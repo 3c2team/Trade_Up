@@ -73,48 +73,79 @@
 	function onOpen(event) {
 		appendMessage("채팅방에 입장하였습니다.");
 		
+		// 입장 메세지 전송에 필요한 정보 보내기(메세지타입 : ENTER, 닉네임, 메세지 불필요)
+		ws.send(getJsonString("ENTER", nickname, ""));
 		
 		// 채팅방 입장 버튼 비활성화, 채팅방 나가기 버튼 활성화
 		$("#btnJoin").prop("disabled", true);
 		$("#btnQuit").prop("disabled", false);
 	}
 	//=================================================
+	// 서버로부터 메세지 수신(함수 파라미터로 MessageEvent 객체가 전달됨) 
 	function onMessage(event) {
 		
+		// 전달받은 데이터(event.data)가 JSON 타입 문자열이 전달되므로 
+		// JSON.parse() 메서드로 JSON 객체 형태로 변환하여 객체 형식으로 접근
+		let data = JSON.parse(event.data);
 		
+		// 메세지타입 판별(ENTER or LEAVE vs TALK)
+		if(data.type == "ENTER" || data.type == "LEAVE"){
+			// 입장&퇴장은 메세지만 출력
+			appendMessage(data.message);
+		}else if(data.type == "TALK"){
+			// 닉네임 : 메세지 형식으로 출력	
+			appendMessage(data.nickname + " : " + data.message);
+		}
+	}
+	//=================================================
+	// 웹소켓 연결이 종료되면 자동으로 호출되는 메서드
+	function onClose(event) {
+		appendMessage("채팅을 종료 합니다.");
+		
+		// 채팅방 입장 버튼 활성화, 채팅방 나가기 버튼 비활성화
+		$("#btnJoin").prop("disabled", false);
+		$("#btnQuit").prop("disabled", true);
 		
 	}
 	//=================================================
-	function onClose() {
-		
+	// 웹소켓 에러 발생 시 자동으로 호출되는 메서드
+	function onError(event){
+		appendMessage("onError");
+		console.log(event);
 	}
-	//=================================================
-	function onError(){
-		
-	}
+	
+	
+	
+	
+	
 	//=================================================
 	// 자신의 채팅창에 메세지를 표시(추가)하는 appendMessage() 함수 정의
 	// => 파라미터 : 출력할 메세지(msg)
-	function appendMessage(event){
-		$("chatMessageArea").append(msg + "<br>");
+	function appendMessage(msg){
+		$("#chatMessageArea").append(msg + "<br>");
 		
 		// 채팅 메세지 출력창 스크롤바를 항상 맨 밑으로 유지
-		$("chatArea").scrollTop($("#chatMessageArea").height() - $("#chatArea").height());
+		$("#chatArea").scrollTop($("#chatMessageArea").height() - $("#chatArea").height());
 		
 	}
 	
 	//=================================================
-	
+	// 웹소켓 서버로 메세지를 전송하는 메서드
 	function sendMessage() {
+		
 		let msg = $("#chatMsg").val();
 		
 		if(msg == ""){
 			alert("메세지 입력 필수!");
-			$("chatMsg").focus();
+			$("#chatMsg").focus();
 			return;
 		}
 		
-		// 자신의 채팅창에 입력한 메세지 출력
+		// 웹소켓 객체의 send() 메서드를 호출하여 메세지 전송
+		// => 스프링 핸들러의 handlerTextMessage() 메서드가 자동으로 호출 됨
+		ws.send(getJsonString("TALK", nickname, msg));
+		
+		//자신의 채팅창에 입력한 메세지 출력 
 		appendMessage(msg);
 		
 		// 채팅 입력창 초기화
@@ -124,12 +155,31 @@
 	}
 	
 	//=================================================
-	//function getJsonString(type, nickname, message){
-	//	
-	//}
+	
+	// 전송할 데이터들을 전달받아 JSON 타입의 문자열로 리턴하는 getJsonString() 함수 정의
+	// => 파라미터 : 메세지타입, 닉네임, 메세지
+	function getJsonString(type, nickname, message){
+		
+		// 전달받은 파라미터들을 하나의 객체로 묶은 후 JSON 타입 문자열로 변환하여 리턴 
+		let data = {
+			type : type,
+			nickname : nickname,
+			message : message
+		};
+		
+		// JSON.stringify() 메세더를 통해 객체 -> JSON 문자열로 변환
+		return JSON.stringify(data);
+	}
 	//=================================================
 	
+	// 접속 종료를 요청하는 메서드
 	function disconnect(){
+		
+		// 퇴장 메세지 전송에 필요한 정보 보내기(메세지타입 : LEAVE, 닉네임, 메세지 불필요)
+		ws.send(getJsonString("LEAVE", nickname, "")); // close() 메서드 호출 전에 수행
+		
+		// 웹소켓 객체의 close() 메서드 호출하여 소켓 연결 종료
+		ws.close(); // 소켓 연결 종료 시 onClose() 함수 자동 호출됨
 		
 	}
 
