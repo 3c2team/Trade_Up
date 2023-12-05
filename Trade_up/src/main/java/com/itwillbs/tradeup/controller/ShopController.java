@@ -178,14 +178,22 @@ public class ShopController {
 		// 이미지 조회
 		List<Map<String, Object>> productImg = shopService.getProductImg(product_num);
 		
+		// 판매자 
+		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct(product_num);
+		
+		// 이미지 조회
+//		List<Map<String, Object>> sellerProductImg = shopService.getSellerProductImg(sId);
+		
 		// 카테고리 조회
 		Map<String, Object> category = shopService.getCategory(product_num);
 		
 		model.addAttribute("product", product);
 		model.addAttribute("productImg", productImg);
 		model.addAttribute("category", category);
+		model.addAttribute("sellerProduct", sellerProduct);
+//		model.addAttribute("sellerProductImg", sellerProductImg);
 
-		model.addAttribute("msg", "상품등록을 실패했습니다.");
+//		model.addAttribute("msg", "상품등록을 실패했습니다.");
 //		model.addAttribute("target", "redirect:/Shop");
 		return "shop/shop_details";
 	}

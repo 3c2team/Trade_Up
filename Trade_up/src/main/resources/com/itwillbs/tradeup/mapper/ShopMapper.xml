@@ -58,4 +58,20 @@
 		 WHERE P.product_num = #{product_num};
 	</select>
 	
+	
+	<!-- 판매자 상품 조회 -->
+	<select id="getSellerProduct" resultType="map">
+		SELECT *
+		  FROM PRODUCT
+		 WHERE product_num = #{product_num};
+	</select>
+	
+	<!-- 판매자 상품 이미지 조회 -->
+<!-- 	<select id="getSellerProductImg" resultType="map"> -->
+<!-- 		SELECT product_image -->
+<!--   		  FROM PRODUCT_IMG I -->
+<!-- 		  JOIN PRODUCT P ON P.product_num = I.product_num -->
+<!-- 		 WHERE P.member_id = #{sId}; -->
+<!-- 	</select> -->
+	
 </mapper>
