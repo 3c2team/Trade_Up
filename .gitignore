@@ -113,5 +113,5 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-Project_garge/target/
+Trade_up/target/
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven
