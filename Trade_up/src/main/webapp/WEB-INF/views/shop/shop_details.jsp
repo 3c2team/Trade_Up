@@ -288,67 +288,70 @@
                                         <div class="product__details__tab__content__item">
 <!--                                         	<a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
-                                            <p>빈조우님</p>
-                                            <p>판매상품 999+ / 안전거래 43 / 후기 10</p>
+                                            <p>${sellerProduct.member_id }님</p>
+                                            <p>판매상품 999+ / 안전거래 43 / 후기 10</p> <!-- count 상품 -->
                                         </div>
                                         <div class="product__details__tab__content__item">
-                                            <h6>빈조우님의 판매 상품 50</h6>
+                                            <h6>${sellerProduct.member_id }님의 판매 상품</h6>
                                         </div>
 								        <div class="container">
 								            <div class="row" style="justify-content: space-between;">
-								                <div class="col">
-								                    <div class="product__item">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-						                                    <ul class="product__hover">
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-						<%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-						                                    </ul>
-						                                </div>
-						                                <div class="product__item__text">
-						                                    <h6>유틸리티 자켓</h6>
-						                                    <a href="#" class="add-cart">상세보기</a>
-															<p>부산진구 <span> / 6분 전</span></p>
-						                                    <h5>30000원</h5>
-						                                </div>
-						                            </div>
-								                </div>
-								                <div class="col">
-								                    <div class="product__item sale">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-						                                    <span class="label">무료나눔</span>
-						                                    <ul class="product__hover">
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-						<%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-						                                    </ul>
-						                                </div>
-						                                <div class="product__item__text">
-						                                    <h6>가방 팔아요</h6>
-						                                    <a href="#" class="add-cart">상세보기</a>
-															<p>서울 마포구 중앙동 <span> / 15분 전</span></p>
-						                                    <h5>5000원</h5>
-						                                </div>
-						                            </div>
-								                </div>
-								                <div class="col">
-								                    <div class="product__item sale">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-						                                    <span class="label">무료나눔</span>
-						                                    <ul class="product__hover">
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-						<%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-						                                    </ul>
-						                                </div>
-						                                <div class="product__item__text">
-						                                    <h6>가방 팔아요</h6>
-						                                    <a href="#" class="add-cart">상세보기</a>
-															<p>서울 마포구 중앙동 <span> / 15분 전</span></p>
-						                                    <h5>5000원</h5>
-						                                </div>
-						                            </div>
-								                </div>
+												<c:forEach items="${sellerProduct }" var="sellerProduct" begin="0" end="3" varStatus="status">
+									                <div class="col">
+									                    <div class="product__item">
+							                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }${sellerProduct.product_main_img }">
+<!-- 						                                    <span class="label">무료나눔</span> -->
+							                                    <ul class="product__hover">
+							                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
+							<%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
+							                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
+							                                    </ul>
+							                                </div>
+							                                <div class="product__item__text">
+							                                    <h6>${sellerProduct.product_name }</h6>
+							                                    <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
+																<p>${sellerProduct.trading_location } <span> / ${sellerProduct.product_release }</span></p>
+							                                    <h5>${sellerProduct.product_price }</h5>
+							                                </div>
+							                            </div>
+									                </div>
+												</c:forEach>
+<!-- 								                <div class="col"> -->
+<!-- 								                    <div class="product__item sale"> -->
+<%-- 						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg"> --%>
+<!-- 						                                    <span class="label">무료나눔</span> -->
+<!-- 						                                    <ul class="product__hover"> -->
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li> --%>
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li> --%>
+<!-- 						                                    </ul> -->
+<!-- 						                                </div> -->
+<!-- 						                                <div class="product__item__text"> -->
+<!-- 						                                    <h6>가방 팔아요</h6> -->
+<!-- 						                                    <a href="#" class="add-cart">상세보기</a> -->
+<!-- 															<p>서울 마포구 중앙동 <span> / 15분 전</span></p> -->
+<!-- 						                                    <h5>5000원</h5> -->
+<!-- 						                                </div> -->
+<!-- 						                            </div> -->
+<!-- 								                </div> -->
+<!-- 								                <div class="col"> -->
+<!-- 								                    <div class="product__item sale"> -->
+<%-- 						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg"> --%>
+<!-- 						                                    <span class="label">무료나눔</span> -->
+<!-- 						                                    <ul class="product__hover"> -->
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li> --%>
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
+<%-- 						                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li> --%>
+<!-- 						                                    </ul> -->
+<!-- 						                                </div> -->
+<!-- 						                                <div class="product__item__text"> -->
+<!-- 						                                    <h6>가방 팔아요</h6> -->
+<!-- 						                                    <a href="#" class="add-cart">상세보기</a> -->
+<!-- 															<p>서울 마포구 중앙동 <span> / 15분 전</span></p> -->
+<!-- 						                                    <h5>5000원</h5> -->
+<!-- 						                                </div> -->
+<!-- 						                            </div> -->
+<!-- 								                </div> -->
 								            </div>
 								        </div>
                                     </div>

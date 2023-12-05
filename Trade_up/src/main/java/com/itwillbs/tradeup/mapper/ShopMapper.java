@@ -25,6 +25,12 @@ public interface ShopMapper {
 
 	// 상품 카테고리 조회
 	Map<String, Object> getCategory(int product_num);
+	
+	// 판매자 상품 조회
+	List<Map<String, Object>> getSellerProduct(int product_num);
+	
+	// 판매자 상품 이미지 조회
+//	List<Map<String, Object>> getSellerProductImg(String sId);
 
 }
 
