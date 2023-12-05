@@ -62,7 +62,13 @@
 		    display: flex;
 		    flex-direction: column;
 		}
-	</style>  
+		.form-check-input {
+			position: initial;
+			margin-top: 0px;
+			margin-left: 0px;
+		}
+		td
+	</style> 
 </head>
 
 <body>
@@ -83,56 +89,61 @@
 							<h5 class="card-header">관심목록</h5>
 							<div class="table-responsive text-nowrap">
 								<table class="table">
-									<thead>
+									<thead class="text-center align-middle">
 										<tr>
-											<th width="50px"><input type="checkbox"></th>
-											<th>상품정보</th>
+											<th width="30px"><input type="checkbox" class="form-check-input" style="width: 18px; height: 18px;"></th>
+											<th colspan="2">상품명</th>
 											<th>판매자</th>
 											<th>거래상태</th>
 											<th>거래방법</th>
 										</tr>
 									</thead>
-									<tbody class="table-border-bottom-0">
+									<tbody class="table-border-bottom-0 text-center">
+										
 										<tr>
-											<td><input type="checkbox"></td>
-											<td>
-												<div class="product">
-													<img width="80px" src="../assets/img/elements/1.jpg">
-													<div class="product_info"><strong>****상품명****</strong><a>50,000원</a></div>
-												</div>
+											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
+											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+											<td class="text-left align-middle">
+												****상품명****
 											</td>
-											<td>신혜리</td>
-											<td>
+											<td class="align-middle">신혜리</td>
+											<td class="align-middle">
                         						<span class="badge bg-label-primary">판매중</span>
-                        						<span class="badge bg-label-secondary">예약중</span>
-						                        <span class="badge bg-label-success">판매완료</span>	
+<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
+<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
 											</td>
-											<td><span>택배거래</span></td>
+											<td class="align-middle">택배거래</td>
+										</tr>
+										
+										<tr>
+											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
+											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+											<td class="text-left align-middle">
+												****상품명****
+											</td>
+											<td class="align-middle">신혜리</td>
+											<td class="align-middle">
+                        						<span class="badge bg-label-primary">판매중</span>
+<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
+<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
+											</td>
+											<td class="align-middle">택배거래</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox"></td>
-											<td>
-												<div class="product">
-													<img width="80px" src="../assets/img/elements/1.jpg">
-													<div class="product_info"><strong>****상품명****</strong><a>50,000원</a></div>
-												</div>
+											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
+											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+											<td class="text-left align-middle">
+												****상품명****
 											</td>
-											<td>신혜리</td>
-											<td><span class="badge bg-label-success me-1">거래완료</span></td>
-											<td><span>택배거래</span></td>
-										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td>
-												<div class="product">
-													<img width="80px" src="../assets/img/elements/1.jpg">
-													<div class="product_info"><strong>****상품명****</strong><a>50,000원</a></div>
-												</div>
+											<td class="align-middle">신혜리</td>
+											<td class="align-middle">
+                        						<span class="badge bg-label-primary">판매중</span>
+<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
+<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
 											</td>
-											<td>신혜리</td>
-											<td><span class="badge bg-label-primary me-1"></span></td>
-											<td><span>택배거래</span></td>
+											<td class="align-middle">택배거래</td>
 										</tr>
+										
 									</tbody>
 								</table>
 							</div>
