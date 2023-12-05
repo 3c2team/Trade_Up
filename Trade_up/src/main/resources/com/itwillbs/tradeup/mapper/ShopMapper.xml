@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.itwillbs.tradeup.mapper.ShopMapper">
+	<!-- 상품 등록 -->
+   	<insert id="registProduct">
+		INSERT INTO PRODUCT
+		VALUES (null
+				,#{member_id}
+				,#{product_name}
+				,#{product_price}
+				,#{product_info}
+				,now()
+				,#{category_idx}
+				,#{file_name}
+				,#{trading_method}
+				,#{product_status}
+			   )
+	</insert>
+	
+	<!-- 상품 이미지 등록 -->
+   	<insert id="registProductImg">
+		INSERT INTO PRODUCT_IMG
+		VALUES (null
+				,(SELECT Max(product_num) as product_num
+				    FROM PRODUCT)
+				,#{product_image}
+			   )
+	</insert>
+	
+	<!-- 모든 상품 조회 -->
+	<select id="selectProductList" resultType="map">
+		SELECT *
+		  FROM PRODUCT
+	  ORDER BY product_release DESC
+	</select>
+
+	<!-- 상품 상세조회 -->
+	<select id="getProduct" resultType="map">
+		SELECT *
+   		  FROM PRODUCT
+   		 WHERE product_num = #{product_num}
+	</select>
+	
+	<!-- 상품 상세조회 이미지 -->
+	<select id="getProductImg" resultType="map">
+		SELECT *
+   		  FROM PRODUCT_IMG
+   		 WHERE product_num = #{product_num}
+	</select>
+	
+	<select id="getCategory" resultType="map">
+		SELECT C.category_name
+		  FROM CATEGORY C
+		  JOIN PRODUCT P ON P.category_idx = C.category_idx
+		 WHERE P.product_num = #{product_num};
+	</select>
+	
+</mapper>

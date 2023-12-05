@@ -1,4 +1,4 @@
-package com.itwillbs.tradeup.cotroller;
+package com.itwillbs.tradeup.controller;
 
 import java.util.Calendar;
 import java.util.List;
