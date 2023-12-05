@@ -84,7 +84,7 @@
 								<table class="table">
 									<thead class="text-center">
 										<tr>
-											<th width="50px"><input type="checkbox"></th>
+											<th></th>
 											<th>상품명</th>
 											<th>상품금액</th>
 											<th>판매자</th>
@@ -95,26 +95,23 @@
 									</thead>
 									<tbody class="text-center table-border-bottom-0">
 										<tr>
-											<td><input type="checkbox"></td>
-											<td>
-												<div class="product">
-													<img width="80px" src="../assets/img/elements/1.jpg">
-													<strong>****상품명****</strong>
-												</div>
+											<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
+											<td class="align-middle">
+												<strong>****상품명****</strong>
 											</td>
-											<td>
+											<td class="align-middle">
 												25084원
 											</td>
-											<td>
+											<td class="align-middle">
 												<a>신혜리</a>
 											</td>
-											<td>
+											<td class="align-middle">
 <!--                         						<span class="badge bg-label-primary">판매중</span> -->
 <!--                         						<span class="badge bg-label-secondary">예약중</span> -->
 						                        <span class="badge bg-label-success">판매완료</span>	
 											</td>
-											<td><span>택배거래</span></td>
-											<td>
+											<td class="align-middle"><span>택배거래</span></td>
+											<td class="align-middle">
 												<button class="btn btn-sm btn-outline-primary">구매완료</button>
 											</td>
 										</tr>
