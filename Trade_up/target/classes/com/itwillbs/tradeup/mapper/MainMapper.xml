@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.itwillbs.tradeup.mapper.MainMapper">
+    	<select id="selectCategory" resultType="map">
+    		SELECT * FROM CATEGORY
+    	</select>
+    	
+    	<select id="selectProduct" resultType="map">
+    		SELECT product_name,product_price,category_name
+			  FROM result_product p
+			  JOIN CATEGORY c
+				ON p.category_num = c.category_idx
+			 WHERE 1=1
+			<if test="search != null">
+				  AND product_name like('%${search}%') 
+			</if>	  
+			<if test="category != null">
+				  AND category_name = #{category} 
+			</if>	  
+			<if test="maxPrice != null">
+				  AND #{maxPrice} + 1 > product_price
+			</if>	  
+			<if test="minPrice != null">
+				  AND product_price > #{minPrice} - 1
+			</if>	  
+    	</select>
+    	<select id="selectQnaCategory" resultType="map">
+    		SELECT *
+			FROM QUESTION_CATEGORY
+    	</select>
+    	<select id="selectQnaCategoryDetail" resultType="map">
+			SELECT *
+			FROM QUESTION_CATEGORY_DETAIL 
+			WHERE qna_category_num = #{qnaCategoryName};
+    	</select>
+    	<insert id="insertQuestion">
+    		INSERT INTO QUESTION
+    		VALUES(
+	    		null
+	    		,(SELECT member_num
+		    		FROM MEMBER
+		    		WHERE member_id = #{sId})
+	    		,#{qna_category_datail}
+	    		,#{content}
+	    		,''
+	    		,'N'
+	    		,now()
+    		)
+    	</insert>
+    	<insert id="insertQuestionImg">
+    		INSERT INTO QUESTION_IMG
+    		VALUES(
+	    		(select MAX(qna_num) as qna_num from QUESTION)
+	    		,#{file_name}
+	    		,#{real_file}
+    		)
+    	</insert>
+    	<select id="selectOftenQna" resultType="map">
+			SELECT *
+			FROM OFTEN_QUESTION 
+			<if test="qna_filter != 0">
+				WHERE qna_filter = #{qna_filter};
+			</if>
+			<if test="qna_select != null">
+				WHERE qna_content LIKE '%${qna_select}%';
+			</if>
+    	</select>
+    	<select id="selectUserQna" resultType="map">
+    		SELECT qna_content
+    				,qna_answer
+    				,IF(qna_is_answer = 'N','미 답변','답변완료') as qna_is_answer
+    				,qna_date
+    				,qna_num
+			FROM QUESTION q
+			JOIN (SELECT member_num
+						FROM MEMBER
+						WHERE member_id = #{sId}) m
+			ON m.member_num = q.member_num		
+    	</select>
+    	<select id="selectQnaDetail" resultType="map">
+    		SELECT *
+    		FROM QUESTION
+    		WHERE qna_num = #{qna_num}
+    	</select>
+    	<select id="selectProductPrice" resultType="map">
+	    	select avg(product_price) as product_avg
+			,max(product_price) as product_max
+			,min(product_price) as product_min
+			from PRODUCT 
+			where product_name like '%${product_name}%'
+			group by product_name
+			limit 20
+		</select>
+    	<select id="selectMarketProduct" resultType="map">
+	    	SELECT product_num
+					,member_id
+					,product_name
+					,product_price
+					,product_info
+					,category_idx
+					,product_main_img
+					,trading_method
+					,product_status
+					,trading_location
+					,uppay
+			FROM PRODUCT 
+			WHERE product_name like '%${product_name}%' 
+			AND product_release > date_sub(now(),interval 3 month);
+		</select>
+    </mapper>

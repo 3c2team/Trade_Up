@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.itwillbs.tradeup.mapper.MyPageMapper">
+    	<select id="selectMember" resultType="map">
+    		<![CDATA[ 
+			SELECT m.*
+			     , ma.address_idx
+			     , ma.recipient_name
+			     , ma.recipient_phone_num
+			     , ma.address1
+			     , ma.address2
+			     , ma.address_name
+			     , ma.address_main
+			     , ma.postcode
+			     , ac.account_num
+			     , ac.account_bank
+			     , ac.account_name
+			     , ac.account_main
+		 	FROM MEMBER m 
+			LEFT JOIN MY_ADDRESS ma ON m.member_id = ma.member_id
+			LEFT JOIN MY_ACCOUNT ac ON m.member_id = ac.member_id
+			WHERE 1=1 
+						AND m.member_id = #{sId}
+						AND ma.address_main = TRUE
+						AND ac.account_main = TRUE;
+			]]>
+    	</select>
+    	
+    	<select id="selectMemberInfo" resultType="map">
+    		SELECT *
+    		FROM ${table_name}
+    		WHERE member_id = #{sId}
+    		ORDER BY ${order_by} DESC;
+    	</select>
+    	
+    	<update id="updateMember">
+    		UPDATE MEMBER
+			SET ${modify_type} = #{modify_value}
+			WHERE member_id = #{sId};
+    	</update>
+    	    	
+    	<update id="updateMainInfo">
+    		UPDATE ${tb} 
+			SET ${col2} = CASE 
+                        			WHEN ${col} = (SELECT *
+														   FROM (SELECT ${col}
+																 FROM ${tb} 
+																 WHERE 1=1 
+																			AND ${col2} = TRUE 
+																			AND member_id = #{sId})a)
+		                        																		THEN FALSE  
+	                    			WHEN ${col} = #{value} THEN TRUE 
+	  						   END;
+    	</update>
+    	
+    	<delete id="deleteInfo">
+    		DELETE
+    		FROM ${tb} 
+			WHERE 1=1
+						AND ${col} = #{value}
+						AND member_id = #{sId};
+    	</delete>
+    	
+    	<insert id="insertMyAddress">
+			INSERT INTO MY_ADDRESS VALUES (
+				NULL
+				, #{sId}
+				, #{recipient_name}
+				, #{recipient_phone_num}
+				, #{address1}
+				, #{address2}
+				, #{address_name}
+				, FALSE
+				, #{postcode}
+			);    	
+    	</insert>
+    	
+    	<update id="updateAddress">
+			UPDATE MY_ADDRESS 
+			SET 
+				recipient_name = #{recipient_name}
+				, recipient_phone_num = #{phone_num}
+				, address1 = #{address1}
+				, address2 = #{address2}
+				, address_name = #{address_name}
+				, address_main = (SELECT * FROM (							 
+												  SELECT address_main  
+												  FROM MY_ADDRESS
+												  WHERE member_id = #{sId} AND address_idx = #{address_idx}) a)
+				, postcode = #{postcode}
+			WHERE 1=1
+						AND address_idx = #{address_idx}
+						And member_id = #{sId};    		
+    	</update>
+    	
+    </mapper>

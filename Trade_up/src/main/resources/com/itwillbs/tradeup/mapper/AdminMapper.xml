@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.tradeup.mapper.AdminMapper">
+    
+    <!-- 금일 회원가입 인원 -->
+ 	<select id="selectMemberJoin" resultType="map">
+ 		SELECT COUNT(member_num) as selectMemberIn
+		FROM MEMBER
+<!-- 		WHERE DATE_FORMAT(member_insert_date, "%Y-%m-%d") = CURDATE() -->
+		WHERE member_insert_date > date_add(now(),interval -1 week)
+ 	</select>
+ 	
+ 	<!-- 전체 회원 목록 -->
+ 	<select id="selectMemberAll" resultType="com.itwillbs.tradeup.vo.MemberVO">
+ 		SELECT *
+ 		FROM MEMBER
+ 		ORDER BY member_insert_date DESC
+ 	</select>
+ 	
+ 	<!-- 전체 회원 수 -->
+ 	<select id="selectMemberCount" resultType="map">
+ 		SELECT COUNT(*) as member
+ 		FROM MEMBER
+ 	</select>
+ 	
+ 	<!-- 관리자 계정 조회 -->
+ 	<select id="selectAdminMember" resultType="com.itwillbs.tradeup.vo.MemberVO">
+ 		SELECT *
+ 		FROM MEMBER
+ 		WHERE member_id = #{id} AND member_state = '관리자'
+ 	</select>
+ 	
+ 	<!-- 가입일로 회원 조회 -->
+ 	<select id="selectMemberPeriod" resultType="com.itwillbs.tradeup.vo.MemberVO">
+ 		SELECT *
+ 		FROM MEMBER
+ 		WHERE 
+ 		<if test="!startDate.equals('')">
+ 			member_insert_date BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 		ORDER BY member_insert_date DESC
+ 	</select>
+ 	
+ 	<!-- 가입일로 회원 수 조회 -->
+ 	<select id="selectMemberCountPeriod" resultType="map">
+ 		SELECT COUNT(*) as memberCount
+ 		FROM MEMBER
+ 		WHERE 
+ 		<if test="!startDate.equals('')">
+ 			member_insert_date BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 고객계좌에서 출금한 내역 조회-->
+ 	<select id="selectWithdrawList" resultType="com.itwillbs.tradeup.vo.WithdrawVO">
+ 		SELECT 
+			W.product_price
+		    , W.withdraw_bank
+		    , W.withdraw_acc
+		    , W.commission
+		    , W.buy_check
+			, M.member_name
+		FROM WITHDRAW W JOIN MEMBER M
+		ON W.member_id = M.member_id
+		ORDER BY withdraw_date DESC
+ 	</select>
+ 	
+ 	<!--판매자에게 입금한 내역 조회-->
+ 	<select id="selectDepositList" resultType="com.itwillbs.tradeup.vo.DepositVO">
+ 		SELECT 
+		    D.product_price
+		    , D.deposit_bank
+		    , D.deposit_acc
+		    , D.sell_check
+			, M.member_name
+		FROM DEPOSIT D JOIN MEMBER M
+		ON D.member_id = M.member_id
+		ORDER BY deposit_date DESC
+ 	</select>
+ 	
+ 	<!-- 관리자 권한 회수 -->
+	<update id="updateMemberRevoke">
+		UPDATE MEMBER
+		SET member_state = '회원'
+		WHERE member_id = #{member}
+	</update> 	
+	
+	<!-- 관리자 권한 부여 -->
+	<update id="updateMemberAuth">
+		UPDATE MEMBER
+		SET member_state = '관리자'
+		WHERE member_id = #{admin}
+	</update>
+ 	
+ 	<!-- 주간 거래량 및 수수료 현황 -->
+ 	<select id="selectCommission" resultType="map">
+ 		SELECT SUM(commission) as commission, count(*) as count
+ 		FROM WITHDRAW
+<!--  		WHERE DATE_FORMAT(withdraw_date, "%Y-%m-%d") = CURDATE() AND buy_check = '구매확정' -->
+ 		WHERE withdraw_date > date_add(now(),interval -1 week) 
+ 	</select>
+ 	
+ 	<!-- 주간 회원 탈퇴 수 -->
+ 	<select id="selectMemberOut" resultType="map">
+ 		SELECT count(*) as memberOut
+ 		FROM MEMBER
+<!--  		WHERE member_state = '회원탈퇴' AND DATE_FORMAT(member_insert_date, "%Y-%m-%d") = CURDATE() -->
+ 		WHERE member_state = '회원탈퇴' AND member_insert_date > date_add(now(),interval -1 week)
+ 	</select>
+ 	
+ 	<!-- 출금내역 기간조회 -->
+ 	<select id="selectWithdrawSearch" resultType="com.itwillbs.tradeup.vo.WithdrawVO">
+  		SELECT *
+ 		FROM WITHDRAW
+ 		WHERE DATE(withdraw_date)
+ 		<if test="!startDate.equals('')">
+ 			BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 		ORDER BY withdraw_date DESC
+ 	</select>
+ 	
+ 	<!-- 입금내역 기간조회 -->
+ 	<select id="selectDepositSearch" resultType="com.itwillbs.tradeup.vo.DepositVO">
+	 	SELECT *
+ 		FROM DEPOSIT
+ 		WHERE DATE(deposit_date)
+ 		<if test="!startDate.equals('')">
+ 			 BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 		ORDER BY deposit_date DESC
+ 	</select>
+ 	
+ 	<!-- 구매확정 수수료내역 -->
+ 	<select id="selectWithdrawCharge" resultType="com.itwillbs.tradeup.vo.WithdrawVO">
+ 		SELECT *
+ 		FROM WITHDRAW
+ 		WHERE buy_check = '구매확정'
+ 	</select>
+ 	
+ 	<!-- 공지사항 등록 -->
+ 	<insert id="insertNotice">
+ 		INSERT INTO NOTICE
+			VALUES(	null
+					, #{notice_subject}
+					, #{notice_content}
+					,now()
+			)
+ 	</insert>
+ 	
+ 	<!-- 관리자페이지 공지사항 조회 -->
+ 	<select id="selectNotice" resultType="map">
+ 		SELECT  notice_num
+				, notice_subject
+				, notice_content
+				, DATE_FORMAT(notice_date, '%Y-%m-%d') as notice_date
+		FROM NOTICE
+ 	</select>
+ 	
+ 	<!-- 거래방법 카운터 -->
+	<select id="selectTrasactionList" resultType="map">
+		SELECT 
+   			count(case when method like '무통장입금%' then method end) as 'bankCount'
+    		, count(case when method like '카카오페이' then method end) as 'kakaopayCount'
+    		, count(case when method like '업페이' then method end) as 'uppayCount'
+    		, sum(case when method like '무통장입금%' then commission end) as 'bankTransfer'
+    		, sum(case when method like '카카오페이' then commission end) as 'kakaopay'
+    		, sum(case when method like '업페이' then commission end) as 'uppay'
+		FROM WITHDRAW
+		WHERE DATE(withdraw_date) 
+		BETWEEN #{startDate} 
+		AND date_format(date(#{endDate}), '%Y-%m-%d') 
+<!-- 		AND buy_check='구매확정' -->
+	</select>
+	
+	<select id="selectTransactionWeek" resultType="map">
+		SELECT 
+   			count(case when method like '무통장입금%' then method end) as 'bankCount'
+    		, count(case when method like '카카오페이' then method end) as 'kakaopayCount'
+    		, count(case when method like '업페이' then method end) as 'uppayCount'
+    		, sum(case when method like '무통장입금%' then commission end) as 'bankTransfer'
+    		, sum(case when method like '카카오페이' then commission end) as 'kakaopay'
+    		, sum(case when method like '업페이' then commission end) as 'uppay'
+		FROM WITHDRAW
+		WHERE
+		<if test="startDate.equals('')">
+			withdraw_date > date_add(now(),interval -1 week)
+ 			<choose>
+ 			<when test="!startDate.equals('')">
+ 				DATE(withdraw_date) BETWEEN #{startDate}
+ 			</when>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+	</select>
+	
+	<select id="selectCommissionSum" resultType="map">
+		SELECT sum(commission) as chargeSum
+		FROM WITHDRAW
+		WHERE buy_check = '구매확정';
+	</select>
+    
+</mapper>
