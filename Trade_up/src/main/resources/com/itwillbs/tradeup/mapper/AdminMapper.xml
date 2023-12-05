@@ -223,5 +223,36 @@
 		FROM WITHDRAW
 		WHERE buy_check = '구매확정';
 	</select>
+	
+	<select id="selectFixWithdrawSearch" resultType="map">
+		SELECT *
+ 		FROM WITHDRAW
+ 		WHERE DATE(withdraw_date)
+ 		<if test="!startDate.equals('')">
+ 			BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 		AND buy_check = '구매확정'
+ 		ORDER BY withdraw_date DESC
+	</select>
+	
+	<select id="selectCommissionSumSearch" resultType="map">
+		SELECT sum(commission) as commissionSum
+ 		FROM WITHDRAW
+ 		WHERE DATE(withdraw_date)
+ 		<if test="!startDate.equals('')">
+ 			BETWEEN #{startDate}
+ 			<choose>
+ 			<when test="!endDate.equals('')">
+ 				AND date_format(date(#{endDate}), '%Y-%m-%d')
+ 			</when>
+ 			</choose>
+ 		</if>
+ 		AND buy_check = '구매확정'
+	</select>
     
 </mapper>

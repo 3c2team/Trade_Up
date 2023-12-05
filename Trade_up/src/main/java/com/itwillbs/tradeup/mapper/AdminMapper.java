@@ -69,11 +69,16 @@ public interface AdminMapper {
 	Map<String, Integer> selectTrasactionList(Map<String, String> map);
 
 	// 거래방법 조회 (일주일)
-//	Map<String, Integer> selectTransactionWeek();
 	Map<String, Integer> selectTransactionWeek(Map<String, String> map);
 
 	// 구매확정 수수료 합계
 	Map<String, Integer> selectCommissionSum();
+
+	// 수수료 내역, 합계
+	List<WithdrawVO> selectFixWithdrawSearch(Map<String, String> map);
+
+	// 수수료 금액 합산 (기간)
+	Map<String, Integer> selectCommissionSumSearch(Map<String, String> map);
 
 
 

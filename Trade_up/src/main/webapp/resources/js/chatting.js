@@ -22,31 +22,61 @@
 			disconnect();
 		});
 		
+		// 채팅방 입장 버튼 활성화, 채팅방 나가기 버튼 비활성화
+		$("#btnJoin").prop("disabled", false);
+		$("#btnQuit").prop("disabled", true);
+		
 	});
 	// -------------------------------------------------
 	let ws;
+	let nickname;
 	
 	function connect() {
-		let ws_base_url = "ws://localhost:8081/tradeup";
+		nickname = $("#nickname").val();
+		
+//		let ws_base_url = "ws://localhost:8081/tradeup";
+		let ws_base_url = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}";
 		
 		ws = new WebSocket(ws_base_url + "/echo"); // 웹소켓 요청
-		ws.onopen = onOpen();
-		ws.onmessage = onMessage();
-		ws.onclose = onClose();
-	}
-	
-	function onOpen() {
 		
+		ws.onopen = onOpen;
+		ws.onmessage = onMessage;
+		ws.onclose = onClose;
+		ws.onerror = onError;
 	}
-	
-	function onClose() {
-		
+	//=================================================
+	// 웹소켓 연결 완료 시 자동으로 호출되는 메서드
+	function onOpen(event) {
+		appendMessage("채팅방에 입장하였습니다.");
 	}
-	
+	//=================================================
 	function onMessage() {
 		
 	}
+	//=================================================
+	function onClose() {
+		
+	}
+	//=================================================
+	function onError(){
+		
+	}
+	//=================================================
+	function appendMessage(){
+		
+	}
+	
+	//=================================================
 	
 	function sendMessage() {
 		ws.send("aaaaaaaaaa");
+	}
+	//=================================================
+//	function getJsonString(type, nickname, message){
+//		
+//	}
+	//=================================================
+	
+	function disconnect(){
+		
 	}

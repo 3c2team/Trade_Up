@@ -141,6 +141,20 @@ public class AdminService {
 		return adminMapper.selectCommissionSum();
 	}
 
+	// 구매확정 수수료 내역 (기간)
+	public List<WithdrawVO> selectFixWithdrawSearch(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectFixWithdrawSearch(map);
+	}
+
+	// 수수료 금액 (기간)
+	public Map<String, Integer> selectCommissionSumSearch(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectCommissionSumSearch(map);
+	}
+
+
+
 
 	
 	

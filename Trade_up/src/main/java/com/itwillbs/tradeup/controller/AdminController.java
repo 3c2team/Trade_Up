@@ -69,22 +69,17 @@ public class AdminController {
 	@GetMapping("/ProductCharge")
 	public String productSales(Map<String, Integer> map, Model model) {
 		
-		// 구매확정 수수료 내역
-		List<WithdrawVO> WithdrawCharge = adminService.selectWithdrawCharge();
-		System.out.println("확정완료 수수료 : " + WithdrawCharge);
-		model.addAttribute("CommissionList",WithdrawCharge);
+			System.out.println("날짜 비였음");
+			// 구매확정 수수료 내역
+			List<WithdrawVO> WithdrawCharge = adminService.selectWithdrawCharge();
+			System.out.println("확정완료 수수료 : " + WithdrawCharge);
+			model.addAttribute("CommissionList",WithdrawCharge);
+			
+			// 금일 수수료 금액, 금일 거래량
+			map = adminService.selectCommissionSum();
+			model.addAttribute("commission",map.get("chargeSum") );
+			return "admin/product_charge";
 		
-		// 금일 수수료 금액, 금일 거래량
-//		map = adminService.selectCommission();
-//		System.out.println("수수료 금액 : " + map.get("commission"));
-//		System.out.println("수수료 건수 : " + map.get("count"));
-//		model.addAttribute("commission",map.get("commission") );
-//		model.addAttribute("count",map.get("count"));
-		map = adminService.selectCommissionSum();
-		model.addAttribute("commission",map.get("chargeSum") );
-		
-//		return "";
-		return "admin/product_charge";
 	}
 	
 	// 거래내역
@@ -103,6 +98,12 @@ public class AdminController {
 		map.put("endDate",endDate);
 		
 		Map<String, Integer> TransactionCount = adminService.selectTransactionWeek(map);
+		
+		if(TransactionCount.isEmpty()) {
+			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			return "fail_back";
+		}
+		
 		System.out.println("뽑히는가1? : " + TransactionCount);
 		model.addAttribute("TransactionCount", TransactionCount);
 		
@@ -232,6 +233,12 @@ public class AdminController {
 		// 기간 회원 검색
 		List<MemberVO> memberPeriod = adminService.selectMemberPeriodList(map);
 		System.out.println("기간 검색 회원 : " + memberPeriod);
+		
+		if(memberPeriod.isEmpty()) {
+			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			return "fail_back";
+		}
+		
 		model.addAttribute("memberList", memberPeriod);
 		// 기간 회원 수 조회
 		Map<String, Integer> memberCount = adminService.selectMemberPeriodCount(map);
@@ -313,6 +320,13 @@ public class AdminController {
 				
 		// 출금내역 기간조회
 		List<WithdrawVO> withdrawSearchList = adminService.selectWithdrawSearch(map);
+		
+		if(withdrawSearchList.isEmpty()) {
+			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			return "fail_back";
+		}
+		
+		
 		System.out.println("withdrawSearchList : " + withdrawSearchList);
 		
 		model.addAttribute("withdrawList",withdrawSearchList);
@@ -334,6 +348,12 @@ public class AdminController {
 			
 			// 입금내역 기간조회
 			List<DepositVO> depositSearchList = adminService.selectDepositSearch(map);
+			
+			if(depositSearchList.isEmpty()) {
+				model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+				return "fail_back";
+			}
+			
 			model.addAttribute("depositList", depositSearchList);
 			
 			return "admin/deposit";
@@ -382,7 +402,7 @@ public class AdminController {
 	@PostMapping("/TransactionSearch")
 	public String transactionSearch(
 			@RequestParam Map<String, String> map,
-			@RequestParam(defaultValue = "1990-01-01") String startDate, 
+			@RequestParam(defaultValue = "") String startDate, 
 			@RequestParam(defaultValue = "") String endDate,
 			Model model) {
 		
@@ -391,6 +411,12 @@ public class AdminController {
 		
 		// 거래방법 카운터, 총액
 		Map<String, Integer> TransactionCount = adminService.selectTransactionList(map);
+		
+		if(TransactionCount.isEmpty()) {
+			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			return "fail_back";
+		}
+		
 		model.addAttribute("TransactionCount", TransactionCount);
 		
 		return "admin/product_transaction";
@@ -420,19 +446,40 @@ public class AdminController {
 	@PostMapping("/ChargeSearch")
 	public String chargeSearch(@RequestParam Map<String, String> map,
 			@RequestParam(defaultValue = "") String startDate, 
-			@RequestParam(defaultValue = "") String endDate) {
+			@RequestParam(defaultValue = "") String endDate, 
+			Model model) {
 		
 		map.put("startDate", startDate);
 		map.put("endDate",endDate);
 		
 		System.out.println("chargeSearch - data 확인 : " + map.get("startDate") + ", : " + map.get("endDate"));
 		
-		return "amin/product_charge";
+//		if(startDate.equals("") || endDate.equals("")) {
+//			System.out.println("날짜 비였음");
+//		}
+				
+		// 구매확정 수수료 내역 (기간)
+		List<WithdrawVO> WithdrawCharge = adminService.selectFixWithdrawSearch(map);
+		
+		if(WithdrawCharge.isEmpty()) {
+			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			return "fail_back";
+		}
+		
+		System.out.println("확정완료 수수료 (기간) : " + WithdrawCharge);
+		model.addAttribute("CommissionList",WithdrawCharge);
+		
+		// 수수료 금액 (기간)
+		Map<String, Integer> mapCommission = new HashMap<String, Integer>();
+		mapCommission = adminService.selectCommissionSumSearch(map);
+		System.out.println("수수료 금액 (기간) : " + mapCommission.get("commissionSum"));
+		model.addAttribute("commission", mapCommission.get("commissionSum") );
+		
+		return "admin/product_charge";
 	}
 	
 	@GetMapping("/ChatMain")
-	public String chatMain(
-			) {
+	public String chatMain() {
 		
 		
 		
