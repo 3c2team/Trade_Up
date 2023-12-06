@@ -1,13 +1,14 @@
 package com.itwillbs.tradeup.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.tradeup.service.MemberService;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 
 //import com.itwillbs.tradeup.service.MemberService;
 
@@ -31,16 +36,49 @@ public class MemberController {
 		return "member/join";
 	}
 	
+	
 	@PostMapping("JoinPro")
 	public String joinPro(Map<String, String> map) {
 		System.out.println(map);
-		
 		return "member/join";
+	}
+	
+	@ResponseBody
+	@GetMapping("SendSMS")
+	public static String testSMS (String[] args, @RequestParam(defaultValue = "010-1111-1111") String phone_num, Map<String, String> map) {
+		String api_key = "NCSK052QH9QYVXN8";
+		String api_secret = "WVOPYYGP5DVVQGLME8JCAD2UZN25U1RZ";
+		int authCode = (int)(Math.random() * 899999) + 100000;
+		Message coolsms = new Message(api_key, api_secret);
+		String res = "false";
+		
+		System.out.println(coolsms);
+		System.out.println(authCode);
+		map.put("authCode", authCode + "");
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", phone_num); // 받는 사람
+		params.put("from", "0109249369"); // 보내는 사람(나) - 일부러 오류나게 해놓음
+		params.put("type", "SMS");
+		params.put("text", "[Trade UP] 본인 확인 인증번호[" + authCode + "]를 화면에 입력해주세요");
+		params.put("app_version", "test app 1.2");
+		
+		System.out.println(params);
+		
+		try {
+			JSONObject obj = (JSONObject)coolsms.send(params);
+			System.out.println(obj.toString());
+			res = "true";
+		} catch (CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+		return res;
 	}
 	
 	@GetMapping("Login")
 	public String login() {
-		return "login/login";
+		return "member/login";
 	}
 	
 	@PostMapping("LoginPro")
