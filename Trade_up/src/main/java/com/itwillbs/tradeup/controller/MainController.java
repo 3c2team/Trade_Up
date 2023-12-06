@@ -155,9 +155,17 @@ public class MainController {
 	@ResponseBody
 	@PostMapping("SelectProduct")
 	public List<Map<String, String>> selectProduct(@RequestParam(required = false) String product_name) {
-		System.out.println("시세조회 검색어 : " + product_name);
-		System.out.println("fdfsfsfs : " +  service.selectProduct(product_name));
 		return service.selectProduct(product_name);
+//		return null;
+	}	
+	
+	//시세검색 ajax
+	@ResponseBody
+	@PostMapping("SelectProductPrice")
+	public List<Map<String, String>> selectProductPrice(@RequestParam(required = false) String product_name) {
+		System.out.println("시세조회 검색어 3333333333: " + product_name);
+		System.out.println("fdfsfsfs 3333333333333333: " +  service.selectProductPrice(product_name));
+		return service.selectProductPrice(product_name);
 //		return null;
 	}	
 	

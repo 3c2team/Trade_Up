@@ -66,7 +66,7 @@ public class MainService {
 		return mapper.selectQnaDetail(qna_num);
 	}
 
-	public Map<String, String> selectProductPrice(String product_name) {
+	public List<Map<String, String>> selectProductPrice(String product_name) {
 		// TODO Auto-generated method stub
 		return mapper.selectProductPrice(product_name);
 	}

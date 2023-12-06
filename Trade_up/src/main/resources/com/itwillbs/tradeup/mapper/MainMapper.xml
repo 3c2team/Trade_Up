@@ -86,13 +86,26 @@
     		WHERE qna_num = #{qna_num}
     	</select>
     	<select id="selectProductPrice" resultType="map">
-	    	select avg(product_price) as product_avg
-			,max(product_price) as product_max
-			,min(product_price) as product_min
-			from PRODUCT 
-			where product_name like '%${product_name}%'
-			group by product_name
-			limit 20
+   	        WITH RECURSIVE result_month AS (
+            SELECT month(now()) -3 AS rnum
+             UNION ALL
+             SELECT rnum + 1 
+             FROM result_month
+             WHERE  month(now()) > rnum
+			)
+		    select concat(rnum,'월')  as month
+					,ifnull(product_avg,0) as product_avg
+		            ,ifnull(product_max,0) as product_max
+		            ,ifnull(product_min,0) as product_min
+		    from result_month s left join (select FLOOR(avg(replace(product_price,',',''))) as product_avg
+											,max(replace(product_price,',','')) as product_max
+                                            ,min(replace(product_price,',','')) as product_min
+											,MONTH(product_release) as month
+									 from PRODUCT
+									 where product_release between date_sub(curdate(),interval 3 MONTH) and curdate()
+								  	 and product_name like '%${product_name}%'
+									 group by MONTH(product_release)) p
+ 		on p.month = s.rnum;
 		</select>
     	<select id="selectMarketProduct" resultType="map">
 	    	SELECT product_num
