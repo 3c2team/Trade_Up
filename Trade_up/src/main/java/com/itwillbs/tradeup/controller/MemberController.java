@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.tradeup.service.MemberService;
+import com.itwillbs.tradeup.service.PayService;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-
-
-//import com.itwillbs.tradeup.service.MemberService;
 
 @Controller
 public class MemberController {
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	PayService payService;
 	
 	@GetMapping("Join")
 	public String join(Map<String, String> map) {
@@ -36,16 +37,49 @@ public class MemberController {
 		return "member/join";
 	}
 	
-	
-	@PostMapping("JoinPro")
-	public String joinPro(Map<String, String> map) {
-		System.out.println(map);
-		return "member/join";
+	// 아이디 중복 판별 처리
+	@ResponseBody
+	@GetMapping("MemberCheckDupId")
+	public String checkDupId(String id) {
+		Map<String, String> returnMember = service.getMemberDup(id);
+		
+		if(returnMember != null) { // 아이디 중복
+			return "true"; // 리턴타입 String일 때 응답 데이터로 String 타입 "true" 문자열 리턴
+		} else {
+			return "false";
+		}
 	}
 	
+	// 메일 중복 판별 처리
+	@ResponseBody
+	@GetMapping("MemberCheckDupMail")
+	public String checkDupMail(@RequestParam Map<String, String> param) {
+		Map<String, String> returnMember = service.getMemberDupMail(param);
+		
+		if(returnMember != null) { // 아이디 중복
+			return "true"; // 리턴타입 String일 때 응답 데이터로 String 타입 "true" 문자열 리턴
+		} else {
+			return "false";
+		}
+	}
+	
+	// 휴대폰 중복 판별 처리
+	@ResponseBody
+	@GetMapping("MemberCheckDupPhone")
+	public String checkDupPhone(String phone_num) {
+		Map<String, String> returnMember = service.getMemberDupPhone(phone_num);
+		
+		if(returnMember != null) { // 아이디 중복
+			return "true"; // 리턴타입 String일 때 응답 데이터로 String 타입 "true" 문자열 리턴
+		} else {
+			return "false";
+		}
+	}
+	
+	// 본인인증 문자 전송
 	@ResponseBody
 	@GetMapping("SendSMS")
-	public static String testSMS (String[] args, @RequestParam(defaultValue = "010-1111-1111") String phone_num, Map<String, String> map) {
+	public static Map<String, String> testSMS (String[] args, @RequestParam(defaultValue = "010-1111-1111") String phone_num) {
 		String api_key = "NCSK052QH9QYVXN8";
 		String api_secret = "WVOPYYGP5DVVQGLME8JCAD2UZN25U1RZ";
 		int authCode = (int)(Math.random() * 899999) + 100000;
@@ -54,6 +88,8 @@ public class MemberController {
 		
 		System.out.println(coolsms);
 		System.out.println(authCode);
+		
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("authCode", authCode + "");
 		
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -73,7 +109,34 @@ public class MemberController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
 		}
-		return res;
+		map.put("result", res);
+		return map;
+	}
+	
+	// 회원가입 완료
+	@PostMapping("JoinPro")
+	public String joinPro(@RequestParam Map<String, String> map, Model model) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String securePasswd = passwordEncoder.encode(map.get("member_passwd"));
+		map.put("member_passwd", securePasswd);
+		
+		int insertCount = service.registMember(map);
+		
+		if(insertCount <= 0) {
+			model.addAttribute("msg", "오류가 생겼습니다. 다시 시도해주세요.");
+			return "fail_back";
+		}
+		
+		insertCount = payService.insertMainAddress(map);
+		
+		if(insertCount <= 0) {
+			model.addAttribute("msg", "오류가 생겼습니다. 다시 시도해주세요.");
+			return "fail_back";
+		}
+		
+		model.addAttribute("msg", "회원가입이 완료되었습니다."); // 출력할 메세지
+		model.addAttribute("targetURL", "Login"); // 이동시킬 페이지
+		return "forward";
 	}
 	
 	@GetMapping("Login")
@@ -83,7 +146,7 @@ public class MemberController {
 	
 	@PostMapping("LoginPro")
 	public String loginPro(
-			String member_id, Map<String, String> map, @RequestParam(required = false) boolean rememberId, 
+			String member_id, String member_passwd, @RequestParam(required = false) boolean rememberId, 
 			HttpSession session, HttpServletResponse response, Model model) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, String> dbMember = service.getMemberLogin(member_id);
@@ -91,10 +154,10 @@ public class MemberController {
 //            return "admin/admin_login";
 //         }
 		
-//		if(dbMember == null || !passwordEncoder.matches(map.get("member_passwd"), dbMember.get("member_passwd"))) {
-//			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
-//			return "fail_back";
-//		}
+		if(dbMember == null || !passwordEncoder.matches(member_passwd, dbMember.get("member_passwd"))) {
+			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
+			return "fail_back";
+		}
 		
 		// 로그인 성공
 		if(dbMember.get("mail_auth_status").equals("N")) { // 이메일 미인증 회원
@@ -116,6 +179,13 @@ public class MemberController {
 			cookie.setMaxAge(0); // 쿠키 즉시 삭제한다는 의미
 		}
 		response.addCookie(cookie);
+		return "redirect:/";
+	}
+	
+	// Logout
+	@GetMapping("Logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
 		return "redirect:/";
 	}
 }

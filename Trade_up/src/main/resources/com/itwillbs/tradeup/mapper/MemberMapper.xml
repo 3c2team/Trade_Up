@@ -4,6 +4,51 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.itwillbs.tradeup.mapper.MemberMapper">
+	<!-- 아이디 중복 -->
+	<select id="selectMemberDup" resultType="map">
+		SELECT *
+		FROM MEMBER
+		WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 메일 중복 -->
+	<select id="selectMemberDupMail" resultType="map" parameterType="map">
+		SELECT *
+		FROM MEMBER
+		WHERE member_e_mail = concat(#{mail1} , "@" , #{mail2})
+	</select>
+	
+	<!-- 휴대폰 중복 -->
+	<select id="selectMemberDupPhone" resultType="map">
+		SELECT *
+		FROM MEMBER
+		WHERE member_phone_num = #{member_phone_num}
+	</select>
+	
+	<!-- 회원가입 등록 -->
+	<insert id="insertMember">
+		INSERT
+			INTO MEMBER
+			(member_name, member_nick_name, member_id, member_passwd, member_e_mail, mail_auth_status, member_insert_date, member_phone_num, <!-- <if test="member_birth.equals('')">member_birth_day, </if> --> member_state)
+			VALUES (
+				  #{member_name}
+				, #{member_nick_name}
+				, #{member_id}
+				, #{member_passwd}
+				, CONCAT(#{member_email1}, '@', #{member_email2})
+				, 'Y'
+				, now()
+				, #{member_phone_num}
+				<!--
+				<if test="member_birth.equals('')">
+					, #{member_birth}
+				</if>
+				-->
+				, '회원'
+			)
+	</insert>
+	
+	<!-- 로그인 -->
 	<select id="selectMemberLogin" resultType="map">
 		SELECT *
 		FROM MEMBER

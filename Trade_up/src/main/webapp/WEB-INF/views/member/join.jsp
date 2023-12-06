@@ -27,36 +27,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/join.css" type="text/css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript">
-	function sendSMS() {
-		let phone_num = $("#member_phone_num").val();
-		let lengthRegex = /^[0-9]{3}[-][0-9]{4}[-][0-9]{4}$/;
-		
-		if(phone_num == "") {
-			msg = "전화번호를 입력해주세요.";
-			color = "red";
-		} else if(!lengthRegex.exec(phone_num)) {
-			msg = "000-0000-0000형식으로 작성해주세요.";
-			color = "red";
-		} else {
-			$.ajax({
-				url: "SendSMS",
-				data: {
-					"phone_num" : phone_num
-				},
-				success: function(result) {
-					alert("인증번호를 발송했습니다. 문자 확인 후 번호를 입력해주세요.")
-				} ,
-				error: function (result) {
-					alert("인증번호 발송에 실패하였습니다. 전화번호를 다시 한번 확인해 주세요")
-				},
-			});
-		}
-		// 텍스트와 글자색상 변수를 활용하여 상태 변경
-		$("#checkPhoneResult").html(msg);
-		$("#checkPhoneResult").css("color", color);
-	}
-</script>
+<style type="text/css">
+input[type="text"] {
+	font-size: 0.8em;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -70,67 +45,96 @@
 		<form action="JoinPro" name="joinForm" method="post" onsubmit="return checks()">
 			<table style="margin-top: -9%">
 				<tr>
-					<th>ID</th>
+					<th>ID<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="text" name="member_id" id="member_id" size="24">
 						<br><span id="checkIdResult">영문소문자/숫자, 4~16자</span>
 					</td>
 				</tr>
 				<tr>
-					<th>비밀번호</th>
+					<th>비밀번호<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="password" name="member_passwd" id="member_passwd" size="24">
 						<br><span id="checkPasswdResult">영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자</span>
 					</td>
 				</tr>
 				<tr>
-					<th>비밀번호 확인</th>
+					<th>비밀번호 확인<span style="color: white; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="password" name="member_passwd2" id="member_passwd2" size="24">
 						<br><span id="checkPasswd2Result"></span>
 					</td>
 				</tr>
 				<tr>
-					<th>이름</th>
+					<th>이름<span style="color: red; margin-left: 6%;">*</span></th>
 					<td><input type="text" name="member_name" id="member_name" size="20"></td>
 				</tr>
 				<tr>
-					<th>닉네임</th>
+					<th>닉네임<span style="color: red; margin-left: 6%;">*</span></th>
 					<td><input type="text" name="member_nick_name" id="member_nick_name" size="20"></td>
 				</tr>
 				<tr>
-					<th>전화번호</th>
+					<th>E-Mail<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="text" name="member_phone_num" id="member_phone_num" size="20">
-						<br><span id="checkPhoneResult">000-0000-0000</span>
+						<input type="text" name="member_email1" id="member_email1" size="10">&nbsp;@<input type="text" name="member_email2" id="member_email2" size="10">
+						<select id="member_emailDomain">
+							<option value="">직접입력</option>
+							<option value="naver.com">naver.com</option>
+							<option value="nate.com">nate.com</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="daum.net">daum.net</option>
+						</select>
+						<br><span style="color: gray;"></span>
 					</td>
 				</tr>
 				<tr>
-					<th>전화번호</th>
+					<th>전화번호<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="button" id="btnSearchAddress" value="본인인증" onclick="sendSMS()">
-						<input type="text" name="member_phone_num" id="member_phone_num" size="8">
+						<input type="text" name="member_phone_num" id="member_phone_num" size="20" oninput="autoHyphen(this)" maxlength="13">
+						<br><span id="checkPhoneResult">숫자만 입력해주세요.</span>
+					</td>
+				</tr>
+				<tr>
+					<th>본인인증<span style="color: red; margin-left: 6%;">*</span></th>
+					<td>
+						<input type="button" id="btnAuthCode" value="본인인증" onclick="sendSMS()">
+						<input type="text" name="member_auth_code" id="member_auth_code" size="6">
 						<br><span id="checkSendResult">본인인증 버튼 클릭 후 문자로 전송된 인증번호를 입력해주세요.</span>
-						<input type="hidden" name="authCode" value="${authCode }">
+						<input type="hidden" id="authCode" name="authCode" value="">
 					</td>
 				</tr>
 				<tr>
-					<th>주소</th>
+					<th>주소<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="text" name="member_address1" id="member_address1" placeholder="기본주소" size="25">
-						<input type="button" id="btnSearchAddress" value="주소검색"><br>
+						<input type="button" id="btnSearchAddress" value="주소검색" onclick="daumPostcode()"><br>
 						<input type="text" name="member_address2" id="member_address2" placeholder="상세주소" size="25">
 					</td>
 				</tr>
 				<tr>
 					<th>생일</th>
-					<td><input type="date" name="member_birth" id="member_birth" size="20"></td>
+					<td id="birthTd">
+					<input type="hidden" name="member_birth" id="member_birth"  size="20">
+					<br>
+					<div class="info" id="info__birth">
+						  <select class="box" id="birth-year">
+						    <option disabled selected>출생 연도</option>
+						  </select>
+						  <select class="box" id="birth-month">
+						    <option disabled selected>월</option>
+						  </select>
+					  <select class="box" id="birth-day">
+					    <option disabled selected>일</option>
+					  </select>
+					
+					</div>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center" >
-						<!-- <button type="button" id="btnCheck" value="가입" onclick="checks()"> -->
-<!-- 						<input type="button" id="btnTest" value="테스트"> -->
 						<input type="submit" id="btnCheck" value="가입">
+<!-- 						<input type="button" id="btnTest" value="테스트"> -->
+<!-- 						<input type="submit" id="btnCheck" value="가입"> -->
 						<input type="reset" value="초기화">
 <!-- 						<input type="button" value="돌아가기" onclick=""> -->
 					</td>
@@ -153,5 +157,6 @@
     <script src="${pageContext.request.contextPath }/resources/js/owl.carousel.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/js/join.js"></script>
 </body>
 </html>

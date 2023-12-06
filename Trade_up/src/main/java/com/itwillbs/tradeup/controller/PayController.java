@@ -22,8 +22,15 @@ import com.itwillbs.tradeup.service.PayService;
 public class PayController {
 	@Autowired
 	PayService service;
+	
 	@Value("${client_id}")
 	private String client_id;
+	
+	// 직거래 페이지
+	@GetMapping("CheckoutMeet")
+	public String checkoutMeet() {
+		return "pay/checkout_meet";
+	}
 	
 	// 결제 페이지
 	@GetMapping("Checkout")
@@ -33,7 +40,7 @@ public class PayController {
 		
 		if(sId == null) {
 			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "./");
+			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
 		
@@ -75,7 +82,7 @@ public class PayController {
 		
 		if(sId == null) {
 			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "./");
+			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
 		
@@ -142,7 +149,7 @@ public class PayController {
 		
 		if(sId == null) {
 			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "./");
+			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
 		
@@ -179,7 +186,7 @@ public class PayController {
 		
 		if(sId == null) {
 			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "./");
+			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
 		if(bank.equals("kakao")) { // 카카오뱅크 계좌 정보 들고오기

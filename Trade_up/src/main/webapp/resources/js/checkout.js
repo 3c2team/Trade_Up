@@ -13,7 +13,10 @@ $("#modal-box").on("click",function(){
 		return false;
 	});
 	$("#modal-box").removeClass("active");
+	$('html, body').css({'overflow': 'auto', 'height': '100%'}); //scroll hidden 해제
+	$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
 });
+
 $("#close").click(function() {
 	$("#modal-box").removeClass("active");
 	$('html, body').css({'overflow': 'auto', 'height': '100%'}); //scroll hidden 해제
