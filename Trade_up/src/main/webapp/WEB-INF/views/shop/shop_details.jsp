@@ -14,6 +14,7 @@
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
 <script type="text/javascript">
 // 	function payCheck(){
@@ -140,7 +141,7 @@
 										</div>
 										<c:forEach items="${productImg }" var="productImg" begin="0" varStatus="status">
 											<div class="carousel-item">
-												<img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100">
+												<img class="product__details__pic__form" src="${productImg.product_image}" class="d-block w-100">
 											</div>
 										</c:forEach>
 <!-- 											<div class="carousel-item"> -->
@@ -164,12 +165,12 @@
 								<ul>
 								<!-- 이미지 업로드 수 만큼 조절해야함 -->
 									<c:forEach var="product_img" items="${productImg }">
-										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg" id="mini_img" ></a></li>
+										<li><a><img src="${productImg.product_image}" id="mini_img" ></a></li>
 									</c:forEach>
 <%-- 									<c:if test="${not empty reviewList }"> --%>
-										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-1.png" id="mini_img" ></a></li>
-										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-2.png" id="mini_img" ></a></li>
-										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-3.png" id="mini_img" ></a></li>
+<%-- 										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-1.png" id="mini_img" ></a></li> --%>
+<%-- 										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-2.png" id="mini_img" ></a></li> --%>
+<%-- 										<li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-3.png" id="mini_img" ></a></li> --%>
 <%-- 									</c:if> --%>
 								</ul>					
 							</div>

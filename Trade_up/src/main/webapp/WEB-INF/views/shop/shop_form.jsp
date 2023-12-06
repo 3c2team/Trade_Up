@@ -10,7 +10,119 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
-<script src="https://dapi.kakao.com/v2/local/geo/coord2regioncode.${FORMAT}"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<%-- <script src="https://dapi.kakao.com/v2/local/geo/coord2regioncode.${FORMAT}"></script> --%>
+<script type="text/javascript">
+
+const dataTransfer = new DataTransfer();
+	
+const autoHyphen = (target) => {
+	target.value = target.value
+	.replace(/[^0-9]/g, '')
+	.replace(/\B(?=(\d{3})+(?!\d))/g,",");
+}
+
+$(function () {
+	
+	// 
+// 	let info = $('#product_info').val();
+// 	info.replace(/\r\n|\n/ , "<br>");
+	
+	// li 선택값 넘기기, css
+	$(".nice-scroll li").click(function() {
+		$(".nice-scroll li").css("color" , "#6c757d");
+		$(".nice-scroll li").css("background-color" , "white");
+		$("#hidCategory").val($(this).val());
+		$(this).css("background-color" , "#5F12D3");
+		$(this).css("color" , "white");
+	});
+	
+	$("#trading_location").click(function(){
+		$("#trading_location").attr("disabled", true);
+		alert("주소를 검색해주세요.");
+// 		debugger;
+	});
+	
+
+	$("#free_sharing").on("checked",function(){
+// 		$("#product_price").prop("disabled", false);
+	});
+	$("#free_sharing").change(function(){
+        if($("#free_sharing").is(":checked")){
+			$("#product_price").prop("disabled", true);
+			$("#product_price").prop("placeholder", "무료나눔");
+        } else{
+			$("#product_price").prop("disabled", false);
+			$("#product_price").prop("placeholder", "판매가격");
+			$("#product_price").css("border", "판매가격");
+			$("#product_price").focus();
+        }
+    });
+	
+	$("#btnSearchAddress").click(function() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            let address = data.address; // 기본 주소 저장
+	            if(data.buildingName != '') { // 건물명이 있을 경우
+	            	address += " (" + data.buildingName + ")";
+	            }
+	            $("#trading_location").val(address);
+	        }
+	    }).open();
+	    
+	});
+	
+	$("#fileTrigger").on("click", function() {
+		$("#file").trigger("click");
+	});
+	
+	$("#file").on("change", uploadImageHandler);
+	
+});
+
+let idx = 0;
+function uploadImageHandler(e) {	
+	let files = e.target.files;
+	console.log(files);
+	let filesArr = Array.prototype.slice.call(files);
+	console.log(filesArr);
+
+	filesArr.forEach(function(file) {
+		if(dataTransfer.files.length > 4) {
+			alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
+			return;	
+		}
+		let reader = new FileReader();
+		
+		reader.onload = function(e) {
+			let html = "<a href = \"javascript:void(0);\" id=\"img_" + idx + "\"><img src=\"" + e.target.result + "\" data-file='" + file.name + "' class='custom_img custom_btn' title='클릭 시 제거'></a>";
+			$("#imgArea").append(html);
+			console.log(idx);
+			const deleteImg = $("#img_" + idx);
+			$(deleteImg).on('click', (delete_img) => {
+				let check = confirm("삭제하시겠습니까?");
+				if(!check){
+					return;
+				}
+				console.log(delete_img.currentTarget.id);
+				let delete_img_num = delete_img.currentTarget.id.split('_')[1]
+				$("#img_"+ delete_img_num)[0].remove()
+				dataTransfer.items.remove(delete_img_num);
+				$("#file")[0].files = dataTransfer.files;
+				$("#count").text($("#file")[0].files.length);
+			});
+			idx++;
+			
+		};
+		reader.readAsDataURL(file);
+		dataTransfer.items.add(file);
+	});
+	e.target.files = dataTransfer.files;
+	$("#count").text($("#file")[0].files.length);
+}
+	
+	
+</script>
 </head>
 <body>
 	<header>
@@ -41,7 +153,7 @@
 									        <input type="hidden" name="category_idx" id="hidCategory" value="${category_idx }"/>
 									            <ul class="nice-scroll">
 									            	<c:forEach var="selectCategory" items="${selectCategory }" varStatus="status">
-														<li class="list" id="liCategory" value="${status.count }">${selectCategory.category_name }</li>
+														<li class="list" id="liCategory" value="${status.count }" style="cursor: pointer;">${selectCategory.category_name }</li>
 								                    </c:forEach>
 								                </ul>
 								            </div>
@@ -59,6 +171,8 @@
 								<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none"/>
 							</div>
 						</div>
+	            </div>
+	            <div class="row">
 	<!--                         	</div> -->
 	                </div>
 	                <div class="col-lg-6 col-md-6">
@@ -130,105 +244,4 @@
 		<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	</footer>
 </body>
-<script type="text/javascript">
-
-const dataTransfer = new DataTransfer();
-	
-const autoHyphen = (target) => {
-	target.value = target.value
-	.replace(/[^0-9]/g, '')
-	.replace(/\B(?=(\d{3})+(?!\d))/g,",");
-}
-
-$(function () {
-	
-	// 
-	$('#product_info').val().replace(/\r\n|\n/ , "<br>");
-	
-	// li 선택값 넘기기, css
-	$(".nice-scroll li").click(function() {
-		$("#hidCategory").val($(this).val());
-		$(this).css("background-color" , "#5F12D3");
-		$(this).css("color" , "white");
-// 		alert($("#hidCategory").val());
-	});
-	
-	$("#trading_location").click(function(){
-		$("#trading_location").attr("disabled", true);
-		alert("주소를 검색해주세요.");
-// 		debugger;
-	});
-	
-
-// 	$("#free_sharing").click(function(){
-		
-// 		$("#product_price").attr("disabled", false);
-// 		$("#product_price").attr("disabled", true);
-		
-// 	});
-	
-	$("#btnSearchAddress").click(function() {
-	    new daum.Postcode({
-	        oncomplete: function(data) {
-	            let address = data.address; // 기본 주소 저장
-	            if(data.buildingName != '') { // 건물명이 있을 경우
-	            	address += " (" + data.buildingName + ")";
-	            }
-	            $("#trading_location").val(address);
-	        }
-	    }).open();
-	    
-	});
-	
-	$("#fileTrigger").on("click", function() {
-		$("#file").trigger("click");
-	});
-	
-	$("#file").on("change", uploadImageHandler);
-	
-});
-
-let idx = 0;
-function uploadImageHandler(e) {	
-	let files = e.target.files;
-	console.log(files);
-	let filesArr = Array.prototype.slice.call(files);
-	console.log(filesArr);
-
-	filesArr.forEach(function(file) {
-		if(dataTransfer.files.length > 4) {
-			alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
-			return;	
-		}
-		let reader = new FileReader();
-		
-		reader.onload = function(e) {
-			let html = "<a href = \"javascript:void(0);\" id=\"img_" + idx + "\"><img src=\"" + e.target.result + "\" data-file='" + file.name + "' class='custom_img custom_btn' title='클릭 시 제거'></a>";
-			$("#imgArea").append(html);
-			console.log(idx);
-			const deleteImg = $("#img_" + idx);
-			$(deleteImg).on('click', (delete_img) => {
-				let check = confirm("삭제하시겠습니까?");
-				if(!check){
-					return;
-				}
-				console.log(delete_img.currentTarget.id);
-				let delete_img_num = delete_img.currentTarget.id.split('_')[1]
-				$("#img_"+ delete_img_num)[0].remove()
-				dataTransfer.items.remove(delete_img_num);
-				$("#file")[0].files = dataTransfer.files;
-				$("#count").text($("#file")[0].files.length);
-			});
-			idx++;
-			
-		};
-		reader.readAsDataURL(file);
-		dataTransfer.items.add(file);
-	});
-	e.target.files = dataTransfer.files;
-	$("#count").text($("#file")[0].files.length);
-}
-	
-	
-</script>
 </html>
