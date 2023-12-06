@@ -112,6 +112,13 @@
   
 // });
 </script>
+
+<script type="text/javascript">
+        	function openChat() {
+        		window.open("MyChat", "MyChat","top=200,left=700,width=500, height=430");
+			}
+</script>
+
 </head>
 <body>
 	<header>
@@ -250,7 +257,14 @@
 				                                </div>
 				                            </div>
 											<div class="product__details__cart__option">
-				                                <a href="#" class="primary-btn">채팅하기</a>
+											<c:choose>
+												<c:when test="${empty sessionScope.sId }">
+													<a class="primary-btn"  style="background: gray;">채팅하기</a>							                        
+												</c:when>
+												<c:otherwise>
+					                                <a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
+												</c:otherwise>
+											</c:choose>
 				                                <a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
 				                            </div>
 										</div>

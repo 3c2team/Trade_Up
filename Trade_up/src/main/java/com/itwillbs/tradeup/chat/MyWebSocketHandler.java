@@ -43,10 +43,20 @@ public class MyWebSocketHandler extends TextWebSocketHandler{
 		System.out.println(session.getId() + " : " + message.getPayload());
 		
 		for(WebSocketSession ws : users.values()) {
-//			System.out.println(session.getId() + " : " + ws.getId());
+			System.out.println( "방금 들어온 세션 아이디 => " + session.getId() + " : (맵에 저장된)웹소켓 아이디 => " + ws.getId());
 			
 			//클라이언트 목록의 세션 아이디와 현재 요청된 세션 아이디가 다를 경우에만 메세지 전송
 			if(!session.getId().equals(ws.getId())) {
+				
+				// 메세지 타입 판별("ENTER","TALK")
+				if(chatMessage.getType().equals(ChatMessage.TYPE_ENTER)) {
+					chatMessage.setMessage(chatMessage.getNickname() + "님이 입장하셨습니다.");
+				}else if(chatMessage.getType().equals(ChatMessage.TYPE_LEAVE)) {
+					chatMessage.setMessage(chatMessage.getNickname() + "님이 퇴장하셨습니다.");
+				}
+				
+				// sendMessage() 메서드를 호출하여 메세지 전송
+				ws.sendMessage(new TextMessage(gson.toJson(chatMessage)));
 				
 			}
 		}
@@ -60,6 +70,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler{
 //		System.out.println("웹소켓 종료~~!!");
 		printLog(session.getId() + " 웹소켓 종료~~!!");
 		users.remove(session.getId());
+		System.out.println("웹소켓 종료후 클라이언트 목록 : " + users);
 	}
 
 	
@@ -70,8 +81,6 @@ public class MyWebSocketHandler extends TextWebSocketHandler{
 		printLog(session.getId() + " 예외 발생 : " + exception.getMessage());
 	}
 
-	
-	
 	
 	public void printLog(String msg) {
 		System.out.println(new Date() + " : " + msg);

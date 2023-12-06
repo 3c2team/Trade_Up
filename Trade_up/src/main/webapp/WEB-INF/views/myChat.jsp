@@ -92,6 +92,7 @@ a {
 </style>
 </head>
 <body>
+<h3>채팅방 자리</h3>
 아이디:
 	<input type="text" id="chatId" value="${ sessionScope.sId }" readonly />
 	<button id="closeBtn" onclick="disconnect();">채팅 종료</button>

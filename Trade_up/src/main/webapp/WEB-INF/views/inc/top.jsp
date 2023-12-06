@@ -49,7 +49,7 @@
 						<c:otherwise>
 							<strong>${sessionScope.sName }</strong> 님 반갑습니다. &nbsp;&nbsp;&nbsp;
 	                        <a href="MyPageMain"><i class="fa fa-solid fa-user fa-lg" style="color: #262626;"></i></a>
-	                        <a href="#none" onclick="openChat()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
+	                        <a href="#none" onclick="chatRoom()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
 	                        <a href="ShopForm"><i class="fa fa-solid fa-money fa-lg" style="color: #262626;"></i></a>
 						</c:otherwise>
 					</c:choose>
@@ -61,6 +61,9 @@
         <script type="text/javascript">
         	function openChat() {
         		window.open("MyChat", "MyChat","top=200,left=700,width=500, height=500");
+			}
+        	function chatRoom() {
+        		window.open("ChatRoom", "ChatRoom","top=200,left=700,width=500, height=500");
 			}
         </script>
     </header>

@@ -144,8 +144,18 @@ public class AdminController {
 		String sId = (String)session.getAttribute("sId");
 		System.out.println("sId : " + sId);
 		
-		return "myChat";
+//		return "myChat";
+		return "chat/main";
 	}
+	
+	// 채팅방
+		@GetMapping("/ChatRoom")
+		public String chatRoom(HttpSession session) {
+			String sId = (String)session.getAttribute("sId");
+			System.out.println("sId : " + sId);
+			
+			return "myChat";
+		}
 	
 	@PostMapping("/AdminLoginPro")
 	public String adminLoginPro(@RequestParam Map<String, String> map, HttpSession session, Model model) {
