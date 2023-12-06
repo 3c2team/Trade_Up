@@ -34,6 +34,7 @@
 	<select id="selectProductList" resultType="map">
 		SELECT *
 		  FROM PRODUCT
+		 WHERE sales_status = '판매중'
 	  ORDER BY product_release DESC
 	</select>
 
@@ -55,7 +56,7 @@
 		SELECT C.category_name
 		  FROM CATEGORY C
 		  JOIN PRODUCT P ON P.category_idx = C.category_idx
-		 WHERE P.product_num = #{product_num};
+		 WHERE P.product_num = #{product_num}
 	</select>
 	
 	
@@ -63,7 +64,7 @@
 	<select id="getSellerProduct" resultType="map">
 		SELECT *
 		  FROM PRODUCT
-		 WHERE product_num = #{product_num};
+		 WHERE product_num = #{product_num}
 	</select>
 	
 	<!-- 판매자 상품 이미지 조회 -->
@@ -71,7 +72,7 @@
 <!-- 		SELECT product_image -->
 <!--   		  FROM PRODUCT_IMG I -->
 <!-- 		  JOIN PRODUCT P ON P.product_num = I.product_num -->
-<!-- 		 WHERE P.member_id = #{sId}; -->
+<!-- 		 WHERE P.member_id = #{sId} -->
 <!-- 	</select> -->
 	
 </mapper>

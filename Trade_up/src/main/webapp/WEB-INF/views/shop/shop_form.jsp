@@ -30,8 +30,8 @@ $(function () {
 	
 	// li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
-		$(".nice-scroll li").css("color" , "#6c757d");
 		$(".nice-scroll li").css("background-color" , "white");
+		$(".nice-scroll li").css("color" , "#6c757d");
 		$("#hidCategory").val($(this).val());
 		$(this).css("background-color" , "#5F12D3");
 		$(this).css("color" , "white");
@@ -47,14 +47,19 @@ $(function () {
 	$("#free_sharing").on("checked",function(){
 // 		$("#product_price").prop("disabled", false);
 	});
+	
 	$("#free_sharing").change(function(){
         if($("#free_sharing").is(":checked")){
 			$("#product_price").prop("disabled", true);
 			$("#product_price").prop("placeholder", "무료나눔");
+			$(".nice-scroll li[value=1]").css("color" , "white");
+			$(".nice-scroll li[value=1]").css("background-color" , "#5F12D3");
         } else{
 			$("#product_price").prop("disabled", false);
 			$("#product_price").prop("placeholder", "판매가격");
 			$("#product_price").css("border", "판매가격");
+			$(".nice-scroll li[value=1]").css("color" , "#6c757d");
+			$(".nice-scroll li[value=1]").css("background-color" , "white");
 			$("#product_price").focus();
         }
     });
@@ -106,7 +111,7 @@ function uploadImageHandler(e) {
 				}
 				console.log(delete_img.currentTarget.id);
 				let delete_img_num = delete_img.currentTarget.id.split('_')[1]
-				$("#img_"+ delete_img_num)[0].remove()
+				$("#img_"+ delete_img_num)[0].remove();
 				dataTransfer.items.remove(delete_img_num);
 				$("#file")[0].files = dataTransfer.files;
 				$("#count").text($("#file")[0].files.length);
@@ -137,9 +142,17 @@ function uploadImageHandler(e) {
 				    <h2>판매하기</h2>
 				</div>
 	            <div class="row">
-	                <div class="col-lg-6 col-md-6" style="min-width:35%;">
-	                    <div class="contact__text">
-	                    </div>
+	                <div class="top-50 start-50" style="min-width:35%; margin-bottom: 30px">
+<!-- 	                    <div class="contact__text"> -->
+<!-- 	                    </div> -->
+						<section class="">
+							<div class="" style="display: flex; margin: 3%">
+								<button id="fileTrigger" type="button" class="custom_btn"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
+								<div id="imgArea" style="display: flex;">
+									<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none"/>
+								</div>
+							</div>
+						</section>
 	                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
 							<div class="card">
 								<div class="card-heading">
@@ -151,6 +164,7 @@ function uploadImageHandler(e) {
 								        <div class="card-main">
 									        <div class="shop__sidebar__categories">
 									        <input type="hidden" name="category_idx" id="hidCategory" value="${category_idx }"/>
+									        <input type="hidden" name="sales_status" id="sales_status" value="판매중"/>
 									            <ul class="nice-scroll">
 									            	<c:forEach var="selectCategory" items="${selectCategory }" varStatus="status">
 														<li class="list" id="liCategory" value="${status.count }" style="cursor: pointer;">${selectCategory.category_name }</li>
@@ -161,47 +175,32 @@ function uploadImageHandler(e) {
 							        </div>
 							    </div>
 							</div>
-							<div class="fs-6 fw-semibold">
-								사진 동영상 첨부( <span id="count">0</span>/5)
-							</div>
-							<div id="imgArea" style="display: flex;">
-								<button id="fileTrigger" type="button" class="custom_btn">
-									<i class="bi bi-camera"></i>
-								</button>		
-								<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none"/>
-							</div>
 						</div>
 	            </div>
 	            <div class="row">
 	<!--                         	</div> -->
 	                </div>
-	                <div class="col-lg-6 col-md-6">
+	                <div class="top-50 start-50">
 	                    <div class="contact__form">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <input type="text" name="product_name" class="input-name" placeholder="글제목">
-                                </div>
-                                <div class="col-lg-7">
-                                    <input type="text" name="product_price" class="input-price" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
+                                    <input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
 <!--                                     <input type="checkbox" name="free_sharing" class="active" value="무료나눔"> -->
 <!--                                     <label class="active" > -->
                                     <input type="checkbox" name="free_sharing" id="free_sharing" value="무료나눔">무료나눔
 <!--                                     </label> -->
-                                </div>
-                                <div class="col-lg-8">
 	                                <div class="address" style="display: flex;">
-	                                    <input type="text" name="trading_location" class="input-price" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">
+	                                    <input type="text" name="trading_location" class="input-name" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">
 										<input type="button" id="btnSearchAddress" class="site-btn" value="검색"><br>
 	                                </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <textarea rows="2" name="product_info" cols="20" wrap="hard" maxlength="1000" placeholder="- 상품명(브랜드) >
+                                    <textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" placeholder="- 상품명(브랜드) >
 - 구매 시기
 - 사용 기간
 - 하자 여부
 * 실제 촬영한 사진과 함께 상세 정보를 입력해주세요.
 * 카카오톡 아이디 첨부 시 게시물 삭제 및 이용제재 처리될 수 있어요.
- 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 가지나라가 함께합니다."></textarea>
+ 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 트레이드업이 함께합니다."></textarea>
                                     <div class="product__details__option">
 		                                <div class="product__details__option__size">
 		                                    <span style="color: #111111; font-weight: 700;">상품상태</span>
@@ -216,10 +215,10 @@ function uploadImageHandler(e) {
                                     <div class="product__details__option">
 		                                <div class="product__details__option__size">
 		                                    <span style="color: #111111; font-weight: 700;">거래방법</span>
-		                                    <input type="checkbox" name="trading_method1" class="active" value="delivery">택배거래
-		                                    <input type="checkbox" name="delivery1" class="active" value="delivery">배송비 별도
-		                                    <input type="checkbox" name="delivery2" class="active" value="">배송비 포함
-		                                    <input type="checkbox" name="trading_method2" class="active" value="direct">직거래
+		                                    <input type="checkbox" name="trading_method1" class="" value="delivery">택배거래
+		                                    <input type="checkbox" name="delivery1" class="" value="delivery">배송비 별도
+		                                    <input type="checkbox" name="delivery2" class="" value="">배송비 포함
+		                                    <input type="checkbox" name="trading_method2" class="" value="direct">직거래
 		                                </div>
 		                            </div>
 	                                <div class="product__details__option__size">

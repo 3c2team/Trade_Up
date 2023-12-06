@@ -133,7 +133,6 @@
                     	<!-- 첫번째 글 -->
                         <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
 	                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
-	                        	<input type="hidden" value="${product.product_num}" name="product_num" id="product_num">
 	                            <div class="product__item">
 	                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
 	                                    <ul class="product__hover">
