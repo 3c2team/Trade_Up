@@ -6,7 +6,7 @@
 
     <!-- Header Section Begin -->
     <header class="header">
-        <div class="container">
+        <div class="container" style="width: 100%; max-width: 100%;">
             <div class="customrow">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo" id="easterEgg" onclick="easterEgg()">
@@ -41,15 +41,20 @@
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option" >
+                    <div class="header__nav__option" style="width: 100%;" >
                     <c:choose>
 						<c:when test="${empty sessionScope.sId }">
 	                        <a href="Login"><p>로그인</p></a>
+	                        <a href="Join"><p>회원가입</p></a>
 						</c:when>
 						<c:otherwise>
 							<strong>${sessionScope.sName }</strong> 님 반갑습니다. &nbsp;&nbsp;&nbsp;
-	                        <a href="MyPageMain"><i class="fa fa-solid fa-user fa-lg" style="color: #262626;"></i></a>
-	                        <a href="#none" onclick="chatRoom()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
+								 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"> <i class="fa fa-solid fa-user fa-lg" style="color: #262626;"></i></a>
+								      <ul class="dropdown-menu">
+								     	 <li><a class="dropdown-item" href="MyPageMain">마이페이지</a></li>
+								     	 <li><a class="dropdown-item" href="Logout">로그아웃</a></li>
+								      </ul>
+	                        <a href="#none" onclick="openChat()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
 	                        <a href="ShopForm"><i class="fa fa-solid fa-money fa-lg" style="color: #262626;"></i></a>
 						</c:otherwise>
 					</c:choose>

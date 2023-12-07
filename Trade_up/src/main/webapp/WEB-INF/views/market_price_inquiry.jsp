@@ -51,45 +51,19 @@
 	<div class="custom_price_inquiry">
 		<div class="fs-3 fw-semibold text-secondary">시세조회</div>
 		<div class="fs-6">원하시는 상품이 얼마에 거래되고 있는지 알아보세요</div>
-		<div style="width: 60%;" class="shop__sidebar__search" id="product_chart">
+		<div style="width: 60%;" class="shop__sidebar__search" >
 			<form onsubmit="return selectProduct()">
 				<input type="text" id="select_product"style="margin-top:7%;" placeholder="상품 이름을 검색해주세요">
 				<button style="margin-top:4%;" type="submit"><span class="icon_search"></span></button>
 			</form> 
 		</div>
+		<div id="product_chart" class='col-xl-6'></div>
 	</div>
 	<div style="width: 70%; margin: auto; " >
 		<div class="fs-4 fw-semibold text-secondary">최근 등록된 상품</div>
 		<div id="registrationProduct"></div>
 		<hr style="margin-bottom: 5%;" class="custom_border_grove">
 		<div id="success_box"></div>
-<!-- 		<div style="margin-bottom: 3%;" class="fs-5 fw-semibold text-secondary">최근 등록 상품 가격을 비교해봤어요!</div> -->
-<!-- 		<div style="" class="custom_box2 border border-success"> -->
-<!-- 			<div class="custom_price"> -->
-<!-- 				<div class="fs-5 fw-semibold text-secondary custom_font">평균 가격이에요</div> -->
-<!-- 				<div style="margin-top: 10%;"> -->
-<!-- 					<span class="fw-semibold text-secondary">평균</span> -->
-<!-- 					<span class="fs-4 fw-semibold text-secondary">100,000</span>  -->
-<!-- 					<span class="fw-semibold text-secondary">원</span>  -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="custom_price"> -->
-<!-- 				<div class="fs-5 fw-semibold text-secondary custom_font">가장 높은 가격이에요</div> -->
-<!-- 				<div style="margin-top: 10%;"> -->
-<!-- 					<span class="fw-semibold text-secondary">평균</span> -->
-<!-- 					<span class="fs-4 fw-semibold text-secondary">000</span>  -->
-<!-- 					<span class="fw-semibold text-secondary">원</span>  -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="custom_price"> -->
-<!-- 				<div class="fs-5 fw-semibold text-secondary custom_font">가장 낮은 가격이에요</div> -->
-<!-- 				<div style="margin-top: 10%;"> -->
-<!-- 					<span class="fw-semibold text-secondary">평균</span> -->
-<!-- 					<span class="fs-4 fw-semibold text-secondary">000</span>  -->
-<!-- 					<span class="fw-semibold text-secondary">원</span>  -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 	</div>
 	
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
@@ -171,20 +145,19 @@
 						);
 					});
 // 						debugger;
-					$("#product_chart").after(
-								"<div class='col-xl-6'>"
-						+			"<div class='card mb-4'>"
+					$("#product_chart").html(
+// 								"<div class='col-xl-6'>"
+									"<div class='card mb-4'>"
 						+				"<div class='card-body'>"
 						+					"<div class='fs-6 fw-semibold text-secondary'>"
 						+						"시세 금액"
 						+					"</div>"
 						+					"<div class='fs-4 fw-semibold custom_color' id='product_avg'>"
-						+						"100,000,000"
 						+					"</div>	"
 						+					"<canvas id='myAreaChart' width='70%' height='40'></canvas>"
 						+				"</div>"
 						+			"</div>"
-						+		"</div>"
+// 						+		"</div>"
 					);
 					debugger;
 					$("#success_box").html(
