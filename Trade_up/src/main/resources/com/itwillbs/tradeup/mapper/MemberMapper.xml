@@ -53,5 +53,12 @@
 		SELECT *
 		FROM MEMBER
 		WHERE member_id = #{member_id}
-	</select>    
+	</select>   
+	<update id="updateCommission">
+		UPDATE COMMITION_ACCOUNT
+		SET commissions = commissions + (SELECT commission
+											FROM WITHDRAW
+											WHERE merchant_uid = #{merchant_uid})
+		WHERE account_idx = 1;
+	</update> 
 </mapper>

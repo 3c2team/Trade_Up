@@ -37,4 +37,9 @@ public class MemberService {
 	public Map<String, String> getMemberLogin(String member_id) {
 		return mapper.selectMemberLogin(member_id);
 	}
+
+	public int updateCommission(String merchant_uid) {
+		// TODO Auto-generated method stub
+		return mapper.updateCommission(merchant_uid);
+	}
 }

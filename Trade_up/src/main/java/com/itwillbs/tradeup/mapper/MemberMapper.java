@@ -20,4 +20,6 @@ public interface MemberMapper {
 	
 	// 로그인
 	Map<String, String> selectMemberLogin(String member_id);
+
+	int updateCommission(String merchant_uid);
 }
