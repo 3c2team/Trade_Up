@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.itwillbs.tradeup.handler.BankValueGenerator;
 import com.itwillbs.tradeup.vo.RequestTokenVO;
+import com.itwillbs.tradeup.vo.ResponseAccountListVO;
 import com.itwillbs.tradeup.vo.ResponseTokenVO;
+import com.itwillbs.tradeup.vo.ResponseUserInfoVO;
 
 @Service
 public class bankApiClient {
@@ -76,6 +79,55 @@ public class bankApiClient {
 		System.out.println("응답코드 : " + responseEntity.getStatusCode());
 		System.out.println("응답헤더 : " + responseEntity.getHeaders());
 		System.out.println("응답데이터 : " + responseEntity.getBody()); // 리턴타입 : ResponseTokenVO
+		
+		return responseEntity.getBody();
+	}
+	
+	public ResponseUserInfoVO requestUserInfo(Map<String, String> map) {
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.add("Authorization", "Bearer" + map.get("access_token"));
+		
+		HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+		
+		URI uri = UriComponentsBuilder
+				.fromUriString(base_url)
+				.path("/v2.0/user/me")
+				.queryParam("user_seq_no", map.get("user_seq_no"))
+				.encode()
+				.build()
+				.toUri();
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<ResponseUserInfoVO> responseEntity = 
+				restTemplate.exchange(uri, HttpMethod.GET, httpEntity, ResponseUserInfoVO.class);
+		
+		return responseEntity.getBody();
+	}
+	
+	
+	public ResponseAccountListVO requestAccountList(Map<String, String> map) {
+		System.out.println("requestAccountList =====================");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer" + map.get("access_token"));
+		
+		HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+		
+		URI uri = UriComponentsBuilder
+					.fromUriString(base_url)
+					.path("/v2.0/account/list")
+					.queryParam("user_seq_no", map.get("user_seq_no"))
+					.queryParam("include_cancel_yn", "N")
+					.queryParam("sort_order", "D")
+					.encode()
+					.build()
+					.toUri();
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<ResponseAccountListVO> responseEntity = 
+				restTemplate.exchange(uri, HttpMethod.GET, httpEntity, ResponseAccountListVO.class);
 		
 		return responseEntity.getBody();
 	}

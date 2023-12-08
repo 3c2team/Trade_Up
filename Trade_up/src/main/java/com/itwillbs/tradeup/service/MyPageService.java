@@ -24,8 +24,13 @@ public class MyPageService {
 	public List<Map<String, Object>> getMemeberInfo(String sId, String table_name, String order_by) {
 		return mapper.selectMemberInfo(sId, table_name, order_by);
 	}
+	// 배송지관리 - 배송지 등록
 	public int registMyAddress(Map<String, Object> param) {
 		return mapper.insertMyAddress(param);
+	}
+	// 계좌관리 - 계좌 등록
+	public int registMyAccount(Map<String, Object> param) {
+		return mapper.insertMyAccount(param);
 	}
 	// 계좌관리&배송지관리 - 정보 삭제
 	public int deleteInfo(Map<String, Object> param) {
@@ -38,6 +43,10 @@ public class MyPageService {
 	// 배송지관리 - 정보 수정
 	public int updateAddress(Map<String, Object> param) {
 		return mapper.updateAddress(param);
+	}
+	// 핀테크 조회
+	public Map<String, String> getFintechInfo(String sId) {
+		return mapper.selecFintechInfo(sId);
 	}
 
 }

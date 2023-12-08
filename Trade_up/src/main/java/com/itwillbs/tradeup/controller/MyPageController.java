@@ -22,37 +22,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MyPageService;
+import com.itwillbs.tradeup.service.bankApiClient;
+import com.itwillbs.tradeup.vo.BankAccountVO;
+import com.itwillbs.tradeup.vo.ResponseAccountListVO;
+import com.itwillbs.tradeup.vo.ResponseUserInfoVO;
 
 @Controller
 public class MyPageController {
-	//TEST
 	@Autowired
 	MyPageService service;
 	
+	@Autowired
+	private bankApiClient bankApiClient;
+	
+	// 마이페이지
 	@GetMapping("MyPageMain")
 	public String myPageMain() {
 		
 		return "myPage/myPage_main";
 	}
 	
+	// 관심목록
 	@GetMapping("MyFavorite")
 	public String myFavorite() {
 		
 		return "myPage/myPage_favorite";
 	}
 	
-	@GetMapping("MyProfile")
-	public String myProfile() {
-		
-		return "myPage/myPage_profile";
-	}
-	
+	// 판매내역
 	@GetMapping("MySales")
 	public String mySales() {
 		
 		return "myPage/myPage_sales";
 	}
 	
+	// 구매내역
 	@GetMapping("MyPurchase")
 	public String myPurchase() {
 		
@@ -135,7 +139,6 @@ public class MyPageController {
 	    }
 		
 	}
-	
 
 	// 계좌관리
 	@GetMapping("MyAccount")
@@ -147,6 +150,46 @@ public class MyPageController {
 		model.addAttribute("my_account", list);
 		
 		return "myPage/myPage_account";
+	}
+	
+	//계좌관리 - 계좌 등록
+	@PostMapping("AddAccount")
+	public String addAccount(HttpSession session, @RequestParam Map<String, Object> param, Map<String, String> map, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		param.put("sId", sId);
+		map = service.getFintechInfo(sId);
+		
+		ResponseUserInfoVO userInfo = bankApiClient.requestUserInfo(map);
+		System.out.println("param - " + param);			//  account_num=23062003007           account_bank=KDB산업은행, 
+		System.out.println("API UserInfo - " + userInfo);	//  account_num_masked=23062003***    bank_name=KDB산업은행
+		
+		String user_acc = (String)param.get("account_num");
+		String user_acc_masked = user_acc.substring(0, user_acc.length() - 3) + "***";
+		String user_bank = (String)param.get("account_bank");
+		
+		int insertCount = 0;
+		for(BankAccountVO account : userInfo.getRes_list()) {
+			
+			String apiBank = account.getBank_name();
+			String apiAcc = account.getAccount_num_masked();
+			
+			if(apiBank.equals(user_bank) && apiAcc.equals(user_acc_masked)) {
+				param.put("account_holder_name", account.getAccount_holder_name());
+				insertCount = service.registMyAccount(param);
+				break;
+			}
+		}
+		
+		String msg = "계좌등록에 실패했습니다. 계좌번호를 확인해주세요.";
+		if(insertCount > 0) {
+			msg = "계좌를 등록했습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("isClose", "false");
+		model.addAttribute("targetURL", "MyAccount");
+		
+		return "forward";
 	}
 	
 	// 배송지관리

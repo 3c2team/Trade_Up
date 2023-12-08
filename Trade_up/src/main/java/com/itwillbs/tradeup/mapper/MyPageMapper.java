@@ -13,13 +13,13 @@ public interface MyPageMapper {
 	Map<String, Object> selectMember(String sId);
 	// 프로필관리 - 정보 수정 (닉네임, 전화번호, 이메일)
 	int updateMember(Map<String, Object> param);
-	
+	// 계좌관리 - 계좌 조회
 	List<Map<String, Object>> selectAccount(String sId);
-
+	// 배송지관리 - 배송지 조회
 	List<Map<String, Object>> selectAddress(String sId);
 	// 계좌관리&배송지관리
 	List<Map<String, Object>> selectMemberInfo(@Param("sId") String sId, @Param("table_name") String table_name, @Param("order_by") String order_by);
-	
+	// 배송지관리 - 배송지 등록
 	int insertMyAddress(Map<String, Object> param);
 	// 계좌관리&배송지관리 - 정보 삭제
 	int deleteInfo(Map<String, Object> param);
@@ -27,4 +27,8 @@ public interface MyPageMapper {
 	int updateMainInfo(Map<String, Object> param);
 	// 배송지관리 - 정보 수정
 	int updateAddress(Map<String, Object> param);
+	// 유저 핀테크 정보
+	Map<String, String> selecFintechInfo(String sId);
+	// 계좌관리 - 계좌 등록
+	int insertMyAccount(Map<String, Object> param);
 }

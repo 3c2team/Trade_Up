@@ -216,12 +216,12 @@
 												<span class="tf-icons bx bx-edit me-1"></span>
 												수정
 											</button>
-											<label class="form-label text-muted">계좌명</label>
-											<h5>${member.account_name }</h5>
+											<label class="form-label text-muted">은행명</label>
+											<h5>${member.account_bank }</h5>
 										</div>
 										<div>
 											<label class="form-label text-muted">계좌 번호</label>
-											<h5>(${member.account_bank }) ${member.account_num }</h5>
+											<h5>${member.account_num }</h5>
 										</div>
 									</div>
 								</div>

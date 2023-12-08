@@ -61,6 +61,25 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 	<script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+	<style type="text/css">
+		#account_security_btn {
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+		function authAccount() {
+			let requestUri = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?"
+								+ "response_type=code"
+								+ "&client_id=4066d795-aa6e-4720-9383-931d1f60d1a9"
+								+ "&redirect_uri=http://localhost:8081/tradeup/callback"	//나중에 수정
+								+ "&scope=login inquiry transfer oob"
+				//					+ "&scope=login inquiry transfer"
+								+ "&state=12345678901234567890123456789012"
+								+ "&auth_type=0";
+			window.open(requestUri, "authWindow", "width=600, height=800");	
+		}
+	</script>
 </head>
 
 <body>
@@ -76,43 +95,62 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="container-xxl flex-grow-1 container-p-y">
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 계좌 관리
-								<!-- 주소지 추가 버튼~ -->
-								<button id="account_add" class="btn rounded-pill btn-icon btn-outline-primary" style="float: right;">
+								
+								<button id="account_add"
+										class="btn rounded-pill btn-icon btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#accountModal"
+										style="float: right;">
 									<span class="tf-icons bx bx-plus"></span>
 								</button>
+								
+								 
 							</h4>
 							<div class="row">
 							
-							<c:forEach var="account" items="${my_account }">
-								<!-- Basic -->
-								<div class="col-md-6">
-									<div class="card mb-4" <c:if test="${account.account_main eq true }">style="border: 2px solid #696cff;"</c:if>>
-										<div class="card-body demo-vertical-spacing demo-only-element">
-											<div class="dropdown" style="float: right;">
-												<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-													<i class="bx bx-dots-vertical-rounded"></i>
-												</button>
-												<div class="dropdown-menu">
-													<c:if test="${account.account_main eq false or empty account.account_main }">
-														<a class="dropdown-item" href="ChangeMainInfo?tb=MY_ACCOUNT&value=${account.account_idx }&col=account_idx&col2=account_main"
-														><i class="bx bx-star me-1"></i> 대표계좌로 지정</a
-														>
-													</c:if>
-													
-													<a class="dropdown-item" href="DeleteInfo?tb=MY_ACCOUNT&value=${account.account_idx }&col=account_idx"
-													><i class="bx bx-trash me-1"></i> 삭제</a
-													>
-												</div>
-											</div>
-											<h5 class="mb-0">${account.account_bank }</h5>											
-											<hr>
-											<p>${account.account_holder_name }</p>
-											<p>${account.account_num }</p>
+<%-- 							<c:if test=""></c:if> --%>
+							<!-- << 토큰 없을 때! >>
+								<div class="col-12" >
+									<div class="card mb-4" id="account_security_btn" onclick="authAccount()" style="border: 2px dashed #cbd0d5;">
+										<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+											<h5>계좌등록을 위해 본인인증이 필요합니다.</h5>
+											<h6 class="mb-0"><small class="text-muted">클릭 시 본인인증을 진행합니다.</small></h6>
 										</div>
 									</div>
 								</div>
-								<!-- / Basic -->
-							</c:forEach>
+							 -->	
+							
+								<c:forEach var="account" items="${my_account }">
+									<!-- Basic -->
+									<div class="col-md-6">
+										<div class="card mb-4" <c:if test="${account.account_main eq true }">style="border: 2px solid #696cff;"</c:if>>
+											<div class="card-body demo-vertical-spacing demo-only-element">
+												<div class="dropdown" style="float: right;">
+													<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+														<i class="bx bx-dots-vertical-rounded"></i>
+													</button>
+													<div class="dropdown-menu">
+														<c:if test="${account.account_main eq false or empty account.account_main }">
+															<a class="dropdown-item" href="ChangeMainInfo?tb=MY_ACCOUNT&value=${account.account_idx }&col=account_idx&col2=account_main"
+															><i class="bx bx-star me-1"></i> 대표계좌로 지정</a
+															>
+														</c:if>
+														
+														<a class="dropdown-item" href="DeleteInfo?tb=MY_ACCOUNT&value=${account.account_idx }&col=account_idx"
+														><i class="bx bx-trash me-1"></i> 삭제</a
+														>
+													</div>
+												</div>
+												<h5 class="mb-0">${account.account_bank }</h5>											
+												<hr>
+												<p>${account.account_holder_name }</p>
+												<p>${account.account_num }</p>
+											</div>
+										</div>
+									</div>
+									<!-- / Basic -->
+								</c:forEach>
+							
 							</div>
 						</div>
 					</div>
@@ -120,10 +158,12 @@
 			</div> <!-- / Layout page -->
 		</div> <!-- / Layout Container -->
 	</div> <!-- / Layout Wrapper -->
-
+	
+	<%-- 계좌 등록 모달 --%>
+	<jsp:include page="modal/account_modal.jsp"></jsp:include>
 	<%-- 바텀 메뉴 --%>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
-
+	
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="${pageContext.request.contextPath }/resources/myPage/assets/vendor/libs/popper/popper.js"></script>

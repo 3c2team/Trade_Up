@@ -17,7 +17,6 @@
 			     , ma.postcode
 			     , ac.account_num
 			     , ac.account_bank
-			     , ac.account_name
 			     , ac.account_main
 		 	FROM MEMBER m 
 			LEFT JOIN MY_ADDRESS ma ON m.member_id = ma.member_id
@@ -35,6 +34,13 @@
     		WHERE member_id = #{sId}
     		ORDER BY ${order_by} DESC;
     	</select>
+    	
+    	<select id="selecFintechInfo" resultType="map">
+    		SELECT *
+    		FROM FINTECH_USER_INFO
+    		WHERE member_id = #{sId};
+    	</select>
+    	
     	
     	<update id="updateMember">
     		UPDATE MEMBER
@@ -76,6 +82,21 @@
 				, FALSE
 				, #{postcode}
 			);    	
+    	</insert>
+    	
+    	<insert id="insertMyAccount">
+			INSERT INTO MY_ACCOUNT VALUES (
+				NULL
+				, #{sId}
+				, #{account_num}
+				, #{account_bank}
+				, (SELECT * FROM (SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END AS result
+									FROM MY_ACCOUNT
+									WHERE 1=1
+												AND member_id = #{sId}
+												AND account_main = TRUE)a)
+				, #{account_holder_name}
+			);
     	</insert>
     	
     	<update id="updateAddress">
