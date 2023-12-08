@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MyPageService;
 import com.itwillbs.tradeup.service.bankApiClient;
+import com.itwillbs.tradeup.service.bankApiService;
 import com.itwillbs.tradeup.vo.BankAccountVO;
 import com.itwillbs.tradeup.vo.ResponseAccountListVO;
 import com.itwillbs.tradeup.vo.ResponseUserInfoVO;
@@ -34,6 +35,9 @@ public class MyPageController {
 	
 	@Autowired
 	private bankApiClient bankApiClient;
+	
+	@Autowired
+	private bankApiService bankApiService;
 	
 	// 마이페이지
 	@GetMapping("MyPageMain")
@@ -146,9 +150,11 @@ public class MyPageController {
 		String sId = (String)session.getAttribute("sId");
 		String servlet_path = request.getServletPath();
 		String order_by = "account_main";
+		Map<String, String> token = service.getFintechInfo(sId);
+		
 		List<Map<String, Object>> list = retrieveDataForServletAndSession(sId, servlet_path, order_by);
 		model.addAttribute("my_account", list);
-		
+		model.addAttribute("token", token);
 		return "myPage/myPage_account";
 	}
 	

@@ -95,31 +95,27 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="container-xxl flex-grow-1 container-p-y">
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 계좌 관리
-								
-								<button id="account_add"
-										class="btn rounded-pill btn-icon btn-outline-primary"
-										data-bs-toggle="modal"
-										data-bs-target="#accountModal"
-										style="float: right;">
-									<span class="tf-icons bx bx-plus"></span>
-								</button>
-								
-								 
+								<c:if test="${not empty token }">
+									<button id="account_add"
+											class="btn rounded-pill btn-icon btn-outline-primary"
+											data-bs-toggle="modal"
+											data-bs-target="#accountModal"
+											style="float: right;">
+										<span class="tf-icons bx bx-plus"></span>
+									</button>
+								</c:if>
 							</h4>
 							<div class="row">
-							
-<%-- 							<c:if test=""></c:if> --%>
-							<!-- << 토큰 없을 때! >>
-								<div class="col-12" >
-									<div class="card mb-4" id="account_security_btn" onclick="authAccount()" style="border: 2px dashed #cbd0d5;">
-										<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
-											<h5>계좌등록을 위해 본인인증이 필요합니다.</h5>
-											<h6 class="mb-0"><small class="text-muted">클릭 시 본인인증을 진행합니다.</small></h6>
+								<c:if test="${empty token }">
+									<div class="col-12" >
+										<div class="card mb-4" id="account_security_btn" onclick="authAccount()" style="border: 2px dashed #cbd0d5;">
+											<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+												<h5>계좌등록을 위해 본인인증이 필요합니다.</h5>
+												<h6 class="mb-0"><small class="text-muted">클릭 시 본인인증을 진행합니다.</small></h6>
+											</div>
 										</div>
 									</div>
-								</div>
-							 -->	
-							
+								</c:if>
 								<c:forEach var="account" items="${my_account }">
 									<!-- Basic -->
 									<div class="col-md-6">
@@ -150,7 +146,6 @@
 									</div>
 									<!-- / Basic -->
 								</c:forEach>
-							
 							</div>
 						</div>
 					</div>
