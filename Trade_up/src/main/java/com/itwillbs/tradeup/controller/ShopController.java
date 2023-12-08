@@ -34,6 +34,7 @@ public class ShopController {
 	@Autowired
 	ShopService shopService;
 	
+	
 	@GetMapping("Shop")
 	public String shop(Model model,@RequestParam(required = false) Map<String,String> map) {
 		// testddd6
@@ -68,11 +69,11 @@ public class ShopController {
 	public String shopForm(@RequestParam(required = false) Map<String,String> map
 							, HttpSession session, Model model) {
 		// 로그인X 처리
-//		if(session.getAttribute("sId") == null) {
-//			model.addAttribute("msg", "로그인 후 이용부탁드립니다.");
-//			model.addAttribute("target", "redirect:/Main");
-//			return "fail_back";
-//		}
+		if(session.getAttribute("sId") == null) {
+			model.addAttribute("msg", "로그인 후 이용부탁드립니다.");
+			model.addAttribute("targetURL", "redirect:/");
+			return "fail_back";
+		}
 		
 		List<Map<String, String>> selectCategory = service.selectCategory();
 //		System.out.println(selectCategory);
@@ -85,17 +86,18 @@ public class ShopController {
 	public String shopSuccess(@RequestParam Map<String, Object> map
 							  ,@RequestParam(value = "file", required=false) MultipartFile[] file
 							  , HttpSession session, Model model) {
-//		System.out.println("오긴옴?" + map);
+		System.out.println("오긴옴?" + map);
 		
 //		거래 방식 지정
 		if(map.get("trading_method1") != null && map.get("trading_method2") != null) {
 			map.put("trading_method", "total");
-		} else if (map.get("trading_method1") != null) {
+		}
+		if (map.get("trading_method1") != null) {
 			map.put("trading_method", map.get("trading_method1"));
-		} else if (map.get("trading_method2") != null) {
+		}
+		if (map.get("trading_method2") != null) {
 			map.put("trading_method", map.get("trading_method2"));
 		}
-		
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
@@ -149,7 +151,7 @@ public class ShopController {
 			}
 			if(insertCount > 0 && insertImgCount > 0) { //성공
 				model.addAttribute("msg", "판매할 상품을 등록했습니다.");
-				model.addAttribute("target", "redirect:/Shop");
+				model.addAttribute("targetURL", "Shop");
 				return "forward";
 			}
 			//------------------ < 게시물 등록 처리 > -------------------
@@ -158,7 +160,7 @@ public class ShopController {
 		} 
 		
 		model.addAttribute("msg", "상품등록을 실패했습니다.");
-		model.addAttribute("target", "redirect:/ShopForm");
+		model.addAttribute("targetURL", "redirect:/ShopForm");
 		return "fail_back";
 	}
 
@@ -194,7 +196,7 @@ public class ShopController {
 //		model.addAttribute("sellerProductImg", sellerProductImg);
 
 //		model.addAttribute("msg", "상품등록을 실패했습니다.");
-//		model.addAttribute("target", "redirect:/Shop");
+//		model.addAttribute("targetURL", "redirect:/Shop");
 		return "shop/shop_details";
 	}
 	

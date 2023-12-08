@@ -196,11 +196,11 @@
 											</div>
 											<div class="product__details__info">
 												<div>
-													<p>배송비</p><br><h6>배송비 별도</h6>
+													<p>배송비</p><br><h6>${product.delivery_method }</h6>
 												</div>
-												<div style="border-left: 0.1em #adb5bd solid; padding-left: 20px;">
-													<p>업페이</p><br><h6>${product.uppay }</h6>
-												</div>
+<!-- 												<div style="border-left: 0.1em #adb5bd solid; padding-left: 20px;"> -->
+<%-- 													<p>업페이</p><br><h6>${product.uppay }</h6> --%>
+<!-- 												</div> -->
 												<div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
 													<p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
 												</div>

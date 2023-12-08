@@ -11,8 +11,17 @@
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
 <%-- <script src="https://dapi.kakao.com/v2/local/geo/coord2regioncode.${FORMAT}"></script> --%>
+<style>
+	.custom_img{
+		height: 100%;
+		object-fit: scale-down;
+		margin: 0 10px 0 10px;
+	}
+</style>
 <script type="text/javascript">
+
 
 const dataTransfer = new DataTransfer();
 	
@@ -35,6 +44,8 @@ $(function () {
 		$("#hidCategory").val($(this).val());
 		$(this).css("background-color" , "#5F12D3");
 		$(this).css("color" , "white");
+// 		alert($("#hidCategory").val());
+// 		debugger;
 	});
 	
 	$("#trading_location").click(function(){
@@ -43,13 +54,36 @@ $(function () {
 // 		debugger;
 	});
 	
+	$(".trading_method1").on("click",function(){
+// 		debugger;
+		let span = '<input type="checkbox" name="delivery_method" value="별도">배송비 별도 '
+				   + ' <input type="checkbox" name="delivery_method" value="포함">배송비 포함';
+		if($(".trading_method1").is(":checked")){
+			$(".product__details__option__delivery").append(span);
+		} 
+		if(!$(".trading_method1").is(":checked")){
+			$(".product__details__option__delivery").empty();
+		}
+	});
+	$(".trading_method2").on("click",function(){
+// 		debugger;
+		let mapView = '<input type="text" name="trading_location" class="input-name" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">'
+					  + '<input type="button" id="btnSearchAddress" class="site-btn" value="검색">';
+		if($(".trading_method2").is(":checked")){
+			$(".address").append(mapView);
+		} 
+		if(!$(".trading_method2").is(":checked")){
+			$(".address").empty();
+		}
+	});
+	
 
 	$("#free_sharing").on("checked",function(){
-// 		$("#product_price").prop("disabled", false);
+		$("#product_price").prop("disabled", false);
 	});
 	
 	$("#free_sharing").change(function(){
-        if($("#free_sharing").is(":checked")){
+        if($(this).is(":checked")){
 			$("#product_price").prop("disabled", true);
 			$("#product_price").prop("placeholder", "무료나눔");
 			$(".nice-scroll li[value=1]").css("color" , "white");
@@ -64,7 +98,7 @@ $(function () {
         }
     });
 	
-	$("#btnSearchAddress").click(function() {
+	$("#btnSearchAddress").on("click", function() {
 	    new daum.Postcode({
 	        oncomplete: function(data) {
 	            let address = data.address; // 기본 주소 저장
@@ -74,7 +108,6 @@ $(function () {
 	            $("#trading_location").val(address);
 	        }
 	    }).open();
-	    
 	});
 	
 	$("#fileTrigger").on("click", function() {
@@ -125,8 +158,7 @@ function uploadImageHandler(e) {
 	e.target.files = dataTransfer.files;
 	$("#count").text($("#file")[0].files.length);
 }
-	
-	
+
 </script>
 </head>
 <body>
@@ -145,14 +177,12 @@ function uploadImageHandler(e) {
 	                <div class="top-50 start-50" style="min-width:35%; margin-bottom: 30px">
 <!-- 	                    <div class="contact__text"> -->
 <!-- 	                    </div> -->
-						<section class="">
-							<div class="" style="display: flex; margin: 3%">
+						<div class="" style="display: flex; margin: 3%">
 								<button id="fileTrigger" type="button" class="custom_btn"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
-								<div id="imgArea" style="display: flex;">
-									<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none"/>
+								<div id="imgArea" style="display: flex; height: 100px;">
+									<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none;"/>
 								</div>
-							</div>
-						</section>
+						</div>
 	                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
 							<div class="card">
 								<div class="card-heading">
@@ -183,18 +213,14 @@ function uploadImageHandler(e) {
 	                <div class="top-50 start-50">
 	                    <div class="contact__form">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="">
                                     <input type="text" name="product_name" class="input-name" placeholder="글제목">
+                                </div>
+                                <div class="">
                                     <input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
-<!--                                     <input type="checkbox" name="free_sharing" class="active" value="무료나눔"> -->
-<!--                                     <label class="active" > -->
                                     <input type="checkbox" name="free_sharing" id="free_sharing" value="무료나눔">무료나눔
-<!--                                     </label> -->
-	                                <div class="address" style="display: flex;">
-	                                    <input type="text" name="trading_location" class="input-name" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">
-										<input type="button" id="btnSearchAddress" class="site-btn" value="검색"><br>
-	                                </div>
-                                    <textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" placeholder="- 상품명(브랜드) >
+                                </div>
+								<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" placeholder="- 상품명(브랜드) >
 - 구매 시기
 - 사용 기간
 - 하자 여부
@@ -215,15 +241,12 @@ function uploadImageHandler(e) {
                                     <div class="product__details__option">
 		                                <div class="product__details__option__size">
 		                                    <span style="color: #111111; font-weight: 700;">거래방법</span>
-		                                    <input type="checkbox" name="trading_method1" class="" value="delivery">택배거래
-		                                    <input type="checkbox" name="delivery1" class="" value="delivery">배송비 별도
-		                                    <input type="checkbox" name="delivery2" class="" value="">배송비 포함
-		                                    <input type="checkbox" name="trading_method2" class="" value="direct">직거래
+		                                    <input type="checkbox" name="trading_method1" class="trading_method1" value="delivery">택배거래
+		                                    <input type="checkbox" name="trading_method2" class="trading_method2" value="direct">직거래
 		                                </div>
 		                            </div>
-	                                <div class="product__details__option__size">
-	                                    <input type="checkbox" name="uppay" class="active" value="사용">업페이
-	                                </div>
+	                                <div class="product__details__option__delivery"></div>
+	                                <div class="address"></div>
 		                            <div class="product__form__submit">
 	                                    <button type="reset" class="site-btn" >리셋</button>
 <!-- 	                                    <button class="site-btn" onclick="insertCheck()">판매등록</button> -->
@@ -234,7 +257,6 @@ function uploadImageHandler(e) {
 	                    </div>
 	                </div>
 	            </div>
-	        </div>
     	</section>
     </form>
     

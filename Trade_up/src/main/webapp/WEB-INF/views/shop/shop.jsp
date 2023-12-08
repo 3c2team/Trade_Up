@@ -145,7 +145,7 @@
 	                                    <h6>${product.product_name}</h6>
 	                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
 										<p>${product.trading_location }<span> / ${product.product_release }</span></p>
-	                                    <h5>${product.product_price}</h5>
+	                                    <h5>${product.product_price}원</h5>
 <%-- 	                                    <fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
 	                                </div>
 	                            </div>
