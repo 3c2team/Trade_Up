@@ -1,0 +1,116 @@
+body {
+	background-color: rgb(255, 255, 255);
+	font-family: 'Noto Serif KR', serif;
+}
+    
+.main {
+	background-color: #FFFFFF;
+	width: 400px;
+	height: 400px;
+	margin: 7em auto;
+	border-radius: 1.5em;
+	box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+    
+.sign {
+	padding-top: 40px;
+	color: rgb(80, 80, 80);
+	font-family: 'Noto Serif KR', serif; 
+	font-weight: bold;
+	font-size: 23px;
+}
+    
+.user {
+	width: 76%;
+	color: rgb(128, 128, 128);
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 1px;
+	background: rgb(255, 255, 255);
+	padding: 10px 20px;
+	border: none;
+	border-radius: 20px;
+	outline: none;
+	box-sizing: border-box;
+	border: 2px solid rgba(0, 0, 0, 0.05);
+	margin-bottom: 50px;
+	margin-left: 46px;
+	text-align: center;
+	margin-bottom: 27px;
+	font-family: 'Noto Serif KR', serif;
+}
+    
+form.form1 {
+	padding-top: 30px;
+}
+    
+.phone {
+	width: 76%;
+	color: rgb(128, 128, 128);
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 1px;
+	background: rgb(255, 255, 255);
+	padding: 10px 20px;
+	border: none;
+	border-radius: 20px;
+	outline: none;
+	box-sizing: border-box;
+	border: 2px solid rgba(0, 0, 0, 0.05);
+	margin-bottom: 50px;
+	margin-left: 46px;
+	text-align: center;
+	margin-bottom: 27px;
+	font-family: 'Noto Serif KR', serif;
+}
+
+.user:focus, .phone:focus {
+	border: 2px solid rgba(0, 0, 0, 0.18) !important;
+}
+    
+.submit {
+	cursor: pointer;
+	border-radius: 5em;
+	color: #fff;
+	background: linear-gradient(to right, rgb(115, 115, 115), rgb(115, 115, 115));
+	border: 0;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	font-family: 'Noto Serif KR', serif;
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-bottom: 20px;
+	font-size: 13px;
+	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+.join {
+	text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+	color: rgb(108, 108, 108);
+	padding-top: 15px;
+	margin-left: 75px;
+	font-family: 'Noto Serif KR', sans-serif;
+	font-size: 15px;
+}
+
+.passForgot {
+	text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+	color: rgb(108, 108, 108);
+	padding-top: 15px;
+	font-family: 'Noto Serif KR', sans-serif;
+	font-size: 15px;
+}
+
+p {
+	text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+	color: rgb(184, 197, 201);
+	text-decoration: none;
+}
+
+@media (max-width: 600px) {
+	.main {
+		border-radius: 0px;
+	}
+}

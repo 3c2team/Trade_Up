@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>J'ai Faim</title>
+<title>Trade Up</title>
 </head>
 	<meta charset="UTF-8">
     <meta name="description" content="Male_Fashion Template">
@@ -55,8 +55,8 @@
 						</div>
 						<div class="kakaoLogin">
 							<a href="https://kauth.kakao.com/oauth/authorize?
-										client_id=46389b0d2a4098beef5e03823cefb9a9
-										&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2Fc3t2%2Fkakao
+										client_id=1582f2676c7805fc4f4fc798652b9f28
+										&redirect_uri=http://localhost:8081/tradeup/kakao
 										&response_type=code" id="kakaoLogin">
 					            		Kakao 로그인
 					        </a>
@@ -64,16 +64,17 @@
 						<div class="naverLogin" id="naver_id_login">
 							<a href="https://nid.naver.com/oauth2.0/authorize?
 									response_type=code
-									&client_id=O9St1pC9EAPKQRlsYeWN
+									&client_id=ZQC7QrR7zfKNLGcco2Gj
 									&state=state
-									&redirect_uri=http://localhost:8081/c3t2/Naver" id="naverLogin">
+									&redirect_uri=http://localhost:8081/tradeup/Naver" id="naverLogin">
 				            		Naver 로그인
 					        </a>
 						</div>
 						<script type="text/javascript">
-							var naver_id_login = new naver_id_login("O9St1pC9EAPKQRlsYeWN", "http://localhost:8081/c3t2/Naver");
+							var naver_id_login = new naver_id_login("ZQC7QrR7zfKNLGcco2Gj", "http://localhost:8081/tradeup/Naver");
 							var state = naver_id_login.getUniqState();
-							naver_id_login.setDomain("http://localhost:8081/c3t2");
+							naver_id_login.setButton("white", 2,40);
+							naver_id_login.setDomain(".service.com");
 							naver_id_login.setState(state);
 							naver_id_login.setPopup();
 							naver_id_login.init_naver_id_login();
@@ -102,6 +103,7 @@
     <script src="${pageContext.request.contextPath }/resources/js/mixitup.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/owl.carousel.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/checkout.js"></script>
 </body>

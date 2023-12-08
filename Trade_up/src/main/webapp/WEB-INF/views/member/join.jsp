@@ -98,7 +98,7 @@ input[type="text"] {
 					<th>본인인증<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="button" id="btnAuthCode" value="본인인증" onclick="sendSMS()">
-						<input type="text" name="member_auth_code" id="member_auth_code" size="6">
+						<input type="text" name="member_auth_code" id="member_auth_code" size="6" maxlength="6">
 						<br><span id="checkSendResult">본인인증 버튼 클릭 후 문자로 전송된 인증번호를 입력해주세요.</span>
 						<input type="hidden" id="authCode" name="authCode" value="">
 					</td>
@@ -107,6 +107,7 @@ input[type="text"] {
 					<th>주소<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
 						<input type="text" name="member_address1" id="member_address1" placeholder="기본주소" size="25">
+						<input type="hidden" name="zonecode" id="zonecode" value="">
 						<input type="button" id="btnSearchAddress" value="주소검색" onclick="daumPostcode()"><br>
 						<input type="text" name="member_address2" id="member_address2" placeholder="상세주소" size="25">
 					</td>
@@ -114,16 +115,15 @@ input[type="text"] {
 				<tr>
 					<th>생일</th>
 					<td id="birthTd">
-					<input type="hidden" name="member_birth" id="member_birth"  size="20">
 					<br>
 					<div class="info" id="info__birth">
-						  <select class="box" id="birth-year">
+						  <select class="box" id="birth-year" name="birth-year">
 						    <option disabled selected>출생 연도</option>
 						  </select>
-						  <select class="box" id="birth-month">
+						  <select class="box" id="birth-month" name="birth-month">
 						    <option disabled selected>월</option>
 						  </select>
-					  <select class="box" id="birth-day">
+					  <select class="box" id="birth-day" name="birth-day">
 					    <option disabled selected>일</option>
 					  </select>
 					

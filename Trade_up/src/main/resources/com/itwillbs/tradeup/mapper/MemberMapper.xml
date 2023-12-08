@@ -29,7 +29,7 @@
 	<insert id="insertMember">
 		INSERT
 			INTO MEMBER
-			(member_name, member_nick_name, member_id, member_passwd, member_e_mail, mail_auth_status, member_insert_date, member_phone_num, <!-- <if test="member_birth.equals('')">member_birth_day, </if> --> member_state)
+			(member_name, member_nick_name, member_id, member_passwd, member_e_mail, mail_auth_status, member_insert_date, member_phone_num, <if test="!member_birth.equals('')">member_birth_day, </if> member_state)
 			VALUES (
 				  #{member_name}
 				, #{member_nick_name}
@@ -39,21 +39,55 @@
 				, 'Y'
 				, now()
 				, #{member_phone_num}
-				<!--
-				<if test="member_birth.equals('')">
+				<if test="!member_birth.equals('')">
 					, #{member_birth}
 				</if>
-				-->
 				, '회원'
 			)
 	</insert>
+	
+	<!-- 전화번호로 아이디 찾기 -->
+	<select id="selectMemberToPhone" resultType="map">
+		SELECT *
+		FROM MEMBER
+		WHERE member_phone_num = #{member_phone_num}
+	</select>
+	
+	<!-- 전화번호로 아이디 찾기 -->
+	<select id="selectMemberEmail" resultType="string">
+		SELECT member_e_mail
+		FROM MEMBER
+		WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updateMemberPasswd">
+		UPDATE MEMBER
+		SET member_passwd = #{securePasswd}
+		WHERE member_id = #{member_id}
+	</update>
 	
 	<!-- 로그인 -->
 	<select id="selectMemberLogin" resultType="map">
 		SELECT *
 		FROM MEMBER
 		WHERE member_id = #{member_id}
-	</select>   
+	</select> 
+	
+	<!-- 카카오 아이디 유무 확인 -->
+	<select id="selectMemberKakaoLogin" resultType="map">
+		SELECT *
+		FROM MEMBER
+		WHERE kakao_id = #{kakao_id}
+	</select>
+	
+	<!-- 카카오 아이디 업데이트 -->
+	<update id="updateKakaoId">
+		UPDATE MEMBER
+		SET kakao_id = #{kakao_id}
+		WHERE member_id = #{member_id}
+	</update>
+	
 	<update id="updateCommission">
 		UPDATE COMMITION_ACCOUNT
 		SET commissions = commissions + (SELECT commission
