@@ -75,4 +75,14 @@ public class MainService {
 		// TODO Auto-generated method stub
 		return mapper.selectMarketProduct(product_name);
 	}
+
+	public int insertReport(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.insertReport(map);
+	}
+
+	public int insertReportImg(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.insertReportImg(map);
+	}
 }

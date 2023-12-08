@@ -47,7 +47,7 @@
       <div class="custom_flex2" style="width: 40%;">
          <h2 class="fw-bold" style="text-align: center;">1:1문의</h2>
          <hr class="custom_border_grove">
-         <form action="QuestionRegistPro" method="post" onsubmit="return submit()" enctype="multipart/form-data" >
+         <form action="QuestionRegistPro" id="regis_pro" method="post" onsubmit="return question_submit()" enctype="multipart/form-data" >
             <select class="form-control" id="qna_category" style="margin: 20px 0; height: 3.2rem;">
                <option selected disabled value="fdfd fdfd">문의 유형을 선택하세요</option>
                <c:forEach var="selectQnaCategory" items="${selectQnaCategory}">
@@ -57,6 +57,7 @@
                <select class="form-control" name="qna_category_datail" class="qna_category_datail" id="qna_category_datail" style="margin: 20px 0; height: 3.2rem;" disabled>
                   <option>상세 유형을 선택하세요</option>
                </select>
+               <input type="hidden" value="${param.product_num }">
             <textarea class="form-control" name="content" style="resize: none; margin-bottom: 1.25rem; " rows="10" cols="10"></textarea>
             <div class="fs-6 fw-semibold">
                사진 동영상 첨부(
@@ -150,7 +151,6 @@
             },
             dataType: 'json',
             success: function(data) {
-               console.log("성공은함");
                $("#qna_category_datail").html("<option selected disabled>상세 유형을 선택하세요</option>");
                data.forEach((params)=> {
                   $("#qna_category_datail").append(
@@ -162,13 +162,16 @@
             }
          });
       });
-      function submit() {
-         if(confirm("등록하시겠습니까?")){
-            alert("등록이 완료되었습니다.");   
-            return true;
-         }
-         return false;
-      }
+      function question_submit() {
+		if($("#qna_category").val()=='2'){
+			$("#regis_pro")[0].action = 'ReportRegistPro';
+		}
+		if(confirm("등록하시겠습니까?")){
+			alert("등록이 완료되었습니다.");   
+			return true;
+		}
+			return false;
+		}
       
    </script>
 </body>

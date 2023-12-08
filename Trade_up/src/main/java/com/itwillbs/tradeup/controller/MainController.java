@@ -104,10 +104,13 @@ public class MainController {
 	}
 	//1대1 문의 페이지 이동
 	@GetMapping("RegistQuewstion")
-	public String registQuewstion(Model model) {
+	public String registQuewstion(Model model,@RequestParam Map<String,String> map) {
 		
 		List<Map<String, String>> selectQnaCategory = service.selectQnaCategory();
-		System.out.println(selectQnaCategory.size());
+		if(map.get("product_num") == null) {
+			System.out.println(selectQnaCategory.remove(1));
+//			selectQnaCategory.get(1).remove("");
+		}
 		System.out.println(selectQnaCategory);
 		model.addAttribute("selectQnaCategory", selectQnaCategory);
 		return "regist_question";
@@ -144,6 +147,34 @@ public class MainController {
 
 	return "redirect:/UserCustomer";
 	}	
+	@PostMapping("ReportRegistPro")
+	public String reportRegistPro(HttpSession session,@RequestParam(value =  "file" , required = false) MultipartFile[] imageList
+			,@RequestParam Map<String, String> map) {
+		System.out.println("신고 : " + map);
+		
+		String uploadDir = "/report_img/";//가상 업로드 경로
+		String saveDir = session.getServletContext().getRealPath(uploadDir);//실제 업로드 경로
+		// 맵에 이름과 경로 전달
+		//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
+		System.out.println(map);
+		String sId = (String)session.getAttribute("sId");
+		map.put("sId", sId);
+		int insertCount = service.insertReport(map);
+		
+		if(insertCount == 0) return "fail_back";
+		for(MultipartFile file : imageList) {
+			String fileName = uuid(file.getOriginalFilename());
+			map.put("real_file", uploadDir + fileName);
+			map.put("file_name", fileName);
+			int insertReportImgCount = service.insertReportImg(map);
+			
+			
+			if(insertReportImgCount == 0) return "fail_back";
+			newFile(saveDir,fileName,file);
+		}
+			
+		return "redirect:/UserCustomer";
+	}	
 	@ResponseBody
 	@PostMapping("SelectQnaCategorys")
 	public List<Map<String, String>> selectQnaCategorys(@RequestParam(required = false) int qnaCategoryName) {
@@ -177,9 +208,6 @@ public class MainController {
 	return service.selectOftenQna(map);
 
 	}	
-	
-	
-	
 	
 	
 

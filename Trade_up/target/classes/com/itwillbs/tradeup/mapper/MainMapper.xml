@@ -123,4 +123,27 @@
 			WHERE product_name like '%${product_name}%' 
 			AND product_release > date_sub(now(),interval 3 month);
 		</select>
+    	<insert id="insertReport">
+    		INSERT INTO REPORT 
+    		VALUES(
+    			null
+    			,(SELECT member_num
+		    		FROM MEMBER
+		    		WHERE member_id = #{sId})
+		    	,#{product_num}
+	    		,#{content}
+		    	,#{qna_category_datail}
+	    		,now()
+	    		,''
+	    		,'N'
+    		)
+    	</insert>
+    	<insert id="insertReportImg">
+    		INSERT INTO REPORT_IMG
+    		 VALUES(
+    			null
+    			,#{file_name}
+    			,#{real_file}
+    		)
+    	</insert>
     </mapper>

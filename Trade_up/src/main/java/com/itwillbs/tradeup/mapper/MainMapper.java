@@ -32,5 +32,9 @@ public interface MainMapper {
 
 	List<Map<String, String>> selectMarketProduct(String product_name);
 
+	int insertReport(Map<String, String> map);
+
+	int insertReportImg(Map<String, String> map);
+
 
 }
