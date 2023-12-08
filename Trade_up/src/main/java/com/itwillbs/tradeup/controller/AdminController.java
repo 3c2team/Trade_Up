@@ -481,7 +481,8 @@ public class AdminController {
 		model.addAttribute("receiverId", memberId);
 		
 //		return "myChat";
-		return "chat/main2";
+		return "chat/shopDetail_Main2";
+//		return "chat/main";
 	}
 	
 	// 채팅방(1:1 채팅방 작성중)

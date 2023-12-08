@@ -1,3 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<%-- 외부 CSS 파일(css/default.css) 불러오기 --%>
+<%-- <link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css"> --%>
+<style type="text/css">
+	/* 채팅방 전체 영역 */
+	#chatRoomArea {
+		width: 1024px;
+		height: 600px;
+		border: 1px solid black;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
+		overflow-y: auto;
+	}
+	
+	/* 채팅방 1개 */
+	.chatRoom {
+		/* 각 채팅방은 옆으로 나란히 배열 */
+/* 		border: 1px solid black; */
+		display: inline-block;
+		margin-right: 10px;
+		margin-bottom: 20px;
+	}
+	
+	/* 채팅 메세지 표시 영역 */
+	.chatMessageArea {
+		width: 300px;
+		height: 200px;
+		border: 1px solid blue;
+		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
+		overflow-y: auto;
+	}
+	
+	/* 채팅 메세지 하단 입력 영역 */
+	.commandArea {
+		width: 300px;
+		position: relative;
+	}
+</style>
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript">
 	$(function() {
 		// 채팅 페이지 접속 시 웹소켓 연결 수행(새로고침 시에도 새 웹소켓 연결됨)
 		connect();
@@ -243,3 +291,51 @@
 		
 		ws.send(getJsonString("LEAVE", userId, "", roomId, ""));
 	}
+	
+</script>
+</head>
+<body>
+	<header>
+		<%-- Login, Join 등의 링크 표시 메뉴 영역 --%>
+		<%-- 주의! JSP 파일은 WEB-INF/views 디렉토리 내에 위치 --%>
+<%-- 		<jsp:include page="../inc/top.jsp"></jsp:include> --%>
+	</header>
+	<article>
+		<%-- 본문 표시 영역 --%>
+		<c:if test="${empty sessionScope.sId}">
+			<script type="text/javascript">
+				alert("로그인 후 사용 가능합니다!");
+				location.href = "MemberLoginForm";
+			</script>
+		</c:if>
+		<h1>채팅 페이지</h1>
+		<hr>
+		판매자 아이디 : <input type="text" id="receiverId" value="${receiverId }"><br>
+		${sessionScope.sId}님 반갑습니다.
+<%-- 		<input type="hidden" id="receiverId" value="${receiverId }"> --%>
+		<input type="button" value="채팅 시작" id="btnJoin">
+		<input type="button" value="채팅방 나가기" id="btnQuit">
+		<hr>
+		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
+	</article>
+	<hr>
+	<footer>
+		<!-- bottom.jsp 페이지를 현재 페이지에 삽입 -->
+<%-- 		<jsp:include page="../inc/bottom.jsp"></jsp:include> --%>
+	</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,26 +2,71 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html style="background: rgba(105, 108, 255, 0.16) !important;">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%-- 외부 CSS 파일(css/default.css) 불러오기 --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css"> --%>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
 <style type="text/css">
 	#chatArea {
-		width: 300px;
-		height: 200px;
-		border: 1px solid rgba(0, 0, 0, 0.45);
+		width: 480px;
+		height: 300px;
+/* 		border: 1px solid rgba(0, 0, 0, 0.45); */
 		margin-top: 20px;
 		margin-bottom: 20px;
 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
 		overflow-y: auto;
 	}
+	
+	#btnQuit{
+	    display: inline-block;
+	    font-size: 13px;
+	    font-weight: 700;
+	    text-transform: uppercase;
+	    padding: 5px;
+	    color: #ffffff;
+	    background: #5F12D3;
+	    letter-spacing: 4px;
+	}
+	
+	 #btnSend{
+	    display: inline-block;
+	    font-size: 13px;
+	    font-weight: 700;
+	    text-transform: uppercase;
+	    padding: 5px;
+	    color: #ffffff;
+	    background: #5F12D3;
+	    letter-spacing: 4px;
+	    float: right;
+	    
+	}
+	
 </style>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script src="${pageContext.request.contextPath }/resources/js/chatting.js"></script> --%>
 <script type="text/javascript">
+
+$(document).ready(function(){
+	nickname = $("#nickname").val();
+	let ws_base_url = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}";
+	
+	ws = new WebSocket(ws_base_url + "/echo"); // 웹소켓 요청
+	
+	ws.onopen = onOpen;
+	ws.onmessage = onMessage;
+	ws.onclose = onClose;
+	ws.onerror = onError;
+	})
+
+
 	$(function() {
 		// 채팅 입력창 키 누를때마다 이벤트 처리
 		// => 엔터키 입력 시(keyCode 값이 '13') 메세지 전송 기능 동작
@@ -38,9 +83,9 @@
 			sendMessage();
 		});
 		
-		$("#btnJoin").click(function() {
-			connect();
-		});
+// 		$("#btnJoin").click(function() {
+// 			connect();
+// 		});
 		
 		$("#btnQuit").click(function() {
 			disconnect();
@@ -91,10 +136,10 @@
 		// 메세지타입 판별(ENTER or LEAVE vs TALK)
 		if(data.type == "ENTER" || data.type == "LEAVE"){
 			// 입장&퇴장은 메세지만 출력
-			appendMessage(data.message);
+// 			appendMessage(data.message);
 		}else if(data.type == "TALK"){
 			// 닉네임 : 메세지 형식으로 출력	
-			appendMessage(data.nickname + " : " + data.message);
+			appendMessage(data.nickname + " : " + data.message); //받는 메세지
 		}
 	}
 	//=================================================
@@ -122,12 +167,19 @@
 	// 자신의 채팅창에 메세지를 표시(추가)하는 appendMessage() 함수 정의
 	// => 파라미터 : 출력할 메세지(msg)
 	function appendMessage(msg){
-		$("#chatMessageArea").append(msg + "<br>");
+		$("#chatMessageArea").append(msg + "<br>"); // 메세지 표시
 		
 		// 채팅 메세지 출력창 스크롤바를 항상 맨 밑으로 유지
 		$("#chatArea").scrollTop($("#chatMessageArea").height() - $("#chatArea").height());
 		
 	}
+// 	function appendMessageSend(msg){
+// 		$("#chatMessageArea1").append(msg + "<br>"); // 받은 메세지 표시
+		
+		// 채팅 메세지 출력창 스크롤바를 항상 맨 밑으로 유지
+// 		$("#chatArea").scrollTop($("#chatMessageArea1").height() - $("#chatArea").height());
+		
+// 	}
 	
 	//=================================================
 	// 웹소켓 서버로 메세지를 전송하는 메서드
@@ -146,7 +198,7 @@
 		ws.send(getJsonString("TALK", nickname, msg));
 		
 		//자신의 채팅창에 입력한 메세지 출력 
-		appendMessage(msg);
+		appendMessage(msg); // 보내는 메세지
 		
 		// 채팅 입력창 초기화
 		$("#chatMsg").val("");
@@ -201,29 +253,27 @@
 				location.href = "MemberLoginForm";
  			</script> 
 		</c:if>
-		<h1>채팅 페이지</h1>
-		<hr>
-		닉네임 : <input type="text" value="${sessionScope.sId}" id="nickname">
+<!-- 		<hr> -->
+<%-- 		닉네임 : <input type="text" value="${sessionScope.sId}" id="nickname"> --%>
+				<input type="hidden" id="nickname" value="${sessionScope.sId}">
+				<span><strong>${sessionScope.sId}</strong>님 반갑습니다.</span>
 <!-- 		<input type="button" value="채팅방 입장" id="btnJoin" onclick="openChat()"> -->
-		<input type="button" value="채팅방 입장" id="btnJoin">
-		<input type="button" value="채팅방 나가기" id="btnQuit">
-		<hr>
-		<div id="chatArea">
-			<span id="chatMessageArea"></span>
+<!-- 		<input type="button" value="채팅방 입장" id="btnJoin"> -->
+		<input type="button" value="채팅방 나가기" id="btnQuit" style="float: right;">
+		<div id="chatArea" class="wrap" style="background: rgba(105, 108, 255, 0.16) !important;">
+			<strong><span class="textbox" id="chatMessageArea"></span></strong> <!-- 현재 하나의 span id로 다 받아옴 -->
+<!--             <span class="textbox2" id="chatMessageArea1"></span> -->
 		</div>
-		<input type="text" id="chatMsg">
+		<hr>
+<!-- 		<input type="text" id="chatMsg"> -->
+		<textarea rows="2" cols="58" id="chatMsg"></textarea>
 		<input type="button" value="전송" id="btnSend">
 	</article>
-	<hr>
+	
 	<footer>
 		<!-- bottom.jsp 페이지를 현재 페이지에 삽입 -->
 <%-- 		<jsp:include page="../inc/bottom.jsp"></jsp:include> --%>
 	</footer>
-	<script type="text/javascript">
-        	function openChat() {
-        		window.open("MyChat", "MyChat","top=200,left=700,width=500, height=500");
-			}
-    </script>
     
 </body>
 </html>

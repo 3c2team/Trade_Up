@@ -54,7 +54,7 @@
 								     	 <li><a class="dropdown-item" href="MyPageMain">마이페이지</a></li>
 								     	 <li><a class="dropdown-item" href="Logout">로그아웃</a></li>
 								      </ul>
-	                        <a href="#none" onclick="openChat()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
+	                        <a href="#none" onclick="chatRoom()"><i class="fa fa-solid fa-comment fa-lg" style="color: #262626;"></i></a>
 	                        <a href="ShopForm"><i class="fa fa-solid fa-money fa-lg" style="color: #262626;"></i></a>
 						</c:otherwise>
 					</c:choose>
