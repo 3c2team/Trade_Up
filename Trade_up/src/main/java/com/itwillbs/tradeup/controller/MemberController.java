@@ -42,7 +42,10 @@ public class MemberController {
 		System.out.println(map);
 		return "member/join";
 	}
-	
+	@GetMapping("NaverLoginPro")
+	public String naverLoginPro() {
+		return "member/naverLoginPro";
+	}
 	// 아이디 중복 판별 처리
 	@ResponseBody
 	@GetMapping("MemberCheckDupId")

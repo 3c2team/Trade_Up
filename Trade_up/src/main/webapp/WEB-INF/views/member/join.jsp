@@ -47,14 +47,14 @@ input[type="text"] {
 				<tr>
 					<th>ID<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="text" name="member_id" id="member_id" size="24">
+						<input type="text" name="member_id" value="${param.email1 }"  id="member_id" size="24">
 						<br><span id="checkIdResult">영문소문자/숫자, 4~16자</span>
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="password" name="member_passwd" id="member_passwd" size="24">
+						<input type="password" name="member_passwd"  id="member_passwd" size="24">
 						<br><span id="checkPasswdResult">영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자</span>
 					</td>
 				</tr>
@@ -67,16 +67,16 @@ input[type="text"] {
 				</tr>
 				<tr>
 					<th>이름<span style="color: red; margin-left: 6%;">*</span></th>
-					<td><input type="text" name="member_name" id="member_name" size="20"></td>
+					<td><input type="text" value="${param.name }"  name="member_name" id="member_name" size="20"></td>
 				</tr>
 				<tr>
 					<th>닉네임<span style="color: red; margin-left: 6%;">*</span></th>
-					<td><input type="text" name="member_nick_name" id="member_nick_name" size="20"></td>
+					<td><input type="text" name="member_nick_name"  value="${param.nickname }"  id="member_nick_name" size="20"></td>
 				</tr>
 				<tr>
 					<th>E-Mail<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="text" name="member_email1" id="member_email1" size="10">&nbsp;@<input type="text" name="member_email2" id="member_email2" size="10">
+						<input type="text" name="member_email1"  value="${param.email1 }"  id="member_email1" size="10">&nbsp;@<input type="text" name="member_email2"  value="${param.email2 }"  id="member_email2" size="10">
 						<select id="member_emailDomain">
 							<option value="">직접입력</option>
 							<option value="naver.com">naver.com</option>

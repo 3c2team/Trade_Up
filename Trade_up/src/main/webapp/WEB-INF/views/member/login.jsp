@@ -62,13 +62,6 @@
 					        </a>
 						</div>
 						<div class="naverLogin" id="naver_id_login">
-							<a href="https://nid.naver.com/oauth2.0/authorize?
-									response_type=code
-									&client_id=ZQC7QrR7zfKNLGcco2Gj
-									&state=state
-									&redirect_uri=http://localhost:8081/tradeup/Naver" id="naverLogin">
-				            		Naver 로그인
-					        </a>
 						</div>
 						<script type="text/javascript">
 							var naver_id_login = new naver_id_login("ZQC7QrR7zfKNLGcco2Gj", "http://localhost:8081/tradeup/Naver");
@@ -106,5 +99,15 @@
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/main.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/checkout.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8080/tradeup/NaverLoginPro");
+		var state = naver_id_login.getUniqState();
+		naver_id_login.setButton("green", 2,40);
+		naver_id_login.setDomain("http://localhost:8080/tradeup/Login");
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+	</script>
 </body>
 </html>
