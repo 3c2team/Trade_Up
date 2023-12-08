@@ -5,10 +5,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<websocket:handlers allowed-origins="http://localhost:8081/">
+	<websocket:handlers allowed-origins="http://localhost:8081/">
 		<websocket:mapping path="/echo" handler="wsHandler" />
 	</websocket:handlers>
 	
 	<bean id="wsHandler" class="com.itwillbs.tradeup.chat.MyWebSocketHandler"/>
+	
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping path="/echo2" handler="wsHandler2" />
+	</websocket:handlers>
+
+	<bean id="wsHandler2" class="com.itwillbs.tradeup.chat.MyWebSocketHandler2" />
 
 </beans>

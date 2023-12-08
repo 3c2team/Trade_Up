@@ -138,24 +138,6 @@ public class AdminController {
 		return "admin/charts";
 	}
 	
-	// 채팅하기
-	@GetMapping("/MyChat")
-	public String myChat(HttpSession session) {
-		String sId = (String)session.getAttribute("sId");
-		System.out.println("sId : " + sId);
-		
-//		return "myChat";
-		return "chat/main";
-	}
-	
-	// 채팅방
-		@GetMapping("/ChatRoom")
-		public String chatRoom(HttpSession session) {
-			String sId = (String)session.getAttribute("sId");
-			System.out.println("sId : " + sId);
-			
-			return "myChat";
-		}
 	
 	@PostMapping("/AdminLoginPro")
 	public String adminLoginPro(@RequestParam Map<String, String> map, HttpSession session, Model model) {
@@ -488,10 +470,38 @@ public class AdminController {
 		return "admin/product_charge";
 	}
 	
+	// 채팅하기
+	@GetMapping("/MyChat")
+	public String myChat(HttpSession session, String memberId, Model model) {
+		String sId = (String)session.getAttribute("sId"); 
+		System.out.println("sId : " + sId);
+		
+		System.out.println("판매자 아이디 : " + memberId);
+		
+		model.addAttribute("receiverId", memberId);
+		
+//		return "myChat";
+		return "chat/main2";
+	}
+	
+	// 채팅방(1:1 채팅방 작성중)
+		@GetMapping("/ChatRoom")
+		public String chatRoom(HttpSession session) {
+			String sId = (String)session.getAttribute("sId");
+			System.out.println("sId : " + sId);
+			
+			return "chat/main2";
+		}
+	
+//	@GetMapping("/ChatMain")
+//	public String chatMain() {
+//		
+//		return "chat/main";
+//	}
+	
+	// 이전 채팅방 
 	@GetMapping("/ChatMain")
-	public String chatMain() {
-		
-		
+	public String chatMain2() {
 		
 		return "chat/main";
 	}

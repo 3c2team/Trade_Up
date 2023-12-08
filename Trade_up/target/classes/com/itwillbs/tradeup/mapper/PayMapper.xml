@@ -79,10 +79,10 @@
     		INTO WITHDRAW
     		(owner_bank, owner_acc, withdraw_bank, withdraw_acc, commission, product_price, member_id, member_name, method, buy_check, withdraw_date, product_num, merchant_uid)
 				VALUES (
-		            #{account_bank}
-		            , #{account_num}
-		            , #{acc_bank}
+		            #{acc_bank}
 		            , #{acc_num}
+		            , #{account_bank}
+		            , #{account_num}
 		            , '300' <!-- #{commission} -->
 		            , '30000' <!-- #{product_price} -->
 		            , #{member_id}
