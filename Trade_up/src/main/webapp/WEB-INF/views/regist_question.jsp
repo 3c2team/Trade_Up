@@ -57,7 +57,7 @@
                <select class="form-control" name="qna_category_datail" class="qna_category_datail" id="qna_category_datail" style="margin: 20px 0; height: 3.2rem;" disabled>
                   <option>상세 유형을 선택하세요</option>
                </select>
-               <input type="hidden" value="${param.product_num }">
+               <input type="hidden" value="${param.product_num }" name="product_num">
             <textarea class="form-control" name="content" style="resize: none; margin-bottom: 1.25rem; " rows="10" cols="10"></textarea>
             <div class="fs-6 fw-semibold">
                사진 동영상 첨부(

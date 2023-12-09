@@ -118,7 +118,6 @@
 					,trading_method
 					,product_status
 					,trading_location
-					,uppay
 			FROM PRODUCT 
 			WHERE product_name like '%${product_name}%' 
 			AND product_release > date_sub(now(),interval 3 month);
@@ -141,9 +140,11 @@
     	<insert id="insertReportImg">
     		INSERT INTO REPORT_IMG
     		 VALUES(
-    			null
+    			(SELECT MAX(report_idx)
+    			FROM REPORT)
     			,#{file_name}
     			,#{real_file}
     		)
     	</insert>
+    	
     </mapper>

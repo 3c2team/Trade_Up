@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -103,49 +104,46 @@
 								<!-- --------------------------------------------------------------- -->
 								
 								<div class="table-responsive text-nowrap">
-									<form action="AdminNoticeDelete" method="post" style="margin:30px">
+<!-- 									<form action="AdminNoticeDelete" method="post" style="margin:30px"> -->
 										<table id="datatablesSimple" >
 											<thead>
 												<tr>
 													<th></th>
 													<th>신고사진</th>
 													<th>신고상품</th>
-													<th>판매자</th>
 													<th>신고사유</th>
 													<th>회원상태</th>
 													<th>회원설정</th>
 												</tr>
 											</thead>
-											<tbody>
-											<c:forEach var="selectNoticeList" items="${selectNoticeList }">
+											<c:forEach var="selectReport" items="${selectReport }">
 												<tr>
-													<td><input type="checkbox" name="checkbox" value=""></td>
-													<td></td>
-													<td>니트</td>
-													<td style="text-align: center;">강원하</td>
-													<td>
-													
+													<td><input type="checkbox" name="checkbox" value="${selectReport.report_idx }"></td>
+													<td><img  src="${pageContext.request.contextPath }${selectReport.report_image_real_file }"></td>
+													<td><button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #7173db;" onclick="location.href='ShopDetail?product_num=${selectReport.report_product_num }'">자세히보기</button></td>
+													<td>${selectReport.qna_category_detail_name } : ${selectReport.report_content }
 													</td>
-													<td style="text-align: center;"><span class="badge bg-label-hold me-1" style="font-size:small;">상태보류</span></td>
+													<td style="text-align: center;"><span class="badge bg-label-hold me-1" style="font-size:small;">${selectReport.report_is_accept }</span></td>
 													<td>
-														<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: black;" onclick="orderPro('${productList.product_num}')">회원정지</button>
-	                        							<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;" onclick="favorite('${productList.product_num}')">회원복구</button><br>
+														<button value="${selectReport.report_product_num }" class="btn default not_dangerous" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #7173db;">보류</button>
+														<button value="${selectReport.report_product_num }" class="btn default insert_dangerous" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: black;" onclick="orderPro('')">회원정지</button>
+	                        							<button value="${selectReport.report_product_num }" class="btn default delete_dangerous" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;" onclick="favorite('')">회원복구</button><br>
 													</td>
 												</tr>
-												<tr>
-													<td><input type="checkbox" name="checkbox" value=""></td>
-													<td></td>
-													<td>니트</td>
-													<td style="text-align: center;">강원하</td>
-													<td>
+<!-- 												<tr> -->
+<!-- 													<td><input type="checkbox" name="checkbox" value=""></td> -->
+<!-- 													<td></td> -->
+<!-- 													<td>니트</td> -->
+<!-- 													<td style="text-align: center;">강원하</td> -->
+<!-- 													<td> -->
 													
-													</td>
-													<td style="text-align: center;"><span class="badge bg-label-prohibition" style="font-size:small;">회원정지</span></td>
-													<td>
-														<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: black;" onclick="orderPro('${productList.product_num}')">회원정지</button>
-	                        							<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;" onclick="favorite('${productList.product_num}')">회원복구</button><br>
-													</td>
-												</tr>
+<!-- 													</td> -->
+<!-- 													<td style="text-align: center;"><span class="badge bg-label-prohibition" style="font-size:small;">회원정지</span></td> -->
+<!-- 													<td> -->
+<%-- 														<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: black;" onclick="orderPro('${productList.product_num}')">회원정지</button> --%>
+<%-- 	                        							<button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;" onclick="favorite('${productList.product_num}')">회원복구</button><br> --%>
+<!-- 													</td> -->
+<!-- 												</tr> -->
 <!-- 												<tr> -->
 <!-- 													<td><input type="checkbox" name="checkbox" value=""></td> -->
 <!-- 													<td></td> -->
@@ -161,10 +159,9 @@
 <!-- 													</td> -->
 <!-- 												</tr> -->
 											</c:forEach>
-											</tbody>
-										</table>	
+										</table>
 									<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	
-								</form>
+<!-- 								</form> -->
 							</div>
 						</div>
 					</div>
@@ -204,5 +201,57 @@
 	<script src="${pageContext.request.contextPath }/resources/js/admin_datatable.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_calender.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_search_list.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".not_dangerous").on("click",function(){
+				  $.ajax({
+			            type: "POST",
+			            url: "UpdateReport",
+			            data: {
+			               product_num : $(this).val()
+			            },
+			            success: function(data) {
+			            	alert("보류되었습니다.");
+			            	location.href="Declaration";
+		            	},
+		            	error:function(){
+		            		alert("실패");
+		            	}
+					});
+			});
+			$(".insert_dangerous").on("click",function(){
+				  $.ajax({
+			            type: "POST",
+			            url: "InsertDangerous",
+			            data: {
+			               product_num : $(this).val()
+			            },
+			            success: function(data) {
+			            	alert("정지되었습니다");
+			            	location.href="Declaration";
+		            	},
+		            	error:function(){
+		            		alert("실패");
+		            	}
+					});
+			});
+			$(".delete_dangerous").on("click",function(){
+				  $.ajax({
+			            type: "POST",
+			            url: "deleteDangerous",
+			            data: {
+			               product_num : $(this).val()
+			            },
+			            success: function(data) {
+			            	alert("해제되었습니다");
+			            	location.href="Declaration";
+		            	},
+		            	error:function(){
+		            		alert("실패");
+		            	}
+					});
+			});
+		});
+	</script>
 	</body>
 </html>

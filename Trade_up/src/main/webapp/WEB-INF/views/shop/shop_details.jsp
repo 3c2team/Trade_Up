@@ -13,6 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
+<style type="text/css">
+	.report_img{
+		max-width: 100%;
+	    width: 20px;
+	    cursor: pointer;
+	    float: inline-end;
+	}
+</style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
 <script type="text/javascript">
@@ -190,7 +198,10 @@
 									<div class="col-lg-8" style="max-width: 100%;">
 										<div class="product__details__text">
 											<h3>${product.product_name }</h3>
-											<h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }</h3>
+											<h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }
+											<img onclick="location.href='RegistQuewstion?product_num=${param.product_num}'" class="report_img" src="${pageContext.request.contextPath }/resources/img/product/report.png">
+											</h3>
+											<span></span>
 											<div style="display: flex; text-align: center;">
 												<span>37분 전 · 조회 16 · 찜 0</span>
 											</div>

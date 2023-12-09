@@ -254,5 +254,57 @@
  		</if>
  		AND buy_check = '구매확정'
 	</select>
-    
+	<select id="selectReport" resultType="map">
+		SELECT r.report_idx
+			,report_member_num
+			,report_product_num
+			,report_content
+			,qna_category_detail_name
+			,report_date
+			,report_processing_date
+			,report_is_accept
+			,report_image_name
+			,report_image_real_file
+		FROM QUESTION_CATEGORY_DETAIL c
+		JOIN (SELECT r.report_idx
+							,report_member_num
+							,report_product_num
+							,report_content
+							,qna_category_detail_num
+							,report_date
+							,report_processing_date
+							,IF(report_is_accept='N','미 처리','처리완료') AS report_is_accept
+							,report_image_name
+							,report_image_real_file
+					FROM REPORT r 
+					LEFT JOIN (SELECT report_idx
+												,MAX(report_image_name) AS report_image_name
+												,MAX(report_image_real_file) AS report_image_real_file
+									FROM REPORT_IMG
+									GROUP BY report_idx) i
+					ON r.report_idx = i.report_idx) r
+		ON c.qna_category_detail_num = r.qna_category_detail_num
+	</select>
+	<update id="updateReport">
+		UPDATE REPORT
+		SET report_is_accept = 'Y'
+		WHERE report_product_num = #{product_num}		
+	</update>
+	<insert id="insertDangerous">
+	INSERT INTO DANGEROUS VALUES(
+		(SELECT member_num
+		FROM MEMBER
+		WHERE member_id = (SELECT member_id
+									FROM PRODUCT
+									WHERE product_num = #{product_num}))
+	)
+	</insert>
+	<delete id="deleteDangerous">
+		DELETE FROM DANGEROUS
+		WHERE member_idx = 	(SELECT member_num
+										FROM MEMBER
+										WHERE member_id = (SELECT member_id
+																	FROM PRODUCT
+																	WHERE product_num = #{product_num}))
+	</delete>
 </mapper>

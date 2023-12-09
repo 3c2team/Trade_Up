@@ -153,6 +153,28 @@ public class AdminService {
 		return adminMapper.selectCommissionSumSearch(map);
 	}
 
+	public List<Map<String, Object>> selectReport() {
+		// TODO Auto-generated method stub
+		return adminMapper.selectReport();
+	}
+
+	public void updateReport(int product_num) {
+		adminMapper.updateReport(product_num);
+	}
+
+
+	public void insertDangerous(int product_num) {
+		adminMapper.insertDangerous(product_num);
+		adminMapper.updateReport(product_num);
+		
+	}
+
+	public void deleteDangerous(int product_num) {
+		// TODO Auto-generated method stub
+		adminMapper.deleteDangerous(product_num);
+		adminMapper.updateReport(product_num);
+	}
+
 
 
 

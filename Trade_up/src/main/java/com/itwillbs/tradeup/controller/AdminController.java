@@ -60,8 +60,10 @@ public class AdminController {
 	
 	// 신고회원
 	@GetMapping("/Declaration")
-	public String declaration() {
-		
+	public String declaration(Model model) {
+		List<Map<String, Object>> selectReport = adminService.selectReport();
+		System.out.println(selectReport);
+		model.addAttribute("selectReport",selectReport);
 		return "admin/declaration";
 	}
 	
@@ -433,6 +435,27 @@ public class AdminController {
 		
 		return TransactionCount;
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/InsertDangerous")
+	public void insertDangerous(@RequestParam int product_num){
+		System.out.println("fdfdfdfd : " + product_num);
+		
+		adminService.insertDangerous(product_num);
+	}
+	@ResponseBody
+	@PostMapping("/deleteDangerous")
+	public void deleteDangerous(@RequestParam int product_num){
+		System.out.println("fdfdfdfd : " + product_num);
+		
+		adminService.deleteDangerous(product_num);
+	}
+	@ResponseBody
+	@PostMapping("/UpdateReport")
+	public void UpdateReport(@RequestParam int product_num){
+		System.out.println("fdfdfdfd : " + product_num);
+		adminService.updateReport(product_num);
 	}
 	
 	@PostMapping("/ChargeSearch")

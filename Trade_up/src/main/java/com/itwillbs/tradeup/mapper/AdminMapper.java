@@ -80,6 +80,13 @@ public interface AdminMapper {
 	// 수수료 금액 합산 (기간)
 	Map<String, Integer> selectCommissionSumSearch(Map<String, String> map);
 
+	List<Map<String, Object>> selectReport();
+
+	void updateReport(int product_num);
+
+	void insertDangerous(int product_num);
+
+	void deleteDangerous(int product_num);
 
 
 	
