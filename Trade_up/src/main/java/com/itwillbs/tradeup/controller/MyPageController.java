@@ -55,9 +55,25 @@ public class MyPageController {
 	
 	// 판매내역
 	@GetMapping("MySales")
-	public String mySales() {
+	public String mySales(HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		
+		List<Map<String, Object>> productsList = service.getMyProduct(sId);
+		model.addAttribute("productsList", productsList);
 		
 		return "myPage/myPage_sales";
+	}
+	
+	// 판매내역 삭제
+	@GetMapping("DeleteMySales")
+	public String deleteMySales(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
+		String sId = (String)session.getAttribute("sId");
+		param.put("sId", sId);
+		int deleteCount = service.deleteProcut(param);
+		if(deleteCount > 0) {
+			return "myPage/myPage_sales";
+		}
+		return "";
 	}
 	
 	// 구매내역
@@ -65,6 +81,12 @@ public class MyPageController {
 	public String myPurchase() {
 		
 		return "myPage/myPage_purchase";
+	}
+	
+	// 구매내역 - 거래완료
+	@GetMapping("TransactionCompleted")
+	public String TransactionCompleted() {
+		return "";
 	}
 	
 	// 프로필관리

@@ -76,19 +76,19 @@
 										<div class="card-body">
 											<h5 class="card-title text-primary">신혜리님 안녕하세요!</h5>
 											<p class="mb-4">
-											신혜리님의 신뢰도 <span class="fw-bold">72%</span> 입니다.
-												<div class="progress" style="height: 6px">
-													<div
-													class="progress-bar"
-													role="progressbar"
-													style="width: 72%"
-													aria-valuenow="25"
-													aria-valuemin="0"
-													aria-valuemax="100"
-													></div>
-												</div>
-											</p>
-											<a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+												신혜리님의 신뢰도 <span class="fw-bold">30%</span> 입니다.
+											</p> 
+											<div class="progress" style="height: 6px">
+												<div
+												class="progress-bar"
+												role="progressbar"
+												style="width: 30%"
+												aria-valuenow="25"
+												aria-valuemin="0"
+												aria-valuemax="100"
+												></div>
+											</div>
+											<a>거래를 통해 신뢰도를 올릴 수 있어요!</a>
 										</div>
 									</div>
 									<div class="col-sm-5 text-center text-sm-left">

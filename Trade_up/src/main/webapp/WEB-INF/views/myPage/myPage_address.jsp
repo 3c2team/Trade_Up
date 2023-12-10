@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <%--
-	추가등록 모달 만들기
 	계좌 10개까지 등록 가능
 	(만약 10개 초과시 추가버튼 안보이게 버튼 수정)
 	
-
+	없는 상태에서 배송지 추가하면 404뜸.
+	
 --%>
 <html
   lang="en"
@@ -62,7 +63,21 @@
     <script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
 	
 	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
-	
+	<script type="text/javascript">
+		$(function() {
+			let listSize = ${fn:length(my_address)};
+			console.log(listSize);
+			$("#address_add").on("click", function() {
+				if(listSize < 10) {
+					window.open('AddAddressFrom'
+ 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no');
+				} else {
+					alert("배송지는 10개까지만 입력가능합니다.");
+					return false;
+				}
+			})
+		});	
+	</script>
   	
 </head>
 
@@ -83,8 +98,6 @@
 									id="address_add"
 									class="btn rounded-pill btn-icon btn-outline-primary"
 									style="float: right;"
-									onclick="window.open('AddAddressFrom'
-							 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no')"
 								>
 									<span class="tf-icons bx bx-plus"></span>
 								</button>

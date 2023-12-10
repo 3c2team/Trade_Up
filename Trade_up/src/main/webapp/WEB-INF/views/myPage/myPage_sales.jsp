@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -52,17 +53,22 @@
 	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 	<script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
-	<style type="text/css">
-		.product{
-		    display: flex;
-		  		align-items: center;
+	<script type="text/javascript">
+		function deleteMyProduct(pro_num, sales_status) {
+			console.log(pro_num, sales_status);
+			
+			if(sales_status == '거래중') {
+				alert("거래중인 상품은 삭제할 수 없습니다.");
+				return false;
+			}
+			if(sales_status == '거래완료') {
+				alert("거래완료 상품은 삭제할 수 없습니다.")
+				return false;
+			}
+			
+			location.href = "DeleteMySales?product_num=" + pro_num;
 		}
-		.product_info{
-			margin-left: 20px;
-		    display: flex;
-		    flex-direction: column;
-		}
-	</style>  
+	</script>
 </head>
 <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -79,53 +85,79 @@
 						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">나의 거래 /</span> 판매내역</h4>
 						<!-- Table -->
 						<div class="card">
-							<h5 class="card-header">판매목록</h5>
+							<h5 class="card-header">판매내역</h5>
 							<div class="table-responsive text-nowrap">
 								<table class="table">
-									<thead class="text-center">
+									<thead class="text-center align-middle">
 										<tr>
-											<th>상품명</th>
-											<th>판매자</th>
+											<th>카테고리</th>
+											<th colspan="2">상품명</th>
+											<th>금액</th>
 											<th>거래상태</th>
 											<th>거래방법</th>
 											<th></th>
 										</tr>
 									</thead>
-									<tbody class="text-center table-border-bottom-0">
-										<tr>
-											<td class="align-middle">
-												<div class="product">
-													<img width="80px" src="../assets/img/elements/1.jpg">
-													<div class="product_info"><strong>****상품명****</strong><a>50,000원</a></div>
-												</div>
-											</td>
-											<td class="align-middle">신혜리</td>
-											<td class="align-middle">
-                        						<span class="badge bg-label-primary">판매중</span>
-                        						<span class="badge bg-label-secondary">예약중</span>
-						                        <span class="badge bg-label-success">판매완료</span>	
-											</td>
-											<td class="align-middle"><span>택배거래</span></td>
-											<td class="align-middle">
-												<div class="dropdown" style="float: right;">
+									<tbody class="table-border-bottom-0 text-center">
+										<c:forEach var="product" items="${productsList }">
+										
+											<tr>
+												<td class="align-middle">${product.category_name }</td>
+												<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+												<td class="text-left align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
+													${product.product_name }
+												</td>
+												<td class="align-middle">
+													${product.product_price }
+													<c:if test="${empty product.product_price }">
+														무료나눔
+													</c:if>
+												</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${product.sales_status eq '거래중' }">
+															<span class="badge bg-label-secondary">거래중</span>
+														</c:when>
+														<c:when test="${product.sales_status eq '거래완료' }">
+															<span class="badge bg-label-success">거래완료</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-primary">판매중</span>
+														</c:otherwise>
+													</c:choose>
+
+												</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${product.trading_method eq 'direct '}">
+															<span class="badge bg-label-warning">직거래</span>
+														</c:when>
+														<c:when test="${product.trading_method eq 'delivery'}">
+															<span class="badge bg-label-info">택배</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-info">택배</span>
+															<span class="badge bg-label-warning">직거래</span>
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td class="align-middle">
+													<div class="dropdown">
 													<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
 														<i class="bx bx-dots-vertical-rounded"></i>
 													</button>
 													<div class="dropdown-menu">
-														<a class="dropdown-item"
-														  type="button"
-														  class="btn btn-primary"
-														  data-bs-toggle="modal"
-														  data-bs-target="#addressModal">
-															<i class="bx bx-edit-alt me-1"></i> 수정
+														<a class="dropdown-item" href="">
+															<i class="bx bx-edit-alt me-1"></i>수정
 														</a>
-														<a class="dropdown-item" href="javascript:void(0);"
-														><i class="bx bx-trash me-1"></i> 삭제</a
-														>
+														<a class="dropdown-item" onclick="deleteMyProduct(${product.product_num }, '${product.sales_status}')" href="#">
+															<i class="bx bx-trash me-1"></i>삭제
+														</a>
 													</div>
 												</div>
-											</td>
-										</tr>
+												</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>

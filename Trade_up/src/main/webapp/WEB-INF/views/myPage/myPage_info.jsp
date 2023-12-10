@@ -257,6 +257,7 @@
 									id="deleteButton"
 									data-bs-toggle="modal"
 									data-bs-target="#delete_account_modal">회원탈퇴</button>
+									<!-- 거래중 테이블 있으면 거래불가, 그럼 거래중 테이블 카운트...? -->
 								<jsp:include page="modal/delete_account_modal.jsp"></jsp:include>
 							</div>
 						</div>

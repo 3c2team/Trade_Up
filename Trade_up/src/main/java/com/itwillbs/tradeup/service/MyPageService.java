@@ -48,5 +48,12 @@ public class MyPageService {
 	public Map<String, String> getFintechInfo(String sId) {
 		return mapper.selecFintechInfo(sId);
 	}
+	// 판매목록 조회
+	public List<Map<String, Object>> getMyProduct(String sId) {
+		return mapper.selectMyProduct(sId);
+	}
+	public int deleteProcut(Map<String, Object> param) {
+		return mapper.delectProcut(param);
+	}
 
 }

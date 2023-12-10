@@ -31,4 +31,8 @@ public interface MyPageMapper {
 	Map<String, String> selecFintechInfo(String sId);
 	// 계좌관리 - 계좌 등록
 	int insertMyAccount(Map<String, Object> param);
+	// 판매내역 조회
+	List<Map<String, Object>> selectMyProduct(String sId);
+	// 판매내역 삭제
+	int delectProcut(Map<String, Object> param);
 }
