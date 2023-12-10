@@ -24,13 +24,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
 <script type="text/javascript">
-	// 채팅 연결
-	function openChat() {
-		let memberId = $("#sellMember").val();
-	//		alert(memberId);
-		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-	}
-	function payCheck(){
+		function payCheck(){
 		let sId = "${sessionScope.sId}";
 		if(sId == null){
 			alert("로그인 후 이용바랍니다.");
@@ -548,6 +542,13 @@
 	<footer class="footer">
 		<jsp:include page="../inc/bottom.jsp"></jsp:include>
     </footer>
+    <script type="text/javascript">
+    function openChat() {
+		let memberId = $("#sellMember").val();
+	//		alert(memberId);
+		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=510, height=395");
+	}
+    </script>
     
 </body>
 

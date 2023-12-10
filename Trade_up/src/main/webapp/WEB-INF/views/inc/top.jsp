@@ -6,6 +6,13 @@
 
     <!-- Header Section Begin -->
     <header class="header">
+    	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+    	<script type="text/javascript">
+			userId= "${sessionScope.sId}"; // 사용자 세션 아이디 저장
+			let ws_base_url = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}";
+			ws = new WebSocket(ws_base_url + "/echo2"); // 웹소켓 요청(Handshake)
+			ws.onopen = onOpen; // 웹소켓 요청에 대한 연결 성공 시
+    	</script>
         <div class="container" style="width: 100%; max-width: 100%;">
             <div class="customrow">
                 <div class="col-lg-3 col-md-3">
@@ -68,7 +75,7 @@
         		window.open("MyChat", "MyChat","top=200,left=700,width=500, height=500");
 			}
         	function chatRoom() {
-        		window.open("ChatRoom", "ChatRoom","top=200,left=700,width=500, height=500");
+        		window.open("ChatRoom", "ChatRoom","top=200,left=700,width=437, height=618");
 			}
         </script>
     </header>

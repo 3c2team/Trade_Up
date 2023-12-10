@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%-- 외부 CSS 파일(css/default.css) 불러오기 --%>
-<%-- <link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css"> --%>
+<link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	/* 채팅방 전체 영역 */
 	#chatRoomArea {
@@ -49,6 +49,7 @@
 	$(function() {
 		// 채팅 페이지 접속 시 웹소켓 연결 수행(새로고침 시에도 새 웹소켓 연결됨)
 		connect();
+		
 		// 채팅 시작 버튼 클릭
 		$("#btnJoin").click(function() {
 			// 상대방 아이디 미입력 시 오류메세지 출력 및 입력창 포커스
@@ -103,7 +104,6 @@
 		ws.onmessage = onMessage; // 웹소켓 서버로부터 메세지 수신 시
 		ws.onclose = onClose; // 웹소켓 요청 종료 시
 		ws.onerror = onError; // 웹소켓 처리 과정 오류 발생 시
-// 		debugger;
 	}
 	
 	// =====================================================================================
@@ -158,16 +158,17 @@
 	function createRoom(roomId, receiverId) {
 		// 생성할 채팅방의 hidden 태그에 채팅방의 룸ID 값을 value 속성값으로 저장
 		// 생성할 채팅방을 묶는 div 태그(".chatRoom")에 룸ID 를 클래스로 추가
-		let room = '<div class="chatRoom ' + roomId + '">'
-					+ '	<div class="chatMessageArea"></div>'
-					+ '	<div class="commandArea">'
-					+ '		<input type="text" class="chatMsg" onkeypress="checkEnter(this)">'
-					+ '		<input type="hidden" class="roomId" value="' + roomId + '">'
+		let room = 
+// 			'<div class="chatRoom ' + roomId + '">'
+// 					+ '	<div class="chatMessageArea"></div>'
+// 					+ '	<div class="commandArea">'
+// 					+ '		<input type="text" class="chatMsg" onkeypress="checkEnter(this)">'
+					 '		<input type="hidden" class="roomId" value="' + roomId + '">'
 					+ '		<input type="hidden" class="receiverId" value="' + receiverId + '">'
-					+ '		<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">'
-					+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
-					+ '	</div>'
-					+ '</div>';
+// 					+ '		<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">'
+// 					+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
+// 					+ '	</div>'
+// 					+ '</div>';
 		
 		$("#chatRoomArea").append(room);
 	}
@@ -316,7 +317,19 @@
 		<input type="button" value="채팅 시작" id="btnJoin">
 		<input type="button" value="채팅방 나가기" id="btnQuit">
 		<hr>
-		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
+		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%>
+			<div class="chatRoom">
+					<div class="chatMessageArea"></div>
+					<div class="commandArea">'
+						<input type="text" class="chatMsg" onkeypress="checkEnter(this)">
+<!-- 						<input type="hidden" class="roomId" value="' + roomId + '"> -->
+<!-- 						<input type="hidden" class="receiverId" value="' + receiverId + '"> -->
+						<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">
+						<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">
+					</div>
+					</div>
+		
+		</div>
 	</article>
 	<hr>
 	<footer>
