@@ -31,7 +31,8 @@
 		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
 	}
 	function payCheck(){
-		if(${sessionScope.sId} == null){
+		let sId = ${sessionScope.sId};
+		if(sId == null){
 			alert("로그인 후 이용바랍니다.");
 			return;
 		}
