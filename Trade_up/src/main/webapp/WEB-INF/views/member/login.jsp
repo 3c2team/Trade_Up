@@ -61,7 +61,7 @@
 					            		Kakao 로그인
 					        </a>
 						</div>
-						<div class="naverLogin" id="naver_id_login">
+						<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;">
 						</div>
 						<script type="text/javascript">
 							var naver_id_login = new naver_id_login("ZQC7QrR7zfKNLGcco2Gj", "http://localhost:8081/tradeup/Naver");
@@ -104,7 +104,7 @@
 	<script type="text/javascript">
 		var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8080/tradeup/NaverLoginPro");
 		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("green", 2,40);
+		naver_id_login.setButton("green", 2);
 		naver_id_login.setDomain("http://localhost:8080/tradeup/Login");
 		naver_id_login.setState(state);
 		naver_id_login.init_naver_id_login();

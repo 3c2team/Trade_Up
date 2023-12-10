@@ -162,4 +162,9 @@ public class MemberService {
 	public int updateCommission(String merchant_uid) {
 		return mapper.updateCommission(merchant_uid);
 	}
+
+	public Map<String, String> getDangerous(String member_id) {
+		// TODO Auto-generated method stub
+		return mapper.getDangerous(member_id);
+	}
 }

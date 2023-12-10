@@ -78,7 +78,7 @@ public class MainController {
 	}
 	//사기조회 결과 페이지 이동
 	@GetMapping("FraudInquiryDetail")
-	public String fraudInquiryDtail() {
+	public String fraudInquiryDtail(@RequestParam String member_id) {
 		
 		return "fraud_inquiry_detail";
 	}

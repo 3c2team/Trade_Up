@@ -294,6 +294,12 @@ public class MemberController {
 			HttpSession session, HttpServletResponse response, Model model) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, String> dbMember = service.getMemberLogin(member_id);
+//		Map<String, String> Dangerous = service.getDangerous(member_id);
+//		if(Dangerous.get("member_idx") ==null) {
+//			model.addAttribute("msg", "회원님의 계정은 이용이 정지된 계정입니다."
+//					+ "자세한사항은 정지 조회에서 조회하시길 바랍니다");
+//			return "fail_back";
+//		}
 //		if(member_id.equals("admin")) {
 //            return "admin/admin_login";
 //         }

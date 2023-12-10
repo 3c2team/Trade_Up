@@ -18,6 +18,8 @@
     let email2 = naver_id_login.getProfileData('email').split("@")[1];
     let nickname = naver_id_login.getProfileData('nickname');
     let name = naver_id_login.getProfileData('name');
+    let id = naver_id_login.getProfileData('id');
+    alert(id);
 //     debugger;
     location.href="Join?email1=" + email1+"&email2="+email2+"&nickname=" + nickname + "&name=" + name;
   }

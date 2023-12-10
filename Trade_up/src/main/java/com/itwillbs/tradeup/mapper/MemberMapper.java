@@ -39,4 +39,6 @@ public interface MemberMapper {
 	
 	int updateCommission(String merchant_uid);
 
+	Map<String, String> getDangerous(String member_id);
+
 }

@@ -95,4 +95,11 @@
 											WHERE merchant_uid = #{merchant_uid})
 		WHERE account_idx = 1;
 	</update> 
+		<select id="getDangerous">
+	    	SELECT *
+			FROM DANGEROUS
+			WHERE member_idx = (SELECT member_num
+											FROM MEMBER
+											WHERE member_id = #{member_id})
+    	</select>
 </mapper>
