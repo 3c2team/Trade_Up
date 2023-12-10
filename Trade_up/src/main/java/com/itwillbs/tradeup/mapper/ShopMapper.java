@@ -8,10 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ShopMapper {
 
-	// 글쓰기
+	// 상품 등록
 	int registProduct(Map<String, Object> map);
 
-	// 글쓰기 사진 등
+	// 상품 이미지 등록
 	int registProductImg(Map<String, Object> map);
 
 	// 상품목록 조회
@@ -29,8 +29,17 @@ public interface ShopMapper {
 	// 판매자 상품 조회
 	List<Map<String, Object>> getSellerProduct(int product_num);
 	
-	// 판매자 상품 이미지 조회
-//	List<Map<String, Object>> getSellerProductImg(String sId);
+	// 상품 수정
+	int updateProduct(Map<String, Object> map);
+	
+	// 상품 이미지 수정
+	int updateProductImg(Map<String, Object> map);
+	
+	// 상품 이미지 삭제
+	int delectProductImg(int product_num);
+	
+	// 판매자 상품 개수
+	int getSellerCount(int product_num);
 
 }
 

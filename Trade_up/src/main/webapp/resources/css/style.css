@@ -1761,6 +1761,7 @@ ol {
 .product__details__option {
 	display: flex;
     justify-content: center;
+    margin: 20px;
 }
 
 .carousel-inner {
@@ -1795,6 +1796,11 @@ ol {
 }
 
 .product__details__option__size label.active {
+	background: #5F12D3;
+	color: #ffffff;
+	border-color: #5F12D3;
+}
+.product__details__option__size label.active1 {
 	background: #5F12D3;
 	color: #ffffff;
 	border-color: #5F12D3;
@@ -3499,7 +3505,6 @@ ol {
 
 .input-name {
 	height: 50px;
-/* 	width: 618px; */
 	border: 1px solid #e1e1e1;
 	padding-left: 20px;
 	font-size: 15px;

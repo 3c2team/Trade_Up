@@ -67,13 +67,13 @@
    		 WHERE product_num = #{product_num}
 	</select>
 	
+	<!-- 카테고리 조회 -->
 	<select id="getCategory" resultType="map">
 		SELECT C.category_name
 		  FROM CATEGORY C
 		  JOIN PRODUCT P ON P.category_idx = C.category_idx
 		 WHERE P.product_num = #{product_num}
 	</select>
-	
 	
 	<!-- 판매자 상품 조회 -->
 	<select id="getSellerProduct" resultType="map">
@@ -82,12 +82,46 @@
 		 WHERE product_num = #{product_num}
 	</select>
 	
-	<!-- 판매자 상품 이미지 조회 -->
-<!-- 	<select id="getSellerProductImg" resultType="map"> -->
-<!-- 		SELECT product_image -->
-<!--   		  FROM PRODUCT_IMG I -->
-<!-- 		  JOIN PRODUCT P ON P.product_num = I.product_num -->
-<!-- 		 WHERE P.member_id = #{sId} -->
-<!-- 	</select> -->
+	<!-- 판매자 상품 개수 -->
+	<select id="getSellerCount">
+		SELECT Count(member_id)
+		  FROM PRODUCT
+		 WHERE member_id = (SELECT member_id
+		 		  FROM PRODUCT
+		 		 WHERE product_num = #{product_num})
+	</select>
+
+	<!-- 상품 수정 -->
+	<update id="updateProduct">
+		UPDATE PRODUCT
+		   SET member_id = #{member_id}
+			   , product_name = #{product_name}
+			   , product_price = #{product_price}
+			   , product_info = #{product_info}
+			   , product_release = #{product_release}
+			   , product_main_img = #{file_name}
+			   , trading_method = #{trading_method}
+			   , product_status = #{product_status}
+			   , trading_location = #{trading_location}
+			   , sales_status = #{sales_status}
+			   , delivery_method = #{delivery_method}
+		 WHERE product_num = #{product_num}
+	</update>
+	
+   	<!-- 상품 이미지 삭제 -->
+	<delete id="delectProductImg">
+   		DELETE
+   		  FROM PRODUCT_IMG
+		 WHERE product_num = #{product_num}
+   	</delete>
+   	
+   	<!-- 상품 이미지 수정 -->
+   	<insert id="updateProductImg">
+		INSERT INTO PRODUCT_IMG
+		VALUES (null
+				, #{product_num}
+				, #{product_image}
+			   )
+	</insert>
 	
 </mapper>

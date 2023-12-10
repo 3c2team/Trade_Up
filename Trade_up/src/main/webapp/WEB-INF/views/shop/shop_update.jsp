@@ -11,9 +11,8 @@
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
 <%-- <script src="https://dapi.kakao.com/v2/local/geo/coord2regioncode.${FORMAT}"></script> --%>
-<!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script> -->
 <style>
 	.custom_img{
 		height: 100%;
@@ -49,41 +48,29 @@ $(function () {
 // 		debugger;
 	});
 	
+	$("#trading_location").click(function(){
+		$("#trading_location").attr("disabled", true);
+		alert("주소를 검색해주세요.");
+// 		debugger;
+	});
 	
 	$(".trading_method1").on("click",function(){
 // 		debugger;
-		let span = '<input type="radio" name="delivery_method" value="별도">배송비 별도 '
-				   + ' <input type="radio" name="delivery_method" value="포함">배송비 포함';
+		let span = '<input type="checkbox" name="delivery_method" value="별도">배송비 별도 '
+				   + ' <input type="checkbox" name="delivery_method" value="포함">배송비 포함';
 		if($(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").append(span);
 		} 
-		if(!$("#trading_method1").is(":checked")){
+		if(!$(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").empty();
 		}
 	});
-	
 	$(".trading_method2").on("click",function(){
 // 		debugger;
 		let mapView = '<input type="text" name="trading_location" class="input-name" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">'
-					  + '<input type="button" class="site-btn" id="address" value="검색">';
+					  + '<input type="button" id="btnSearchAddress" class="site-btn" value="검색">';
 		if($(".trading_method2").is(":checked")){
 			$(".address").append(mapView);
-			$("#trading_location").on("click",function(){
-// 				debugger;
-				$("#trading_location").attr("disabled", true);
-				alert("주소를 검색해주세요.");
-			});
-			$("#address").on("click", function() {
-			    new daum.Postcode({
-			        oncomplete: function(data) {
-			            let address = data.address; // 기본 주소 저장
-			            if(data.buildingName != '') { // 건물명이 있을 경우
-			            	address += " (" + data.buildingName + ")";
-			            }
-			            $("#trading_location").val(address);
-			        }
-			    }).open();
-			});
 		} 
 		if(!$(".trading_method2").is(":checked")){
 			$(".address").empty();
@@ -111,6 +98,17 @@ $(function () {
         }
     });
 	
+	$("#btnSearchAddress").on("click", function() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            let address = data.address; // 기본 주소 저장
+	            if(data.buildingName != '') { // 건물명이 있을 경우
+	            	address += " (" + data.buildingName + ")";
+	            }
+	            $("#trading_location").val(address);
+	        }
+	    }).open();
+	});
 	
 	$("#fileTrigger").on("click", function() {
 		$("#file").trigger("click");
@@ -169,7 +167,7 @@ function uploadImageHandler(e) {
 	</header>
 
     <!-- 본문 시작 -->
-    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return confirm('등록하시겠습니까?')">
+    <form action="ShopUpdate" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return confirm('등록하시겠습니까?')">
     	<section class="contact shop_spad">
 	        <div class="container" style="padding: 0 300px 0 300px; margin: 0 300px 0 300px;">
 				<div class="section-title">
@@ -222,14 +220,13 @@ function uploadImageHandler(e) {
                                     <input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
                                     <input type="checkbox" name="free_sharing" id="free_sharing" value="무료나눔">무료나눔
                                 </div>
-								<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false">
-- 상품명(브랜드) >
+								<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" placeholder="- 상품명(브랜드) >
 - 구매 시기
 - 사용 기간
 - 하자 여부
 * 실제 촬영한 사진과 함께 상세 정보를 입력해주세요.
 * 카카오톡 아이디 첨부 시 게시물 삭제 및 이용제재 처리될 수 있어요.
- 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 트레이드업이 함께합니다.</textarea>
+ 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 트레이드업이 함께합니다."></textarea>
                                     <div class="product__details__option">
 		                                <div class="product__details__option__size">
 		                                    <span style="color: #111111; font-weight: 700;">상품상태</span>
@@ -245,7 +242,7 @@ function uploadImageHandler(e) {
 		                                <div class="product__details__option__size">
 		                                    <span style="color: #111111; font-weight: 700;">거래방법</span>
 		                                    <input type="checkbox" name="trading_method1" class="trading_method1" value="delivery">택배거래
-		                                    <input type="checkbox" name="trading_method2" class="trading_method2" value="direct" >직거래
+		                                    <input type="checkbox" name="trading_method2" class="trading_method2" value="direct">직거래
 		                                </div>
 		                            </div>
 	                                <div class="product__details__option__delivery"></div>
