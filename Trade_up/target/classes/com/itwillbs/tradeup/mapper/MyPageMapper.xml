@@ -35,13 +35,25 @@
     		ORDER BY ${order_by} DESC;
     	</select>
     	
+    	<select id="selectMyProduct" resultType="map">
+    		SELECT p.product_num
+				, c.category_name
+				, p.product_main_img 
+				, p.product_name 
+				, p.product_price 
+				, p.sales_status 
+				, p.trading_method 
+			FROM PRODUCT p
+			JOIN CATEGORY c ON p.category_idx = c.category_idx 
+			WHERE member_id = 'hyeri123';
+    	</select>
+    	
     	<select id="selecFintechInfo" resultType="map">
     		SELECT *
     		FROM FINTECH_USER_INFO
     		WHERE member_id = #{sId};
     	</select>
-    	
-    	
+		    	
     	<update id="updateMember">
     		UPDATE MEMBER
 			SET ${modify_type} = #{modify_value}
@@ -68,6 +80,14 @@
 			WHERE 1=1
 						AND ${col} = #{value}
 						AND member_id = #{sId};
+    	</delete>
+    	
+    	<delete id="delectProcut">
+    		DELETE
+    		FROM  PRODUCT
+ 			WHERE 1=1
+						AND member_id = #{sId}
+						AND product_num = #{product_num};
     	</delete>
     	
     	<insert id="insertMyAddress">
@@ -116,5 +136,6 @@
 						AND address_idx = #{address_idx}
 						And member_id = #{sId};    		
     	</update>
+    	
     	
     </mapper>
