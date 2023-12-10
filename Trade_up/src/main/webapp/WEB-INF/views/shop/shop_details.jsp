@@ -36,15 +36,6 @@
 			return;
 		}
 		window.open("Shoppay?product_num=" + ${product.product_num}, "Shoppay","top=200,left=700,width=500, height=430");
-// 		location.href = "Shoppay?product_num=" + &{product_num};
-// 		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-// 		if(${sessionScope.sChat} == null){
-// 			alert("채팅 후 안심거래 하시길 바랍니다.");
-// 			return;
-// 		}
-		
-		
-// 		location.href = "Checkout?product_num=&{product_num}";
 		
 	}
 

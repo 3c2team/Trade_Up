@@ -24,7 +24,5 @@ function delivery(){
 	<input type="hidden" value="${product_num}">
 	<button onclick="direct()">직거래</button>
 	<button onclick="delivery()">택배거래</button>
-<%-- 	<a href="Checkout?product_num=${product_num}" class="primary-btn" >택배거래</a> --%>
-<%-- 	<a href="CheckoutMeet?product_num=${product_num}" class="primary-btn">직거래</a> --%>
 </body>
 </html>

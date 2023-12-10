@@ -202,6 +202,7 @@ public class ShopController {
 	
 	@GetMapping("Shoppay")
 	public String Shoppay(@RequestParam int product_num, Model model) {
+		
 		model.addAttribute("product_num", product_num);
 		return "shop/shop_pay";
 	}
