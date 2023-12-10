@@ -24,17 +24,29 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
 <script type="text/javascript">
-// 	function payCheck(){
-// 		if(${sessionScope.sId} == null){
-// 			alert("로그인 후 이용바랍니다.");
-// 			return;
-// 		}
+	// 채팅 연결
+	function openChat() {
+		let memberId = $("#sellMember").val();
+	//		alert(memberId);
+		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
+	}
+	function payCheck(){
+		if(${sessionScope.sId} == null){
+			alert("로그인 후 이용바랍니다.");
+			return;
+		}
+		window.open("Shoppay?product_num=" + ${product.product_num}, "Shoppay","top=200,left=700,width=500, height=430");
+// 		location.href = "Shoppay?product_num=" + &{product_num};
+// 		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
 // 		if(${sessionScope.sChat} == null){
 // 			alert("채팅 후 안심거래 하시길 바랍니다.");
 // 			return;
 // 		}
 		
-// 	}
+		
+// 		location.href = "Checkout?product_num=&{product_num}";
+		
+	}
 
 
 // var map = null,
@@ -263,18 +275,19 @@
 				                                </div>
 				                            </div>
 											<div class="product__details__cart__option">
-											<c:forEach var="sellerProduct" items="${sellerProduct }">
-												판매자 아이디 : ${sellerProduct.member_id}(확인용)<br>
-												<input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
-												<c:choose>
-													<c:when test="${empty sessionScope.sId }">
-														<a class="primary-btn"  style="background: gray;">채팅하기</a>							                        
-													</c:when>
-													<c:otherwise>
-						                                <a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
-													</c:otherwise>
-												</c:choose>
-					                                <a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
+												<c:forEach var="sellerProduct" items="${sellerProduct }">
+													판매자 아이디 : ${sellerProduct.member_id}(확인용)<br>
+													<input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
+													<input type="hidden" value="${product_num}">
+													<c:choose>
+														<c:when test="${empty sessionScope.sId }">
+															<a class="primary-btn"  style="background: gray;">채팅하기</a>							                        
+														</c:when>
+														<c:otherwise>
+							                                <a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
+														</c:otherwise>
+													</c:choose>
+						                                <a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
 				                                </c:forEach>
 				                            </div>
 										</div>
@@ -544,13 +557,6 @@
 		<jsp:include page="../inc/bottom.jsp"></jsp:include>
     </footer>
     
-    <script type="text/javascript">
-		function openChat() {
-			let memberId = $("#sellMember").val();
-// 			alert(memberId);
-			window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-		}
-</script>
 </body>
 
 </html>
