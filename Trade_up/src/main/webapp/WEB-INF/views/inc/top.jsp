@@ -12,6 +12,21 @@
 			let ws_base_url = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}";
 			ws = new WebSocket(ws_base_url + "/echo2"); // 웹소켓 요청(Handshake)
 			ws.onopen = onOpen; // 웹소켓 요청에 대한 연결 성공 시
+			
+			function onOpen(event) {
+				ws.send(getJsonString("INIT", userId, "", "", ""));
+			}
+			
+			function getJsonString(type, userId, receiverId, roomId, message) {
+				let data = {
+					type : type,
+					userId : userId,
+					receiverId : receiverId,
+					roomId : roomId,
+					message : message
+				};
+				return JSON.stringify(data);
+			}
     	</script>
         <div class="container" style="width: 100%; max-width: 100%;">
             <div class="customrow">
