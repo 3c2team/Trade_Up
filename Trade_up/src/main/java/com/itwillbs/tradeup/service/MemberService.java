@@ -163,10 +163,6 @@ public class MemberService {
 		return mapper.updateCommission(merchant_uid);
 	}
 
-	public Map<String, String> getDangerous(String member_id) {
-		// TODO Auto-generated method stub
-		return mapper.getDangerous(member_id);
-	}
 
 	public Map<String, String> getNaverAccessToken(String id) {
 		// TODO Auto-generated method stub

@@ -291,20 +291,17 @@
 		WHERE report_product_num = #{product_num}		
 	</update>
 	<insert id="insertDangerous">
-	INSERT INTO DANGEROUS VALUES(
-		(SELECT member_num
-		FROM MEMBER
-		WHERE member_id = (SELECT member_id
-									FROM PRODUCT
-									WHERE product_num = #{product_num}))
-	)
+	UPDATE MEMBER
+	SET member_state = '정지'
+	WHERE member_id =(SELECT member_id
+						FROM PRODUCT
+					   WHERE product_num = #{product_num})
 	</insert>
 	<delete id="deleteDangerous">
-		DELETE FROM DANGEROUS
-		WHERE member_idx = 	(SELECT member_num
-										FROM MEMBER
-										WHERE member_id = (SELECT member_id
-																	FROM PRODUCT
-																	WHERE product_num = #{product_num}))
+		UPDATE MEMBER
+		SET member_state = '회원'
+		WHERE member_id =(SELECT member_id
+							FROM PRODUCT
+					   	   WHERE product_num = #{product_num})
 	</delete>
 </mapper>

@@ -75,6 +75,11 @@ public class MemberController {
 			session.setAttribute("naver_id", id);
 			return "member/loginNaver";
 		}
+		if(naver.get("member_state").equals("정지")) {
+			model.addAttribute("msg", "회원님의 계정은 이용이 정지된 계정입니다."
+					+ "자세한사항은 정지 조회에서 조회하시길 바랍니다");
+			return "fail_back";
+		}
 		session.setAttribute("naver_id", naver.get("naver_id"));
         session.setAttribute("sId", naver.get("member_id"));
         session.setAttribute("sName", naver.get("member_name"));
@@ -276,7 +281,11 @@ public class MemberController {
         
         String kakao_id = (String)userInfo.get("id");
         Map<String, String> dbMember = service.getMemberKakaoLogin(kakao_id);
-    	
+        if(dbMember.get("member_state").equals("정지")) {
+			model.addAttribute("msg", "회원님의 계정은 이용이 정지된 계정입니다."
+					+ "자세한사항은 정지 조회에서 조회하시길 바랍니다");
+			return "fail_back";
+		}
     	if(dbMember != null) { // 연동 이력이 있는 경우
     		session.setAttribute("kakao_id", kakao_id);
             session.setAttribute("access_Token", access_Token);
@@ -313,6 +322,7 @@ public class MemberController {
 			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
 			return "fail_back";
 		}
+		
 		session.setAttribute("sId", map.get("member_id"));
 		session.setAttribute("sName", dbMember.get("member_name"));
         session.setAttribute("sPhone", dbMember.get("member_phone_num"));
@@ -335,12 +345,11 @@ public class MemberController {
 			HttpSession session, HttpServletResponse response, Model model) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, String> dbMember = service.getMemberLogin(member_id);
-//		Map<String, String> Dangerous = service.getDangerous(member_id);
-//		if(Dangerous.get("member_idx") ==null) {
-//			model.addAttribute("msg", "회원님의 계정은 이용이 정지된 계정입니다."
-//					+ "자세한사항은 정지 조회에서 조회하시길 바랍니다");
-//			return "fail_back";
-//		}
+		if(dbMember.get("member_state").equals("정지")) {
+			model.addAttribute("msg", "회원님의 계정은 이용이 정지된 계정입니다."
+					+ "자세한사항은 정지 조회에서 조회하시길 바랍니다");
+			return "fail_back";
+		}
 //		if(member_id.equals("admin")) {
 //            return "admin/admin_login";
 //         }

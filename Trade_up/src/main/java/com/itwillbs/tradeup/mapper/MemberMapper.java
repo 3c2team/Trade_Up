@@ -39,8 +39,6 @@ public interface MemberMapper {
 	
 	int updateCommission(String merchant_uid);
 
-	Map<String, String> getDangerous(String member_id);
-
 	Map<String, String> getNaverAccessToken(String id);
 
 	int insertNaver(Map<String, String> map);
