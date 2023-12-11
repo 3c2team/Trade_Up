@@ -167,4 +167,14 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return mapper.getDangerous(member_id);
 	}
+
+	public Map<String, String> getNaverAccessToken(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getNaverAccessToken(id);
+	}
+
+	public int insertNaver(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.insertNaver(map);
+	}
 }

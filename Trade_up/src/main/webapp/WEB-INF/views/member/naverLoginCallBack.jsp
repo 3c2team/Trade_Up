@@ -8,20 +8,16 @@
 </head>
 <body>
 <script type="text/javascript">
-  var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8080/tradeup/NaverLoginPro");
+  var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
   // 접근 토큰 값 출력
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
   function naverSignInCallback() {
-    let email1 = naver_id_login.getProfileData('email').split("@")[0];
-    let email2 = naver_id_login.getProfileData('email').split("@")[1];
-    let nickname = naver_id_login.getProfileData('nickname');
-    let name = naver_id_login.getProfileData('name');
     let id = naver_id_login.getProfileData('id');
     alert(id);
 //     debugger;
-    location.href="Join?email1=" + email1+"&email2="+email2+"&nickname=" + nickname + "&name=" + name;
+    location.href="NaverLogin?id=" + id;
   }
 </script>
 </body>

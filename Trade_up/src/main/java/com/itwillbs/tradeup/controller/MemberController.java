@@ -42,9 +42,52 @@ public class MemberController {
 		System.out.println(map);
 		return "member/join";
 	}
-	@GetMapping("NaverLoginPro")
-	public String naverLoginPro() {
-		return "member/naverLoginPro";
+	@PostMapping("AddNaver")
+	public String addNaver(@RequestParam Map<String, String> map,Model model,HttpSession session) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		System.out.println("받은 값 : " + map);
+		Map<String, String> dbMember = service.getMemberLogin(map.get("member_id"));
+		
+		if(dbMember == null || !passwordEncoder.matches(map.get("member_passwd"), dbMember.get("member_passwd"))) {
+			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
+			return "fail_back";
+		}
+		int addNaverCount = service.insertNaver(map);
+		if(addNaverCount == 0) {
+			model.addAttribute("msg", "연동에 실패하였습니다.");
+			return "fail_back";
+		} 
+		session.setAttribute("naver_id", dbMember.get("naver_id"));
+        session.setAttribute("sId", dbMember.get("member_id"));
+        session.setAttribute("sName", dbMember.get("member_name"));
+        session.setAttribute("sPhone", dbMember.get("member_phone_num"));
+        session.setAttribute("sEmail", dbMember.get("member_e_mail"));
+        session.setAttribute("loginUser", dbMember);
+        model.addAttribute("msg", "네이버 연동이 완료되었습니다. 메인페이지로 이동합니다."); // 출력할 메세지
+		return "redirect:/";
+	}
+	@GetMapping("NaverLogin")
+	public String naverLogin(@RequestParam String id, HttpSession session, Model model) {
+		
+		System.out.println("네이버 아이디 : " + id );
+		Map<String, String> naver = service.getNaverAccessToken(id);
+		
+		if(naver == null) {
+			session.setAttribute("naver_id", id);
+			return "member/loginNaver";
+		}
+		session.setAttribute("naver_id", naver.get("naver_id"));
+        session.setAttribute("sId", naver.get("member_id"));
+        session.setAttribute("sName", naver.get("member_name"));
+        session.setAttribute("sPhone", naver.get("member_phone_num"));
+        session.setAttribute("sEmail", naver.get("member_e_mail"));
+        session.setAttribute("loginUser", naver);
+        model.addAttribute("msg", "로그인에 성공했습니다. 메인페이지로 이동합니다."); // 출력할 메세지
+		return "redirect:/";
+	}
+	@GetMapping("NaverLoginCallBack")
+	public String NaverLoginCallBack() {
+		return "member/naverLoginCallBack";
 	}
 	// 아이디 중복 판별 처리
 	@ResponseBody
