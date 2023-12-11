@@ -41,15 +41,26 @@ public class MyPageController {
 	
 	// 마이페이지
 	@GetMapping("MyPageMain")
-	public String myPageMain() {
+	public String myPageMain(HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		List<Map<String, Object>> accountList = service.getMyAccount(sId);
+		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
+		List<Map<String, Object>> productsList = service.getMyProduct(sId);
 		
+		model.addAttribute("accountList", accountList);
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("productsList", productsList);
 		return "myPage/myPage_main";
 	}
 	
 	// 관심목록
 	@GetMapping("MyFavorite")
-	public String myFavorite() {
+	public String myFavorite(HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
 		
+		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
+		model.addAttribute("favoriteList", favoriteList);
+		System.out.println(favoriteList);
 		return "myPage/myPage_favorite";
 	}
 	

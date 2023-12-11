@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -93,59 +94,59 @@
 										<tr>
 											<th width="30px"><input type="checkbox" class="form-check-input" style="width: 18px; height: 18px;"></th>
 											<th colspan="2">상품명</th>
+											<th>금액</th>
 											<th>판매자</th>
 											<th>거래상태</th>
 											<th>거래방법</th>
 										</tr>
 									</thead>
 									<tbody class="table-border-bottom-0 text-center">
-										
-										<tr>
-											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
-											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
-											<td class="text-left align-middle">
-												****상품명****
-											</td>
-											<td class="align-middle">신혜리</td>
-											<td class="align-middle">
-                        						<span class="badge bg-label-primary">판매중</span>
-<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
-<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
-											</td>
-											<td class="align-middle">택배거래</td>
-										</tr>
-										
-										<tr>
-											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
-											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
-											<td class="text-left align-middle">
-												****상품명****
-											</td>
-											<td class="align-middle">신혜리</td>
-											<td class="align-middle">
-                        						<span class="badge bg-label-primary">판매중</span>
-<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
-<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
-											</td>
-											<td class="align-middle">택배거래</td>
-										</tr>
-										<tr>
-											<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
-											<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
-											<td class="text-left align-middle">
-												****상품명****
-											</td>
-											<td class="align-middle">신혜리</td>
-											<td class="align-middle">
-                        						<span class="badge bg-label-primary">판매중</span>
-<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
-<!-- 						                        <span class="badge bg-label-success">판매완료</span>	 -->
-											</td>
-											<td class="align-middle">택배거래</td>
-										</tr>
-										
+										<c:forEach var="favorite" items="${favoriteList }">
+											<tr>
+												<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
+												<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+												<td class="text-left align-middle">
+													${favorite.product_name }
+												</td>
+												<td class="align-middle">${favorite.product_price }</td>
+												<td class="align-middle">${favorite.member_id }</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${favorite.sales_status eq '거래중'}">
+															<span class="badge bg-label-secondary">거래중</span>
+														</c:when>
+														<c:when test="${favorite.sales_status eq '거래완료' }">
+															<span class="badge bg-label-success">거래완료</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-primary">판매중</span>
+														</c:otherwise>
+													</c:choose>
+
+												</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${favorite.trading_method eq 'direct '}">
+															<span class="badge bg-label-warning">직거래</span>
+														</c:when>
+														<c:when test="${favorite.trading_method eq 'delivery'}">
+															<span class="badge bg-label-info">택배</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-info">택배</span>
+															<span class="badge bg-label-warning">직거래</span>
+														</c:otherwise>
+													</c:choose>
+												</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
+							</div>
+							<div class="row">
+								<div class="align-middle">
+									
+								</div>
 							</div>
 						</div>
 						<!--/Table -->

@@ -35,4 +35,8 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectMyProduct(String sId);
 	// 판매내역 삭제
 	int delectProcut(Map<String, Object> param);
+	// 관심목록 조회
+	List<Map<String, Object>> selectMyFavorite(String sId);
+	// 계좌관리 - 계좌 조회
+	List<Map<String, Object>> selectMyAccount(String sId);
 }

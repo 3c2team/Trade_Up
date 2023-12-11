@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html
@@ -178,55 +179,32 @@
 						<!-- 거래내역 -->
 						<div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
 							<div class="card h-100">
-								<div class="card-header d-flex align-items-center justify-content-between pb-0">
-									<div class="card-title mb-0">
-										<h5 class="m-0 me-2">거래내역</h5>
-										<small class="text-muted">이번달 거래내역</small>
-									</div>
-									<div class="dropdown">
-										<button
-										class="btn p-0"
-										type="button"
-										id="orederStatistics"
-										data-bs-toggle="dropdown"
-										aria-haspopup="true"
-										aria-expanded="false"
-										>
-											<i class="bx bx-dots-vertical-rounded"></i>
-										</button>
-										<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-											<a class="dropdown-item" href="javascript:void(0);">Select All</a>
-											<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-											<a class="dropdown-item" href="javascript:void(0);">Share</a>
+									<div class="card-header d-flex align-items-center justify-content-between">
+										<h5 class="card-title m-0 me-2">관심목록</h5>
+										<div class="dropdown">
 										</div>
 									</div>
-								</div>
-								<div class="card-body">
-									<div class="d-flex justify-content-between align-items-center mb-3">
-										<div class="d-flex flex-column align-items-center gap-1">
-											<h2 class="mb-2">8,258</h2>
-											<span>Total Orders</span>
-										</div>
-										<div id="orderStatisticsChart"></div>
+									<div class="card-body">
+										<ul class="p-0 m-0">
+											<c:forEach var="favorite" items="${favoriteList }">
+												<li class="d-flex mb-4 pb-1">
+													<div class="avatar flex-shrink-0 me-3">
+														<img src="${pageContext.request.contextPath }/resources/myPage/assets/img/icons/unicons/wallet.png" class="rounded" />
+													</div>
+													<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+														<div class="me-2">
+															<h6 class="mb-0">${favorite.product_name }</h6>
+															<small class="text-muted d-block mb-1">${favorite.member_id }</small>
+														</div>
+														<div class="user-progress d-flex align-items-center gap-1">
+															<h6 class="mb-0">${favorite.product_price }</h6>
+														</div>
+													</div>
+												</li>
+											</c:forEach>
+										</ul>
 									</div>
-									<ul class="p-0 m-0">
-										<li class="d-flex mb-4 pb-1">
-											<div class="avatar flex-shrink-0 me-3">
-												<span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
-											</div>
-											<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-												<div class="me-2">
-													<h6 class="mb-0">Fashion</h6>
-													<small class="text-muted">T-shirt, Jeans, Shoes</small>
-												</div>
-												<div class="user-progress">
-													<small class="fw-semibold">23.8k</small>
-												</div>
-											</div>
-										</li>
-									</ul>
 								</div>
-							</div>
 						</div>
 						<!--/ 거래내역 -->
 			
@@ -296,23 +274,6 @@
 								<div class="card h-100">
 									<div class="card-header d-flex align-items-center justify-content-between">
 										<h5 class="card-title m-0 me-2">Pay 사용내역</h5>
-										<div class="dropdown">
-											<button
-											class="btn p-0"
-											type="button"
-											id="transactionID"
-											data-bs-toggle="dropdown"
-											aria-haspopup="true"
-											aria-expanded="false"
-											>
-												<i class="bx bx-dots-vertical-rounded"></i>
-											</button>
-											<div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-												<a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-												<a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-												<a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-											</div>
-										</div>
 									</div>
 									<div class="card-body">
 										<ul class="p-0 m-0">
@@ -322,12 +283,10 @@
 												</div>
 												<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 													<div class="me-2">
-														<small class="text-muted d-block mb-1">Paypal</small>
-														<h6 class="mb-0">Send money</h6>
+														<h6 class="mb-0">출금</h6>
 													</div>
 													<div class="user-progress d-flex align-items-center gap-1">
-														<h6 class="mb-0">+82.6</h6>
-														<span class="text-muted">USD</span>
+														<h6 class="mb-0">-82123원</h6>
 													</div>
 												</div>
 											</li>
@@ -344,8 +303,9 @@
 		</div>
 	</div>
 	
-	<%-- 모달  --%>
-	<jsp:include page="modal/up_pay.jsp"></jsp:include>
+	<%-- 업페이 충전 모달 --%>
+	<%@ include file="modal/up_pay.jsp" %>
+<%-- 	<jsp:include page="modal/up_pay.jsp"></jsp:include> --%>
 	<%-- 바텀 메뉴 --%>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	

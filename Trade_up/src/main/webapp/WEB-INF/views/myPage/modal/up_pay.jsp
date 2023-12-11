@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <script type="text/javascript">
@@ -36,14 +35,11 @@
 						<div class="col mb-3">
 							<label for="nameSmall" class="form-label">결제계좌</label>
 							<select class="form-select" required>
-	<%-- 							<c:forEach var="account" items="${accountList }" varStatus="status"> --%>
-	<%-- 								<option id="account_${status.count }" > --%>
-	<%-- 									${account.accout } --%>
-	<!-- 								</option> -->
-	<%-- 							</c:forEach> --%>
-								<option>농협 3520537300153</option>
-								<option>카카오뱅크 123456789</option>
-								<option>기업 987654321</option>
+								<c:forEach var="account" items="${accountList }" varStatus="status">
+									<option id="account_${status.count }" >
+										${account.account_bank }  ${account.account_num }
+									</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>

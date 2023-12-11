@@ -55,5 +55,12 @@ public class MyPageService {
 	public int deleteProcut(Map<String, Object> param) {
 		return mapper.delectProcut(param);
 	}
+	public List<Map<String, Object>> getMyfavorite(String sId) {
+		return mapper.selectMyFavorite(sId);
+	}
+	// 계좌관리 - 계좌 조회
+	public List<Map<String, Object>> getMyAccount(String sId) {
+		return mapper.selectMyAccount(sId);
+	}
 
 }
