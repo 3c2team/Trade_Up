@@ -63,7 +63,6 @@ public class MemberController {
         session.setAttribute("sPhone", dbMember.get("member_phone_num"));
         session.setAttribute("sEmail", dbMember.get("member_e_mail"));
         session.setAttribute("loginUser", dbMember);
-        model.addAttribute("msg", "네이버 연동이 완료되었습니다. 메인페이지로 이동합니다."); // 출력할 메세지
 		return "redirect:/";
 	}
 	@GetMapping("NaverLogin")
@@ -82,7 +81,6 @@ public class MemberController {
         session.setAttribute("sPhone", naver.get("member_phone_num"));
         session.setAttribute("sEmail", naver.get("member_e_mail"));
         session.setAttribute("loginUser", naver);
-        model.addAttribute("msg", "로그인에 성공했습니다. 메인페이지로 이동합니다."); // 출력할 메세지
 		return "redirect:/";
 	}
 	@GetMapping("NaverLoginCallBack")
