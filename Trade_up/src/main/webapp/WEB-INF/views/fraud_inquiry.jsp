@@ -30,11 +30,13 @@
 			판매자의 휴대폰, 계좌번호, 메신저 ID, 이메일로<br>
 			피해 사례 조회를 이용해 보세요!
 		</span>
-		<select class="form-select">
-			<option disabled selected="selected">아이디를 입력하세요</option>
-		</select>
-		<input type="text" name="member_id" class="form-control" style="margin-top: 20px;">
-		<input type="button" onclick="goFraudInquiryDetail()" class="btn btn-dark float-start" style="margin-top: 20px;"value="조회">
+		<form action="FraudInquiryPro" method="post">
+			<select class="form-select">
+				<option disabled selected="selected">아이디를 입력하세요</option>
+			</select>
+			<input type="text" name="member_id" class="form-control" style="margin-top: 20px;">
+			<input type="submit" class="btn btn-dark float-start" style="margin-top: 20px;"value="조회">
+		</form>
 		<hr style="border: groove; margin-top: 13%;">
 		<div class="custom_font_13px text">
 			(주)트레이드업은 범죄 피해방지를 위해 해당 서비스를 운영하고 있습니다. 피해 사례 결과에 대해 중고나라는 보증하지 않으며, 거래에 대한 법적 책임은 당사자에게 있습니다.
@@ -44,11 +46,5 @@
 		</div>
 	</div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
-	<script type="text/javascript">
-		function goFraudInquiryDetail() {
-			location.href="FraudInquiryDetail?member_id=" + $("input[type=text][name=member_id]").val();
-					
-		}
-	</script>
 </body>
 </html>

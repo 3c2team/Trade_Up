@@ -41,7 +41,7 @@
                                     <li><a href="BlogDetails">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="FraudInquiry">사기조회</a></li>
+                            <li><a href="FraudInquiry">정지조회</a></li>
                             <li><a href="MarketPriceInquiry">시세조회</a></li>
                             <li><a href="ChatMain">채팅테스트</a></li>
                         </ul>

@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MainService;
+import com.itwillbs.tradeup.service.MemberService;
 
 @Controller
 public class MainController {
 	
 	@Autowired
 	MainService service;
+	@Autowired
+	MemberService memberService;
 	
 	@GetMapping("About")
 	public String about() {
@@ -72,15 +75,22 @@ public class MainController {
 	}
 	//사기조회 결과 처리
 	@PostMapping("FraudInquiryPro")
-	public String fraudInquiryPro() {
+	public String fraudInquiryPro(@RequestParam String member_id,Model model) {
+		System.out.println("member_id : " + member_id);
+		Map<String, String> dbMember = memberService.getMemberLogin(member_id);
+		model.addAttribute("targetURL", "FraudInquiry");
 		
-		return "redirect:/FraudInquiryDetail";
-	}
-	//사기조회 결과 페이지 이동
-	@GetMapping("FraudInquiryDetail")
-	public String fraudInquiryDtail(@RequestParam String member_id) {
-		
-		return "fraud_inquiry_detail";
+		if(dbMember == null) {
+			model.addAttribute("msg","정보가 없는 아이디입니다.");
+			return "forward";
+		}
+		if(dbMember.get("member_state").equals("정지")) {
+			model.addAttribute("msg","회원님의 계정은 정지된 계정입니다"
+					+ "자세한 문의 사항은 XXXXX@XXXX.com으로 문의 주시길 바랍니다.");
+		}else {
+			model.addAttribute("msg","회원님의 계정은 이용가능한 계정입니다.");
+		}
+		return "forward";
 	}
 	
 	//시세조회 페이지 이동
