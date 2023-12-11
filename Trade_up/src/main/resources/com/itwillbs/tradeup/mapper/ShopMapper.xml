@@ -87,8 +87,8 @@
 		SELECT Count(member_id)
 		  FROM PRODUCT
 		 WHERE member_id = (SELECT member_id
-		 		  FROM PRODUCT
-		 		 WHERE product_num = #{product_num})
+		 		  			  FROM PRODUCT
+							 WHERE product_num = #{product_num})
 	</select>
 
 	<!-- 상품 수정 -->

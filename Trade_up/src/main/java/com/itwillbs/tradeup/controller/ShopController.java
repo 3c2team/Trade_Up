@@ -98,6 +98,11 @@ public class ShopController {
 		if (map.get("trading_method2") != null) {
 			map.put("trading_method", map.get("trading_method2"));
 		}
+		if (map.get("product_price") == null) {
+			map.put("product_price", map.get("free_sharing"));
+		} else {
+			map.put("product_price", map.get("product_price")+"원");
+		}
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
@@ -160,7 +165,7 @@ public class ShopController {
 		} 
 		
 		model.addAttribute("msg", "상품등록을 실패했습니다.");
-		model.addAttribute("targetURL", "redirect:/ShopForm");
+		model.addAttribute("targetURL", "ShopForm");
 		return "fail_back";
 	}
 	
@@ -204,6 +209,7 @@ public class ShopController {
 	// 상품 상세 페이지에서 결제 페이지 이동
 	@GetMapping("ShopPay")
 	public String shopPay(@RequestParam int product_num, Model model) {
+		
 		
 		model.addAttribute("product_num", product_num);
 		return "shop/shop_pay";
