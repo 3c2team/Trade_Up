@@ -103,6 +103,8 @@ public class bankApiClient {
 		ResponseEntity<ResponseUserInfoVO> responseEntity = 
 				restTemplate.exchange(uri, HttpMethod.GET, httpEntity, ResponseUserInfoVO.class);
 		
+		
+		
 		return responseEntity.getBody();
 	}
 	

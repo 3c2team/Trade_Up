@@ -49,6 +49,11 @@ public class OauthController {
 		
 		bankApiService.registToken(responseToken, sId);
 		
+		session.setAttribute("access_token", responseToken.getAccess_token());
+		session.setAttribute("user_seq_no", responseToken.getUser_seq_no());
+		
+		model.addAttribute("access_token", responseToken.getAccess_token());
+		model.addAttribute("user_seq_no", responseToken.getAccess_token());
 		return "close";
 	}
 }
