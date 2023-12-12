@@ -46,7 +46,7 @@ public class ShopController {
 //		System.out.println(selectCategory);
 //		System.out.println(map);
 		if(map.get("price") != null) {
-			System.out.println("일단 이건 성공");
+//			System.out.println("일단 이건 성공");
 			String[] price = map.get("price")
 							.replace("만원", "0000")
 							.replace("이상", "")
@@ -70,11 +70,29 @@ public class ShopController {
 	
 	
 	@ResponseBody
+	@PostMapping("LastProduct")
+	public List<Map<String, Object>> lastProduct(@RequestParam(required = false) String category_idx) {
+//		System.out.println("category_idx: " + category_idx);
+		return shopService.lastProductList(category_idx);
+	}	
+	@ResponseBody
 	@PostMapping("JjimProduct")
 	public List<Map<String, Object>> jjimProduct(@RequestParam(required = false) String category_idx) {
-		System.out.println("category_idx: " + category_idx);
+//		System.out.println("category_idx: " + category_idx);
 		return shopService.jjimProductList(category_idx);
 	}	
+//	@ResponseBody
+//	@PostMapping("LowProduct")
+//	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_idx) {
+//		System.out.println("category_idx: " + category_idx);
+//		return shopService.lowProductList(category_idx);
+//	}	
+//	@ResponseBody
+//	@PostMapping("HighProduct")
+//	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_idx) {
+//		System.out.println("category_idx: " + category_idx);
+//		return shopService.highProductList(category_idx);
+//	}	
 	
 	@GetMapping("ShopForm")
 	public String shopForm(@RequestParam(required = false) Map<String,String> map
@@ -225,8 +243,6 @@ public class ShopController {
 	// 상품 상세 페이지에서 결제 페이지 이동
 	@GetMapping("ShopPay")
 	public String shopPay(@RequestParam int product_num, Model model) {
-		
-		
 		model.addAttribute("product_num", product_num);
 		return "shop/shop_pay";
 	}

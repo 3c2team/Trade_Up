@@ -17,7 +17,7 @@
 	 margin: 5px;
 	 font-size: 13px;
 }
-.cusor{
+.nice-scroll li{
 	cursor: pointer;
 }
 </style>
@@ -73,14 +73,18 @@
                                             <div class="card-main">
                                                 <ul class="nice-scroll">
                                                 	<c:forEach var="selectCategory" items="${selectCategory }" varStatus="status">
-														<li value="${status.count }"><div class="cusor">${selectCategory.category_name }</div></li>
+														<li class="cusor" value="${status.count }">
+<!-- 														<div class="cusor"> -->
+														${selectCategory.category_name }
+<!-- 														</div> -->
+														</li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" name="category_idx" id="category_idx">
+<!--                                 <input type="hidden" name="category_idx" id="category_idx"> -->
                                 <!-- 가격 -->
                                 <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
@@ -169,14 +173,28 @@
 		var category = "";
 		var price = "";
 		let category_idx = 1;
+// 		$(".cusor").click(function() {
+// 	 		debugger;
+// 			category_idx = $(this).val();
+// 			alert(category_idx);
+// 		});
+
+// 		$(".cusor").on("click",function(){
+// 			location.href="Shop?category=" + $(this).text() + search + price;
+// 		});
+		
 		$(".nice-scroll li").click(function() {
 // 	 		debugger;
 			category_idx = $(this).val();
 			alert(category_idx);
+			$(".nice-scroll li").css("background-color" , "white");
+			$(".nice-scroll li").css("color" , "#6c757d");
+			$(this).css("background-color" , "#5F12D3");
+			$(this).css("color" , "white");
 		});
 		if("${param.category}"){
 			category = "&category=${param.category}";
-			$(".cusor").each(function(){
+			$(".nice-scroll li").each(function(){
 // 				debugger;				
 				if($(this).text() == "${param.category}"){
 					$(".nice-scroll li").css("background-color" , "white");
@@ -222,20 +240,18 @@
 			location.href="Shop?" + totalSearch;
 		});
 		
-		$(".cusor").on("click",function(){
-			location.href="Shop?category=" + $(this).text() + search + price;
-		});
 		$(".radio").on("click",function(){
 			location.href="Shop?price=" + $(this).val() + search + category;
 		});
 
 		$("#selectBox").change(function() {		    
+// 	 		debugger;
 			var result = $("#selectBox option:selected").val();
 			alert(category_idx);
 		    if (result == 'last') {
 				$.ajax({
 					type: "POST",
-					url: "JjimProduct",
+					url: "LastProduct",
 					data: {
 						category_idx : category_idx
 					},
@@ -304,77 +320,77 @@
 				
 				});
 			}
-		    if (result == 'low') {
-				$.ajax({
-					type: "POST",
-					url: "JjimProduct",
-					data: {
-						category_idx : category_idx
-					},
-					dataType: 'json',
-					success: function(data) {
-						$(".rightList").html("");
-						data.forEach( product =>{
-							$(".rightList").append( 
-								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
-							);
-						});
-					},erorr: function() {
-						location.href="Shop";
-					}
+// 		    if (result == 'low') {
+// 				$.ajax({
+// 					type: "POST",
+// 					url: "LowProduct",
+// 					data: {
+// 						category_idx : category_idx
+// 					},
+// 					dataType: 'json',
+// 					success: function(data) {
+// 						$(".rightList").html("");
+// 						data.forEach( product =>{
+// 							$(".rightList").append( 
+// 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+// 								+ 	"<div class='product__item'>"
+// 								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+// 								+ 			"<ul class='product__hover'>"
+// 								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+// 								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+// 								+ 			"</ul>"
+// 								+ 		"</div>"
+// 								+ 		"<div class='product__item__text'>"
+// 								+ 			"<h6>" + product.product_name + "</h6>"
+// 								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+// 								+ 			"<p>" + product.trading_location + "</p>"
+// 								+ 			"<h5>" + product.product_price + "</h5>"
+// 								+ 		"</div>"
+// 								+	 "</div>"
+// 								+ "</div>"
+// 							);
+// 						});
+// 					},erorr: function() {
+// 						location.href="Shop";
+// 					}
 				
-				});
-			}
-		    if (result == 'high') {
-				$.ajax({
-					type: "POST",
-					url: "JjimProduct",
-					data: {
-						category_idx : category_idx
-					},
-					dataType: 'json',
-					success: function(data) {
-						$(".rightList").html("");
-						data.forEach( product =>{
-							$(".rightList").append( 
-								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
-							);
-						});
-					},erorr: function() {
-						location.href="Shop";
-					}
-				});
-			}
+// 				});
+// 			}
+// 		    if (result == 'high') {
+// 				$.ajax({
+// 					type: "POST",
+// 					url: "HighProduct",
+// 					data: {
+// 						category_idx : category_idx
+// 					},
+// 					dataType: 'json',
+// 					success: function(data) {
+// 						$(".rightList").html("");
+// 						data.forEach( product =>{
+// 							$(".rightList").append( 
+// 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+// 								+ 	"<div class='product__item'>"
+// 								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+// 								+ 			"<ul class='product__hover'>"
+// 								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+// 								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+// 								+ 			"</ul>"
+// 								+ 		"</div>"
+// 								+ 		"<div class='product__item__text'>"
+// 								+ 			"<h6>" + product.product_name + "</h6>"
+// 								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+// 								+ 			"<p>" + product.trading_location + "</p>"
+// 								+ 			"<h5>" + product.product_price + "</h5>"
+// 								+ 		"</div>"
+// 								+	 "</div>"
+// 								+ "</div>"
+// 							);
+// 						});
+// 					},erorr: function() {
+// 						location.href="Shop";
+// 					}
+// 				});
+// 			}
 		});
 	});
     

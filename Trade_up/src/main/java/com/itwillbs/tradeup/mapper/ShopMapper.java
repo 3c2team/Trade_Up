@@ -41,6 +41,9 @@ public interface ShopMapper {
 	// 판매자 상품 개수
 	int getSellerCount(int product_num);
 	
+	// 최신 목록
+	List<Map<String, Object>> lastProductList(String category_idx);
+	
 	// 찜 목록
 	List<Map<String, Object>> jjimProductList(String category_idx);
 
