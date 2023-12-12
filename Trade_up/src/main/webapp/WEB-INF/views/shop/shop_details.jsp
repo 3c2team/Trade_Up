@@ -20,6 +20,14 @@
        cursor: pointer;
        float: inline-end;
    }
+   .custom_seller{
+		cursor: pointer;
+		border: solid;
+		border-width: 1px;
+		border-radius: 1rem;
+		padding: 1rem;
+		border-color: rgb(230 230 230);
+   }
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
@@ -213,10 +221,10 @@
 								<!-- 판매자 시작 -->
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
                                     <div class="product__details__tab__content">
-                                        <div class="product__details__tab__content__item">
+                                        <div class="product__details__tab__content__item custom_seller" onclick="location.href='UserMarket?member_id=${product.member_id}'">
 <!--                                            <a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
-                                            <a href="UserMarket?member_id=${product.member_id}">${product.member_id}님</a>
+                                            ${product.member_id}님
                                             <p>판매상품 999+ / 안전거래 43 / 후기 10</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
