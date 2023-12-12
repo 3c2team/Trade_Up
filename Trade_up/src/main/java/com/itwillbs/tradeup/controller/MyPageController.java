@@ -42,14 +42,14 @@ public class MyPageController {
 	// 마이페이지
 	@GetMapping("MyPageMain")
 	public String myPageMain(HttpSession session, Model model) {
-		String sId = (String)session.getAttribute("sId");
-		List<Map<String, Object>> accountList = service.getMyAccount(sId);
-		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
-		List<Map<String, Object>> productsList = service.getMyProduct(sId);
-		
-		model.addAttribute("accountList", accountList);
-		model.addAttribute("favoriteList", favoriteList);
-		model.addAttribute("productsList", productsList);
+//		String sId = (String)session.getAttribute("sId");
+//		List<Map<String, Object>> accountList = service.getMyAccount(sId);
+//		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
+//		List<Map<String, Object>> productsList = service.getMyProduct(sId);
+//		
+//		model.addAttribute("accountList", accountList);
+//		model.addAttribute("favoriteList", favoriteList);
+//		model.addAttribute("productsList", productsList);
 		return "myPage/myPage_main";
 	}
 	
@@ -82,9 +82,11 @@ public class MyPageController {
 		param.put("sId", sId);
 		int deleteCount = service.deleteProcut(param);
 		if(deleteCount > 0) {
-			return "myPage/myPage_sales";
+			return "redirect:/MySales";
+		} else {
+			model.addAttribute("msg", "판매글 삭제에 실패했습니다. 다시 시도해 주세요.");
+			return "fail_back";
 		}
-		return "";
 	}
 	
 	// 구매내역
@@ -258,10 +260,12 @@ public class MyPageController {
 		int insertCount = service.registMyAddress(param);
 		
 		if(insertCount > 0) {
-			return "close";
+			return "redirect:/MyAddress";
 		} else {
 			model.addAttribute("msg", "오류남");
-			return "close";
+			model.addAttribute("isClose", "true");
+			model.addAttribute("targetURL", "AddAddress");
+			return "forward";
 		}
 	}
 	

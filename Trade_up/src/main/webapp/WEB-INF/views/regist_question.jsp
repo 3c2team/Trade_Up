@@ -72,7 +72,7 @@
             </div>
             <div class="d-grid gap-2">
                <input type="file"  multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none"/>
-               <input type="submit"  style="height: 3.5rem;" class="btn btn-success" value="등록하기">
+               <input type="submit"  style="height: 3.5rem;" id="dis_submit" disabled="disabled" class="btn btn-success" value="등록하기">
             </div>
          </form>
       </div>
@@ -142,7 +142,7 @@
       $("#qna_category").on("change",function(){
          $("#qna_category_datail").attr("disabled",false);
          console.log($(this).val());
-         
+         $("#dis_submit").attr("disabled",true);
          $.ajax({
             type: "POST",
             url: "SelectQnaCategorys",
@@ -156,6 +156,9 @@
                   $("#qna_category_datail").append(
                      "<option value="+params.qna_category_detail_num +">"+params.qna_category_detail_name +"</option>"
                   );
+               });
+               $("#qna_category_datail").on("change",function(){
+            	   $("#dis_submit").attr("disabled",false);
                });
             },erorr: function() {
                alert("실패");

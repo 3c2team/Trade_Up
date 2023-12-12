@@ -62,11 +62,12 @@
 			SELECT *
 			FROM OFTEN_QUESTION 
 			<if test="qna_filter != 0">
-				WHERE qna_filter = #{qna_filter};
+				WHERE qna_filter = #{qna_filter}
 			</if>
 			<if test="qna_select != null">
-				WHERE qna_content LIKE '%${qna_select}%';
+				WHERE qna_content LIKE '%${qna_select}%'
 			</if>
+			order by often_qna_num desc
     	</select>
     	<select id="selectUserQna" resultType="map">
     		SELECT qna_content
@@ -93,19 +94,19 @@
              FROM result_month
              WHERE  month(now()) > rnum
 			)
-		    select concat(rnum,'월')  as month
+		    SELECT CONCAT(rnum,'월')  AS month
 					,ifnull(product_avg,0) as product_avg
 		            ,ifnull(product_max,0) as product_max
 		            ,ifnull(product_min,0) as product_min
-		    from result_month s left join (select FLOOR(avg(replace(product_price,',',''))) as product_avg
-											,max(replace(product_price,',','')) as product_max
-                                            ,min(replace(product_price,',','')) as product_min
+		    FROM result_month s LEFT JOIN (SELECT FLOOR(AVG(CAST(REPLACE(product_price,',','') AS signed integer))) AS product_avg
+											,MAX(CAST(REPLACE(product_price,',','') AS signed integer)) as product_max
+                                            ,MIN(CAST(REPLACE(product_price,',','') AS signed integer)) as product_min
 											,MONTH(product_release) as month
-									 from PRODUCT
-									 where product_release between date_sub(curdate(),interval 3 MONTH) and curdate()
-								  	 and product_name like '%${product_name}%'
-									 group by MONTH(product_release)) p
- 		on p.month = s.rnum;
+									 FROM PRODUCT
+									 WHERE product_release BETWEEN DATE_SUB(CURDATE(),INTERVAL 3 MONTH) AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+								  	 AND product_name LIKE '%${product_name}%'
+									 GROUP BY MONTH(product_release)) p
+ 		ON p.month = s.rnum;
 		</select>
     	<select id="selectMarketProduct" resultType="map">
 	    	SELECT product_num
@@ -120,7 +121,8 @@
 					,trading_location
 			FROM PRODUCT 
 			WHERE product_name like '%${product_name}%' 
-			AND product_release > date_sub(now(),interval 3 month);
+			AND product_release > date_sub(now(),interval 3 month)
+			LIMIT 9;
 		</select>
     	<insert id="insertReport">
     		INSERT INTO REPORT 
@@ -146,5 +148,29 @@
     			,#{real_file}
     		)
     	</insert>
+    	<select id="selectUserReport" resultType="map">
     	
+       SELECT report_idx
+			,report_member_num
+			,report_product_num
+			,report_content
+			,qna_category_detail_name
+			,report_date
+			,report_processing_date
+            ,report_is_accept
+         FROM QUESTION_CATEGORY_DETAIL q JOIN ( SELECT report_idx
+													,report_member_num
+													,report_product_num
+													,report_content
+													,qna_category_detail_num
+													,report_date
+													,report_processing_date
+													,if(report_is_accept='N','미 처리','처리완료') AS report_is_accept
+												 FROM REPORT r join (SELECT member_num
+																	  FROM MEMBER
+																	 WHERE member_id = #{sId}) m
+												   ON r.report_member_num = m.member_num) r
+		   ON r.qna_category_detail_num = q.qna_category_detail_num ;
+    	
+    	</select>
     </mapper>

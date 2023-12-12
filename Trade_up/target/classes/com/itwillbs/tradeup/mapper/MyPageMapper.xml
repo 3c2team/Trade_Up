@@ -28,6 +28,13 @@
 			]]>
     	</select>
     	
+    	<select id="selectMyAccount" resultType="map">
+    		SELECT *
+    		FROM MY_ACCOUNT
+    		WHERE member_id = #{sId}
+    		ORDER BY account_main DESC;
+    	</select>
+    	
     	<select id="selectMemberInfo" resultType="map">
     		SELECT *
     		FROM ${table_name}
@@ -45,7 +52,20 @@
 				, p.trading_method 
 			FROM PRODUCT p
 			JOIN CATEGORY c ON p.category_idx = c.category_idx 
-			WHERE member_id = 'hyeri123';
+			WHERE p.member_id = #{sId};
+    	</select>
+    	
+    	<select id="selectMyFavorite">
+    		SELECT p.product_num
+				, p.product_main_img 
+				, p.product_name 
+				, p.member_id
+				, p.product_price 
+				, p.sales_status 
+				, p.trading_method 
+			FROM FAVORITE f 
+			JOIN PRODUCT p ON f.product_num = p.product_num 
+			WHERE f.member_id = #{sId};
     	</select>
     	
     	<select id="selecFintechInfo" resultType="map">
@@ -136,6 +156,5 @@
 						AND address_idx = #{address_idx}
 						And member_id = #{sId};    		
     	</update>
-    	
     	
     </mapper>

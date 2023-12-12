@@ -9,6 +9,6 @@ import com.itwillbs.tradeup.vo.ResponseTokenVO;
 @Mapper
 public interface BankMapper {
 
-	void insertToken(ResponseTokenVO responseToken);
+	void insertToken(@Param("responseToken") ResponseTokenVO responseToken, @Param("sId")String sId);
 	
 }

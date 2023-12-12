@@ -14,8 +14,8 @@ public class bankApiService {
 //	@Autowired
 //	private bankApiClient bankApiClient;
 	
-	public void registToken(ResponseTokenVO responseToken) {
-		mapper.insertToken(responseToken);
+	public void registToken(ResponseTokenVO responseToken, String sId) {
+		mapper.insertToken(responseToken, sId);
 	}
 
 }

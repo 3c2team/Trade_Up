@@ -53,7 +53,7 @@
 			<hr class="custom_border_grove">
 			<h3 class="fw-bold" >문의내역</h3>
 			<div  id="qna_board">
-				<c:if test="${empty selectUserQna}">
+				<c:if test="${empty selectUserQna && empty selectUserReport}">
 					<div style="text-align: center;">
 						<img src="${pageContext.request.contextPath }/resources/img/mascote.jpg"/>
 						<div style="font-size: xx-large;font-weight: bold;">문의 사항이 없어요!</div>
@@ -66,7 +66,6 @@
 						</div>
 						<div class="custom_content2">
 							${UserQna.qna_content}
-							 :  ${UserQna.qna_num}
 							<span><button class="btn custom_btn3" style=" font-size: 1.5rem;" >></button></span>
 						</div>
 						<div class="custom_date">
@@ -74,6 +73,23 @@
 						</div>
 					</div>
 				</c:forEach>
+				
+				
+				<c:forEach var="UserReport" items="${selectUserReport}">
+					<div class="custom_qna_content" style="cursor: auto;">
+						<div class="custom_answer">
+							${UserReport.report_is_accept}
+						</div>
+						<div class="custom_content2">
+							${UserReport.qna_category_detail_name} : 
+							${UserReport.report_content}
+						</div>
+						<div class="custom_date">
+							${UserReport.report_date}
+						</div>
+					</div>
+				</c:forEach>
+				
 			</div>
 		</div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>

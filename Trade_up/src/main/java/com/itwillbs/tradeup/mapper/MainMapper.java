@@ -36,5 +36,7 @@ public interface MainMapper {
 
 	int insertReportImg(Map<String, String> map);
 
+	List<Map<String, String>> selectUserReport(String sId);
+
 
 }

@@ -1,77 +1,100 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../assets/"
-  data-template="vertical-menu-template-free"
+	lang="en"
+	class="light-style layout-menu-fixed"
+	dir="ltr"
+	data-theme="theme-default"
+	data-assets-path="../assets/"
+	data-template="vertical-menu-template-free"
 >
 <head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-  />
-
-  <title>GARGE | MyPage</title>
-
-  <meta name="description" content="" />
-
-  <!-- Favicon -->
-<!--   <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" /> -->
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet"
-  />
+	<meta charset="utf-8" />
+	<meta
+	  name="viewport"
+	  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+	/>
+	
+	<title>GARGE | MyPage</title>
+	
+	<meta name="description" content="" />
+	
+	<!-- Favicon -->
+	<!--   <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" /> -->
+	
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+	  href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+	  rel="stylesheet"
+	/>
 	
 	<!-- top css -->
 	<jsp:include page="../inc/style.jsp"></jsp:include>
-  <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/fonts/boxicons.css" />
-
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/css/demo.css" />
-
-  <!-- Vendors CSS -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-  <!-- Page CSS -->
-
-  <!-- Helpers -->
-  <script src="${pageContext.request.contextPath }/resources/myPage/assets/vendor/js/helpers.js"></script>
-
-  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
+	<!-- Icons. Uncomment required icon fonts -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/fonts/boxicons.css" />
+	
+	<!-- Core CSS -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/css/core.css" class="template-customizer-core-css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/css/demo.css" />
+	
+	<!-- Vendors CSS -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/myPage/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+	
+	<!-- Page CSS -->
+	
+	<!-- Helpers -->
+	<script src="${pageContext.request.contextPath }/resources/myPage/assets/vendor/js/helpers.js"></script>
+	
+	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+	<script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/jquery.twbsPagination.min.js"></script>
+	
 	<style type="text/css">
-		.product{
-		    display: flex;
-    		align-items: center;
-		}
-		.product_info{
-			margin-left: 20px;
-		    display: flex;
-		    flex-direction: column;
-		}
 		.form-check-input {
 			position: initial;
 			margin-top: 0px;
 			margin-left: 0px;
 		}
-		td
-	</style> 
+	</style>
+	
+	<script type="text/javascript">
+// 		let totalCount = ${fn:length(favoriteList)};
+// 		let pageSize = 5;
+// 		let pageNumber = 1;
+		
+// 		let totalPages = totalCount / 10;
+		
+// 		if(totalCount % 10 > 0) {
+// 			totalPages++;
+// 		}
+		
+// 		$('#pagination').twbsPagination({ 
+// 			startPage:1,
+// 			totalPages: totalPages,
+// 		    visiblePages: 10,
+		    
+// 		    first:'<span sris-hidden="true">«</span>' ,
+		    
+// 		    last:'<span sris-hidden="true">»</span>' ,
+		    
+// 		    prev:"<",
+// 		    next:">",
+// 		    onPageClick: function (event, page) {
+		    
+// 		        alert(page); 
+// 		            }
+// 		     })
+		
+	</script>
+	
 </head>
-
 <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
 	<!-- Layout wrapper -->

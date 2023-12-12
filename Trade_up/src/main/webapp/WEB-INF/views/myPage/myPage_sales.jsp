@@ -86,7 +86,7 @@
 						<!-- Table -->
 						<div class="card">
 							<h5 class="card-header">판매내역</h5>
-							<div class="table-responsive text-nowrap">
+							<div class="text-nowrap">
 								<table class="table">
 									<thead class="text-center align-middle">
 										<tr>
