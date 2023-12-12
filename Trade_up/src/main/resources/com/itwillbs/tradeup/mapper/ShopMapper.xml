@@ -17,17 +17,7 @@
 				,#{file_name}
 				,#{trading_method}
 				,#{product_status}
-				, '안함' 
-<!-- 		 		<if test="!map.containsKey('trading_location')"> -->
-<!-- 			 		#{trading_location} -->
-<!-- 		 			<choose> -->
-<!-- 			 			<when test="map.containsKey('trading_location')"> -->
-<!-- 				 			(SELECT address1  -->
-<!-- 						        FROM MY_ADDRESS  -->
-<!-- 						       WHERE member_id = #{member_id} AND address_main = '1') -->
-<!-- 			 			</when> -->
-<!-- 		 			</choose> -->
-<!-- 		 		</if> -->
+		 		,#{trading_location}
 				,'판매중'
 				,#{delivery_method}
 			   )
@@ -45,13 +35,6 @@
 			   )
 	</insert>
 	
-	<!-- 모든 상품 조회 -->
-	<select id="selectProductList" resultType="map">
-		SELECT *
-		  FROM PRODUCT
-		 WHERE sales_status = '판매중'
-	  ORDER BY product_release DESC
-	</select>
 
 	<!-- 상품 상세조회 -->
 	<select id="getProduct" resultType="map">
@@ -90,6 +73,39 @@
 		 		  			  FROM PRODUCT
 							 WHERE product_num = #{product_num})
 	</select>
+	
+	<!-- 최신 상품 조회 -->
+	<select id="selectProductList" resultType="map">
+		SELECT *
+		  FROM PRODUCT
+		 WHERE sales_status = '판매중' AND category_idx = '1'
+	  ORDER BY product_release DESC
+	</select>
+
+	<!-- 찜 목록 -->
+	<select id="jjimProductList">
+		SELECT P.product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C
+		  FROM PRODUCT P
+		  JOIN FAVORITE F ON P.product_num = F.product_num
+		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중'
+		 GROUP BY P.product_num
+		 ORDER BY C desc
+	</select>
+	
+	<!-- 높은 가격 목록 -->
+<!-- 	<select id="highProductList"> -->
+<!-- 		SELECT product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C -->
+<!-- 		  FROM PRODUCT -->
+<!-- 		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중' -->
+<!-- 		 ORDER BY C desc -->
+<!-- 	</select> -->
+	<!-- 낮은 가격 목록 -->
+<!-- 	<select id="lowProductList"> -->
+<!-- 		SELECT product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C -->
+<!-- 		  FROM PRODUCT -->
+<!-- 		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중' -->
+<!-- 		 ORDER BY C desc -->
+<!-- 	</select> -->
 
 	<!-- 상품 수정 -->
 	<update id="updateProduct">

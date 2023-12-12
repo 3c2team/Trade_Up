@@ -72,15 +72,15 @@
                                         <div class="card-body">
                                             <div class="card-main">
                                                 <ul class="nice-scroll">
-                                                	<c:forEach var="selectCategory" items="${selectCategory }">
-														<li><div class="cusor">${selectCategory.category_name }</div></li>
+                                                	<c:forEach var="selectCategory" items="${selectCategory }" varStatus="status">
+														<li value="${status.count }"><div class="cusor">${selectCategory.category_name }</div></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <input type="hidden" name="category_idx" id="category_idx">
                                 <!-- 가격 -->
                                 <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
@@ -119,38 +119,40 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
                                     <p>정렬:&nbsp;</p>
-                                    <select>
-                                        <option value="">추천순</option>
-                                        <option value="">최신순</option>
-                                        <option value="">낮은가격순</option>
-                                        <option value="">높은가격순</option>
+                                    <select id="selectBox">
+                                        <option value="last">최신순</option>
+                                        <option value="jjim">찜많은순</option>
+                                        <option value="low">낮은가격순</option>
+                                        <option value="high">높은가격순</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
-	                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
-	                            <div class="product__item">
-	                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
-	                                    <ul class="product__hover">
-	                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
-<%-- 	                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-	                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
-	                                    </ul>
-	                                </div>
-	                                <div class="product__item__text">
-	                                    <h6>${product.product_name}</h6>
-	                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
-										<p>${product.trading_location }<span> / ${product.product_release }</span></p>
-	                                    <h5>${product.product_price}원</h5>
-<%-- 	                                    <fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
-	                                </div>
-	                            </div>
-	                        </div>
-						</c:forEach>
-			        </div>
+                    <div class="rightList">
+	                    <div class="row">
+	                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
+		                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
+		                            <div class="product__item">
+		                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
+		                                    <ul class="product__hover">
+		                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
+	<%-- 	                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
+		                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
+		                                    </ul>
+		                                </div>
+		                                <div class="product__item__text">
+		                                    <h6>${product.product_name}</h6>
+		                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
+											<p>${product.trading_location }<span> / ${product.product_release }</span></p>
+		                                    <h5>${product.product_price}</h5>
+	<%-- 	                                    <fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
+		                                </div>
+		                            </div>
+		                        </div>
+							</c:forEach>
+				        </div>
+                    </div>
 			    </div>
 			</div>
         </div>
@@ -161,17 +163,26 @@
     <script type="text/javascript">
     $(function() {
 // 		debugger;
-//			alert("${param}")
+// 			alert("${param.category}");
 //			if(search){
 		var search = "";
 		var category = "";
 		var price = "";
+		let category_idx = 1;
+		$(".nice-scroll li").click(function() {
+// 	 		debugger;
+			category_idx = $(this).val();
+			alert(category_idx);
+		});
 		if("${param.category}"){
 			category = "&category=${param.category}";
 			$(".cusor").each(function(){
 // 				debugger;				
 				if($(this).text() == "${param.category}"){
-					$(this).css("color","red");
+					$(".nice-scroll li").css("background-color" , "white");
+					$(".nice-scroll li").css("color" , "#6c757d");
+					$(this).css("background-color" , "#5F12D3");
+					$(this).css("color" , "white");
 				}
 			});
 			$("#category").attr("hidden",false);
@@ -217,8 +228,175 @@
 		$(".radio").on("click",function(){
 			location.href="Shop?price=" + $(this).val() + search + category;
 		});
-			
+
+		$("#selectBox").change(function() {		    
+			var result = $("#selectBox option:selected").val();
+			alert(category_idx);
+		    if (result == 'last') {
+				$.ajax({
+					type: "POST",
+					url: "JjimProduct",
+					data: {
+						category_idx : category_idx
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".rightList").html("");
+						data.forEach( product =>{
+							$(".rightList").append( 
+								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+								+ 	"<div class='product__item'>"
+								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+								+ 			"<ul class='product__hover'>"
+								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+								+ 			"</ul>"
+								+ 		"</div>"
+								+ 		"<div class='product__item__text'>"
+								+ 			"<h6>" + product.product_name + "</h6>"
+								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+								+ 			"<p>" + product.trading_location + "</p>"
+								+ 			"<h5>" + product.product_price + "</h5>"
+								+ 		"</div>"
+								+	 "</div>"
+								+ "</div>"
+							);
+						});
+					},erorr: function() {
+						location.href="Shop";
+					}
+				
+				});
+			}
+		    if (result == 'jjim') {
+				$.ajax({
+					type: "POST",
+					url: "JjimProduct",
+					data: {
+						category_idx : category_idx
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".rightList").html("");
+						data.forEach( product =>{
+							$(".rightList").append( 
+								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+								+ 	"<div class='product__item'>"
+								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+								+ 			"<ul class='product__hover'>"
+								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+								+ 			"</ul>"
+								+ 		"</div>"
+								+ 		"<div class='product__item__text'>"
+								+ 			"<h6>" + product.product_name + "</h6>"
+								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+								+ 			"<p>" + product.trading_location + "</p>"
+								+ 			"<h5>" + product.product_price + "</h5>"
+								+ 		"</div>"
+								+	 "</div>"
+								+ "</div>"
+							);
+						});
+					},erorr: function() {
+						location.href="Shop";
+					}
+				
+				});
+			}
+		    if (result == 'low') {
+				$.ajax({
+					type: "POST",
+					url: "JjimProduct",
+					data: {
+						category_idx : category_idx
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".rightList").html("");
+						data.forEach( product =>{
+							$(".rightList").append( 
+								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+								+ 	"<div class='product__item'>"
+								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+								+ 			"<ul class='product__hover'>"
+								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+								+ 			"</ul>"
+								+ 		"</div>"
+								+ 		"<div class='product__item__text'>"
+								+ 			"<h6>" + product.product_name + "</h6>"
+								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+								+ 			"<p>" + product.trading_location + "</p>"
+								+ 			"<h5>" + product.product_price + "</h5>"
+								+ 		"</div>"
+								+	 "</div>"
+								+ "</div>"
+							);
+						});
+					},erorr: function() {
+						location.href="Shop";
+					}
+				
+				});
+			}
+		    if (result == 'high') {
+				$.ajax({
+					type: "POST",
+					url: "JjimProduct",
+					data: {
+						category_idx : category_idx
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".rightList").html("");
+						data.forEach( product =>{
+							$(".rightList").append( 
+								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+								+ 	"<div class='product__item'>"
+								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+								+ 			"<ul class='product__hover'>"
+								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+								+ 			"</ul>"
+								+ 		"</div>"
+								+ 		"<div class='product__item__text'>"
+								+ 			"<h6>" + product.product_name + "</h6>"
+								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+								+ 			"<p>" + product.trading_location + "</p>"
+								+ 			"<h5>" + product.product_price + "</h5>"
+								+ 		"</div>"
+								+	 "</div>"
+								+ "</div>"
+							);
+						});
+					},erorr: function() {
+						location.href="Shop";
+					}
+				});
+			}
+		});
 	});
+    
+    // 시간 변환
+    const elapsedTime = (date: number): string => {
+    	const start = new Date(date);
+    	const end = new Date();
+
+    	const seconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+    	if (seconds < 60) return '방금 전';
+
+    	const minutes = seconds / 60;
+    	if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+
+    	const hours = minutes / 60;
+    	if (hours < 24) return `${Math.floor(hours)}시간 전`;
+
+    	const days = hours / 24;
+    	if (days < 7) return `${Math.floor(days)}일 전`;
+
+    	return `${start.toLocaleDateString()}`;
+    };
 
     </script>
 </body>

@@ -68,6 +68,10 @@ public class ShopService {
 		return mapper.getSellerCount(product_num);
 	}
 
+	public List<Map<String, Object>> jjimProductList(String category_idx) {
+		return mapper.jjimProductList(category_idx);
+	}
+
 
 }
 

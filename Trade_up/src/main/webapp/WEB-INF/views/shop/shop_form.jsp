@@ -18,7 +18,6 @@
 		object-fit: scale-down;
 		margin: 0 10px 0 10px;
 	}
-	
 </style>
 <script type="text/javascript">
 
@@ -31,11 +30,11 @@ const autoHyphen = (target) => {
 	.replace(/\B(?=(\d{3})+(?!\d))/g,",");
 }
 
+const autoEnter = (target) => {
+	target.value = target.value.replace(/\r\n|\n/ , "<br>");
+}
+
 $(function () {
-	
-	// 
-// 	let info = $('#product_info').val();
-// 	info.replace(/\r\n|\n/ , "<br>");
 	
 	// li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
@@ -84,40 +83,19 @@ $(function () {
 		}
 	});
 	
-
-// 	$(".nice-scroll li[value=1]").on("click",function(){
-// 		$("#product_price").prop("disabled", true);
-// 		$("#product_price").prop("placeholder", "무료나눔");
-// 		$(".nice-scroll li[value=1]").css("color" , "white");
-// 		$(".nice-scroll li[value=1]").css("background-color" , "#5F12D3");
-// 		$("#hidCategory").val($(this).val());
-//         if($(this).is(":click")){
-// 			$("#product_price").prop("disabled", true);
-// 			$("#product_price").prop("placeholder", "무료나눔");
-// 			$(".nice-scroll li[value=1]").css("color" , "white");
-// 			$(".nice-scroll li[value=1]").css("background-color" , "#5F12D3");
-// 			$("#hidCategory").val('1');
-//         } else{
-// 			$("#product_price").prop("disabled", false);
-// 			$("#product_price").prop("placeholder", "판매가격");
-// 			$("#product_price").css("border", "판매가격");
-// 			$(".nice-scroll li[value=1]").css("color" , "#6c757d");
-// 			$(".nice-scroll li[value=1]").css("background-color" , "white");
-// 			$("#product_price").focus();
-//         }
-// 	});
-	
 	$(".free_sharing").change(function(){
         if($(this).is(":checked")){
+//         	debugger;
 			$("#product_price").prop("disabled", true);
 			$("#product_price").prop("placeholder", "무료나눔");
 			$(".nice-scroll li[value=1]").css("color" , "white");
 			$(".nice-scroll li[value=1]").css("background-color" , "#5F12D3");
 			$("#hidCategory").val('1');
         } else{
+//         	debugger;
 			$("#product_price").prop("disabled", false);
 			$("#product_price").prop("placeholder", "판매가격");
-			$("#product_price").css("border", "판매가격");
+			$("#product_price").css("border-color", "grey");
 			$(".nice-scroll li[value=1]").css("color" , "#6c757d");
 			$(".nice-scroll li[value=1]").css("background-color" , "white");
 			$("#product_price").focus();
@@ -241,8 +219,8 @@ function tradingLocation(){
 								<div style="display: grid;">
 <!--                                 <fieldset>  -->
 									<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
-									<label class="free_sharing" for="check">무료나눔
-										<input type="checkbox" name="free_sharing" class="free_sharing" id="check" value="무료나눔">
+									<label class="free_sharing" for="check">
+										<input type="checkbox" name="free_sharing" class="free_sharing" id="check" value="무료나눔">무료나눔
 									</label>
 <!-- 								</fieldset> -->
 <!--                                 <fieldset>  -->
@@ -250,7 +228,7 @@ function tradingLocation(){
 <!-- 								<input id="check" type="checkbox">  -->
 <!-- 								<label for="check">무료나눔</label> -->
 <!-- 								</fieldset> -->
-									<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false">
+									<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false" oninput="autoEnter(this)">
 - 상품명(브랜드) >
 - 구매 시기
 - 사용 기간
