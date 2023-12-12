@@ -238,17 +238,20 @@
                                 <h4 class="order__title">주문 내역</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>주문한 상품 <span>30,000</span></li>
-                                    <li>안전거래 수수료(1%) <span>300</span></li>
+                                    <li>주문한 상품 <span>${product_priceShow }</span></li>
+                                    <li>안전거래 수수료(1%) <span>${commissionShow }</span></li>
                                 </ul>
+                                <input type="hidden" name="product_price"  value="${product_price }">
+                                <input type="hidden" name="product_priceShow"  value="${product_priceShow }">
+                                <input type="hidden" name="product_num"  value="${product_num }">
+                                <input type="hidden" name="commission"  value="${commission }">
+                                <input type="hidden" name="total"  value="${total }">
+                                <input type="hidden" name="commissionShow"  value="${commissionShow }">
+                                <input type="hidden" name="totalShow"  value="${totalShow }">
+                                <input type="hidden" name="product_name" value="${product_name }">
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>30,300</span></li>
+                                    <li>총 가격 <span>${totalShow }</span></li>
                                 </ul>
-                                <!-- 상품 정보 불러오기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <input type="hidden" name="product_num" value="3">
-                                <input type="hidden" name="product_name" value="가방">
-                                <input type="hidden" name="product_price" value="30000">
-                                <input type="hidden" name="product_commission" value="300">
                                 <div class="checkout__input__checkbox"> <!-- 셋 중 하나만 되게 고칠 것 -->
                                     <label for="acc-or">
                                         카카오 페이
@@ -315,7 +318,7 @@
 <%--     <script src="${pageContext.request.contextPath }/resources/js/jquery.slicknav.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath }/resources/js/mixitup.min.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath }/resources/js/owl.carousel.min.js"></script> --%>
-<!--     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <%--     <script src="${pageContext.request.contextPath }/resources/js	/main.js"></script> --%>
     <script src="${pageContext.request.contextPath }/resources/js/checkout.js"></script>
 </body>

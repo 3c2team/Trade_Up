@@ -89,7 +89,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form method="get" action="PaymentComplete">
+                <form method="post" action=PaymentComplete>
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span>같은 상품을 2회 이상 주문 완료 후 취소하실 경우 그 상품은 구매하실 수 없으므로 신중하게 구매해 주세요.</h6>
@@ -97,21 +97,27 @@
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>받으시는 분 : ${deliver.member_name }</p>
+                                    <input type="hidden" name="member_name"  value="${deliver.member_name }">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="checkout__input">
                                     <p>주소 : (${deliver.zonecode })${deliver.member_address1 } ${deliver.member_address2 }</p>
+                                    <input type="hidden" name="member_address1"  value="${deliver.member_address1 }">
+                                    <input type="hidden" name="member_address2"  value="${deliver.member_address2 }">
+                                    <input type="hidden" name="zonecode"  value="${deliver.zonecode }">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>전화번호 : ${deliver.member_phone }</p>
+                                    <input type="hidden" name="member_phone"  value="${deliver.member_phone }">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>이메일 : ${deliver.member_email }</p>
+                                    <input type="hidden" name="member_email"  value="${deliver.member_email }">
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -123,6 +129,7 @@
 	                                   	</c:when>
 	                                   	<c:otherwise>
 	                                   		${deliver.diliver_ment }
+	                                   		<input type="hidden" name="diliver_ment"  value="${deliver.diliver_ment }">
 	                                   	</c:otherwise>
                                     </c:choose>
                                     </p>
@@ -131,12 +138,24 @@
                             <hr>
                             <div class="col-lg-12">
                                 <div class="checkout__input">
-                                    <p>업페이 잔액 : 3,000원</p>
+                                    <p>업페이 잔액 : 
+                                    <c:choose>
+	                                    <c:when test="${empty deliver.remainPay }">
+	                                   		0
+	                                   	</c:when>
+	                                   	<c:otherwise>
+	                                   		${deliver.remainPayShow }
+	                                   	</c:otherwise>
+                                    </c:choose>
+                                    원</p>
+                                    <input type="hidden" name="remainPay"  value="${deliver.remainPay }">
+                                    <input type="hidden" name="chargeMoney"  value="${deliver.chargeMoney }">
+                                    <input type="hidden" name="chargeMoneyShow"  value="${deliver.chargeMoneyShow }">
                                 </div>
                             </div>
                             <div class="col-lg-12" id="moneyDown" style="display: none;">
                                 <div class="checkout__input">
-                                    <p style="color: #5F12D3;">30,300원이 부족하므로 자동으로 40,000원 충전 후 결제됩니다.</p>
+                                    <p style="color: #5F12D3;">${deliver.chargeMoneyShow }원이 부족하므로 자동으로 ${deliver.chargeMoneyShow }원 충전 후 결제됩니다.</p>
                                     <p>연결된 계좌에 금액이 들어있는지 확인 후 결제를 진행해주시길 바랍니다.</p>
                                 </div>
                             </div>
@@ -151,13 +170,22 @@
                                 <h4 class="order__title">주문 내역</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>주문한 상품 <span>30,000</span></li>
-                                    <li>안전거래 수수료(1%) <span>300</span></li>
+                                    <li>주문한 상품 <span>${deliver.product_priceShow }</span></li>
+                                    <li>안전거래 수수료(1%) <span>${deliver.commissionShow }</span></li>
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>33,300</span></li>
+                                    <li>총 가격 <span>${deliver.totalShow }</span></li>
                                 </ul>
+                                <input type="hidden" name="product_price"  value="${deliver.product_price }">
+                                <input type="hidden" name="product_priceShow"  value="${deliver.product_priceShow }">
+                                <input type="hidden" name="product_num"  value="${deliver.product_num }">
+                                <input type="hidden" name="commission"  value="${deliver.commission }">
+                                <input type="hidden" name="total"  value="${deliver.total }">
+                                <input type="hidden" name="commissionShow"  value="${deliver.commissionShow }">
+                                <input type="hidden" name="totalShow"  value="${deliver.totalShow }">
+                                <input type="hidden" name="product_name" value="${deliver.product_name }">
                                 <button type="submit" class="site-btn" id="paymentCheck" style="padding: 3%; font-size: 18px;">업페이로 결제하기</button>
+								<input type="hidden" name="upPay" value="Y">
                             </div>
                         </div>
                     </div>

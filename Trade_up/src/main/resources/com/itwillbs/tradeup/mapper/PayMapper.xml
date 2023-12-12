@@ -11,7 +11,7 @@
     	</select>
 		
     	<select id="selectMyAddressMain" resultType="map"> <!-- 메인 주소 -->
-    		SELECT  member_id 
+    		SELECT  member_id
     		 -- , my_address_num
 				, recipient_name
 				, recipient_phone_num
@@ -75,7 +75,7 @@
     		FROM UPPAY
     		WHERE member_id = #{sId}
     		ORDER BY uppay_date DESC
-			LIMIT 1;
+			LIMIT 1
     	</select>
     	
     	<select id="selectOwnerBank" resultType="map"> <!-- 우리 계좌 정보 들고오기 -->
@@ -112,6 +112,44 @@
 		            , #{product_num}
 		            , #{merchant_uid}
 				)
+    	</insert>
+    	
+    	<select id="selectMyUppay" resultType="map"> <!-- 업페이 충전 내역 여부 확인 -->
+			SELECT *
+			FROM UPPAY
+			WHERE member_id = #{sId}
+		</select>
+		
+    	<select id="selectTokenInfo" resultType="map"> <!-- 토큰 정보 가져오기 -->
+			SELECT *
+			FROM FINTECH_USER_INFO
+			WHERE member_id = #{sId}
+		</select>
+    	
+    	<insert id="insertChargeAutoUppay"> <!-- 업페이 자동 충전 -->
+    		INSERT 
+    		INTO UPPAY
+    		(member_id, uppay_pay, uppay_use, uppay_date, uppay_remain)
+				VALUES (
+		            #{member_id}
+		            , #{chargeMoney}
+		            , '자동 충전'
+		            , now()
+		            , #{total}
+            )
+    	</insert>
+    	
+    	<insert id="insertAutoUppay"> <!-- 업페이 자동 결제 -->
+    		INSERT 
+    		INTO UPPAY
+    		(member_id, uppay_pay, uppay_use, uppay_date, uppay_remain)
+				VALUES (
+		            #{member_id}
+		            , #{total}
+		            , '결제'
+		            , now()
+		            , #{remainPay}
+	            )
     	</insert>
     	
     	<update id="updateSalesStatus"> <!-- 상품 판매상태 거래중으로 바꾸기 -->

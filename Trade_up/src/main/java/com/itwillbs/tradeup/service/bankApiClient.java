@@ -3,11 +3,13 @@ package com.itwillbs.tradeup.service;
 import java.net.URI;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -19,6 +21,7 @@ import com.itwillbs.tradeup.vo.RequestTokenVO;
 import com.itwillbs.tradeup.vo.ResponseAccountListVO;
 import com.itwillbs.tradeup.vo.ResponseTokenVO;
 import com.itwillbs.tradeup.vo.ResponseUserInfoVO;
+import com.itwillbs.tradeup.vo.ResponseWithdrawVO;
 
 @Service
 public class bankApiClient {
@@ -130,6 +133,47 @@ public class bankApiClient {
 		
 		ResponseEntity<ResponseAccountListVO> responseEntity = 
 				restTemplate.exchange(uri, HttpMethod.GET, httpEntity, ResponseAccountListVO.class);
+		
+		return responseEntity.getBody();
+	}
+	
+	// 출금 이체
+	public ResponseWithdrawVO requestWithdraw(Map<String, String> map) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(map.get("access_token"));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		String url = base_url + "/v2.0/transfer/withdraw/fin_num";
+		
+		JSONObject jo = new JSONObject();
+		
+		// ----- 업페이 -------
+		jo.put("bank_tran_id", bankValueGenerator.getBankTranId()); // 거래고유번호(참가기관)
+		jo.put("cntr_account_type", "N"); // 약정 계좌/계정 구분("N" : 계좌, "C" 계정 => N 고정)
+		jo.put("cntr_account_num", "2023032400"); // 약정 계좌/계정 번호(핀테크 서비스 기관 계좌)
+		jo.put("dps_print_content", map.get("member_id") + "_충전"); // 입금계좌인자내역
+		
+		// ----- 고객 -------
+		jo.put("fintech_use_num", "120211385488932387471783"); // 출금계좌 핀테크이용번호!!!!!!!!내꺼로 하드코딩함
+		jo.put("wd_print_content", "업페이_충전"); // 출금계좌인자내역
+		jo.put("tran_amt", map.get("chargeMoney")); // 거래금액
+		jo.put("tran_dtime", bankValueGenerator.getTranDTime()); // 요청일시
+		jo.put("req_client_name", map.get("member_name")); // 요청고객성명(출금계좌)
+		jo.put("req_client_fintech_use_num", "120211385488932387471783"); // 요청고객핀테크이용번호(출금계좌)!!!!!!!!내꺼로 하드코딩함
+		jo.put("req_client_num", map.get("member_id").toUpperCase()); // 요청고객회원번호(아이디처럼 사용) => 단, 영문자는 모두 대문자
+		jo.put("transfer_purpose", "TR"); // 이체용도(송금(TR), 결제(ST))
+
+		jo.put("recv_client_name", "트업_업페이"); // 최종수취고객성명
+		jo.put("recv_client_bank_code", "002"); // 최종수취고객계좌 개설기관.표준코드
+		jo.put("recv_client_account_num", "2023032400"); // 최종수취고객계좌번호
+//		log.info(">>>>> 출금이체 요청 JSON 데이터 : " + jo.toString());
+		
+		HttpEntity<String> httpEntity = new HttpEntity<String>(jo.toString(), headers);
+//		log.info(">>>>> httpEntity : " + httpEntity.getHeaders());
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<ResponseWithdrawVO> responseEntity = restTemplate.postForEntity(url, httpEntity, ResponseWithdrawVO.class);
+//		log.info(">>>>> 출금이체결과 : " + responseEntity.getBody());
 		
 		return responseEntity.getBody();
 	}

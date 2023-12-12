@@ -20,7 +20,7 @@
 	    	pay_method: "card",
 	    	merchant_uid: "ORD" + getDateTimeString(),   // 주문번호
 	    	name: "${deliver.product_name }", //"${paymentProduct}",
-	    	amount: 30300, //${resultPrice },                         // 숫자 타입
+	    	amount: "${deliver.total}", //${resultPrice },                         // 숫자 타입
 	    	buyer_email: "${deliver.member_email }", //"${Member.member_e_mail}",
 	    	buyer_name: "${deliver.member_name }", //"${Member.member_name}",
 	    	buyer_tel: "${deliver.member_phone }", //"${Member.member_phone_num}",
@@ -46,8 +46,7 @@
 	                    diliver_ment : "${deliver.diliver_ment }",
 	                    product_num : "${deliver.product_num }",
 	                    product_name : "${deliver.product_name }",
-	                    product_price : "${deliver.product_price }",
-	                    product_commission : "${deliver.product_commission }",
+	                    product_price : "${deliver.total }",
 						},
 					success:function(result){
 						console.log("데이터 전송 성공");
@@ -57,12 +56,12 @@
 					error:function(){
 						console.log("작업 실패");
 						alert("오류가 발생 했습니다.");
-						location.href = "${pageContext.request.contextPath}/Checkout";
+						location.href = "${pageContext.request.contextPath}/Checkout?product_num=${deliver.product_num}";
 					}
 				});
 	     	}else{
 	     		alert("결제에 실패하였습니다.");
-	     		location.href = "${pageContext.request.contextPath}/Checkout";
+	     		location.href = "${pageContext.request.contextPath}/Checkout?product_num=${deliver.product_num}";
 	     	}
 	    });
 	}
@@ -97,7 +96,11 @@ function getDateTimeString() {
 	<input type="hidden" name="product_num" value="${deliver.product_num}">
 	<input type="hidden" name="product_name" value="${deliver.product_name}">
 	<input type="hidden" name="product_price" value="${deliver.product_price}">
-	<input type="hidden" name="product_commission" value="${deliver.product_commission}">
+	<input type="hidden" name="product_priceShow" value="${deliver.product_priceShow}">
+	<input type="hidden" name="commission" value="${deliver.commission}">
+	<input type="hidden" name="commissionShow" value="${deliver.commissionShow}">
+	<input type="hidden" name="total" value="${deliver.total}">
+	<input type="hidden" name="totalShow" value="${deliver.totalShow}">
 </form>
 </body>
 </html>

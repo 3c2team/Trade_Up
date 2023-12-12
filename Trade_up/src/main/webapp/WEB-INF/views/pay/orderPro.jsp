@@ -134,11 +134,11 @@
                                 <h4 class="order__title">주문 내역</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>주문한 상품 <span>30,000</span></li>
-                                    <li>안전거래 수수료(1%) <span>300</span></li>
+                                    <li>결제한 상품 <span>${deliver.product_priceShow }</span></li>
+                                    <li>안전거래 수수료(1%) <span>${deliver.commissionShow }</span></li>
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>33,300</span></li>
+                                    <li>총 가격 <span>${deliver.totalShow }</span></li>
                                 </ul>
                                 <button type="submit" class="site-btn" id="paymentCheck" style="padding: 3%; font-size: 18px;">마이 페이지로 가기</button>
                             </div>
