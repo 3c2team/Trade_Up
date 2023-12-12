@@ -82,21 +82,21 @@
 										<div id="layoutSidenav_content">
 										<main>
 											<div class="row">
-												<div class="col-xl-6">
-													<div class="card mb-4">
-														<br>
-														<div class="card-header">
-															<i class="fas fa-chart-bar me-1"></i> 거래 방법 현황
-														</div>
-														<br>
-														<div class="card-body">
-															<canvas id="myPieChart" width="100%" height="40"></canvas>
-														</div>
-													</div>
-												</div>
+<!-- 												<div class="col-xl-6"> -->
+<!-- 													<div class="card mb-4"> -->
+<!-- 														<br> -->
+<!-- 														<div class="card-header"> -->
+<!-- 															<i class="fas fa-chart-bar me-1"></i> 거래 방법 현황 -->
+<!-- 														</div> -->
+<!-- 														<br> -->
+<!-- 														<div class="card-body"> -->
+<%-- 															<canvas id="myPieChart" width="100%" height="40"></canvas> --%>
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 												
-												<div class="col-xl-6" id="reservation_confirm_term_right">
-													<form action="TransactionSearch" method="post">	
+												<div class="col-xl-6" id="reservation_confirm_term_right" style="width:1000px;position: absolute;margin-left:150px;margin-right:150px;">
+<!-- 													<form action="TransactionSearch" method="post">	 -->
 														<div class="calanderWrap" align="center">
 															<br>
 															<input type="date" id="startDate" name="startDate"> - <input type="date" id="endDate" name="endDate" >
@@ -104,19 +104,22 @@
 <!-- 																<button type="submit" class="btn default" id="search_btn" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #5F12D3 ;">조회</button> -->
 																<button class="btn default" id="search_btn" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #5F12D3 ;">조회</button>
 														</div>
-													</form>
+<!-- 													</form> -->
 													<br>
 													<div class="table-responsive text-nowrap">
 														<table class="table">
 															<thead>
 																<tr>
+																	<th></th>
 																	<th>거래방법</th>
 																	<th>건수</th>
 																	<th>수수료 금액</th>
+																	<th></th>
 																</tr>
 															</thead>
 															<tbody class="table-border-bottom-0">
 																<tr>
+																<td></td>
 																	<td>
 																		<div class="product pay-type" >
 																			<div class="product_info"><strong>업페이</strong></div>
@@ -132,8 +135,10 @@
 												                        	<span class="badge bg-label-prohibition"><fmt:formatNumber value="${TransactionCount.uppay }" pattern="#,###" /> 원</span>	
 																		</div>
 																	</td>
+																	<td></td>
 																</tr>
 																<tr>
+																	<td></td>
 																	<td>
 																		<div class="product pay-type">
 																			<div class="product_info"><strong>카카오페이</strong></div>
@@ -147,8 +152,10 @@
 																	<td>
 												                        <span class="badge bg-label-prohibition"><fmt:formatNumber value="${TransactionCount.kakaopay }" pattern="#,###" />원</span>	
 																	</td>
+																	<td></td>
 																</tr>
 																<tr>
+																	<td></td>
 																	<td>
 																		<div class="product pay-type" >
 																			<div class="product_info"><strong>무통장</strong></div>
@@ -162,6 +169,7 @@
 																	<td>
 												                        <span class="badge bg-label-prohibition"><fmt:formatNumber value="${TransactionCount.bankTransfer }" pattern="#,###" /> 원</span>	
 																	</td>
+																	<td></td>
 																</tr>
 															</tbody>
 														</table>

@@ -162,21 +162,19 @@
  	
  	<!-- 공지사항 등록 -->
  	<insert id="insertNotice">
- 		INSERT INTO NOTICE
+ 		INSERT INTO OFTEN_QUESTION
 			VALUES(	null
-					, #{notice_subject}
-					, #{notice_content}
-					,now()
+					, #{qna_content}
+					, #{qna_answer}
+					, #{qna_filter}
 			)
  	</insert>
  	
  	<!-- 관리자페이지 공지사항 조회 -->
  	<select id="selectNotice" resultType="map">
- 		SELECT  notice_num
-				, notice_subject
-				, notice_content
-				, DATE_FORMAT(notice_date, '%Y-%m-%d') as notice_date
-		FROM NOTICE
+ 		SELECT  *
+		FROM OFTEN_QUESTION
+		ORDER BY often_qna_num DESC
  	</select>
  	
  	<!-- 거래방법 카운터 -->
@@ -304,4 +302,39 @@
 							FROM PRODUCT
 					   	   WHERE product_num = #{product_num})
 	</delete>
+	
+	<select id="selectQuestionList" resultType="map">
+		SELECT *
+		FROM QUESTION q
+		LEFT JOIN(SELECT qna_num
+						 ,MAX(qna_image_name) AS qna_image_name
+						 ,MAX(qna_image_real_file) AS qna_image_real_file 
+				  FROM QUESTION_IMG
+		          GROUP BY qna_num) i
+		ON q.qna_num = i.qna_num
+		LEFT JOIN QUESTION_CATEGORY_DETAIL d
+		ON q.qna_category_detail_num = d.qna_category_detail_num
+		ORDER BY qna_date DESC;
+	</select>
+	
+	<select id="selectQnaContent" resultType="map">
+		SELECT d.qna_category_detail_name, q.qna_content
+		FROM QUESTION q
+		JOIN QUESTION_CATEGORY_DETAIL d
+		ON q.qna_category_detail_num = d.qna_category_detail_num
+		WHERE qna_num = #{qnaNum}
+	</select>
+	
+	<update id="updateQnaAnswer">
+		UPDATE QUESTION
+		SET qna_answer = #{question_content}, qna_is_answer = 'Y'
+		WHERE qna_num = #{qna_num}
+	</update>
+	
+	<select id="selectQnaDetail" resultType="map">
+		SELECT qna_content, qna_answer
+		FROM OFTEN_QUESTION
+		WHERE often_qna_num = #{qnaDetailNum}
+	</select>
+	
 </mapper>

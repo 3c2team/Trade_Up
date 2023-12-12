@@ -175,6 +175,30 @@ public class AdminService {
 		adminMapper.updateReport(product_num);
 	}
 
+	// 문의내역 리스트
+	public List<Map<String, String>> selectQuestionList() {
+		
+		return adminMapper.selectQuestionList();
+	}
+
+	// 답변용 문의내용 조회
+	public Map<String, String> selectQnaContent(int qnaNum) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectQnaContent(qnaNum);
+	}
+
+	//문의내역 답변
+	public int updateQnaAnswer(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.updateQnaAnswer(map);
+	}
+
+	//공지사항 상세 페이지
+	public Map<String, String> selectQnaDetail(int qnaDetailNum) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectQnaDetail(qnaDetailNum);
+	}
+
 
 
 

@@ -49,6 +49,7 @@
 	    background: #5F12D3;
 	    color: #ffffff;
 	    border-color: #5F12D3;
+	    float: right;
 	}
 	
 	#btnQuit{
@@ -351,7 +352,7 @@
 			<div class="chatRoom">
 				<div class="chatMessageArea"></div>
 				<div class="commandArea">
-					<input type="text" size="60" class="chatMsg" onkeypress="checkEnter(this)">
+					<input type="text" size="57" class="chatMsg" onkeypress="checkEnter(this)">
 <!-- 					<textarea rows="2" cols="40"class="chatMsg" onkeypress="checkEnter(this)"></textarea> -->
 					<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">
 <!-- 					<input type="button" class="btnQuitRoom" value="대화종료" > -->

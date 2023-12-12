@@ -17,7 +17,7 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>TRADEUP | 회원조회</title>
+  <title>TRADEUP | 문의내역</title>
 
   <meta name="description" content="" />
 
@@ -63,9 +63,6 @@
 		    display: flex;
 		    flex-direction: column;
 		}
-		
-/*         th {word-break:break-all;word-wrap:break-word;} */
- 
 	</style>  
 </head>
 
@@ -79,44 +76,59 @@
 			<div class="layout-page">
 				<div class="content-wrapper">
 					<div class="container-xxl flex-grow-1 container-p-y">
-						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">공지사항 /</span> 공지사항</h4>
+						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">지원관리 /</span> 문의내역</h4>
 						<!--/Table -->
 						<div class="card">
-							<h5 class="card-header">공지 목록</h5>
+							<h5 class="card-header">문의 내역</h5>
 
 								<!-- --------------------------------------------------------------- -->
 								
 								<div class="table-responsive text-nowrap" style="padding: 20px;">
-								
+<!-- 								<input type="button" class="btn default"  id="open_notice_insert" style="border-radius: 3px; margin-bottom: 3px; font-size: small; color: #fff; background: darkgreen; float:right;" value="공지사항 등록"> -->
 									<br>
-<!-- 									<form action="" method="post" style="margin:30px"> -->
+<!-- 									<form action="MemberListPeriod" method="post" style="margin:30px"> -->
 										<table id="datatablesSimple" >
 											<thead>
 												<tr>
 													<th></th>
-<!-- 													<th style="width:15%;">공지번호</th> -->
-													<th >공지제목</th>
-													<th>내용 상세보기</th>
-<!-- 													<th></th> -->
-<!-- 													<th>공지날짜</th> -->
+													<th>문의사진</th>
+													<th>문의제목</th>
+													<th>문의내용</th>
+													<th>문의날짜</th>
+													<th>답변완료 여부</th>
+													<th>답변하기</th>
 <!-- 													<th>관리자 권한 부여</th> -->
 												</tr>
 											</thead>
 											<tbody>
-											<c:forEach var="NoticeList" items="${NoticeList}">
+											<c:forEach var="questoinList" items="${questoinList}">
 												<tr>
-													<td><input type="checkbox" id="checkbox" name="checkbox" value="${NoticeList.often_qna_num}"></td>
-<%-- 													<td>${NoticeList.often_qna_num}</td> --%>
-													<td>${NoticeList.qna_content}</td>
+													
+													<td><input type="checkbox" id="checkbox" name="checkbox" value="${questoinList.qna_num}"></td>
+													<td><img  src="${pageContext.request.contextPath }${questoinList.qna_image_real_file}"></td>
+													<td>${questoinList.qna_category_detail_name}</td>
+													<td>${questoinList.qna_content}</td>
+													<td>${questoinList.qna_date}</td>
 													<td>
-														<button class="btn default qnaDetail" id="qnaDetail" value="${NoticeList.often_qna_num}" style="border-radius: 3px; margin-bottom: 3px; font-size: small; color: #fff; background: #5F12D3 ;">상세보기</button>
+														<c:choose>
+															<c:when test="${questoinList.qna_is_answer eq 'N'}">
+																<span class="badge bg-label-hold me-1" style="font-size:small;" id="checkedResult">미완료</span>
+															</c:when>
+															<c:when test="${questoinList.qna_is_answer eq 'Y'}">
+																<span class="badge bg-label-prohibition" style="font-size:small;" id="checkedResult">완료</span>
+															</c:when>
+														</c:choose>
 													</td>
+													<td>
+<!-- 														<input type="button" class="btn default delete_dangerous" id="open_question_insert" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;" value="답변하기"> -->
+														<button class="btn default delete_dangerous" id="open_question_insert" value="${questoinList.qna_num}" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: darkgreen;">답변하기</button>
+													</td>
+<%-- 													<td>${memberList.member_phone_num}</td> --%>
 												</tr>
 											</c:forEach>
 											</tbody>
 										</table>	
-									<input type="submit" id="delete_btn" class="btn btn-primary" value="삭제">	
-									<input type="button" class="btn default"  id="open_notice_insert" style="border-radius: 3px; margin-bottom: 3px; font-size: small; color: #fff; background: darkgreen; float:right;" value="공지사항 등록">
+									<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	
 <!-- 								</form> -->
 
 							</div>
@@ -155,8 +167,7 @@
         <script
 		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
 		crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/admin_notice.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/admin_notice_detail.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/admin_question.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_datatable.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_calender.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_search_list.js"></script>

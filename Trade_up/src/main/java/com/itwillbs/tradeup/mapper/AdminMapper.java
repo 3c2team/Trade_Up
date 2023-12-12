@@ -88,6 +88,18 @@ public interface AdminMapper {
 
 	void deleteDangerous(int product_num);
 
+	// 문의내역 리스트
+	List<Map<String, String>> selectQuestionList();
+
+	// 답변용 문의내용 조회
+	Map<String, String> selectQnaContent(int qnaNum);
+
+	// 문의내역 답변
+	int updateQnaAnswer(Map<String, String> map);
+
+	// 공지사항 상세내용
+	Map<String, String> selectQnaDetail(int qnaDetailNum);
+
 
 	
 	

@@ -27,11 +27,11 @@
 				<div data-i18n="Misc">거래내역</div>
 			</a>
 			<ul class="menu-sub">
-				<li class="menu-item">
-					<a href="Transaction" class="menu-link">
-						<div data-i18n="Under Maintenance">거래 내역</div>
-					</a>
-				</li>
+<!-- 				<li class="menu-item"> -->
+<!-- 					<a href="Transaction" class="menu-link"> -->
+<!-- 						<div data-i18n="Under Maintenance">거래 내역</div> -->
+<!-- 					</a> -->
+<!-- 				</li> -->
 				<li class="menu-item">
 					<a href="ProductCharge" class="menu-link">
 						<div data-i18n="Error"> 수수료 내역</div>
@@ -123,7 +123,7 @@
 	  <li class="menu-item">
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-cube-alt"></i>
-				<div data-i18n="Misc">공지사항</div>
+				<div data-i18n="Misc">지원관리</div>
 			</a>
 			<ul class="menu-sub">
 				<li class="menu-item">
@@ -132,10 +132,11 @@
 					</a>
 				</li>
 				<li class="menu-item">
-					<a href="AdminEvent" class="menu-link">
-						<div data-i18n="Error"> 이벤트</div>
+					<a href="AdminQuestion" class="menu-link">
+						<div data-i18n="Error"> 문의내역</div>
 					</a>
 				</li>
+				
 			</ul>
 		</li>
 		<li class="menu-item">

@@ -1,6 +1,6 @@
 $(function(){
 	$("#open_notice_insert").on("click",function(){
-		window.open('AdminNoticeRegist','공지등록', "top=500,left=500,width=750, height=500");
+		window.open('AdminNoticeRegist','공지등록', "top=500,left=500,width=770, height=500");
 	});
 
 });

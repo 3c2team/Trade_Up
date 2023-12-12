@@ -8,19 +8,19 @@
 <script type="text/javascript">
 
 </script>
-<title>공지사항 등록</title>
+<title>문의사항 답변</title>
 </head>
 <body>
 	<div class="jumbotron" style="padding: 2rem 2rem; background: #696cff;">
 		<div class="container">
 			<h1 class="display-3" style="font-size: 30px; background: #696cff;">
-			<strong style="color:white;">공지사항 등록</strong>	
+			<strong style="color:white;">문의사항 답변</strong>	
 			</h1>
 		</div>
 	</div>
 	
 	<div class="container">
-		<form name="newProduct" onsubmit="return confirm('등록하시겠습니까?')" action="AdminNoticeRegistPro" class="form-horizontal" method="post" 
+		<form name="newProduct" onsubmit="return confirm('등록하시겠습니까?')" action="AdminQuestionRegistPro" class="form-horizontal" method="post" 
 		enctype="multipart/form-data">
 <!-- 			<div class="form-group row"> -->
 <!-- 				<label class="col-sm-2">등록 분류</label> -->
@@ -29,36 +29,32 @@
 <!-- 				</div> -->
 <!-- 			</div> -->
 			<div class="form-group row">
-				<label class="col-sm-2">제목</label>
+				<label class="col-sm-2">문의 제목</label>
 				<div class="com-sm-3">
-					<input type="text" name="qna_content" required class="form-control">
+					<input type="text" value="${qnaAnswer.qna_category_detail_name }">
 				</div>
 			</div>
 			
 			<div class="form-group row">
-				<label class="col-sm-2">카테고리</label>
-				<div class="com-sm-3">
-					<select name="qna_filter">
-					    <option value="1">거래문의</option>
-					    <option value="2">이용문의</option>
-					    <option value="3">회원/계정</option>
-					    <option value="4">운영정책</option>
-					    <option value="5">기타</option>
-					  </select>
+				<label class="col-sm-2">문의 내용</label>
+				<div >
+<!-- 					<textarea cols="50" rows="2"  style="width:400px; height: 180px;"> -->
+					<textarea style="width:400px; height: 180px;">${qnaAnswer.qna_content}</textarea>
+					<input type="hidden" name="qna_num" value="${qnaNum}">
 				</div>
 			</div>
-			
+			<hr>
 			<div class="form-group row">
-				<label class="col-sm-2">상세 내용</label>
+				<label class="col-sm-2">답변 내용</label>
 				<div class="com-sm-5">
-					<textarea name="qna_answer" required cols="50" rows="2" class="form-control" style="width:400px; height: 180px;"></textarea>
+					<textarea name="question_content" cols="50" rows="2" class="form-control" style="width:400px; height: 180px;"></textarea>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input type="reset" class="btn btn-primary" onclick="window.close()" value="취소" >
-					<input type="submit"class="btn btn-primary" value="등록" >
+					<input type="reset"  class="btn btn-primary" onclick="window.close()" value="취소" >
+					<input type="submit" class="btn btn-primary" value="등록" >
 				</div>
 			</div>
 		</form>

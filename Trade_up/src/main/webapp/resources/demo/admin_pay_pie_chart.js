@@ -3,15 +3,16 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 $("#search_btn").click(function(){
-	var start = $("input[name=startDate]").val();
-	var end = $("input[name=endDate]").val();
+	let start = $("input[name=startDate]").val();
+	let end = $("input[name=endDate]").val();
 //	alert("start : " + start + ", end :" + end + " : 확인용!");
-	console.log("start : " + start + "end" + "end");
+	console.log("start : " + start + ", end : " + end);
 	
 	if(start > end){
 		alert("이후 날짜보다 시작 날짜가 더 빠를 수 없습니다. ");
 		return false;
 	}
+
 });
 
 // Pie Chart Example
@@ -20,7 +21,10 @@ var ctx = document.getElementById("myPieChart");
 		type: "POST",
 		url: "TransactionMethod",
 		async: false,
-		data: {},
+		data: { 
+			startDate:$("input[name=startDate]").val(),
+			endDate:$("input[name=endDate]").val()
+			},
 		success: function(TransactionCount) {
 //			alert(TransactionCount);
 			kakaopayCount = TransactionCount.kakaopayCount;

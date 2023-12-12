@@ -77,17 +77,17 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">업페이 /</span> 수수료 내역</h4>
 						<!--/Table -->
-						<div class="row">
-                               <div class="card-header py-3">
-                                   <h6 class="m-0 font-weight-bold text-primary" style="position: absolute;">수수료 차트</h6>
-                               </div>
-                               <div class="card-body">
-	                        	<div class="chart-area">
-	                            	<canvas id="myAreaChart" style="display: block;width: 1000px;height: 200px;"></canvas>
-	                            </div>
-	                        </div>
-						</div>	
-						<br><br>
+<!-- 						<div class="row"> -->
+<!--                                <div class="card-header py-3"> -->
+<!--                                    <h6 class="m-0 font-weight-bold text-primary" style="position: absolute;">수수료 차트</h6> -->
+<!--                                </div> -->
+<!--                                <div class="card-body"> -->
+<!-- 	                        	<div class="chart-area"> -->
+<%-- 	                            	<canvas id="myAreaChart" style="display: block;width: 1000px;height: 200px;"></canvas> --%>
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
+<!-- 						</div>	 -->
+<!-- 						<br><br> -->
 						<div class="card">
 							<h5 class="card-header">수수료 내역</h5>
 								<form action="ChargeSearch" method="post" style="margin-bottom: -25px;">	

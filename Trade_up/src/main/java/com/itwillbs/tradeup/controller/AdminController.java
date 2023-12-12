@@ -19,6 +19,8 @@ import com.itwillbs.tradeup.vo.DepositVO;
 import com.itwillbs.tradeup.vo.MemberVO;
 import com.itwillbs.tradeup.vo.WithdrawVO;
 
+import retrofit2.http.GET;
+
 
 @Controller
 public class AdminController {
@@ -344,7 +346,7 @@ public class AdminController {
 			List<DepositVO> depositSearchList = adminService.selectDepositSearch(map);
 			
 			if(depositSearchList.isEmpty()) {
-				model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+				model.addAttribute("msg", "데이터가 없습니다."); // 출력할 메세지
 				return "fail_back";
 			}
 			
@@ -356,6 +358,7 @@ public class AdminController {
 		 //공지사항 페이지 이동(관리자)
 		@GetMapping("/AdminNotice")
 		public String adminNotice(Model model) {
+			
 			// 공지사항 조회
 			List<Map<String, String>> noticeList = adminService.selectNoticeList();
 			model.addAttribute("NoticeList", noticeList);
@@ -363,24 +366,37 @@ public class AdminController {
 			return "admin/admin_notice_board";
 		}
 		
+		 //공지사항 상세 페이지
+		@GetMapping("/AdminNoticeDetail")
+		public String adminNoticeDetail(int qnaDetailNum, Model model) {
+			
+			System.out.println("qnaDetailNum : " + qnaDetailNum);
+			
+			Map<String, String> qnaDetail = adminService.selectQnaDetail(qnaDetailNum);
+			model.addAttribute("qnaDetail", qnaDetail);
+			
+			
+			return "admin/admin_notice_detail";
+		}
+		
 		 //공지사항 등록 페이지 이동(관리자)
 		@GetMapping("/AdminNoticeRegist")
 		public String adminNoticeRegit() {
 			
-			
-			
 			return "admin/admin_notice_regist";
 		}
+		
 		
 		 //공지사항 등록 처리(관리자)
 		@PostMapping("AdminNoticeRegistPro")
 		public String noticeRegetPro(@RequestParam Map<String, String> map, Model model) {
 			
-			System.out.println(map);
+			System.out.println("공지등록 넘어온 값 : " + map);
 			
 			int insertNoticeCount = adminService.insertNotice(map);
 			if(insertNoticeCount == 0) return "fail_back";
 	    	model.addAttribute("msg","등록 완료되었습니다.");
+	    	
 	    	return "success_close";
 			
 		}
@@ -423,15 +439,15 @@ public class AdminController {
 			@RequestParam(defaultValue = "") String startDate, 
 			@RequestParam(defaultValue = "") String endDate){
 		
+		System.out.println("기간조회 날짜 값(파이 차트) : " + startDate + ", " + endDate);
 		map.put("startDate", startDate);
 		map.put("endDate",endDate);
-		
 		System.out.println("data 확인 : " + map.get("startDate") + ", : " + map.get("endDate"));
 		
 		// 거래 방법 출력(일주일)
 		System.out.println("transactionMethod 들어옴");
 		Map<String, Integer> TransactionCount = adminService.selectTransactionWeek(map);
-		System.out.println("뽑히는가? : " + TransactionCount);
+		System.out.println("일주일 PIE 차트 데이터  : " + TransactionCount);
 		
 		return TransactionCount;
 		
@@ -477,7 +493,7 @@ public class AdminController {
 		List<WithdrawVO> WithdrawCharge = adminService.selectFixWithdrawSearch(map);
 		
 		if(WithdrawCharge.isEmpty()) {
-			model.addAttribute("msg", "오늘 이전 날짜만 조회 가능합니다."); // 출력할 메세지
+			model.addAttribute("msg", "데이터가 없습니다."); // 출력할 메세지
 			return "fail_back";
 		}
 		
@@ -532,6 +548,50 @@ public class AdminController {
 			return "chat/chat_main";
 		}
 	
+		// 문의내역 리스트
+		@GetMapping("AdminQuestion")
+		public String adminQuestion(Model model) {
+			
+			List<Map<String, String>> questoinList = adminService.selectQuestionList();
+			
+			System.out.println("나옴???" + questoinList);
+			
+			model.addAttribute("questoinList", questoinList);
+			return "admin/admin_question";
+					
+		}
+		
+		// 문의내역 답변
+		@GetMapping("/AdminQuestionRegist")
+		public String adminQuestionRegist(int qnaNum, Model model) {
+			
+			System.out.println("넘어온 qnaNum : " + qnaNum);
+			
+			Map<String, String> qnaAnswer = adminService.selectQnaContent(qnaNum);
+			System.out.println("답변용 : " + qnaAnswer);
+			
+			model.addAttribute("qnaAnswer",qnaAnswer);
+			model.addAttribute("qnaNum", qnaNum);
+			
+			return "admin/admin_question_regist";
+		}
+		
+		// 문의내역 답변
+		@PostMapping("AdminQuestionRegistPro")
+		public String adminQuestionRegistPro(@RequestParam Map<String, String> map, Model model) {
+			
+			System.out.println("답변 시 넘어온 값 : " + map);
+			
+//			int insertNoticeCount = adminService.insertNotice(map);
+//			if(insertNoticeCount == 0) return "fail_back";
+			
+			int updateQnaAnswer = adminService.updateQnaAnswer(map);
+			
+			
+	    	model.addAttribute("msg","등록 완료되었습니다.");
+	    	return "success_close";
+		}
+		
 	
 	
 	
