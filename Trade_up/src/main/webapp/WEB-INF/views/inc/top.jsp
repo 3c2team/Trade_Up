@@ -47,18 +47,18 @@
                         <ul>
                             <li class="active"><a href="./">메인</a></li>
                             <li><a href="Shop">중고거래</a></li>
-                            <li><a href="#">페이지</a>
-                                <ul class="dropdown">
-                                    <li><a href="About">About Us</a></li>
-                                    <li><a href="ShopDetails">Shop Details</a></li>
-                                    <li><a href="ShoppingCart">Shopping Cart</a></li>
-                                    <li><a href="Checkout">Check Out</a></li>
-                                    <li><a href="BlogDetails">Blog Details</a></li>
-                                </ul>
-                            </li>
+<!--                             <li><a href="#">페이지</a> -->
+<!--                                 <ul class="dropdown"> -->
+<!--                                     <li><a href="About">About Us</a></li> -->
+<!--                                     <li><a href="ShopDetails">Shop Details</a></li> -->
+<!--                                     <li><a href="ShoppingCart">Shopping Cart</a></li> -->
+<!--                                     <li><a href="Checkout">Check Out</a></li> -->
+<!--                                     <li><a href="BlogDetails">Blog Details</a></li> -->
+<!--                                 </ul> -->
+<!--                             </li> -->
                             <li><a href="FraudInquiry">정지조회</a></li>
                             <li><a href="MarketPriceInquiry">시세조회</a></li>
-                            <li><a href="ChatMain">채팅테스트</a></li>
+                            <li><a href="Customer">고객센터</a></li>
                         </ul>
                     </nav>
                 </div>
