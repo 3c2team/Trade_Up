@@ -170,15 +170,15 @@
                                        <input type="hidden" value="${product_num}">
                                        <c:choose>
                                           <c:when test="${empty sessionScope.sId }">
-                                             <a class="primary-btn"  style="background: gray;">채팅하기</a>                                             
+											<a class="primary-btn"  style="background: gray;">채팅하기</a>                                             
                                           </c:when>
                                           <c:otherwise>
-                                                     <a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
+											<a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
                                           </c:otherwise>
                                        </c:choose>
-                                                  <a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
-                                            </c:forEach>
-                                        </div>
+										<a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
+									</c:forEach>
+								</div>
                               </div>
                            </div>
                         </div>
@@ -216,7 +216,7 @@
                                         <div class="product__details__tab__content__item">
 <!--                                            <a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
-                                            <p>빈조우님</p>
+                                            <a href="UserMarket?member_id=${product.member_id}">${product.member_id}님</a>
                                             <p>판매상품 999+ / 안전거래 43 / 후기 10</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
@@ -448,13 +448,13 @@
     
 </body>
 <script type="text/javascript">
-   // 채팅 연결
-   function openChat() {
-      let memberId = $("#sellMember").val();
-   //      alert(memberId);
-//       window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-      window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
-   }
+	// 채팅 연결
+	function openChat() {
+	   let memberId = $("#sellMember").val();
+	//      alert(memberId);
+	//    window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
+	   window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	}
    
    function payCheck(){
       let sId = "${sessionScope.sId}";
