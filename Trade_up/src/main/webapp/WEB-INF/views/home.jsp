@@ -11,6 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Male-Fashion | Template</title>
+<style type="text/css">
+    .main_heart{
+	    background-size: contain;
+	    width: 30px;
+	    height: 30px;
+    }
+</style>
 	<jsp:include page="inc/style.jsp"></jsp:include>
 </head>
 
@@ -108,7 +115,12 @@
 	                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${productList.product_main_img}">
 	                            <span class="label">New</span>
 	                            <ul class="product__hover">
-	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
+	                            	<c:if test="${empty productList.favorite_idx}">
+	                                	<li style="margin-left:10px;background-size: contain; width: 30px; height: 30px;" class="favorite_off"></li>
+	                                </c:if>
+	                            	<c:if test="${!empty productList.favorite_idx}">
+	                                	<li style="margin-left:10px; background-size: contain; width: 30px; height: 30px;"class="main_heart favorite_on"></li>
+	                                </c:if>
 	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
 	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
 	                            </ul>
@@ -140,6 +152,7 @@
                 </c:forEach>
             </div>
         </div>
+       
     </section>
     <!-- Product Section End -->
 
@@ -152,6 +165,7 @@
     <!-- Latest Blog Section Begin -->
     <!-- Latest Blog Section End -->
 
+<div class="favorite_on"></div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7a037ee7b5defdef9bd8b44dd31e3eac&libraries=services"></script>
   <script type="text/javascript">

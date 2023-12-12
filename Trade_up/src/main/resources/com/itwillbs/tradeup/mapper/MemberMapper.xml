@@ -104,4 +104,5 @@
    		SET naver_id = #{naver_id}
    		WHERE member_id = #{member_id}
    	</update>
+
 </mapper>

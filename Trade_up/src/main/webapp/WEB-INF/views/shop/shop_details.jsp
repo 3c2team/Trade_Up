@@ -28,6 +28,7 @@
 		padding: 1rem;
 		border-color: rgb(230 230 230);
    }
+
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
@@ -101,6 +102,8 @@
                                <a href="Main">홈</a>
                                <a href="Shop?category=${category.category_name }">${category.category_name }</a>
                                <span>${product.product_num }</span>
+                               
+                               <div id="favorite_btn"class="favorite_off" style="cursor:pointer; width: 50px;float: inline-end;"></div>
                            </div>
                      <div class="container">
                         <div class="row d-flex justify-content-center">
@@ -474,7 +477,59 @@
       
    }
 
+   $(function() {
+	   let isRun = false;
+	   let proNum = ${param.product_num};
+       let sId = "${sessionScope.sId}";
+	      $.ajax({
+	            url: "selectFavorite",
+	            method: 'POST',
+	            data: { proNum: proNum, sId: sId },
+	            success: function(data) {
+	               $("#favorite_btn").removeClass();
+	               $("#favorite_btn").addClass('favorite_' + data);
+	            },
+	            error: function(error) {
+	               if(${empty sessionScope.sId }) {
+	                  alert("로그인이 필요합니다.");
+	               }
+	            }
+	         });
+	
 
+	      // ===== 중복 방어 코드 =====
+
+	      $("#favorite_btn").on('click', function() {
+	         if(isRun) {
+	            return;
+	         }
+	         
+	         isRun = true;
+	      // ======================
+	         
+	       
+	         let favBtnClass = $("#favorite_btn").attr("class");
+	         let url = favBtnClass == "favorite_on" ? "RemoveFavorite" : "AddFavorite";
+	         
+	         alert(url);
+// 	         return;
+	         $.ajax({
+	            url: url,
+	            method: 'POST',
+	            data: { proNum: proNum, sId: sId },
+	            success: function(data) {
+	               $("#favorite_btn").removeClass();
+	               $("#favorite_btn").addClass('favorite_' + data);
+	               isRun = false;
+	            },
+	            error: function(error) {
+	               if(${empty sessionScope.sId }) {
+	                  alert("로그인이 필요합니다.");
+	               }
+	            }
+	         });
+	      });
+   });
 // var map = null,
 // customOverlay = new kakao.maps.CustomOverlay({}),
 // kkoMap = {

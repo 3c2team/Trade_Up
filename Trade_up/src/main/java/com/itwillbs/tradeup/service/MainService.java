@@ -95,4 +95,23 @@ public class MainService {
 		// TODO Auto-generated method stub
 		return mapper.selectSellerProduct(member_id);	
 	}
+
+	public int registFavorite(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return mapper.registFavorite(param);	
+	}
+
+	public int deleteFavorite(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return mapper.deleteFavorite(param);	
+	}
+
+	public Map<String, String> selectFavorite(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return mapper.selectFavorite(param);	
+	}
+	public List<Map<String, Object>> mainProductList(String sId) {
+		// TODO Auto-generated method stub
+		return mapper.mainProductList(sId);
+	}
 }

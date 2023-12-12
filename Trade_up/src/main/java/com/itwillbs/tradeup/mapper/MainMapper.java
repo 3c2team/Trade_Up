@@ -40,5 +40,13 @@ public interface MainMapper {
 
 	List<Map<String, String>> selectSellerProduct(String member_id);
 
+	int registFavorite(Map<String, Object> param);
+
+	int deleteFavorite(Map<String, Object> param);
+
+	Map<String, String> selectFavorite(Map<String, Object> param);
+
+	List<Map<String, Object>> mainProductList(String sId);
+
 
 }

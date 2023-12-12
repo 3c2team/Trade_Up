@@ -178,4 +178,31 @@
     		from PRODUCT
     		where member_id = #{member_id}
     	</select>
+   	   	<insert id="registFavorite">
+	   		INSERT INTO FAVORITE
+	   		VALUES(
+	   			null
+	   			,#{sId}
+	   			,#{proNum}
+	   		)
+   		</insert>
+   		<delete id="deleteFavorite">
+	   		DELETE FROM FAVORITE
+	   		WHERE member_id = #{sId} 
+	   		AND product_num = #{proNum}
+  	 	</delete>
+    	<select id="selectFavorite" resultType="map">
+    		select *
+    		FROM FAVORITE
+	   		WHERE member_id = #{sId} 
+	   		AND product_num = #{proNum}
+    	</select>
+    	<select id="mainProductList">
+	    	SELECT *
+			FROM PRODUCT p left 
+			JOIN (select product_num,favorite_idx
+				FROM FAVORITE
+				WHERE member_id = 'dmddo') f
+			ON p.product_num = f.product_num;
+    	</select>
     </mapper>

@@ -249,5 +249,35 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+	@ResponseBody
+	@PostMapping("AddFavorite")
+	public String addFavorite(@RequestParam Map<String, Object> param, HttpSession session) {
+		System.out.println("insert insertinsertinsertinsertinsert" + param);
+	   int insertCount = service.registFavorite(param);
+	   if(insertCount == 0 ) {
+		   System.out.println("인설트 안됌!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	   }
+	   return "on";
+	}
+
+	// 관심상품 삭제
+	@ResponseBody
+	@PostMapping("RemoveFavorite")
+	public String removeFavorite(@RequestParam Map<String, Object> param, HttpSession session) {
+		System.out.println("fdfdfdfdfdfd" + param);
+	   int deleteCount = service.deleteFavorite(param);
+	   return "off";
+	}
+	@ResponseBody
+	@PostMapping("selectFavorite")
+	public String selectFavorite(@RequestParam Map<String, Object> param, HttpSession session) {
+		System.out.println("fdfdfdfdfdfd" + param);
+		Map<String, String> selectFavorite = service.selectFavorite(param);
+		System.out.println(selectFavorite);
+		if(selectFavorite == null) {
+			return "off";
+		}
+		return "on";
+	}
 
 }
