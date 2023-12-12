@@ -88,5 +88,11 @@ public class MainService {
 
 	public List<Map<String, String>> selectUserReport(String sId) {
 		// TODO Auto-generated method stub
-		return mapper.selectUserReport(sId);	}
+		return mapper.selectUserReport(sId);	
+	}
+
+	public List<Map<String, String>> selectSellerProduct(String member_id) {
+		// TODO Auto-generated method stub
+		return mapper.selectSellerProduct(member_id);	
+	}
 }

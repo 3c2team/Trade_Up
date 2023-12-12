@@ -38,5 +38,7 @@ public interface MainMapper {
 
 	List<Map<String, String>> selectUserReport(String sId);
 
+	List<Map<String, String>> selectSellerProduct(String member_id);
+
 
 }

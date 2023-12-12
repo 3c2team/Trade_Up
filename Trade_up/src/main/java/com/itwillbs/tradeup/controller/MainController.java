@@ -135,8 +135,12 @@ public class MainController {
 		return "user_customer_detail";
 	}
 	@GetMapping("UserMarket")
-	public String userMarket() {
-		
+	public String userMarket(@RequestParam String member_id,Model model) {
+		Map<String, String> Seller = memberService.getMemberLogin(member_id);
+		List<Map<String, String>> sellerProduct = service.selectSellerProduct(member_id);
+		Seller.put("Count", ""+sellerProduct.size());
+		model.addAttribute("Seller", Seller);
+		model.addAttribute("sellerProduct", sellerProduct);
 		return "user_market";
 	}
 	@PostMapping("QuestionRegistPro")

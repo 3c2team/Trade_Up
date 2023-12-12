@@ -113,7 +113,7 @@
 				success: function(data) {
 					let count = 0;
 					data.forEach(items => {
-						$("#qna_board").append("<div class='custom_qna_content' name='non_hidden_" +count  +"'>"+items.qna_content+"</div>");
+						$("#qna_board").append("<div class='custom_qna_content' style='padding-left : 7px;' name='non_hidden_" +count  +"'>"+items.qna_content+"</div>");
 						$("#qna_board").append("<pre><div class='custom_qna_answer' hidden name='non_hidden_" +count  +"'>"+items.qna_answer+"</div></pre>");
 						count++;
 					});
@@ -144,7 +144,7 @@
 				success: function(data) {
 					let count = 0;
 					data.forEach(items => {
-						$("#qna_board").append("<div class='custom_qna_content' name='non_hidden_" +count  +"'>"+items.qna_content+"</div>");
+						$("#qna_board").append("<div class='custom_qna_content' style='padding-left : 7px;' name='non_hidden_" +count  +"'>"+items.qna_content+"</div>");
 						$("#qna_board").append("<pre><div class='custom_qna_answer' hidden name='non_hidden_" +count  +"'>"+items.qna_answer+"</div></pre>");
 						count++;
 					});

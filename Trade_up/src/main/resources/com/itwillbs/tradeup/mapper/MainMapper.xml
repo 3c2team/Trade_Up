@@ -173,4 +173,9 @@
 		   ON r.qna_category_detail_num = q.qna_category_detail_num ;
     	
     	</select>
+    	<select id="selectSellerProduct" resultType="map">
+    		select *
+    		from PRODUCT
+    		where member_id = #{member_id}
+    	</select>
     </mapper>
