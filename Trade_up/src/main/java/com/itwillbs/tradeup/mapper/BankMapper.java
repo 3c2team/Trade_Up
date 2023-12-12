@@ -10,5 +10,7 @@ import com.itwillbs.tradeup.vo.ResponseTokenVO;
 public interface BankMapper {
 
 	void insertToken(@Param("responseToken") ResponseTokenVO responseToken, @Param("sId")String sId);
+
+	void insertFintechUseNum(@Param("fintech_use_num") String fintech_use_num, @Param("sId") String sId);
 	
 }

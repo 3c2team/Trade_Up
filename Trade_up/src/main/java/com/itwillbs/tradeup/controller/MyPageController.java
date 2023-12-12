@@ -209,8 +209,9 @@ public class MyPageController {
 		String user_bank = (String)param.get("account_bank");
 		
 		int insertCount = 0;
+		String fintech_use_num = "";
 		for(BankAccountVO account : userInfo.getRes_list()) {
-			
+			fintech_use_num = account.getFintech_use_num();
 			String apiBank = account.getBank_name();
 			String apiAcc = account.getAccount_num_masked();
 			
@@ -224,6 +225,7 @@ public class MyPageController {
 		String msg = "계좌등록에 실패했습니다. 계좌번호를 확인해주세요.";
 		if(insertCount > 0) {
 			msg = "계좌를 등록했습니다.";
+			bankApiService.registFintechUseNum(fintech_use_num, sId);
 		}
 		
 		model.addAttribute("msg", msg);

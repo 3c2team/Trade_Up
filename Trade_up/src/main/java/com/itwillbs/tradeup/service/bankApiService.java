@@ -17,5 +17,9 @@ public class bankApiService {
 	public void registToken(ResponseTokenVO responseToken, String sId) {
 		mapper.insertToken(responseToken, sId);
 	}
+	
+	public void registFintechUseNum(String fintech_use_num, String sId) {
+		mapper.insertFintechUseNum(fintech_use_num, sId);
+	}
 
 }

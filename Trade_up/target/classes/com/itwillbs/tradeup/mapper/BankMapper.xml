@@ -5,8 +5,13 @@
 <mapper namespace="com.itwillbs.tradeup.mapper.BankMapper">
 	<insert id="insertToken">
 		INSERT INTO FINTECH_USER_INFO
-		VALUES (#{sId}, #{responseToken.access_token}, #{responseToken.user_seq_no});
+		VALUES (#{sId}, #{responseToken.access_token}, #{responseToken.user_seq_no}, NULL);
 	</insert>
+	<update id="insertFintechUseNum">
+		UPDATE FINTECH_USER_INFO 
+		SET fintech_use_num = #{fintech_use_num}
+		WHERE member_id = #{sId};
+	</update>
 </mapper>
 
 
