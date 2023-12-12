@@ -85,4 +85,8 @@ public class MainService {
 		// TODO Auto-generated method stub
 		return mapper.insertReportImg(map);
 	}
+
+	public List<Map<String, String>> selectUserReport(String sId) {
+		// TODO Auto-generated method stub
+		return mapper.selectUserReport(sId);	}
 }

@@ -109,7 +109,9 @@ public class MainController {
 	public String userCustomer(HttpSession session,Model model) {
 		String sId = (String)session.getAttribute("sId");
 		List<Map<String, String>> selectUserQna = service.selectUserQna(sId);
+		List<Map<String, String>> selectUserReport = service.selectUserReport(sId);
 		model.addAttribute("selectUserQna",selectUserQna);
+		model.addAttribute("selectUserReport",selectUserReport);
 		return "user_customer";
 	}
 	//1대1 문의 페이지 이동
@@ -132,6 +134,11 @@ public class MainController {
 		model.addAttribute("QnaDetail",QnaDetail);
 		return "user_customer_detail";
 	}
+	@GetMapping("UserMarket")
+	public String userMarket() {
+		
+		return "user_market";
+	}
 	@PostMapping("QuestionRegistPro")
 	public String quewstionRegistPro(HttpSession session,@RequestParam(value =  "file" , required = false) MultipartFile[] imageList
 			,@RequestParam Map<String, String> map) {
@@ -139,7 +146,7 @@ public class MainController {
 			String saveDir = session.getServletContext().getRealPath(uploadDir);//실제 업로드 경로
 			// 맵에 이름과 경로 전달
 			//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
-			System.out.println(map);
+			System.out.println("머가 넘어올까 ? " + map);
 			String sId = (String)session.getAttribute("sId");
 			map.put("sId", sId);
 			int insertQuestionCount = service.insertQuestion(map);
