@@ -31,7 +31,6 @@
 
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/shop_details.js"></script> --%>
 </head>
 <body>
    <header>
@@ -63,12 +62,6 @@
                                     <img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100">
                                  </div>
                               </c:forEach>
-<!--                                  <div class="carousel-item"> -->
-<%--                                     <img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100"> --%>
-<!--                                  </div> -->
-<!--                               <div class="carousel-item"> -->
-<%--                                  <img class="product__details__pic__form" id="main_img" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-2.png" class="d-block w-100"> --%>
-<!--                               </div> -->
                            </div>
                               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -86,11 +79,9 @@
                            <c:forEach var="product_img" items="${productImg }">
                               <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg" id="mini_img" ></a></li>
                            </c:forEach>
-<%--                            <c:if test="${not empty reviewList }"> --%>
                               <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-1.png" id="mini_img" ></a></li>
                               <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-2.png" id="mini_img" ></a></li>
                               <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-3.png" id="mini_img" ></a></li>
-<%--                            </c:if> --%>
                         </ul>               
                      </div>
                   </div>
@@ -129,7 +120,6 @@
                                  <div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
                                  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
                                  <script>
-//                                  if(${})
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                                      mapOption = { 
                                          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -174,7 +164,6 @@
                                         </div>
                                  <div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
-<%--                                        판매자 아이디 : ${sellerProduct.member_id}(확인용)<br> --%>
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
                                        <input type="hidden" value="${product_num}">
                                        <c:choose>
@@ -279,7 +268,6 @@
                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
                                    <ul class="product__hover">
                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
-<%-- 	                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
                                    </ul>
                                </div>
@@ -288,7 +276,6 @@
                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
 								<p>${product.trading_location }<span> / ${product.product_release }</span></p>
                                    <h5>${product.product_price}</h5>
-<%-- 									<fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
                                </div>
                            </div>
                        </div>
@@ -325,7 +312,7 @@
    $(function() {
 	   let isRun = false;
 	   let proNum = ${param.product_num};
-       let sId = "${sessionScope.sId}";
+	   let sId = "${sessionScope.sId}";
 	      $.ajax({
 	            url: "selectFavorite",
 	            method: 'POST',
