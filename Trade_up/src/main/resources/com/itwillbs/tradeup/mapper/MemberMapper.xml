@@ -29,13 +29,15 @@
 	<insert id="insertMember">
 		INSERT
 			INTO MEMBER
-			(member_name, member_nick_name, member_id, member_passwd, member_e_mail, member_insert_date, member_phone_num, <if test="!member_birth.equals('')">member_birth, </if> member_state)
+			(member_name, member_nick_name, member_id, member_passwd, member_e_mail, member_email1, member_email2, member_insert_date, member_phone_num, <if test="!member_birth.equals('')">member_birth, </if> member_state)
 			VALUES (
 				  #{member_name}
 				, #{member_nick_name}
 				, #{member_id}
 				, #{member_passwd}
 				, CONCAT(#{member_email1}, '@', #{member_email2})
+				, #{member_email1}
+				, #{member_email2}
 				, now()
 				, #{member_phone_num}
 				<if test="!member_birth.equals('')">
@@ -104,5 +106,4 @@
    		SET naver_id = #{naver_id}
    		WHERE member_id = #{member_id}
    	</update>
-
 </mapper>

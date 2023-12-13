@@ -162,8 +162,7 @@ public class MemberService {
 	public int updateCommission(String merchant_uid) {
 		return mapper.updateCommission(merchant_uid);
 	}
-
-
+	
 	public Map<String, String> getNaverAccessToken(String id) {
 		// TODO Auto-generated method stub
 		return mapper.getNaverAccessToken(id);
