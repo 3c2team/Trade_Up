@@ -129,7 +129,8 @@ public class ShopController {
 		}
 		if (map.get("trading_method2") != null) {
 			map.put("trading_method", map.get("trading_method2"));
-		}
+		} 
+		
 		if (map.get("product_price") == null) {
 			map.put("product_price", map.get("free_sharing"));
 		} else {
@@ -220,7 +221,7 @@ public class ShopController {
 		List<Map<String, Object>> productImg = shopService.getProductImg(product_num);
 		
 		// 판매자 
-		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct(product_num);
+		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct((String)product.get("member_id"));
 
 		int sellerCount = shopService.getSellerCount(product_num);
 		
@@ -234,6 +235,8 @@ public class ShopController {
 		
 		String jjim = shopService.selectJJim(product_num);
 		
+		String sellCount = shopService.selectSellCount((String)product.get("member_id"));
+		
 		model.addAttribute("product", product);
 		model.addAttribute("productImg", productImg);
 		model.addAttribute("category", category);
@@ -241,6 +244,7 @@ public class ShopController {
 		model.addAttribute("sellerCount", sellerCount);
 		model.addAttribute("productList", productList);
 		model.addAttribute("jjim", jjim);
+		model.addAttribute("sellCount", sellCount);
 //		model.addAttribute("sellerProductImg", sellerProductImg);
 
 //		model.addAttribute("msg", "상품등록을 실패했습니다.");

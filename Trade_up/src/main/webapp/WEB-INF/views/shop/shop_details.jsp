@@ -74,15 +74,11 @@
                         </div>
                       </div>
                      <div class="product__details__mini__pic">
-                        <ul>
-                        <!-- 이미지 업로드 수 만큼 조절해야함 -->
-                           <c:forEach var="product_img" items="${productImg }">
-                              <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg" id="mini_img" ></a></li>
-                           </c:forEach>
-                              <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-1.png" id="mini_img" ></a></li>
-                              <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-2.png" id="mini_img" ></a></li>
-                              <li><a><img src="${pageContext.request.contextPath }/resources/img/shop-details/thumb-3.png" id="mini_img" ></a></li>
-                        </ul>               
+						<c:forEach var="productImg" items="${productImg }">
+	                        <ul>
+								<li><a><img src="${pageContext.request.contextPath }${productImg.product_image}" id="mini_img" ></a></li>
+	                        </ul>
+						</c:forEach>
                      </div>
                   </div>
                     </div>
@@ -104,20 +100,22 @@
                                  <h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }
                                  <img onclick="location.href='RegistQuewstion?product_num=${param.product_num}'" class="report_img" src="${pageContext.request.contextPath }/resources/img/product/report.png">
                                  </h3>
-                                 <span></span>
-                                 <div style="display: flex; text-align: center;">
-                                    <span>37분 전 · 찜 ${jjim}</span>
-                                 </div>
-                                 <div class="product__details__info">
-                                    <div>
-                                       <p>배송비</p><br><h6>${product.delivery_method }</h6>
-                                    </div>
-                                    <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
-                                       <p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
-                                    </div>
-                                 </div>
-                                 <h6 style="text-align: left; margin-top: 30px">직거래 희망장소</h6>
-                                 <div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
+<!--                                  <span></span> -->
+								<div style="display: flex; text-align: center;">
+									<span>${product.product_release} · 찜 ${jjim}</span>
+								</div>
+								<div class="product__details__info">
+								   <div>
+								      <p>배송비</p><br><h6>${product.delivery_method }</h6>
+								   </div>
+								   <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
+								      <p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
+								   </div>
+								</div>
+								<c:if test="${!empty product.delivery_method }">
+									<h6 style="text-align: left; margin-top: 30px">직거래 희망장소</h6>
+									<div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
+								</c:if>
                                  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
                                  <script>
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -151,17 +149,6 @@
                                     // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
                                     infowindow.open(map, marker); 
                                  </script>
-                                 <div class="product__details__option">
-                                            <div class="product__details__option__size">
-                                                <span>거래방법 선택</span>
-                                                <label for="xxl">택배거래
-                                                    <input type="radio" id="xxl">
-                                                </label>
-                                                <label class="active" for="xl">직거래
-                                                    <input type="radio" id="xl">
-                                                </label>
-                                            </div>
-                                        </div>
                                  <div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
@@ -195,15 +182,15 @@
                             <div class="product__content__all">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
-                              <h5>상품내용</h5>
-                                        <p class="note">거래 전 주의사항 안내<br>
-                                          판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
-                                          유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-                                          Garge 고객센터로 신고해주시기 바랍니다.</p>
-<!--                                         <div class="product__details__tab__content__item"> -->
+                              			<h5>상품내용</h5>
+                                        <div class="product__details__notice" style="background-color: #F3EDFF;">
+	                                        <p class="note">거래 전 주의사항 안내<br>
+	                                          판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
+	                                          유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
+	                                          Garge 고객센터로 신고해주시기 바랍니다.</p>
+                                        </div>
                                         <div class="product__details__tab__content__item">
-<!--                                            <a name="tabs-5"></a> -->
-                                 <p id="product_info">${product.product_info }
+                                 			<p id="product_info">${product.product_info }
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +202,16 @@
 <!--                                            <a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
                                             ${product.member_id}님
-                                            <p>판매상품 ${sellerCount} / 안전거래 43</p>
+                                            <p>판매상품 ${sellerCount} / 안전거래 
+                                            <c:choose>
+												<c:when test="${!empty sellCount}">
+													${sellCount}
+												</c:when>
+												<c:otherwise>
+													0
+												</c:otherwise>
+											</c:choose>
+											</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
                                             <h6>${product.member_id }님의 판매 상품 ${sellerCount}</h6>

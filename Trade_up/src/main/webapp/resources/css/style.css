@@ -1720,7 +1720,7 @@ s
 	display: flex;
     text-align: left;
     justify-content: space-between;
-	margin-right: 30px;
+	margin-right: 80px;
 }
 
 .product__details__text h4 {
@@ -2087,7 +2087,7 @@ s
     font-weight: 700;
     background-color: #F3EDFF;
     text-align: center;
-    margin: 7%;
+    margin: 50px;
 }
 
 .product__details__tab__content__item {

@@ -27,7 +27,7 @@ public interface ShopMapper {
 	Map<String, Object> getCategory(int product_num);
 	
 	// 판매자 상품 조회
-	List<Map<String, Object>> getSellerProduct(int product_num);
+	List<Map<String, Object>> getSellerProduct(String member_id);
 	
 	// 상품 수정
 	int updateProduct(Map<String, Object> map);
@@ -54,6 +54,8 @@ public interface ShopMapper {
 	List<Map<String, Object>> highProductList(String category_idx);
 
 	String selectJJim(int product_num);
+
+	String selectSellCount(String member_id);
 
 }
 

@@ -62,7 +62,7 @@
 	<select id="getSellerProduct" resultType="map">
 		SELECT *
 		  FROM PRODUCT
-		 WHERE product_num = #{product_num}
+		 WHERE member_id = #{member_id}
 	</select>
 	
 	<!-- 판매자 상품 개수 -->
@@ -108,6 +108,15 @@
 		 WHERE P.product_num = #{product_num} AND sales_status = '판매중'
 	  GROUP BY P.product_num
 	  ORDER BY C desc
+	</select>
+	
+	<!-- 판매자 판매 개수 -->
+	<select id="selectSellCount">
+		SELECT count(sales_status)
+		  FROM PRODUCT
+ 		 WHERE (SELECT count(sales_status)
+		  		  FROM PRODUCT
+		 		 WHERE member_id = #{member_id}) = '거래완료';
 	</select>
 	
 	<!-- 높은 가격 목록 -->

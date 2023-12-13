@@ -56,8 +56,8 @@ public class ShopService {
 		return mapper.getCategory(product_num);
 	}
 
-	public List<Map<String, Object>> getSellerProduct(int product_num) {
-		return mapper.getSellerProduct(product_num);
+	public List<Map<String, Object>> getSellerProduct(String member_id) {
+		return mapper.getSellerProduct(member_id);
 	}
 
 	public int delectProductImg(int product_num) {
@@ -88,6 +88,9 @@ public class ShopService {
 		return mapper.selectJJim(product_num);
 	}
 
+	public String selectSellCount(String member_id) {
+		return mapper.selectSellCount(member_id);
+	}
 
 }
 
