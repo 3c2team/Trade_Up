@@ -100,21 +100,31 @@
 	  ORDER BY C desc
 	</select>
 	
+	<!-- 찜 갯수 -->
+	<select id="selectJJim">
+		SELECT COUNT(F.favorite_idx) as C
+		  FROM PRODUCT P
+		  JOIN FAVORITE F ON P.product_num = F.product_num
+		 WHERE P.product_num = #{product_num} AND sales_status = '판매중'
+	  GROUP BY P.product_num
+	  ORDER BY C desc
+	</select>
+	
 	<!-- 높은 가격 목록 -->
-<!-- 	<select id="highProductList"> -->
-<!-- 		SELECT product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C -->
-<!-- 		  FROM PRODUCT -->
-<!-- 		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중' -->
-<!-- 		 ORDER BY C desc -->
-<!-- 	</select> -->
+	<select id="highProductList">
+	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
+		FROM PRODUCT
+	   WHERE category_idx = #{category_idx} AND sales_status = '판매중'
+	ORDER BY cast(p as unsigned) desc;
+	</select>
 	
 	<!-- 낮은 가격 목록 -->
-<!-- 	<select id="lowProductList"> -->
-<!-- 		SELECT product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C -->
-<!-- 		  FROM PRODUCT -->
-<!-- 		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중' -->
-<!-- 		 ORDER BY C desc -->
-<!-- 	</select> -->
+	<select id="lowProductList">
+	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
+		FROM PRODUCT
+	   WHERE category_idx = #{category_idx} AND sales_status = '판매중'
+	ORDER BY cast(p as unsigned);
+	</select>
 
 	<!-- 상품 수정 -->
 	<update id="updateProduct">

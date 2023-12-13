@@ -115,15 +115,12 @@
                                  </h3>
                                  <span></span>
                                  <div style="display: flex; text-align: center;">
-                                    <span>37분 전 · 조회 16 · 찜 0</span>
+                                    <span>37분 전 · 찜 ${jjim}</span>
                                  </div>
                                  <div class="product__details__info">
                                     <div>
                                        <p>배송비</p><br><h6>${product.delivery_method }</h6>
                                     </div>
-<!--                                     <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px;"> -->
-<%--                                        <p>업페이</p><br><h6>${product.uppay }</h6> --%>
-<!--                                     </div> -->
                                     <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
                                        <p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
                                     </div>
@@ -132,6 +129,7 @@
                                  <div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
                                  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
                                  <script>
+//                                  if(${})
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                                      mapOption = { 
                                          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -176,7 +174,7 @@
                                         </div>
                                  <div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
-                                       판매자 아이디 : ${sellerProduct.member_id}(확인용)<br>
+<%--                                        판매자 아이디 : ${sellerProduct.member_id}(확인용)<br> --%>
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
                                        <input type="hidden" value="${product_num}">
                                        <c:choose>
@@ -228,68 +226,33 @@
 <!--                                            <a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
                                             ${product.member_id}님
-                                            <p>판매상품 999+ / 안전거래 43 / 후기 10</p>
+                                            <p>판매상품 ${sellerCount} / 안전거래 43</p>
                                         </div>
                                         <div class="product__details__tab__content__item">
-                                            <h6>빈조우님의 판매 상품 50</h6>
+                                            <h6>${product.member_id }님의 판매 상품 ${sellerCount}</h6>
                                         </div>
-                                <div class="container">
-                                    <div class="row" style="justify-content: space-between;">
-                                        <div class="col">
-                                            <div class="product__item">
-                                                  <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-                                                      <ul class="product__hover">
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                  <%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                                                      </ul>
-                                                  </div>
-                                                  <div class="product__item__text">
-                                                      <h6>유틸리티 자켓</h6>
-                                                      <a href="#" class="add-cart">상세보기</a>
-                                             <p>부산진구 <span> / 6분 전</span></p>
-                                                      <h5>30000원</h5>
-                                                  </div>
-                                              </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="product__item sale">
-                                                  <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-                                                      <span class="label">무료나눔</span>
-                                                      <ul class="product__hover">
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                  <%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                                                      </ul>
-                                                  </div>
-                                                  <div class="product__item__text">
-                                                      <h6>가방 팔아요</h6>
-                                                      <a href="#" class="add-cart">상세보기</a>
-                                             <p>서울 마포구 중앙동 <span> / 15분 전</span></p>
-                                                      <h5>5000원</h5>
-                                                  </div>
-                                              </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="product__item sale">
-                                                  <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }/resources/img/shop-details/ex.jpg">
-                                                      <span class="label">무료나눔</span>
-                                                      <ul class="product__hover">
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                  <%--                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
-                                                          <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                                                      </ul>
-                                                  </div>
-                                                  <div class="product__item__text">
-                                                      <h6>가방 팔아요</h6>
-                                                      <a href="#" class="add-cart">상세보기</a>
-                                             <p>서울 마포구 중앙동 <span> / 15분 전</span></p>
-                                                      <h5>5000원</h5>
-                                                  </div>
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>
+		                               <div class="container">
+		                                   <div class="row" style="justify-content: space-between;">
+		                                   <c:forEach items="${sellerProduct }" var="sellerProduct" end="2">
+		                                       <div class="col">
+		                                           <div class="product__item">
+		                                                 <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }${sellerProduct.product_main_img}">
+		                                                     <ul class="product__hover">
+		                                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
+		                                                         <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
+		                                                     </ul>
+		                                                 </div>
+		                                                 <div class="product__item__text">
+		                                                     <h6>${sellerProduct.product_name}</h6>
+		                                                     <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
+		                                            <p>${sellerProduct.trading_location} <span> / ${sellerProduct.product_release }</span></p>
+		                                                     <h5>${sellerProduct.product_price }</h5>
+		                                                 </div>
+		                                             </div>
+		                                       </div>
+		                                   </c:forEach>
+		                                   </div>
+		                               </div>
                                     </div>
                                 </div>
                             </div>
@@ -310,144 +273,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/product/product-1.jpg">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>PiquÃ© Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/product/product-2.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>PiquÃ© Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-4">
-                                    <input type="radio" id="pc-4">
-                                </label>
-                                <label class="active black" for="pc-5">
-                                    <input type="radio" id="pc-5">
-                                </label>
-                                <label class="grey" for="pc-6">
-                                    <input type="radio" id="pc-6">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/product/product-3.jpg">
-                            <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Multi-pocket Chest Bag</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$43.48</h5>
-                            <div class="product__color__select">
-                                <label for="pc-7">
-                                    <input type="radio" id="pc-7">
-                                </label>
-                                <label class="active black" for="pc-8">
-                                    <input type="radio" id="pc-8">
-                                </label>
-                                <label class="grey" for="pc-9">
-                                    <input type="radio" id="pc-9">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/product/product-4.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Diagonal Textured Cap</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$60.9</h5>
-                            <div class="product__color__select">
-                                <label for="pc-10">
-                                    <input type="radio" id="pc-10">
-                                </label>
-                                <label class="active black" for="pc-11">
-                                    <input type="radio" id="pc-11">
-                                </label>
-                                <label class="grey" for="pc-12">
-                                    <input type="radio" id="pc-12">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            	<c:forEach items="${productList }" var="product" end="4" varStatus="status">
+                       <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
+                           <div class="product__item">
+                               <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
+                                   <ul class="product__hover">
+                                       <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
+<%-- 	                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
+                                       <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
+                                   </ul>
+                               </div>
+                               <div class="product__item__text">
+                                   <h6>${product.product_name}</h6>
+                                   <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
+								<p>${product.trading_location }<span> / ${product.product_release }</span></p>
+                                   <h5>${product.product_price}</h5>
+<%-- 									<fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
+                               </div>
+                           </div>
+                       </div>
+				</c:forEach>
             </div>
         </div>
     </section>

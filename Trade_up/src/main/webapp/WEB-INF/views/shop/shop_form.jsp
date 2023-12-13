@@ -54,27 +54,43 @@ $(function () {
 	
 	
 	$(".trading_method1").on("click",function(){
-// 		debugger;
-		let span =  '<fieldset id="delivery_method">'
-					+'<label class="active" for="배송비 별도">배송비 별도'
-					+'<input type="radio" id="xxl" name="delivery_method" value="배송비 별도">'
-			        +'</label>'
-			        +'<label for="배송비 포함">배송비 포함'
-			        +'<input type="radio" id="xl" name="delivery_method" value="배송비 포함">'
-			        +'</label>'
-			        +'</fieldset>';
-// 		let span = '<input type="radio" name="delivery_method" value="별도">배송비 별도 '
-// 				   + ' <input type="radio" name="delivery_method" value="포함">배송비 포함';
 		if($(".trading_method1").is(":checked")){
-			$(".product__details__option__delivery").append(span);
+			$('.product__details__option__delivery').append(
+	            $('<input>').prop({
+	                type: 'radio',
+	                id: 'xxlx',
+	                name: 'delivery_method',
+	                value: '배송비 별도'
+	            }),
+	            $('<label>').prop({
+	                for: 'xxlx',
+	                class: 'active'
+	            }).html('배송비 별도')
+	        ).append( 
+	            $('<br>')
+	        );
+			$('.product__details__option__delivery').append(
+	            $('<input>').prop({
+	                type: 'radio',
+	                id: 'xxlxx',
+	                name: 'delivery_method',
+	                value: '배송비 포함'
+	            }),
+	            $('<label>').prop({
+	                for: 'xxlxx'
+	            }).html('배송비 포함')
+	        ).append(
+	            $('<br>')
+	        );
 		} 
 		if(!$(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").empty();
 		}
 	});
-	$(".product__details__option__delivery d-flex justify-content-center label").on('click', function () {
+	
+	$(".product__details__option__delivery label").on("click", function () {
 		debugger;
-		$(".product__details__option__delivery d-flex justify-content-center label").removeClass('active');
+		$(".product__details__option__delivery label").removeClass('active');
 		$(this).addClass('active');
 	});
 	
@@ -183,7 +199,6 @@ function tradingLocation(){
 }
 
 function insertCheck(){
-	var result = confirm("판매등록 하시겠습니까?");
 	
 	if ($(".category_idx").val() == "") {
 		alert("카테고리를 선택해주세요.");
@@ -197,7 +212,7 @@ function insertCheck(){
 		alert("판매가격을 입력해주세요.");
 		return false;
 	}
-	if ($("input[name:product_name]").val() == "") {
+	if ($("input[name:product_status]").val() == "") {
 		alert("판매정보를 입력해주세요.");
 		return false;
 	}
@@ -205,24 +220,24 @@ function insertCheck(){
 		alert("카테고리를 선택해주세요.");
 		return false;
 	}
-// 	if($('input[name=product_info]').val() == "undefined" || $('input[name=product_info]').val() == "" || $('input[name=product_info]').val() == null){
-// 		alert("판매할 상품정보를 입력해주세요.");
-// 		return false;
-// 	}
+	if($('input[name=product_info]').val() == "undefined" || $('input[name=product_info]').val() == "" || $('input[name=product_info]').val() == null){
+		alert("판매할 상품정보를 입력해주세요.");
+		return false;
+	}
 	if($('input[name=trading_method1]:checked').val() == "undefined" || $('input[name=trading_method1]:checked').val() == "" || $('input[name=trading_method1]:checked').val() == null){
 		alert("거래 방법을 선택해주세요.");
 		return false;
 	}
-	const checkboxes = document.querySelectorAll('input');
+// 	const checkboxes = document.querySelectorAll('input');
 
-	//😍 이렇게 바꿨어요!
-    for( let i = 0; i < checkboxes.length; i ++){
-        if(checkboxes[i].checked === true) return false;	
-    }
-    alert('검색할 파일 형태를 선택하세요.'); 
-	if(result){
-		$("form").submit();
-	}
+//     for( let i = 0; i < checkboxes.length; i ++){
+//         if(checkboxes[i].checked === true) return false;	
+//     }
+//     alert('검색할 파일 형태를 선택하세요.'); 
+// var result = confirm("판매등록 하시겠습니까?");
+// 	if(result){
+// 		$("form").submit();
+// 	}
 	return false;
 }
 

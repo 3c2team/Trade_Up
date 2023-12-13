@@ -81,18 +81,21 @@ public class ShopController {
 //		System.out.println("category_idx: " + category_idx);
 		return shopService.jjimProductList(category_idx);
 	}	
-//	@ResponseBody
-//	@PostMapping("LowProduct")
-//	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-//		return shopService.lowProductList(category_idx);
-//	}	
-//	@ResponseBody
-//	@PostMapping("HighProduct")
-//	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-//		return shopService.highProductList(category_idx);
-//	}	
+	
+	@ResponseBody
+	@PostMapping("HighProduct")
+	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_idx) {
+		System.out.println("category_idx: " + category_idx);
+		return shopService.highProductList(category_idx);
+	}	
+	
+	@ResponseBody
+	@PostMapping("LowProduct")
+	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_idx) {
+		System.out.println("category_idx: " + category_idx);
+		return shopService.lowProductList(category_idx);
+	}	
+	
 	
 	@GetMapping("ShopForm")
 	public String shopForm(@RequestParam(required = false) Map<String,String> map
@@ -136,9 +139,8 @@ public class ShopController {
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
-		String uploadDir = "/resources/upload/"; //가상 경로
-		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_Up/resources/upload/", ""); //실제 경로
-		
+		String uploadDir = "/upload/"; //가상 경로
+		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_Up/", ""); //실제 경로
 //		String sId = (String)session.getAttribute("sId");
 //		String uploadDir = "/upload/"; //가상 경로
 //		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", ""); //실제 경로
@@ -199,7 +201,7 @@ public class ShopController {
 		} 
 		
 		model.addAttribute("msg", "상품등록을 실패했습니다.");
-		model.addAttribute("targetURL", "ShopForm");
+		model.addAttribute("targetURL", "redirect:/ShopForm");
 		return "fail_back";
 	}
 	
@@ -228,11 +230,17 @@ public class ShopController {
 		// 카테고리 조회
 		Map<String, Object> category = shopService.getCategory(product_num);
 		
+		List<Map<String, Object>> productList = shopService.selectProductList();
+		
+		String jjim = shopService.selectJJim(product_num);
+		
 		model.addAttribute("product", product);
 		model.addAttribute("productImg", productImg);
 		model.addAttribute("category", category);
 		model.addAttribute("sellerProduct", sellerProduct);
 		model.addAttribute("sellerCount", sellerCount);
+		model.addAttribute("productList", productList);
+		model.addAttribute("jjim", jjim);
 //		model.addAttribute("sellerProductImg", sellerProductImg);
 
 //		model.addAttribute("msg", "상품등록을 실패했습니다.");

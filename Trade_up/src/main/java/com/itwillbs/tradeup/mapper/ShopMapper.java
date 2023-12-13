@@ -46,6 +46,14 @@ public interface ShopMapper {
 	
 	// 찜 목록
 	List<Map<String, Object>> jjimProductList(String category_idx);
+	
+	// 낮은 가격순
+	List<Map<String, Object>> lowProductList(String category_idx);
+	
+	// 높은 가격순
+	List<Map<String, Object>> highProductList(String category_idx);
+
+	String selectJJim(int product_num);
 
 }
 
