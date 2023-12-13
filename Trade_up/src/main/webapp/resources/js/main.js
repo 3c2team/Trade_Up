@@ -105,10 +105,10 @@
     /*-------------------
 		Radio Btn
 	--------------------- */
-    $(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label").on('click', function () {
-        $(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label").removeClass('active');
-        $(this).addClass('active');
-    });
+//    $(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label, .product__details__option__delivery label").on('click', function () {
+//        $(".product__color__select label, .shop__sidebar__size label, .product__details__option__size label, .product__details__option__delivery label").removeClass('active');
+//        $(this).addClass('active');
+//    });
 
     /*-------------------
 		Scroll

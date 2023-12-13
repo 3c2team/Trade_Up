@@ -36,6 +36,11 @@ const autoEnter = (target) => {
 
 $(function () {
 	
+	 $(".product__details__option__size label").on('click', function () {
+	        $(".product__details__option__size label").removeClass('active');
+	        $(this).addClass('active');
+	 });
+	
 	// li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
 		$(".nice-scroll li").css("background-color" , "white");
@@ -50,12 +55,14 @@ $(function () {
 	
 	$(".trading_method1").on("click",function(){
 // 		debugger;
-		let span = '<label class="active" for="xxxxl">배송비 별도'
-					+'<input type="radio" id="xxxl" name="delivery_method" value="별도">'
+		let span =  '<fieldset id="delivery_method">'
+					+'<label class="active" for="배송비 별도">배송비 별도'
+					+'<input type="radio" id="xxl" name="delivery_method" value="배송비 별도">'
 			        +'</label>'
-			        +'<label class for="xxxl">배송비 포함'
-			        +'<input type="radio" id="xxxl" name="delivery_method" value="포함">'
-			        +'</label>';
+			        +'<label for="배송비 포함">배송비 포함'
+			        +'<input type="radio" id="xl" name="delivery_method" value="배송비 포함">'
+			        +'</label>'
+			        +'</fieldset>';
 // 		let span = '<input type="radio" name="delivery_method" value="별도">배송비 별도 '
 // 				   + ' <input type="radio" name="delivery_method" value="포함">배송비 포함';
 		if($(".trading_method1").is(":checked")){
@@ -64,6 +71,11 @@ $(function () {
 		if(!$(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").empty();
 		}
+	});
+	$(".product__details__option__delivery d-flex justify-content-center label").on('click', function () {
+		debugger;
+		$(".product__details__option__delivery d-flex justify-content-center label").removeClass('active');
+		$(this).addClass('active');
 	});
 	
 	$(".trading_method2").on("click",function(){
@@ -123,6 +135,7 @@ function uploadImageHandler(e) {
 			alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
 			return;	
 		}
+		
 		let reader = new FileReader();
 		
 		reader.onload = function(e) {
@@ -150,6 +163,11 @@ function uploadImageHandler(e) {
 	});
 	e.target.files = dataTransfer.files;
 	$("#count").text($("#file")[0].files.length);
+	if(insertCheck()){
+		if(e.target.files == "" || e.target.files == "undefined" || e.target.files == null){
+			return false;
+		}
+	}
 }
 
 function tradingLocation(){
@@ -164,6 +182,50 @@ function tradingLocation(){
     }).open();
 }
 
+function insertCheck(){
+	var result = confirm("판매등록 하시겠습니까?");
+	
+	if ($(".category_idx").val() == "") {
+		alert("카테고리를 선택해주세요.");
+		return false;
+	}
+	if ($("input[name:product_name]").val() == "") {
+		alert("상품 이름을 입력해주세요.");
+		return false;
+	}
+	if ($("input[name:product_price]").val() == "") {
+		alert("판매가격을 입력해주세요.");
+		return false;
+	}
+	if ($("input[name:product_name]").val() == "") {
+		alert("판매정보를 입력해주세요.");
+		return false;
+	}
+	if ($(".category_idx").val() == "") {
+		alert("카테고리를 선택해주세요.");
+		return false;
+	}
+// 	if($('input[name=product_info]').val() == "undefined" || $('input[name=product_info]').val() == "" || $('input[name=product_info]').val() == null){
+// 		alert("판매할 상품정보를 입력해주세요.");
+// 		return false;
+// 	}
+	if($('input[name=trading_method1]:checked').val() == "undefined" || $('input[name=trading_method1]:checked').val() == "" || $('input[name=trading_method1]:checked').val() == null){
+		alert("거래 방법을 선택해주세요.");
+		return false;
+	}
+	const checkboxes = document.querySelectorAll('input');
+
+	//😍 이렇게 바꿨어요!
+    for( let i = 0; i < checkboxes.length; i ++){
+        if(checkboxes[i].checked === true) return false;	
+    }
+    alert('검색할 파일 형태를 선택하세요.'); 
+	if(result){
+		$("form").submit();
+	}
+	return false;
+}
+
 </script>
 </head>
 <body>
@@ -172,7 +234,7 @@ function tradingLocation(){
 	</header>
 
     <!-- 본문 시작 -->
-    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return confirm('등록하시겠습니까?')">
+    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" >
     	<section class="contact shop_spad">
 			<div class="section-title">
 			    <h2>판매하기</h2>
@@ -181,7 +243,7 @@ function tradingLocation(){
                 <div class="col-6" style="min-width:35%; margin-bottom: 30px">
 <!-- 	                    <div class="contact__text"> -->
 <!-- 	                    </div> -->
-					<div class="" style="display: flex; margin: 3%">
+					<div style="display: flex; margin: 3%">
 							<button id="fileTrigger" type="button" class="site-btn" style="width: 66px;"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
 							<div id="imgArea" style="display: flex; height: 100px;">
 								<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none;"/>
@@ -219,7 +281,7 @@ function tradingLocation(){
 								<div style="display: grid;">
 <!--                                 <fieldset>  -->
 									<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
-									<label class="free_sharing" for="check">
+									<label for="check">
 										<input type="checkbox" name="free_sharing" class="free_sharing" id="check" value="무료나눔">무료나눔
 									</label>
 <!-- 								</fieldset> -->
@@ -239,13 +301,15 @@ function tradingLocation(){
 								</div>
 								<div class="product__details__option">
 									<div class="product__details__option__size">
-										<span style="color: #111111; font-weight: 700;">상품상태</span>
-										<label class="active" for="xxl">중고
-											<input type="radio" id="xxl" name="product_status" value="중고" checked>
-	                                    </label>
-	                                    <label for="xl">새상품
-	                                        <input type="radio" id="xl" name="product_status" value="새상품">
-	                                    </label>
+										 <fieldset id="product_status">
+											<span style="color: #111111; font-weight: 700;">상품상태</span>
+											<label class="active" for="중고">중고
+												<input type="radio" id="xxl" name="product_status" value="중고" checked>
+		                                    </label>
+		                                    <label for="새상품">새상품
+		                                        <input type="radio" id="xl" name="product_status" value="새상품">
+		                                    </label>
+										 </fieldset>
                                 	</div>
 	                            </div>
 								<div class="product__details__option">
@@ -259,8 +323,7 @@ function tradingLocation(){
                                 <div class="address d-flex justify-content-center" style="display: contents; margin-top: 30px;"></div>
 	                            <div class="product__form__submit">
                                     <button type="reset" class="site-btn" >리셋</button>
-<!-- 	                                    <button class="site-btn" onclick="insertCheck()">판매등록</button> -->
-                                    <button type="submit" class="site-btn" >판매등록</button>
+                                    <button class="site-btn" onclick="insertCheck()">판매등록</button>
 	                            </div>
 					</div>
 				</div>
