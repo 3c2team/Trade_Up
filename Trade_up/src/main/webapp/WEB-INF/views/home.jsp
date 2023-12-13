@@ -63,43 +63,11 @@
     <!-- Hero Section End -->
 
     <!-- Banner Section Begin -->
-    <section class="banner spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 offset-lg-4">
-                    <div class="banner__item">
-                        <div class="banner__item__pic">
-                            <img src="${pageContext.request.contextPath }/resources/img/banner/banner-1.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="banner__item banner__item--middle">
-                        <div class="banner__item__pic">
-                            <img src="${pageContext.request.contextPath }/resources/img/banner/banner-2.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="banner__item banner__item--last">
-                        <div class="banner__item__pic">
-                            <img src="${pageContext.request.contextPath }/resources/img/banner/banner-3.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Banner Section End -->
 
     <!-- Product Section Begin -->
-    <section class="product spad">
+    <section class="product spad" style="margin-top: 5rem;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -108,9 +76,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="row product__filter">
+            <div class="row product__filter" style="overflow:auto; flex-wrap: nowrap;">
             <c:forEach items="${productList }" var="productList">
-	                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+	                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
 	                    <div class="product__item">
 	                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${productList.product_main_img}">
 	                            <span class="label">New</span>
@@ -135,17 +103,6 @@
 	                                <i class="fa fa-star-o"></i>
 	                            </div>
 	                            <h5>${productList.product_price} 원</h5>
-	                            <div class="product__color__select">
-	                                <label for="pc-1">
-	                                    <input type="radio" id="pc-1">
-	                                </label>
-	                                <label class="active black" for="pc-2">
-	                                    <input type="radio" id="pc-2">
-	                                </label>
-	                                <label class="grey" for="pc-3">
-	                                    <input type="radio" id="pc-3">
-	                                </label>
-	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
@@ -165,7 +122,6 @@
     <!-- Latest Blog Section Begin -->
     <!-- Latest Blog Section End -->
 
-<div class="favorite_on"></div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7a037ee7b5defdef9bd8b44dd31e3eac&libraries=services"></script>
   <script type="text/javascript">

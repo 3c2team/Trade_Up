@@ -101,13 +101,20 @@ public class MainController {
 	}
 	//고객센터 페이지 이동
 	@GetMapping("Customer")
-	public String customer() {
+	public String customer(HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId == null || sId.equals("")) return "not_login";
+		
 		
 		return "customer";
 	}
 	@GetMapping("UserCustomer")
 	public String userCustomer(HttpSession session,Model model) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null || sId.equals("")) return "not_login";
+		
+		
 		List<Map<String, String>> selectUserQna = service.selectUserQna(sId);
 		List<Map<String, String>> selectUserReport = service.selectUserReport(sId);
 		model.addAttribute("selectUserQna",selectUserQna);
@@ -116,7 +123,10 @@ public class MainController {
 	}
 	//1대1 문의 페이지 이동
 	@GetMapping("RegistQuewstion")
-	public String registQuewstion(Model model,@RequestParam Map<String,String> map) {
+	public String registQuewstion(Model model,@RequestParam Map<String,String> map,HttpSession session) {
+		
+		String sId = (String)session.getAttribute("sId");
+		if(sId == null || sId.equals("")) return "not_login";
 		
 		List<Map<String, String>> selectQnaCategory = service.selectQnaCategory();
 		if(map.get("product_num") == null) {
@@ -128,7 +138,10 @@ public class MainController {
 		return "regist_question";
 	}
 	@GetMapping("UserCustomerDetail")
-	public String userCustomerDetail(Model model,int qna_num) {
+	public String userCustomerDetail(Model model,int qna_num, HttpSession session) {
+		
+		String sId = (String)session.getAttribute("sId");
+		if(sId == null || sId.equals("")) return "not_login";
 		
 		Map<String,String> QnaDetail = service.selectQnaDetail(qna_num);
 		model.addAttribute("QnaDetail",QnaDetail);
@@ -146,12 +159,15 @@ public class MainController {
 	@PostMapping("QuestionRegistPro")
 	public String quewstionRegistPro(HttpSession session,@RequestParam(value =  "file" , required = false) MultipartFile[] imageList
 			,@RequestParam Map<String, String> map) {
+			String sId = (String)session.getAttribute("sId");
+			if(sId == null || sId.equals("")) return "not_login";
+			
 			String uploadDir = "/qna_img/";//가상 업로드 경로
 			String saveDir = session.getServletContext().getRealPath(uploadDir);//실제 업로드 경로
 			// 맵에 이름과 경로 전달
 			//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
 			System.out.println("머가 넘어올까 ? " + map);
-			String sId = (String)session.getAttribute("sId");
+			
 			map.put("sId", sId);
 			int insertQuestionCount = service.insertQuestion(map);
 			
@@ -171,14 +187,17 @@ public class MainController {
 	@PostMapping("ReportRegistPro")
 	public String reportRegistPro(HttpSession session,@RequestParam(value =  "file" , required = false) MultipartFile[] imageList
 			,@RequestParam Map<String, String> map) {
-		System.out.println("신고 : " + map);
+//		System.out.println("신고 : " + map);
+		
+		String sId = (String)session.getAttribute("sId");
+		if(sId == null || sId.equals("")) return "not_login";
 		
 		String uploadDir = "/report_img/";//가상 업로드 경로
 		String saveDir = session.getServletContext().getRealPath(uploadDir);//실제 업로드 경로
 		// 맵에 이름과 경로 전달
 		//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
 		System.out.println(map);
-		String sId = (String)session.getAttribute("sId");
+	
 		map.put("sId", sId);
 		int insertCount = service.insertReport(map);
 		
