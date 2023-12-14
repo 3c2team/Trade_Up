@@ -130,9 +130,16 @@
 											<small
 												class="text-success fw-semibold"
 												data-bs-toggle="modal"
-												data-bs-target="#smallModal"
+												data-bs-target="#up_pay"
 												style="cursor:pointer"
 											>충전하기</small>
+											
+											<small
+												class="text-success fw-semibold"
+												data-bs-toggle="modal"
+												data-bs-target="#up_pay_re"
+												style="cursor:pointer"
+											>송금하기</small>
 										</div>
 									</div>
 								</div>
@@ -305,7 +312,8 @@
 	
 	<%-- 업페이 충전 모달 --%>
 	<%@ include file="modal/up_pay.jsp" %>
-<%-- 	<jsp:include page="modal/up_pay.jsp"></jsp:include> --%>
+	<%-- 업페이 송금 모달 --%>
+	<%@ include file="modal/up_pay_re.jsp" %>
 	<%-- 바텀 메뉴 --%>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	

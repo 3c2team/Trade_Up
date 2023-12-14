@@ -43,12 +43,12 @@ public class MyPageController {
 	// 마이페이지
 	@GetMapping("MyPageMain")
 	public String myPageMain(HttpSession session, Model model) {
-//		String sId = (String)session.getAttribute("sId");
-//		List<Map<String, Object>> accountList = service.getMyAccount(sId);
+		String sId = (String)session.getAttribute("sId");
+		List<Map<String, Object>> accountList = service.getMyAccount(sId);
 //		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
 //		List<Map<String, Object>> productsList = service.getMyProduct(sId);
 //		
-//		model.addAttribute("accountList", accountList);
+		model.addAttribute("accountList", accountList);
 //		model.addAttribute("favoriteList", favoriteList);
 //		model.addAttribute("productsList", productsList);
 		return "myPage/myPage_main";

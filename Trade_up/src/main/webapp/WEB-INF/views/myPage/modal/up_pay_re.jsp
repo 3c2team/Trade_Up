@@ -18,11 +18,11 @@
 	}
 </script>
 
-<div class="modal fade" id="up_pay" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="up_pay_re" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel2">UP Pay 충전</h5>
+				<h5 class="modal-title" id="exampleModalLabel2">UP Pay 송금</h5>
 				<button
 					type="button"
 					class="btn-close"
@@ -34,7 +34,7 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col mb-3">
-							<label for="nameSmall" class="form-label">결제계좌</label>
+							<label for="nameSmall" class="form-label">송금계좌</label>
 							<select class="form-select" required>
 								<c:forEach var="account" items="${accountList }" varStatus="status">
 									<option id="account_${status.count }" >
@@ -46,7 +46,7 @@
 					</div>
 					<div class="row">
 						<div class="col mb-3">
-							<label class="form-label" for="emailSmall">충전금액</label>
+							<label class="form-label" for="emailSmall">송금금액</label>
 							<input type="number" class="form-control" id="amount"/>
 							<label class="form-label" id="danger" for="emailSmall"></label>
 						</div>
@@ -56,7 +56,7 @@
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 						취소
 					</button>
-					<button type="submit" id="submit" class="btn btn-primary">충전하기</button>
+					<button type="submit" id="submit" class="btn btn-primary">송금하기</button>
 				</div>
 			</form>
 		</div>
