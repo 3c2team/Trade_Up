@@ -91,6 +91,7 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 			// => 파라미터 : 자신의 아이디(sender_id)   
 			// => 리턴타입 : List<ChatRoomListVO>(chatRoomList)
 			List<Map<String, String>> chatRoomList = chatService.getChatRoomList(sender_id);
+			System.out.println("chatRoomList 확인 : " + chatRoomList);	
 			// 조회 결과를 JSON 형식으로 변환하여 메세지로 설정
 			chatMessage.setMessage(gson.toJson(chatRoomList));
 			// 메세지 타입을 전체 목록 표시를 위한 LIST 로 설정
@@ -204,7 +205,6 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 					// ChatService - removeChatRoomUser() 메서드 호출하여 채팅방 정보 제거
 					// => 파라미터 : ChatMessage2 객체   리턴타입 : int
 					int roomUserCnt = chatService.removeChatRoomUser(chatMessage); 
-					
 					
 					// 자신의 세션에도 메세지 전송(자신의 브라우저 화면에서 방 제거 위해)
 					// => 단, 자신의 세션에 있는 채팅창만 제거하기 위해 타입을 REMOVE 로 변경 후 전송

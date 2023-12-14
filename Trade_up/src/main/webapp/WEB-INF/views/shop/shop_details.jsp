@@ -307,7 +307,7 @@
 	   let memberId = $("#sellMember").val();
 	//      alert(memberId);
 	//    window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-	   window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	   window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=400, height=395");
 	}
    
    function payCheck(){

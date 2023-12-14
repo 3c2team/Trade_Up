@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.tradeup.mapper.ChatMapper">
+		<!-- 채팅방 추가 -->
+	<insert id="insertChatRoom">
+		INSERT 
+		INTO CHAT_ROOM_LIST 
+		VALUES
+		<!-- 복수개의 항목을 한꺼번에 INSERT 할 경우 반복문 형식의 <foreach> 태그 활용 -->
+		<foreach item="chatRoom" collection="list" separator=",">
+			(#{chatRoom.room_id}, #{chatRoom.user_id})
+		</foreach>
+	</insert>
+	
+	<!-- 채팅방 목록 조회 -->
+	<select id="selectChatRoomList" resultType="hashmap">
+<!-- 		SELECT * -->
+<!-- 		FROM chat_room_list -->
+<!-- 		WHERE user_id = #{sender_id} -->
+		
+		<!-- 하나의 채팅방에 두명의 사용자가 존재하므로 두 사용자 모두 조회 대상에 추가 -->
+		SELECT 
+			c.room_id
+			, c.user_id AS sender_id
+			, (SELECT user_id
+				FROM CHAT_ROOM_LIST
+				WHERE 
+					room_id = c.room_id
+					AND user_id != c.user_id
+			) AS receiver_id
+		FROM CHAT_ROOM_LIST AS c 
+		WHERE c.user_id = #{sender_id};
+	</select>
+	
+	<!-- 채팅 내역 조회 - SELECT -->
+	<select id="selectChatList" resultType="com.itwillbs.tradeup.vo.ChatMessage2">
+		SELECT *
+		FROM CHAT_MESSAGE
+		WHERE room_id = #{room_id}
+	</select>
+	
+	<!-- 채팅 메세지 저장 - INSERT -->
+	<insert id="insertMessage">
+		INSERT
+		INTO CHAT_MESSAGE
+		VALUES (
+			#{room_id}
+			, #{sender_id}
+			, #{receiver_id}
+			, #{message}
+			, #{type}
+			<!-- 만약, type 에 따른 메세지 전송 대상을 구분하여 기록해 놓을 경우 값 추가 -->
+			<choose>
+				<when test="type.equals('START')">
+					, 'S' -- 발신자(SENDER) 에게만 출력하도록 표시
+				</when>
+				<when test="type.equals('ENTER') or type.equals('LEAVE')">
+					, 'R' -- 수신자(RECEIVER) 에게만 출력하도록 표시
+				</when>
+				<when test="type.equals('TALK')">
+					, 'A' -- 전체(ALL) 에게 출력하도록 표시
+				</when>
+				<otherwise>
+					, 'N' -- 아무에게도 출력하지 않음
+				</otherwise>
+			</choose>
+			, now()
+		)
+	</insert>
+	
+	<!-- 채팅방 유저 정보 삭제 -->
+	<delete id="deleteChatRoomUser">
+		DELETE 
+		FROM CHAT_ROOM_LIST
+		WHERE
+			room_id = #{room_id}
+			AND user_id = #{sender_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

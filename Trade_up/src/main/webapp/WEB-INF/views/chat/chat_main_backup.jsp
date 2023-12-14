@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html style="background: rgba(105, 108, 255, 0.16) !important;">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%-- 외부 CSS 파일(css/default.css) 불러오기 --%>
-<%-- <link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css"> --%>
+<link href="${pageContext.request.contextPath }/resources/css/default.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	/* 채팅방 전체 영역 */
 /* 	#chatRoomArea { */
@@ -17,21 +17,21 @@
 /* 		margin-top: 20px; */
 /* 		margin-bottom: 20px; */
 /* 		display: inline-block; */
-		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
+/* 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */ */
 /* 		overflow-y: auto; */
 /* 	} */
 	
 	/* 채팅방 목록 영역 */
-/* 	#chatRoomListArea { */
-/* 		width: 300px; */
-/* 		height: 600px; */
-/* 		border: 1px solid black; */
-/* 		margin-top: 20px; */
-/* 		margin-bottom: 20px; */
-/* 		display: inline-block; */
+	#chatRoomListArea {
+		width: 300px;
+		height: 600px;
+		border: 1px solid black;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		display: inline-block;
 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
-/* 		overflow-y: auto; */
-/* 	} */
+		overflow-y: auto;
+	}
 	
 	/* 채팅방 1개 */
 	.chatRoom {
@@ -44,13 +44,11 @@
 	
 	/* 채팅 메세지 표시 영역 */
 	.chatMessageArea {
-		width: 370px;
+		width: 300px;
 		height: 200px;
-/* 		border: 1px solid blue; */
+		border: 1px solid blue;
 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
 		overflow-y: auto;
-		background: rgba(105, 108, 255, 0.16) !important;
-		margin-bottom: 20px;
 	}
 	
 	/* 채팅 메세지 정렬 */
@@ -68,36 +66,8 @@
 	
 	/* 채팅 메세지 하단 입력 영역 */
 	.commandArea {
-		width: 370px;
+		width: 300px;
 		position: relative;
-	}
-	
-	.btnSend {
-	    background: #5F12D3;
-	    color: #ffffff;
-	    border-color: #5F12D3;
-/* 	    float: right; */
-	}
-	
-	.btnQuitRoom {
-	    background: #5F12D3;
-	    color: #ffffff;
-	    border-color: #5F12D3;
-	    float: right;
-	}
-	
-	#btnQuit{
-		background: #5F12D3;
-	    color: #ffffff;
-	    border-color: #5F12D3;
-	    float: right;
-	    
-	}
-	
-	.chatUserInfo {
-		width: 370px;
-		display: inline-block;
-		margin-bottom: 20px;
 	}
 </style>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
@@ -140,12 +110,11 @@
 	let current_user_id;
 	
 	// 채팅 시작
-	function startChat() {
+// 	function startChat() {
 		// 채팅 시작을 위한 웹소켓 메세지 전송
 		// => 타입(START), 사용자아이디, 상대방아이디, 나머지 2개 널스트링
-// 		console.log($("#receiver_id").val() + "----------- 찍혔나요??")
-		ws.send(getJsonString("START", current_user_id, $("#receiver_id").val(), "", ""));
-	}
+// 		ws.send(getJsonString("START", current_user_id, $("#receiver_id").val(), "", ""));
+// 	}
 	
 	function connect() {
 		current_user_id = "${sessionScope.sId}"; // 사용자 세션 아이디 저장
@@ -161,8 +130,6 @@
 		ws.onmessage = onMessage; // 웹소켓 서버로부터 메세지 수신 시
 		ws.onclose = onClose; // 웹소켓 요청 종료 시
 		ws.onerror = onError; // 웹소켓 처리 과정 오류 발생 시
-		
-		console.log("웹소켓 접속함");
 	}
 	
 	// =====================================================================================
@@ -174,8 +141,7 @@
 		// => 메세지타입(INIT), 사용자아이디, 나머지 널스트링
 		ws.send(getJsonString("INIT", current_user_id, "", "", ""));
 		
-		// 웹소켓 연결 후 바로 채팅 연결
-		ws.send(getJsonString("START", current_user_id, $("#receiver_id").val(), "", ""));
+		ws.send(getJsonString("START", userId, $("#receiverId").val(), "", ""));
 	}
 	
 	// =====================================================================================
@@ -271,18 +237,21 @@
 		console.log("채팅방 생성!");
 		// 생성할 채팅방의 hidden 태그에 채팅방의 룸ID 값을 value 속성값으로 저장
 		// 생성할 채팅방을 묶는 div 태그(".chatRoom")에 룸ID 를 클래스로 추가
-		let room = '<div class="chatRoom ' + room_id + '">'
-					+ '	<div class="chatMessageArea"></div>'
-					+ '	<div class="commandArea">'
-					+ '		<input type="text" size="30" class="chatMsg" onkeypress="checkEnter(this)">'
-					+ '		<input type="hidden" class="room_id" value="' + room_id + '">'
-					+ '		<input type="hidden" class="receiver_id" value="' + receiver_id + '">'
-					+ '		<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">'
-					+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
-					+ '	</div>'
-					+ '</div>';
+// 		let room = '<div class="chatRoom ' + room_id + '">'
+// 					+ '	<div class="chatMessageArea"></div>'
+// 					+ '	<div class="commandArea">'
+// 					+ '		<input type="text" class="chatMsg" onkeypress="checkEnter(this)">'
+// 					+ '		<input type="hidden" class="room_id" value="' + room_id + '">'
+// 					+ '		<input type="hidden" class="receiver_id" value="' + receiver_id + '">'
+// 					+ '		<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">'
+// 					+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
+// 					+ '	</div>'
+// 					+ '</div>';
 		
-		$("#chatRoomArea").append(room);
+// 		$("#chatRoomArea").append(room);
+		$(".commandArea").append('<input type="hidden" class="roomId" value="' + roomId + '">');
+		$(".commandArea").append('<input type="hidden" class="receiverId" value="' + receiverId + '">');
+		console.log(roomId + ", " + receiverId + "들어감");
 	}
 	
 	function appendMessageToTargetRoom(room_id, sender_id, receiver_id, message, type) {
@@ -427,38 +396,43 @@
 </script>
 </head>
 <body>
-<!-- 	<header> -->
-		<%-- Login, Join 등의 링크 표시 메뉴 영역 --%>
-		<%-- 주의! JSP 파일은 WEB-INF/views 디렉토리 내에 위치 --%>
-<%-- 		<jsp:include page="../inc/top.jsp"></jsp:include> --%>
-<!-- 	</header> -->
-	<article>
-		<%-- 본문 표시 영역 --%>
-		<c:if test="${empty sessionScope.sId}">
-			<script type="text/javascript">
-				alert("로그인 후 사용 가능합니다!");
-				location.href = "MemberLoginForm";
-			</script>
-		</c:if>
-		<br>
+<!-- 	<article> -->
+
 <!-- 		<h1>채팅 페이지</h1> -->
 <!-- 		<hr> -->
-		<div class="chatUserInfo">
-		판매자 아이디 : ${receiverId }
-		<input type="hidden" id="receiver_id" value="${receiverId }"><br>
-		<strong>${sessionScope.sId}</strong>님 반갑습니다.
 <!-- 		상대방 아이디 : <input type="text" id="receiver_id"> -->
 <!-- 		<input type="button" value="채팅 시작" id="btnJoin"> -->
-		<input type="button" value="채팅방 나가기" id="btnQuit">
+<!-- 		<input type="button" value="채팅방 나가기" id="btnQuit"> -->
+<!-- 		<hr> -->
+<%-- 		<div id="chatRoomArea">채팅방 추가될 위치</div> --%>
+<%-- 		<div id="chatRoomListArea">채팅방 목록 추가될 위치</div> --%>
+<!-- 	</article> -->
+
+<article>
+
+		<h1>채팅 페이지(상품 문의 1:1)</h1>
+		<hr>
+		판매자 아이디 : ${receiverId }
+		<input type="hidden" id="receiverId" value="${receiverId }"><br>
+		<strong>${sessionScope.sId}</strong>님 반갑습니다.
+<%-- 		<input type="hidden" id="receiverId" value="${receiverId }"> --%>
+<!-- 		<input type="button" value="채팅 시작" id="btnJoin"> -->
+		<input type="button" value="채팅방 나가기" id="btnQuit" onclick="quitRoom(this)">
+		<hr>
+		<div id="chatRoomArea">
+			<%-- 채팅방 추가될 위치 --%>
+			<div class="chatRoom">
+				<div class="chatMessageArea"></div>
+				<div class="commandArea">
+					<input type="text" size="57" class="chatMsg" onkeypress="checkEnter(this)">
+<!-- 					<textarea rows="2" cols="40"class="chatMsg" onkeypress="checkEnter(this)"></textarea> -->
+					<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">
+<!-- 					<input type="button" class="btnQuitRoom" value="대화종료" > -->
+				</div>
+			</div>
 		</div>
-		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
-		<div id="chatRoomListArea"><%-- 채팅방 목록 추가될 위치 --%></div>
 	</article>
 	<hr>
-<!-- 	<footer> -->
-<!-- 		<!-- bottom.jsp 페이지를 현재 페이지에 삽입 -->
-<%-- 		<jsp:include page="../inc/bottom.jsp"></jsp:include> --%>
-<!-- 	</footer> -->
 </body>
 </html>
 

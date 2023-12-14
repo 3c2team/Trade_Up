@@ -35,7 +35,7 @@ public class ChatController {
 //			return "myChat";
 //			return "chat/shopDetail_Main2";
 //			return "chat/chat_main";
-			return "chat/chat_room2";
+			return "chat/chat_main";
 		}
 		
 	// 채팅방
@@ -44,7 +44,7 @@ public class ChatController {
 			String sId = (String)session.getAttribute("sId");
 			System.out.println("sId : " + sId);
 			
-			return "chat/chat_room2";
+			return "chat/chat_room";
 		}
 		
 		// 채팅방 채팅목록 조회
