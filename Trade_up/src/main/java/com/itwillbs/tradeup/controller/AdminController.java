@@ -73,15 +73,18 @@ public class AdminController {
 	@GetMapping("/ProductCharge")
 	public String productSales(Map<String, Integer> map, Model model) {
 		
-			System.out.println("날짜 비였음");
+//			System.out.println("날짜 비였음");
 			// 구매확정 수수료 내역
 			List<WithdrawVO> WithdrawCharge = adminService.selectWithdrawCharge();
 			System.out.println("확정완료 수수료 : " + WithdrawCharge);
 			model.addAttribute("CommissionList",WithdrawCharge);
 			
 			// 금일 수수료 금액, 금일 거래량
-			map = adminService.selectCommissionSum();
-			model.addAttribute("commission",map.get("chargeSum") );
+//			map = adminService.selectCommissionSum();
+//			if(map.get("chargeSum") == null) {
+//				model.addAttribute("commission",0);
+//			}
+//			model.addAttribute("commission",map.get("chargeSum"));
 			return "admin/product_charge";
 		
 	}
@@ -510,29 +513,29 @@ public class AdminController {
 	}
 	
 	// 채팅하기(1:1 채팅방 작성중)
-	@GetMapping("/MyChat")
-	public String myChat(HttpSession session, String memberId, Model model) {
-		String sId = (String)session.getAttribute("sId"); 
-		System.out.println("sId : " + sId);
-		
-		System.out.println("판매자 아이디 : " + memberId);
-		
-		model.addAttribute("receiverId", memberId);
+//	@GetMapping("/MyChat")
+//	public String myChat(HttpSession session, String memberId, Model model) {
+//		String sId = (String)session.getAttribute("sId"); 
+//		System.out.println("sId : " + sId);
+//		
+//		System.out.println("판매자 아이디 : " + memberId);
+//		
+//		model.addAttribute("receiverId", memberId);
 		
 //		return "myChat";
 //		return "chat/shopDetail_Main2";
 //		return "chat/chat_main";
-		return "chat/main2";
-	}
+//		return "chat/main2";
+//	}
 	
 	// 채팅방
-		@GetMapping("/ChatRoom")
-		public String chatRoom(HttpSession session) {
-			String sId = (String)session.getAttribute("sId");
-			System.out.println("sId : " + sId);
-			
-			return "chat/chat_room";
-		}
+//		@GetMapping("/ChatRoom")
+//		public String chatRoom(HttpSession session) {
+//			String sId = (String)session.getAttribute("sId");
+//			System.out.println("sId : " + sId);
+//			
+//			return "chat/chat_room";
+//		}
 	
 //	@GetMapping("/ChatMain")
 //	public String chatMain() {
@@ -541,12 +544,12 @@ public class AdminController {
 //	}
 	
 		// 이전 채팅방 
-		@GetMapping("/ChatMain")
-		public String chatMain2() {
+//		@GetMapping("/ChatMain")
+//		public String chatMain2() {
 			
 //			return "chat/main2";
-			return "chat/chat_main";
-		}
+//			return "chat/chat_main";
+//		}
 	
 		// 문의내역 리스트
 		@GetMapping("AdminQuestion")

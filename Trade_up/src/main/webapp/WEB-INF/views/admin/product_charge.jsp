@@ -123,7 +123,7 @@
 												</tr>
 											</thead>
 											<tbody>
-											<c:forEach var="CommissionList" items="${CommissionList }">
+											<c:forEach var="CommissionList" items="${CommissionList}">
 												<tr>
 													<td><input type="checkbox" name="checkbox" value=""></td>
 													<td>
@@ -131,23 +131,23 @@
 															<div class=""><strong>****상품명****</strong></div>
 <!-- 														</div> -->
 													</td>
-													<td>${CommissionList.member_name }</td>
+													<td>${CommissionList.member_name}</td>
 													<td>
 														<c:choose>
 															<c:when test="${CommissionList.buy_check eq '확정대기'}">
-																<span class="badge bg-label-hold me-1" style="font-size:small;">${CommissionList.buy_check }</span>
+																<span class="badge bg-label-hold me-1" style="font-size:small;">${CommissionList.buy_check}</span>
 															</c:when>
 															<c:when test="${CommissionList.buy_check eq '구매확정'}">
-																<span class="badge bg-label-approval me-1" style="font-size:small;">${CommissionList.buy_check }</span>
+																<span class="badge bg-label-approval me-1" style="font-size:small;">${CommissionList.buy_check}</span>
 															</c:when>
 														</c:choose>
 <%-- 														<span class="badge bg-label-hold me-1" style="font-size:small;">${depositList.buy_check }</span> --%>
 													</td>
 													<td>
-								                        <span class="badge bg-label-approval me-1" style="font-size:small;">${CommissionList.product_price }원</span>	
+								                        <span class="badge bg-label-approval me-1" style="font-size:small;">${CommissionList.product_price}원</span>	
 													</td>
 													<td>
-								                        <span class="badge bg-label-prohibition" style="font-size:small;">${CommissionList.commission }원</span>	
+								                        <span class="badge bg-label-prohibition" style="font-size:small;">${CommissionList.commission}원</span>	
 													</td>
 													<td>
 								                        <span>${CommissionList.withdraw_bank} (${CommissionList.withdraw_acc})</span>	

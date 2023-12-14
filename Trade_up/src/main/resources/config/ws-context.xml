@@ -16,11 +16,5 @@
 	</websocket:handlers>
 
 	<bean id="wsHandler2" class="com.itwillbs.tradeup.chat.MyWebSocketHandler2" />
-	
-	<websocket:handlers allowed-origins="*">
-		<websocket:mapping path="/echo3" handler="wsHandler3" />
-	</websocket:handlers>
-
-	<bean id="wsHandler3" class="com.itwillbs.tradeup.chat.MyWebSocketHandler2_backup" />
 
 </beans>
