@@ -36,7 +36,7 @@
 	
 	<!-- 상품 상세조회 -->
 	<select id="getProduct" resultType="map">
-		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
+		SELECT *, DATE_FORMAT(product_release, '%Y-%m-%d %H:%i:%s') AS formatted_datetime
    		  FROM PRODUCT
    		 WHERE product_num = #{product_num}
 	</select>
