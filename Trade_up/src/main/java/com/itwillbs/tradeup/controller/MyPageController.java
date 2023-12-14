@@ -71,6 +71,27 @@ public class MyPageController {
 		return "myPage/myPage_favorite";
 	}
 	
+	@GetMapping("DeleteFavorite")
+	public String deleteFavorite(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
+		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		param.put("sId", sId);
+		
+		int deleteCount = service.deleteFavorite(param);
+		
+		if(deleteCount > 0) {
+			return "redirect:/DeleteFavorite";
+		}
+		
+		model.addAttribute("msg", "서버 오류로 관심상품 해제에 실패했습니다. 다시 시도해주세요.");
+		return "myPage/fail_back";
+	}
+	
 	// 판매내역
 	@GetMapping("MySales")
 	public String mySales(HttpSession session, Model model) {

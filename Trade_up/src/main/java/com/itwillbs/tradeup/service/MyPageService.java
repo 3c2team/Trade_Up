@@ -68,5 +68,8 @@ public class MyPageService {
 	public List<Map<String, Object>> getMyPurchase(String sId) {
 		return mapper.selectMyPurchase(sId);
 	}
+	public int deleteFavorite(Map<String, Object> param) {
+		return mapper.deleteFavorite(param);
+	}
 
 }

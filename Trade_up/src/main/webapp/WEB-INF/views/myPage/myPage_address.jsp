@@ -63,22 +63,6 @@
     <script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
 	
 	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			let listSize = ${fn:length(my_address)};
-			console.log(listSize);
-			$("#address_add").on("click", function() {
-				if(listSize < 10) {
-					window.open('AddAddressFrom'
- 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no');
-				} else {
-					alert("배송지는 10개까지만 입력가능합니다.");
-					return false;
-				}
-			})
-		});	
-	</script>
-  	
 </head>
 
 <body>
@@ -94,11 +78,21 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="container-xxl flex-grow-1 container-p-y">
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 배송지 관리
+								<!-- 
 								<button 
 									id="address_add"
 									class="btn rounded-pill btn-icon btn-outline-primary"
 									style="float: right;"
 								>
+									<span class="tf-icons bx bx-plus"></span>
+								</button>
+								 -->
+								<button 
+									id="address_add"
+									class="btn rounded-pill btn-icon btn-outline-primary"
+									data-bs-toggle="offcanvas"
+									data-bs-target="#offcanvasEnd"
+									style="float: right;">
 									<span class="tf-icons bx bx-plus"></span>
 								</button>
 							</h4>
@@ -159,8 +153,8 @@
 	
 	<%-- 수정 모달 --%>
 	<jsp:include page="modal/address_modal.jsp"></jsp:include>
-	<%-- 추가 모달? --%>
-<%-- 	<jsp:include page="offcanvas/address_add.jsp"></jsp:include> --%>
+	<%-- 추가 캔버스 --%>
+	<%@ include file="offcanvas/address_add.jsp"%>
 	<%-- 바텀 메뉴 --%>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	

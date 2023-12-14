@@ -109,24 +109,23 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">나의 거래 /</span> 관심목록</h4>
 						<!-- Table -->
-						<div class="card">
+						<div class="card" <c:if test="${empty favoriteList }">style="display: none;"</c:if>>
 							<h5 class="card-header">관심목록</h5>
 							<div class="table-responsive text-nowrap">
 								<table class="table">
 									<thead class="text-center align-middle">
 										<tr>
-											<th width="30px"><input type="checkbox" class="form-check-input" style="width: 18px; height: 18px;"></th>
 											<th colspan="2">상품명</th>
 											<th>금액</th>
 											<th>판매자</th>
 											<th>거래상태</th>
 											<th>거래방법</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody class="table-border-bottom-0 text-center">
 										<c:forEach var="favorite" items="${favoriteList }">
 											<tr>
-												<td class="align-middle"><input type="checkbox" class="form-check-input"></td>
 												<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
 												<td class="text-left align-middle">
 													${favorite.product_name }
@@ -161,8 +160,14 @@
 														</c:otherwise>
 													</c:choose>
 												</td>
+												<td class="align-middle">
+													<a href="DeleteFavorite?favorit_idx=${favorite.favorite_idx }">    
+														<i class="tf-icons bx bx-trash"></i>
+													</a>
+												</td>
 											</tr>
 										</c:forEach>
+										
 									</tbody>
 								</table>
 							</div>
@@ -173,6 +178,19 @@
 							</div>
 						</div>
 						<!--/Table -->
+						<c:if test="${empty favoriteList}">
+							<div class="col-12" >
+								<div class="card mb-4" id="account_security_btn" onclick="location.href=''" style="border: 2px dashed #cbd0d5;">
+									<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+										<h5>앗!   관심목록에 등록한 상품이 없어요.</h5>
+										<h6 class="mb-0"><small class="text-muted">우리 같이 다른 고객님이 올려주신 상품 구경하러 가볼까요?</small></h6>
+										<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+										<br>
+										<h6 class="mb-0"><small class="text-muted"> * : ˚·✧* : ˚·✧ ヾ꒰ྀི *ˊᵕˋ ꒱ྀིﾉ ✧·˚ : *✧·˚ : *</small></h6>
+									</div>
+								</div>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>

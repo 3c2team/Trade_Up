@@ -18,7 +18,7 @@
 			     , ac.account_num
 			     , ac.account_bank
 			     , ac.account_main
-		 	FROM MEMBER m 
+		 	  FROM MEMBER m 
 			LEFT JOIN MY_ADDRESS ma ON m.member_id = ma.member_id
 			LEFT JOIN MY_ACCOUNT ac ON m.member_id = ac.member_id
 			WHERE 1=1 
@@ -78,11 +78,20 @@
 				 , p.member_id
 				 , p.product_price 
 				 , p.sales_status 
-				 , p.trading_method 
+				 , p.trading_method
+				 , f.favorite_idx 
 			  FROM FAVORITE f 
 			  JOIN PRODUCT p ON f.product_num = p.product_num 
 			 WHERE f.member_id = #{sId};
     	</select>
+    	
+    	<delete id="deleteFavorite">
+    		DELETE 
+			  FROM FAVORITE 
+			 WHERE 1=1 
+			   AND member_id = #{sId}
+			   AND favorite_idx = #{favorit_idx};
+    	</delete>
     	
     	<select id="selecFintechInfo" resultType="map">
     		SELECT *

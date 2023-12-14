@@ -37,6 +37,8 @@ public interface MyPageMapper {
 	int delectProcut(Map<String, Object> param);
 	// 관심목록 조회
 	List<Map<String, Object>> selectMyFavorite(String sId);
+	// 관심목록 삭제
+	int deleteFavorite(Map<String, Object> param);
 	// 계좌관리 - 계좌 조회
 	List<Map<String, Object>> selectMyAccount(String sId);
 	// 유저정보 - 탈퇴 사유 조회

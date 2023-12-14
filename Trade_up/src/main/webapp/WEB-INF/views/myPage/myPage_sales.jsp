@@ -84,7 +84,7 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">나의 거래 /</span> 판매내역</h4>
 						<!-- Table -->
-						<div class="card">
+						<div class="card" <c:if test="${empty productsList }">style="display: none;"</c:if>>
 							<h5 class="card-header">판매내역</h5>
 							<div class="text-nowrap">
 								<table class="table">
@@ -160,6 +160,19 @@
 							</div>
 						</div>
 						<!--/Table -->
+						<c:if test="${empty productsList}">
+							<div class="col-12" >
+								<div class="card mb-4" id="account_security_btn" onclick="location.href=''" style="border: 2px dashed #cbd0d5;">
+									<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+										<h5>앗!   판매중인 상품이 없어요.</h5>
+										<h6 class="mb-0"><small class="text-muted">우리 같이 상품등록 하러 가볼까요?</small></h6>
+										<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+										<br>
+										<h6 class="mb-0"><small class="text-muted">(つ˵•́ω•́˵)つ━☆.。.:*・°☆ ｡+.｡☆ﾟ:;｡+ﾟ</small></h6>
+									</div>
+								</div>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
