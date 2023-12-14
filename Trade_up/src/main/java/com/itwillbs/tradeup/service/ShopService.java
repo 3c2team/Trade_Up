@@ -91,6 +91,10 @@ public class ShopService {
 	public String selectSellCount(String member_id) {
 		return mapper.selectSellCount(member_id);
 	}
+	
+	public String selectAllCount() {
+		return mapper.selectAllCount();
+	}
 
 }
 

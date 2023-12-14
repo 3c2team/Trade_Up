@@ -4,6 +4,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.itwillbs.tradeup.mapper.ShopMapper">
+	
 	<!-- 상품 등록 -->
    	<insert id="registProduct">
 		INSERT INTO PRODUCT
@@ -21,8 +22,6 @@
 				,'판매중'
 				,#{delivery_method}
 			   )
-			   
-			   
 	</insert>
 	
 	<!-- 상품 이미지 등록 -->
@@ -35,10 +34,9 @@
 			   )
 	</insert>
 	
-
 	<!-- 상품 상세조회 -->
 	<select id="getProduct" resultType="map">
-		SELECT *
+		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
    		  FROM PRODUCT
    		 WHERE product_num = #{product_num}
 	</select>
@@ -60,7 +58,7 @@
 	
 	<!-- 판매자 상품 조회 -->
 	<select id="getSellerProduct" resultType="map">
-		SELECT *
+		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
 		  FROM PRODUCT
 		 WHERE member_id = #{member_id}
 	</select>
@@ -76,29 +74,12 @@
 	
 	<!-- 최신 상품 조회 -->
 	<select id="selectProductList" resultType="map">
-		SELECT *
+		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
 		  FROM PRODUCT
-		 WHERE sales_status = '판매중' AND category_idx = '1'
+		 WHERE sales_status = '판매중'
 	  ORDER BY product_release DESC
 	</select>
 
-	<!-- 찜 목록 -->
-	<select id="lastProductList">
-		SELECT *
-		  FROM PRODUCT 
-		 WHERE category_idx = #{category_idx} AND sales_status = '판매중'
-	  ORDER BY product_release desc
-	</select>
-	
-	<!-- 찜 목록 -->
-	<select id="jjimProductList">
-		SELECT P.product_num, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COUNT(F.favorite_idx) as C
-		  FROM PRODUCT P
-		  JOIN FAVORITE F ON P.product_num = F.product_num
-		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중'
-	  GROUP BY P.product_num
-	  ORDER BY C desc
-	</select>
 	
 	<!-- 찜 갯수 -->
 	<select id="selectJJim">
@@ -119,6 +100,24 @@
 		 		 WHERE member_id = #{member_id}) = '거래완료';
 	</select>
 	
+	<!-- 최신 목록 -->
+	<select id="lastProductList">
+		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
+		  FROM PRODUCT 
+		 WHERE category_idx = #{category_idx} AND sales_status = '판매중'
+	  ORDER BY product_release desc
+	</select>
+	
+	<!-- 찜 목록 -->
+	<select id="jjimProductList">
+		SELECT P.product_num, product_name, product_main_img, product_price, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease, trading_location, sales_status, COUNT(F.favorite_idx) as C
+		  FROM PRODUCT P
+		  JOIN FAVORITE F ON P.product_num = F.product_num
+		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중'
+	  GROUP BY P.product_num
+	  ORDER BY C desc
+	</select>
+	
 	<!-- 높은 가격 목록 -->
 	<select id="highProductList">
 	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
@@ -134,12 +133,18 @@
 	   WHERE category_idx = #{category_idx} AND sales_status = '판매중'
 	ORDER BY cast(p as unsigned);
 	</select>
+	
+	<!-- 판매중 목록 -->
+	<select id="selectAllCount">
+	  SELECT count(product_num)
+		FROM PRODUCT
+	   WHERE sales_status = '판매중'
+	</select>
 
 	<!-- 상품 수정 -->
 	<update id="updateProduct">
 		UPDATE PRODUCT
-		   SET member_id = #{member_id}
-			   , product_name = #{product_name}
+		   SET product_name = #{product_name}
 			   , product_price = #{product_price}
 			   , product_info = #{product_info}
 			   , product_release = #{product_release}

@@ -19,7 +19,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.itwillbs.mvc_board.service.BankApiClient;
 import com.itwillbs.tradeup.handler.BankValueGenerator;
 import com.itwillbs.tradeup.vo.RequestTokenVO;
 import com.itwillbs.tradeup.vo.ResponseAccountListVO;

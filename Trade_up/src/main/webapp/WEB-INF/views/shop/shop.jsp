@@ -259,7 +259,7 @@
 // 	        const releaseDate = $(this).text(); // span의 텍스트를 가져옵니다
 // 	        const elapsed = elapsedTime(releaseDate);
 	
-// 	        // 경과 시간으로 변경된 값을 span에 다시 설정
+	        // 경과 시간으로 변경된 값을 span에 다시 설정
 // 	        $(this).text(elapsed);
 // 	    });
 	});
@@ -282,7 +282,7 @@
 
 //         return `${start.toLocaleDateString()}`;
 //     }
-    document.getElementById("elapsedTime").innerText = "${elapsedTimeString}";
+//     document.getElementById("elapsedTime").innerText = "${elapsedTimeString}";
     </script>
 <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -379,8 +379,9 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing DBAll of DBselect results</p>
+                                    <p>총 ${allCount }개의 상품</p>
                                 </div>
+                                
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">

@@ -56,6 +56,8 @@ public interface ShopMapper {
 	String selectJJim(int product_num);
 
 	String selectSellCount(String member_id);
+	
+	String selectAllCount();
 
 }
 

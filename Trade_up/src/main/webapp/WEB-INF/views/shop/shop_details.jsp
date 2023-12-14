@@ -31,6 +31,13 @@
 
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<!-- 쌤꺼 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
+<!-- 내꺼 -->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=047e14e9ac251be40261bd5614958317&libraries=services"></script> -->
+
+
+
 </head>
 <body>
    <header>
@@ -94,7 +101,7 @@
                            </div>
                      <div class="container">
                         <div class="row d-flex justify-content-center">
-                           <div class="col-lg-8" style="max-width: 100%;">
+                           <div class="col-lg-12" style="max-width: 100%;">
                               <div class="product__details__text">
                                  <h3>${product.product_name }</h3>
                                  <h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }
@@ -102,57 +109,66 @@
                                  </h3>
 <!--                                  <span></span> -->
 								<div style="display: flex; text-align: center;">
-									<span>${product.product_release} · 찜 ${jjim}</span>
+									<span>${product.productRelease} · 찜 ${jjim}</span>
 								</div>
 								<div class="product__details__info">
 								   <div>
-								      <p>배송비</p><br><h6>${product.delivery_method }</h6>
-								   </div>
-								   <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
 								      <p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
 								   </div>
+								<c:if test="${product.delivery_method eq 'total'}">
+								   <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
+								      <p>배송비</p><br><h6>${product.delivery_method }</h6>
+								   </div>
+								</c:if>
 								</div>
-								<c:if test="${!empty product.delivery_method }">
+								<c:if test="${product.delivery_method ne '안함' }">
 									<h6 style="text-align: left; margin-top: 30px">직거래 희망장소</h6>
 									<div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
 								</c:if>
-                                 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
+                                 
                                  <script>
-                                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                                     mapOption = { 
-                                         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                         level: 3 // 지도의 확대 레벨
-                                     };
-   
-                                    var map = new kakao.maps.Map(mapContainer, mapOption);
-      
-                                    // 마커가 표시될 위치입니다 
-                                    var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
-      
-                                    // 마커를 생성합니다
-                                    var marker = new kakao.maps.Marker({
-                                        position: markerPosition
-                                    });
-      
-                                    // 마커가 지도 위에 표시되도록 설정합니다
-                                    marker.setMap(map);
-      
-                                    var iwContent = '<div style="padding:5px;">직거래 희망장소<br><a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:#5F12D3 padding:5px;" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-                                        iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
-      
-                                    // 인포윈도우를 생성합니다
-                                    var infowindow = new kakao.maps.InfoWindow({
-                                        position : iwPosition, 
-                                        content : iwContent 
-                                    });
-                                      
-                                    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-                                    infowindow.open(map, marker); 
+                                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		                     			mapOption = {
+		                     			    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		                     			    level: 3 // 지도의 확대 레벨
+		                     			};  
+		                     	   	
+		                     	   // 지도를 생성합니다    
+		                     		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		                     			
+		                     		// 주소-좌표 변환 객체를 생성합니다
+		                     		var geocoder = new kakao.maps.services.Geocoder();
+		                     			
+		                     		// 주소로 좌표를 검색합니다
+		                     		geocoder.addressSearch('${product.trading_location}', function(result, status) {
+		                     			
+		                     			// 정상적으로 검색이 완료됐으면 
+		                     			 if (status === kakao.maps.services.Status.OK) {
+		                     				
+		                     			    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		                     			
+		                     			    // 결과값으로 받은 위치를 마커로 표시합니다
+		                     			    var marker = new kakao.maps.Marker({
+		                     			        map: map,
+		                     			        position: coords
+		                     			    });
+		                     			
+		                     			    // 인포윈도우로 장소에 대한 설명을 표시합니다
+		                     			    var infowindow = new kakao.maps.InfoWindow({
+		                     			        content: '<div style="width:150px;text-align:center;padding:6px 0;">직거래 희망장소</div>'
+		                     			    });
+		                     			    infowindow.open(map, marker);
+		                     			
+		                     			    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		                     			    map.setCenter(coords);
+		                     			} 
+		                     		}); 
                                  </script>
                                  <div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
                                        <input type="hidden" value="${product_num}">
+									</c:forEach>
                                        <c:choose>
                                           <c:when test="${empty sessionScope.sId }">
 											<a class="primary-btn"  style="background: gray;">채팅하기</a>                                             
@@ -162,7 +178,6 @@
                                           </c:otherwise>
                                        </c:choose>
 										<a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
-									</c:forEach>
 								</div>
                               </div>
                            </div>
@@ -181,7 +196,7 @@
                             <div class="tab-content">
                             <div class="product__content__all">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
-                                    <div class="product__details__tab__content">
+                                    <div class="product__details__tab__content col-lg-10">
                               			<h5>상품내용</h5>
                                         <div class="product__details__notice" style="background-color: #F3EDFF;">
 	                                        <p class="note">거래 전 주의사항 안내<br>
@@ -197,7 +212,7 @@
 								
 								<!-- 판매자 시작 -->
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content">
+                                    <div class="product__details__tab__content col-lg-10">
                                         <div class="product__details__tab__content__item custom_seller" onclick="location.href='UserMarket?member_id=${product.member_id}'">
 <!--                                            <a name="tabs-6"></a> -->
                                             <h5>판매자 정보</h5>
@@ -228,10 +243,10 @@
 		                                                     </ul>
 		                                                 </div>
 		                                                 <div class="product__item__text">
-		                                                     <h6>${sellerProduct.product_name}</h6>
-		                                                     <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
-		                                            <p>${sellerProduct.trading_location} <span> / ${sellerProduct.product_release }</span></p>
-		                                                     <h5>${sellerProduct.product_price }</h5>
+		                                                    <h6>${sellerProduct.product_name}</h6>
+		                                                    <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
+															<p>${sellerProduct.trading_location} <span> / ${sellerProduct.productRelease }</span></p>
+		                                                    <h5>${sellerProduct.product_price }</h5>
 		                                                 </div>
 		                                             </div>
 		                                       </div>
@@ -258,7 +273,7 @@
                 </div>
             </div>
             <div class="row">
-            	<c:forEach items="${productList }" var="product" end="4" varStatus="status">
+            	<c:forEach items="${productList }" var="product" end="2" varStatus="status">
                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
                            <div class="product__item">
                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
@@ -270,7 +285,7 @@
                                <div class="product__item__text">
                                    <h6>${product.product_name}</h6>
                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
-								<p>${product.trading_location }<span> / ${product.product_release }</span></p>
+								<p>${product.trading_location }<span> / ${product.productRelease }</span></p>
                                    <h5>${product.product_price}</h5>
                                </div>
                            </div>
@@ -306,6 +321,8 @@
    }
 
    $(function() {
+// 	   debugger;
+	   
 	   let isRun = false;
 	   let proNum = ${param.product_num};
 	   let sId = "${sessionScope.sId}";
@@ -358,87 +375,7 @@
 	         });
 	      });
    });
-// var map = null,
-// customOverlay = new kakao.maps.CustomOverlay({}),
-// kkoMap = {
-//   initKko: function (o) {
-//     var e = o.mapId,
-//       t = document.getElementById(e),
-//       a = {
-//         center: new kakao.maps.LatLng(37.567509, 126.980663),
-//         level: 13,
-//       };
-//     (map = new kakao.maps.Map(t, a)),
-//       $.getJSON("./json/sigu.json", function (o) {
-//         let e = $(o.features);
-//         e.each(function () {
-//           kkoMap.getPolycode($(this)[0]);
-//         });
-//       });
-//   },
-//   getPolycode: function (o) {
-//     var e = [],
-//       t = o.geometry;
-//     if ("Polygon" == t.type) {
-//       var a = t.coordinates[0],
-//         n = { name: o.properties.adm_nm, path: [] };
-//       for (var s in a)
-//         e.push({ x: p[s][1], y: p[s][0] }),
-//           n.path.push(new kakao.maps.LatLng(a[s][1], a[s][0]));
-//       kkoMap.setPolygon(n, e);
-//     } else if ("MultiPolygon" == t.type)
-//       for (var s in t.coordinates) {
-//         var p = t.coordinates[s],
-//           n = { name: o.properties.adm_nm, path: [] };
-//         for (var r in p[0])
-//           e.push({ x: p[0][r][1], y: p[0][r][0] }),
-//             n.path.push(new kakao.maps.LatLng(p[0][r][1], p[0][r][0]));
-//         kkoMap.setPolygon(n, e);
-//       }
-//   },
-//   setPolygon: function (o, e) {
-//     var t = new kakao.maps.Polygon({
-//       name: o.name,
-//       path: o.path,
-//       strokeWeight: 2,
-//       strokeColor: "#004c80",
-//       strokeOpacity: 0.8,
-//       fillColor: "#fff",
-//       fillOpacity: 0.7,
-//     });
-//     kakao.maps.event.addListener(t, "mouseover", function (a) {
-//       t.setOptions({ fillColor: "#09f" }),
-//         customOverlay.setPosition(kkoMap.centroid(e)),
-//         customOverlay.setContent(
-//           "<div class='overlaybox'>" + o.name + "</div>"
-//         ),
-//         customOverlay.setMap(map);
-//     }),
-//       kakao.maps.event.addListener(t, "mouseout", function () {
-//         t.setOptions({ fillColor: "#fff" }), customOverlay.setMap(null);
-//       }),
-//       t.setMap(map);
-//   },
-//   centroid: function (o) {
-//     var e, t, a, n, s, p, r, i, l;
-//     for (e = 0, r = i = l = 0, t = (a = o.length) - 1; e < a; t = e++)
-//       (n = o[e]),
-//         (s = o[t]),
-//         (p = n.y * s.x - s.y * n.x),
-//         (i += (n.x + s.x) * p),
-//         (l += (n.y + s.y) * p),
-//         (r += 3 * p);
-//     return new kakao.maps.LatLng(i / r, l / r);
-//   },
-// };
-// $(function () {
+
    
-//   kkoMap.initKko({ mapId: "map" });
-  
-//   $("#product_info").getContents().replaceAll("<br>", "\r\n");
-//   if()
-//   $("#product_info").getContents().replaceAll("new", "\r\n");
-  
-// });
 </script>
 </html>

@@ -40,13 +40,10 @@ public class ShopController {
 	
 	@GetMapping("Shop")
 	public String shop(Model model,@RequestParam(required = false) Map<String,String> map) {
-		// testddd6
+
 		List<Map<String, String>> selectCategory = service.selectCategory();
-		
-//		System.out.println(selectCategory);
-//		System.out.println(map);
+
 		if(map.get("price") != null) {
-//			System.out.println("일단 이건 성공");
 			String[] price = map.get("price")
 							.replace("만원", "0000")
 							.replace("이상", "")
@@ -60,11 +57,15 @@ public class ShopController {
 				map.put("maxPrice", price[i]);
 			}
 		}
-//		List<Map<String, Object>> productList = service.selectProduct(map);
+		
 		List<Map<String, Object>> productList = shopService.selectProductList();
-//		System.out.println("상품 목록" + productList);
+		
+		String allCount = shopService.selectAllCount();
+		
 		model.addAttribute("productList", productList);
 		model.addAttribute("selectCategory", selectCategory);
+		model.addAttribute("allCount", allCount);
+		
 		return "shop/shop";
 	}
 	
@@ -85,14 +86,14 @@ public class ShopController {
 	@ResponseBody
 	@PostMapping("HighProduct")
 	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_idx) {
-		System.out.println("category_idx: " + category_idx);
+//		System.out.println("category_idx: " + category_idx);
 		return shopService.highProductList(category_idx);
 	}	
 	
 	@ResponseBody
 	@PostMapping("LowProduct")
 	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_idx) {
-		System.out.println("category_idx: " + category_idx);
+//		System.out.println("category_idx: " + category_idx);
 		return shopService.lowProductList(category_idx);
 	}	
 	
@@ -114,11 +115,11 @@ public class ShopController {
 	}
 	
 	// 등록 완료
-	@PostMapping("/ShopSuccess")
+	@PostMapping("ShopSuccess")
 	public String shopSuccess(@RequestParam Map<String, Object> map
 							  ,@RequestParam(value = "file", required=false) MultipartFile[] file
 							  , HttpSession session, Model model) {
-//		System.out.println("오긴옴?" + map);
+		System.out.println("오긴옴?" + map);
 		
 //		거래 방식 지정
 		if(map.get("trading_method1") != null && map.get("trading_method2") != null) {
@@ -140,7 +141,7 @@ public class ShopController {
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
-		String uploadDir = "/upload/"; //가상 경로
+		String uploadDir = "/Trade_Up/product_img/"; //가상 경로
 		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_Up/", ""); //실제 경로
 //		String sId = (String)session.getAttribute("sId");
 //		String uploadDir = "/upload/"; //가상 경로
@@ -225,9 +226,6 @@ public class ShopController {
 
 		int sellerCount = shopService.getSellerCount(product_num);
 		
-		// 이미지 조회
-//		List<Map<String, Object>> sellerProductImg = shopService.getSellerProductImg(sId);
-		
 		// 카테고리 조회
 		Map<String, Object> category = shopService.getCategory(product_num);
 		
@@ -245,10 +243,7 @@ public class ShopController {
 		model.addAttribute("productList", productList);
 		model.addAttribute("jjim", jjim);
 		model.addAttribute("sellCount", sellCount);
-//		model.addAttribute("sellerProductImg", sellerProductImg);
 
-//		model.addAttribute("msg", "상품등록을 실패했습니다.");
-//		model.addAttribute("targetURL", "redirect:/Shop");
 		return "shop/shop_details";
 	}
 	
