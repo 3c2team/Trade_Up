@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -84,37 +85,60 @@
 								<table class="table">
 									<thead class="text-center">
 										<tr>
-											<th></th>
-											<th>상품명</th>
+											<th colspan="2">상품명</th>
 											<th>상품금액</th>
 											<th>판매자</th>
 											<th>거래상태</th>
 											<th>거래방법</th>
-											<th>거래상태</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody class="text-center table-border-bottom-0">
-										<tr>
-											<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
-											<td class="align-middle">
-												<strong>****상품명****</strong>
-											</td>
-											<td class="align-middle">
-												25084원
-											</td>
-											<td class="align-middle">
-												<a>신혜리</a>
-											</td>
-											<td class="align-middle">
-<!--                         						<span class="badge bg-label-primary">판매중</span> -->
-<!--                         						<span class="badge bg-label-secondary">예약중</span> -->
-						                        <span class="badge bg-label-success">판매완료</span>	
-											</td>
-											<td class="align-middle"><span>택배거래</span></td>
-											<td class="align-middle">
-												<button class="btn btn-sm btn-outline-primary">구매완료</button>
-											</td>
-										</tr>
+										<c:forEach var="product" items="${productList }">
+											<tr>
+												<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
+												<td class="align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
+													<strong>${product.product_name }</strong>
+												</td>
+												<td class="align-middle">
+													${product.product_price }
+												</td>
+												<td class="align-middle">
+													<a>${product.member_id }</a>
+												</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${product.sales_status eq '거래중'}">
+															<span class="badge bg-label-secondary">거래중</span>
+														</c:when>
+														<c:when test="${product.sales_status eq '거래완료' }">
+															<span class="badge bg-label-success">거래완료</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-primary">판매중</span>
+														</c:otherwise>
+													</c:choose>
+
+												</td>
+												<td class="align-middle">
+													<c:choose>
+														<c:when test="${product.trading_method eq 'direct '}">
+															<span class="badge bg-label-warning">직거래</span>
+														</c:when>
+														<c:when test="${product.trading_method eq 'delivery'}">
+															<span class="badge bg-label-info">택배</span>
+														</c:when>
+														<c:otherwise>
+															<span class="badge bg-label-info">택배</span>
+															<span class="badge bg-label-warning">직거래</span>
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td class="align-middle">
+													<button class="btn btn-sm btn-outline-primary">거래완료</button>
+												</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>

@@ -109,9 +109,6 @@
 												</td>
 												<td class="align-middle">
 													${product.product_price }
-													<c:if test="${empty product.product_price }">
-														무료나눔
-													</c:if>
 												</td>
 												<td class="align-middle">
 													<c:choose>

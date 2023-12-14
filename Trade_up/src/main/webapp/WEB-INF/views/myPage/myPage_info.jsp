@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <%--
-
 	전화번호 수정
 	이메일 수정
 	정규식 추가
@@ -64,6 +64,8 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
+<%--   <script src="${pageContext.request.contextPath }/resources/js/join.js"></script> --%>
+  
   <style type="text/css">
   	.info-img {
   		position: relative;
@@ -82,7 +84,17 @@
 	    margin: auto;
   	}
   </style>
-  
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
+		var state = naver_id_login.getUniqState();
+		naver_id_login.setButton("green", 2);
+		naver_id_login.setDomain("http://localhost:8081/tradeup/Login");
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+	</script>
+	
+	
   <script>
     function submitForm() {
     	var formData = $('#MyInfoModify').serialize();
@@ -153,8 +165,20 @@
 											</div>									
 										</div>
 										<div class="card-header d-flex align-items-center justify-content-center" style="flex-direction: column;">
-											<h5>카카오 <span class="text-muted fw-light">연동하기</span></h5>
-											<h5>네이버 <span class="text-muted fw-light">연동하기</span></h5>
+											<h5>카카오 <span class="text-muted fw-light">
+												<a href="https://kauth.kakao.com/oauth/authorize?
+													client_id=1582f2676c7805fc4f4fc798652b9f28
+													&redirect_uri=http://localhost:8081/tradeup/kakao
+													&response_type=code" id="kakaoLogin">
+								            		연동하기
+					        					</a>
+				        					</span></h5>
+											<h5>네이버 
+												<span class="text-muted fw-light">
+													<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;">
+													</div>연동하기
+												</span>
+											</h5>
 										</div>
 									</div>
 								</div>
@@ -171,12 +195,13 @@
 										</div>
 										<div>
 											<label class="form-label text-muted">전화번호</label>
-											<h5>${member.member_phone_num }  <a 
-												data-bs-toggle="modal"
-												href="#modify_phone"
-											><i class="tf-icons bx bx-edit"></i>
-											</a></h5>
-											<jsp:include page="modal/modify_phone.jsp"></jsp:include>
+											<h5>${member.member_phone_num }
+												<a data-bs-toggle="modal"
+													href="#modify_phone"
+												><i class="tf-icons bx bx-edit"></i>
+												</a>
+											</h5>
+<%-- 											<%@ include file="modal/modify_phone.jsp"%> --%>
 										</div>
 										<div>
 											<label class="form-label text-muted">이메일</label>
@@ -185,7 +210,7 @@
 												href="#modify_email"
 											><i class="tf-icons bx bx-edit"></i>
 											</a></h5>
-											<jsp:include page="modal/modify_email.jsp"></jsp:include>
+											<%@ include file="modal/modify_email.jsp"%>
 										</div>
 										<div class="divider">
 											<div class="divider-text">
@@ -197,14 +222,23 @@
 											수정
 										</button>
 										<div>
-											<label class="form-label text-muted">주소명
-											</label>
-											<h5>${member.address_name }</h5>
+										
+											<c:choose>
+												<c:when test="${empty member.address_name }">
+													대표 주소를 등록해주세요.
+												</c:when>
+												<c:otherwise>
+													<label class="form-label text-muted">주소명
+													</label>
+													<h5>${member.address_name }</h5>
+												</div>
+												<div>
+													<label class="form-label text-muted">주소</label>
+													<h5>[${member.postcode }] ${member.address1 } ${member.address2 }</h5>
+												</c:otherwise>
+											</c:choose>
 											
-										</div>
-										<div>
-											<label class="form-label text-muted">주소</label>
-											<h5>[${member.postcode }] ${member.address1 } ${member.address2 }</h5>
+											
 										</div>
 										<div class="divider">
 											<div class="divider-text">
@@ -216,12 +250,22 @@
 												<span class="tf-icons bx bx-edit me-1"></span>
 												수정
 											</button>
-											<label class="form-label text-muted">은행명</label>
-											<h5>${member.account_bank }</h5>
-										</div>
-										<div>
-											<label class="form-label text-muted">계좌 번호</label>
-											<h5>${member.account_num }</h5>
+											
+											<c:choose>
+												<c:when test="${empty member.account_bank }">
+													대표 계좌를 등록해주세요.
+												</c:when>
+												<c:otherwise>
+													<label class="form-label text-muted">은행명</label>
+													<h5>${member.account_bank }</h5>
+												</div>
+												<div>
+													<label class="form-label text-muted">계좌 번호</label>
+													<h5>${member.account_num }</h5>
+													
+												</c:otherwise>
+											</c:choose>
+											
 										</div>
 									</div>
 								</div>
@@ -258,7 +302,7 @@
 									data-bs-toggle="modal"
 									data-bs-target="#delete_account_modal">회원탈퇴</button>
 									<!-- 거래중 테이블 있으면 거래불가, 그럼 거래중 테이블 카운트...? -->
-								<jsp:include page="modal/delete_account_modal.jsp"></jsp:include>
+								<%@ include file="modal/delete_account_modal.jsp"%>
 							</div>
 						</div>
 						<!-- 탈퇴 -->

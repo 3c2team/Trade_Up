@@ -39,4 +39,8 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectMyFavorite(String sId);
 	// 계좌관리 - 계좌 조회
 	List<Map<String, Object>> selectMyAccount(String sId);
+	// 유저정보 - 탈퇴 사유 조회
+	List<Map<String, Object>> selectFeedback();
+	// 구매내역 - 내역 조회
+	List<Map<String, Object>> selectMyPurchase(String sId);
 }

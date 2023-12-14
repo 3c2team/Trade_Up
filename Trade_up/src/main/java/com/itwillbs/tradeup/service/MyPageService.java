@@ -62,5 +62,11 @@ public class MyPageService {
 	public List<Map<String, Object>> getMyAccount(String sId) {
 		return mapper.selectMyAccount(sId);
 	}
+	public List<Map<String, Object>> getFeedback() {
+		return mapper.selectFeedback();
+	}
+	public List<Map<String, Object>> getMyPurchase(String sId) {
+		return mapper.selectMyPurchase(sId);
+	}
 
 }

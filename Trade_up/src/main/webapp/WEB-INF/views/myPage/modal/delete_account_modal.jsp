@@ -1,19 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <script type="text/javascript">
-	// function checks() {
-	// 	let amount = $("#amount").val();
-	// 	let result = true;			
-	// 	if(amount < 10000){
-	// 		$("#amount").css({'border-color':'#ff3e1d'});
-	// 		$("#danger").css({'color':'#ff3e1d'});
-	// 		$("#danger").text("10000원 이상부터 충전 가능");
-	// 		result = false;
-	// 	}
+	$(document).ready(function() {
+		$("#select_feedback").change(function() {
+			$(".tip_class").css("display", "none" );
+			$("#other_reason").css("display", "none" );
+			
+			let selectedOptionVal = $('option:selected', this).val();
+				
+			if(selectedOptionVal == "option_last") {
+				$("#tip_last").css("display", "");
+				$("#other_reason").css("display", "");
+			}
+			
+			$("#tip_" + selectedOptionVal).css("display", "");
+			
+		});
+	});
+	
+	function checks() {
+		let password = $("#password").val();
+		let result = true;
 		
-	// 	return result;  
-	// }		
+		if(password == ""){
+			$("#password").css({'border-color':'#ff3e1d'});
+			$("#danger2").css({'color':'#ff3e1d'});
+			$("#danger2").text("비밀번호를 입력해주세요.");
+			result = false;
+		}
+		
+		return result;  
+	}
 </script>
 <%-- 모달창 --%>
 <div class="modal fade" id="delete_account_modal" tabindex="-1" aria-hidden="true">
@@ -30,29 +49,37 @@
 					<b>${member.member_nick_name }님이 계정을 삭제하려는 이유가 궁금해요. </b><br><br>
 					<div class="row">
 						<div class="col mb-3">
-							<select class="form-select" required>
+							<select class="form-select" id="select_feedback" name="" required>
 	<%-- 							<c:forEach var="account" items="${accountList }" varStatus="status"> --%>
 	<%-- 								<option id="account_${status.count }" > --%>
 	<%-- 									${account.accout } --%>
 	<!-- 								</option> -->
 	<%-- 							</c:forEach> --%>
-								<option>계정을 삭제하려는 이유를 알려주세요</option>
-								<option id="option_1">너무 많이 이용해요</option>
-								<option id="option_2">사고 싶은 물품이 없어요</option>
-								<option id="option_3">물품이 안팔려요</option>
-								<option id="option_4">비매너 사용자를 만났어요</option>
-								<option id="option_5">억울하게 이용이 제한됐어요</option>
-								<option id="option_6">새 계정을 만들고 싶어요</option>
-								<option id="option_7">기타</option>
+								<option>선택해주세요</option>
+								<c:forEach var="feedback" items="${feedback }" varStatus="status">
+									<option value="${feedback.feedback_idx }" id="option_${feedback.feedback_idx }">${feedback.exid_feedback }</option>
+								</c:forEach>
+								<option value="option_last">기타</option>
 							</select>
-							<small id="tip"></small>
+							<div class="mt-3">
+								<input type="text" name="etc" id="other_reason" class="form-control mb-3" placeholder="계정을 삭제하려는 이유를 알려주세요." style="display: none;"/>
+								<label class="form-label" id="danger1" style="display: none;"></label>
+								<c:forEach var="feedback" items="${feedback }" varStatus="status">
+									<small class="tip_class" id="tip_${feedback.feedback_idx }" style="display: none;">${feedback.exid_feedback_tip }</small>
+								</c:forEach>
+								<small class="tip_class" id="tip_last" style="display: none;">	
+									말씀해주신 소중한 의견을 반영하여 더 따뜻한 서비스를 만들어가도록 노력할게요.<br>	
+									언제나 이 자리에서 기다리고 있을게요. 언제든지 돌아와 주세요.<br>	
+									지금까지 함께여서 진심으로 행복했어요.	
+								</small>
+							</div>
 						</div>
 					</div>
-					
 					<div class="row">
 						<div class="col mb-3">
-							<label for="nameSmall" class="form-label">비밀번호를 입력해주세요.</label>
-							<input type="password" name="password" class="form-control" required="required" placeholder="PassWord" />
+							<label for="nameSmall" class="form-label" >비밀번호를 입력해주세요.</label>
+							<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" />
+							<label class="form-label" id="danger2"></label>
 						</div>
 					</div>
 				</div>

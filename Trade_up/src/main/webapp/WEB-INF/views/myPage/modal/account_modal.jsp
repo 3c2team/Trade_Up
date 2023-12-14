@@ -63,7 +63,7 @@
 						<div class="col mb-3">
 							<label class="form-label" for="emailSmall">계좌번호</label>
 							<input type="number" name="account_num" id="account_num" class="form-control"/>
-							<label class="form-label" id="danger" for="emailSmall"></label>
+							<label class="form-label" id="danger"></label>
 						</div>
 					</div>
 				</div>

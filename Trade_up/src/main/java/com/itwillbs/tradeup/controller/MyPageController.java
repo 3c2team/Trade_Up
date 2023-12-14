@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +59,12 @@ public class MyPageController {
 	public String myFavorite(HttpSession session, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
 		model.addAttribute("favoriteList", favoriteList);
 		System.out.println(favoriteList);
@@ -69,6 +76,12 @@ public class MyPageController {
 	public String mySales(HttpSession session, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		List<Map<String, Object>> productsList = service.getMyProduct(sId);
 		model.addAttribute("productsList", productsList);
 		
@@ -79,6 +92,13 @@ public class MyPageController {
 	@GetMapping("DeleteMySales")
 	public String deleteMySales(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		int deleteCount = service.deleteProcut(param);
 		if(deleteCount > 0) {
@@ -91,14 +111,28 @@ public class MyPageController {
 	
 	// 구매내역
 	@GetMapping("MyPurchase")
-	public String myPurchase() {
+	public String myPurchase(HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
 		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
+		List<Map<String, Object>> productList = service.getMyPurchase(sId);
+		
+		System.out.println(productList);
+		
+		model.addAttribute("productList", productList);
 		return "myPage/myPage_purchase";
 	}
 	
 	// 구매내역 - 거래완료
 	@GetMapping("TransactionCompleted")
-	public String TransactionCompleted() {
+	public String TransactionCompleted(HttpSession session, Map<String, Object> map, Model model) {
+		
+		
 		return "";
 	}
 	
@@ -106,20 +140,51 @@ public class MyPageController {
 	@GetMapping("MyInfo")
 	public String myInfo(HttpSession session, Map<String, Object> map, Model model) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		map = service.getMember(sId);
+		List<Map<String, Object>> feedback = service.getFeedback();
+		
+		
+		System.out.println(feedback);
+		
 		model.addAttribute("member", map);
+		model.addAttribute("feedback", feedback);
 		return "myPage/myPage_info";
 	}
 	
 	// 프로필관리 - 회원 탈퇴
 	@PostMapping("DeleteMember")
-	public String deleteMember(HttpSession session, @RequestParam Map<String, Object> param) {
-		return "Main";
+	public String deleteMember(HttpSession session, @RequestParam Map<String, Object> param, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
+		System.out.println("탈퇴 param: " + param);
+		
+		return "myPage/myPage_info";
 	}
 	
 	// 프로필관리 - 정보 수정 (닉네임, 전화번호, 이메일)
 	@PostMapping("MyInfoModify")
-	public String myInfoModify(HttpSession session, @RequestParam Map<String, Object> param) {
+	public String myInfoModify(HttpSession session, @RequestParam Map<String, Object> param, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", session.getAttribute("sId"));
 		
 		int updateCount = service.myInfoModify(param);
@@ -132,8 +197,15 @@ public class MyPageController {
 	
 	// 프로필관리 - 프로필 이미지 수정 
 	@PostMapping("MyProfileModify")
-	public String myProfileModify(HttpSession session, @RequestParam Map<String, Object> param, @RequestParam(value = "file", required=false) MultipartFile file) {
+	public String myProfileModify(HttpSession session, @RequestParam Map<String, Object> param, @RequestParam(value = "file", required=false) MultipartFile file, Model model) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		
 		String uploadDir = "resources/TradeUp_upload/user_profile_image";
@@ -183,6 +255,13 @@ public class MyPageController {
 	@GetMapping("MyAccount")
 	public String myAccount(HttpSession session, Model model, HttpServletRequest request) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		String servlet_path = request.getServletPath();
 		String order_by = "account_main";
 		Map<String, String> token = service.getFintechInfo(sId);
@@ -197,6 +276,13 @@ public class MyPageController {
 	@PostMapping("AddAccount")
 	public String addAccount(HttpSession session, @RequestParam Map<String, Object> param, Map<String, String> map, Model model) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		map = service.getFintechInfo(sId);
 		
@@ -239,6 +325,13 @@ public class MyPageController {
 	@GetMapping("MyAddress")
 	public String myAddress(HttpSession session, Model model, HttpServletRequest request) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		String servlet_path = request.getServletPath();
 		String order_by = "address_main";
 		List<Map<String, Object>> list = retrieveDataForServletAndSession(sId, servlet_path, order_by);
@@ -257,6 +350,13 @@ public class MyPageController {
 	@PostMapping("AddAddress")
 	public String addMyAddress(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		
 		int insertCount = service.registMyAddress(param);
@@ -275,6 +375,13 @@ public class MyPageController {
 	@PostMapping("ModifyAddress")
 	public String modifyAddress(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		
 		int updateCount = service.updateAddress(param);
@@ -293,6 +400,13 @@ public class MyPageController {
 	@GetMapping("ChangeMainInfo")
 	public String changeMainInfo(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		
 		int insertCount = service.changeMainInfo(param);
@@ -313,8 +427,14 @@ public class MyPageController {
 	// 계좌관리&배송지관리 - 정보 삭제
 	@GetMapping("DeleteInfo")
 	public String deleteInfo(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
-		
 		String sId = (String)session.getAttribute("sId");
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
 		param.put("sId", sId);
 		
 		int deleteCount = service.deleteInfo(param);

@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col mb-3">
 							<label for="nameSmall" class="form-label">전화번호 변경</label>
-							<input type="text" name="modify_value" id="member_phone_num" class="form-control" placeholder="전화번호" />
+							<input type="number" name="modify_value" id="member_phone_num" oninput="autoHyphen(this)" class="form-control" placeholder="${member.member_phone_num }" />
 						</div>
 					</div>
 				</div>

@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col mb-3">
 							<label for="nameSmall" class="form-label">이메일 변경</label>
-							<input type="text" name="modify_value" id="nameSmall" class="form-control" placeholder="이메일" />
+							<input type="text" name="modify_value" id="nameSmall" class="form-control" placeholder="${member.member_e_mail }" />
 						</div>
 					</div>
 				</div>

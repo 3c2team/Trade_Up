@@ -51,21 +51,37 @@
 				, p.sales_status 
 				, p.trading_method 
 			FROM PRODUCT p
-			JOIN CATEGORY c ON p.category_idx = c.category_idx 
+			JOIN CATEGORY c 
+			  ON p.category_idx = c.category_idx
+			   
 			WHERE p.member_id = #{sId};
+    	</select>
+    	
+    	<select id="selectMyPurchase" resultType="map">
+    		SELECT p.product_num 
+				 , p.product_main_img 
+				 , p.product_name 
+				 , p.product_price 
+				 , p.member_id 
+				 , p.trading_method 
+				 , p.sales_status 
+				 , w.*
+			  FROM WITHDRAW w
+			  JOIN PRODUCT p ON w.product_num = p.product_num 
+			 WHERE w.member_id = #{sId};
     	</select>
     	
     	<select id="selectMyFavorite">
     		SELECT p.product_num
-				, p.product_main_img 
-				, p.product_name 
-				, p.member_id
-				, p.product_price 
-				, p.sales_status 
-				, p.trading_method 
-			FROM FAVORITE f 
-			JOIN PRODUCT p ON f.product_num = p.product_num 
-			WHERE f.member_id = #{sId};
+				 , p.product_main_img 
+				 , p.product_name 
+				 , p.member_id
+				 , p.product_price 
+				 , p.sales_status 
+				 , p.trading_method 
+			  FROM FAVORITE f 
+			  JOIN PRODUCT p ON f.product_num = p.product_num 
+			 WHERE f.member_id = #{sId};
     	</select>
     	
     	<select id="selecFintechInfo" resultType="map">
@@ -73,7 +89,12 @@
     		FROM FINTECH_USER_INFO
     		WHERE member_id = #{sId};
     	</select>
-		    	
+		
+		<select id="selectFeedback" resultType="map">
+			SELECT *
+    		FROM EXITED_FEEDBACK;
+		</select>
+		
     	<update id="updateMember">
     		UPDATE MEMBER
 			SET ${modify_type} = #{modify_value}
