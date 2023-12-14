@@ -54,7 +54,25 @@ public interface PayMapper {
 	// 업페이 자동 결제
 	void insertAutoUppay(Map<String, String> map);
 	
-	// 상품 판매상태 거래중으로 바꾸기
-	void updateSalesStatus(String product_num);
+	// 상품 판매상태 바꾸기
+	void updateSalesStatus(@Param("product_num") String product_num, @Param("state") String state);
+	
+	// 거래 정보 가져오기(WITHDRAW 테이블 접근)
+	Map<String, String> selectDealInfo(@Param("product_num") String string);
+	
+	// 판매자 아이디
+	String selectSellerId(@Param("product_num") String string);
+	
+	// 판매자 정보 가져오기(MY_ACCOUNT 테이블 접근)
+	Map<String, String> selectSellerInfo(String sellerId);
+	
+	// 우리 계좌에서 돈 출금
+	int insertWithdraw(Map<String, String> map);
+	
+	// withdraw 테이블에서 구매 상태 구매확정으로 바꾸기
+	void updateDeposit(@Param("product_num") String string);
+	
+	// 이름 가져오기
+	String selectMemberName(String sId);
 
 }

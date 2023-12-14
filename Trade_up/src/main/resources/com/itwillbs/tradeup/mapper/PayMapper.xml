@@ -152,9 +152,57 @@
 	            )
     	</insert>
     	
-    	<update id="updateSalesStatus"> <!-- 상품 판매상태 거래중으로 바꾸기 -->
+    	<update id="updateSalesStatus"> <!-- 상품 판매상태 바꾸기 -->
     		UPDATE PRODUCT
-    		SET sales_status = '거래중'
+    		SET sales_status = #{state}
     		WHERE product_num = #{product_num};
     	</update>
+    	
+    	<select id="selectDealInfo" resultType="map"> <!-- 거래 정보 가져오기(WITHDRAW 테이블 접근) -->
+			SELECT *
+			FROM WITHDRAW
+			WHERE product_num = #{product_num}
+		</select>
+    	
+    	<select id="selectSellerId" resultType="String"> <!-- 판매자 아이디 -->
+			SELECT member_id
+			FROM PRODUCT
+			WHERE product_num = #{product_num}
+		</select>
+    	
+    	<select id="selectSellerInfo" resultType="map"> <!-- 판매자 정보 가져오기(MY_ACCOUNT 테이블 접근) -->
+			SELECT *
+			FROM MY_ACCOUNT
+			WHERE member_id = #{sellerId}
+		</select>
+		
+		<insert id="insertWithdraw"> <!-- 우리 계좌에서 돈 출금 -->
+    		INSERT
+    		INTO DEPOSIT
+    		(deposit_bank, deposit_acc, owner_bank, owner_acc, product_price, member_id, member_name, deposit_date, product_num, merchant_uid)
+				VALUES (
+		            #{account_bank}
+		            , #{account_num}
+		            , #{owner_bank}
+		            , #{owner_num}
+		            , #{product_price}
+		            , #{member_id}
+		            , #{member_name}
+		            , now()
+		            , #{product_num}
+		            , #{merchant_uid}
+				)
+    	</insert>
+    	
+    	<update id="updateDeposit"> <!-- withdraw 테이블에서 구매 상태 구매확정으로 바꾸기 -->
+    		UPDATE WITHDRAW
+    		SET buy_check = '구매 확정'
+    		WHERE product_num = #{product_num};
+    	</update>
+    	
+    	<select id="selectMemberName" resultType="String"> <!-- 멤버 이름 가져오기 -->
+			SELECT member_name
+			FROM MEMBER
+			WHERE member_id = #{sId}
+		</select>
     </mapper>

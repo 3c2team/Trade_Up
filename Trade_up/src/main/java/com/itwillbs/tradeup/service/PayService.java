@@ -89,7 +89,37 @@ public class PayService {
 	}
 	
 	// 상품 판매상태 거래중으로 바꾸기
-	public void updateSalesStatus(String product_num) {
-		mapper.updateSalesStatus(product_num);
+	public void updateSalesStatus(String product_num, String state) {
+		mapper.updateSalesStatus(product_num, state);
+	}
+	
+	// 거래 정보 가져오기(WITHDRAW 테이블 접근)
+	public Map<String, String> getDealInfo(String string) {
+		return mapper.selectDealInfo(string);
+	}
+	
+	// 판매자 아이디
+	public String getSellerId(String string) {
+		return mapper.selectSellerId(string);
+	}
+	
+	// 판매자 정보 가져오기(MY_ACCOUNT 테이블 접근)
+	public Map<String, String> getSellerInfo(String sellerId) {
+		return mapper.selectSellerInfo(sellerId);
+	}
+	
+	// 우리 계좌에서 돈 출금
+	public int insertWithdraw(Map<String, String> map) {
+		return mapper.insertWithdraw(map);
+	}
+	
+	// withdraw 테이블에서 구매 상태 구매확정으로 바꾸기
+	public void updateDeposit(String string) {
+		mapper.updateDeposit(string);
+	}
+	
+	// 이름 가져오기
+	public String getMemberName(String sId) {
+		return mapper.selectMemberName(sId);
 	}
 }

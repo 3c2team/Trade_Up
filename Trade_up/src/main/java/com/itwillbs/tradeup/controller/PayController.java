@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
+import com.itwillbs.tradeup.vo.ResponseDepositListVO;
 import com.itwillbs.tradeup.service.PayService;
 import com.itwillbs.tradeup.service.bankApiClient;
 import com.itwillbs.tradeup.vo.ResponseWithdrawVO;
@@ -41,14 +42,8 @@ public class PayController {
 	// 결제 페이지
 	@GetMapping("Checkout")
 	public String checkout(HttpSession session, Model model, @RequestParam int product_num, Map<String,String> map) {
-		String sId = (String)session.getAttribute("sId");
+		String sId = LoginNeed(session, model);
 		String sEmail = (String)session.getAttribute("sEmail");
-		
-		if(sId == null) {
-			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "Login");
-			return "forward";
-		}
 		
 		model.addAttribute("sId", sId);
 		model.addAttribute("sEmail", sEmail);
@@ -97,13 +92,7 @@ public class PayController {
 					, HttpSession session
 					, Model model
 					) {
-		String sId = (String)session.getAttribute("sId");
-		
-		if(sId == null) {
-			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "Login");
-			return "forward";
-		}
+		String sId = LoginNeed(session, model);
 		
 		if(map.get("pick").equals("Y")) {
 			int changeCount = service.updateMainAddress(map); // 원래 메인 주소 그냥 주소로 변경
@@ -164,14 +153,8 @@ public class PayController {
 	// 업페이
 	@PostMapping("PaymentPro")
 	public String paymentPro(@RequestParam Map<String, String> map, Model model, HttpSession session) {
-		String sId = (String)session.getAttribute("sId");
 		System.out.println(map);
-		
-		if(sId == null) {
-			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "Login");
-			return "forward";
-		}
+		String sId = LoginNeed(session, model);
 		
 		if(map.get("pick").equals("Y")) {
 			int changeCount = service.updateMainAddress(map); // 원래 메인 주소 그냥 주소로 변경
@@ -212,18 +195,13 @@ public class PayController {
 	// 무통장 입금
 	@PostMapping("PaypalPro")
 	public String paypalPro(@RequestParam String bank, @RequestParam Map<String, String> map, Model model, HttpSession session) {
-		String sId = (String)session.getAttribute("sId");
 		String bank_name = "신한은행";
+		String sId = LoginNeed(session, model);
 		
-		if(sId == null) {
-			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "Login");
-			return "forward";
-		}
 		if(bank.equals("kakao")) { // 카카오뱅크 계좌 정보 들고오기
 			bank_name = "카카오뱅크";
 		}
-		if(bank.equals("su")) { // 국민 계좌 정보 들고오기
+		if(bank.equals("su")) { // 산업은행 계좌 정보 들고오기
 			bank_name = "KDB산업은행";
 		}
 		Map<String, String> ownerBank = service.getOwnerBank(bank_name); // 우리 계좌 정보 가져오기
@@ -288,7 +266,8 @@ public class PayController {
 //		model.addAttribute("transferResult", transferResult);
 		
 		model.addAttribute("deliver", map);
-		service.updateSalesStatus(map.get("product_num"));
+		String state = "거래중";
+		service.updateSalesStatus(map.get("product_num"), state);
 		return "pay/paypal";
 	}
 	
@@ -310,11 +289,12 @@ public class PayController {
 				Map<String, String> tokenInfo = service.getTokenInfo(sId); // 토큰 정보 가져오기
 				map.put("access_token", tokenInfo.get("access_token"));
 				map.put("user_seq_no", tokenInfo.get("user_seq_no"));
+				map.put("fintech_use_num", tokenInfo.get("fintech_use_num"));
 				Map<String, String> mainAccount = service.getMainAccount(sId);
 				map.put("account_num", mainAccount.get("account_num"));
 				map.put("account_bank", mainAccount.get("account_bank"));
-				map.put("acc_num", "2023120106");
-				map.put("acc_bank","KDB산업은행");
+//				map.put("acc_num", "2023120106");
+//				map.put("acc_bank","KDB산업은행");
 				map.put("member_id", sId);
 				ResponseWithdrawVO withdrawResult = bankApiClient.requestWithdraw(map);
 				model.addAttribute("withdrawResult", withdrawResult);
@@ -335,14 +315,96 @@ public class PayController {
 			map.put("remainPay", remainPay);
 			service.payAutoUppay(map);
 		}
-		service.updateSalesStatus(map.get("product_num"));
+		String state = "거래중";
+		service.updateSalesStatus(map.get("product_num"), state);
 		return "pay/orderPro";
 	}
 	
 	// 구매확정
 	@PostMapping("BuyCheck") 
-	public String buyCheck() {
+	public String buyCheck(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		System.out.println(map);
+		// Map으로 받아올 정보 - 구매자가 구매확정을 누름 판매자 정보는 상품 번호로 조인해서 들고 올 것
+		// 상품 번호
 		
+		String sId = LoginNeed(session, model);
+		
+		map.put("owner_bank", "KDB산업은행"); // 우리 은행 정보
+		map.put("owner_num", "2023120106"); // 우리 계좌
+		
+		Map<String, String> deal = service.getDealInfo(map.get("product_num")); // 거래 정보 가져오기(WITHDRAW 테이블 접근)
+		map.put("product_price", deal.get("product_price")); // 상품 가격
+		map.put("merchant_uid", deal.get("merchant_uid")); // 거래 번호
+		
+		String sellerId = service.getSellerId(map.get("product_num")); // 판매자 정보 가져오기(PRODUCT 테이블 접근)
+		map.put("member_id", sellerId); // 판매자 아이디
+		
+		Map<String, String> sellerInfo = service.getSellerInfo(sellerId); // 판매자 정보 가져오기(MY_ACCOUNT 테이블 접근)
+		map.put("account_num", sellerInfo.get("account_num")); // 판매자 계좌
+		map.put("account_bank", sellerInfo.get("account_bank")); // 판매자 계좌 은행
+		map.put("member_name", sellerInfo.get("account_holder_name")); // 판매자 계좌 은행
+		
+		int insertCount = service.insertWithdraw(map); // 우리 계좌에서 돈 출금 (판매자에게 채팅으로 판매 완료되었습니다 보내기)
+		if(insertCount < 0) { // 구매자 계좌에서 돈 출금 (구매자에게 채팅으로 구매 확정되었습니다 보내기)
+			model.addAttribute("msg", "오류가 발생하였습니다. 다시 주문해주세요.");
+			return "fail_back";
+		}
+		
+		service.updateDeposit(map.get("product_num")); // withdraw 테이블에서 구매 상태 구매확정으로 바꾸기
+		String state = "거래완료";
+		service.updateSalesStatus(map.get("product_num"), state);
 		return "myPage/myPage_purchase";
+	}
+	
+	// 업페이 충전
+	@PostMapping("UpPayCharge")
+	public String upPayCharge(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		String sId = LoginNeed(session, model);
+		
+		String member_name = service.getMemberName(sId);
+		map.put("member_name", member_name);
+		Map<String, String> tokenInfo = service.getTokenInfo(sId); // 토큰 정보 가져오기
+		map.put("access_token", tokenInfo.get("access_token"));
+		map.put("user_seq_no", tokenInfo.get("user_seq_no"));
+		map.put("fintech_use_num", tokenInfo.get("fintech_use_num"));
+		map.put("member_id", sId);
+		
+		ResponseDepositListVO depositResult = bankApiClient.requestDeposit(map);
+		
+		model.addAttribute("depositResult", depositResult);
+		
+		return "myPage/myPage_main";
+	}
+	
+	// 업페이 환불
+	@PostMapping("UpPayRefund")
+	public String upPayRefund(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		String sId = LoginNeed(session, model);
+		
+		String member_name = service.getMemberName(sId);
+		map.put("member_name", member_name);
+		Map<String, String> tokenInfo = service.getTokenInfo(sId); // 토큰 정보 가져오기
+		map.put("access_token", tokenInfo.get("access_token"));
+		map.put("user_seq_no", tokenInfo.get("user_seq_no"));
+		map.put("fintech_use_num", tokenInfo.get("fintech_use_num"));
+//		map.put("acc_num", "2023120106");
+//		map.put("acc_bank","KDB산업은행");
+		map.put("member_id", sId);
+		
+		ResponseDepositListVO depositResult = bankApiClient.requestDeposit(map);
+		
+		model.addAttribute("depositResult", depositResult);
+		
+		return "myPage/myPage_main";
+	}
+	
+	public String LoginNeed(HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		return sId;
 	}
 }
