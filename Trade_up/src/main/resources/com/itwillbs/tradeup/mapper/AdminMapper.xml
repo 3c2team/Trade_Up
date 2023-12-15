@@ -118,7 +118,7 @@
  		SELECT count(*) as memberOut
  		FROM MEMBER
 <!--  		WHERE member_state = '회원탈퇴' AND DATE_FORMAT(member_insert_date, "%Y-%m-%d") = CURDATE() -->
- 		WHERE member_state = '회원탈퇴' AND member_insert_date > date_add(now(),interval -1 week)
+ 		WHERE member_state = '탈퇴' AND member_insert_date > date_add(now(),interval -1 week)
  	</select>
  	
  	<!-- 출금내역 기간조회 -->

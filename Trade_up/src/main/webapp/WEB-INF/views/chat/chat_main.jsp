@@ -327,6 +327,8 @@
 		let chatRoom = $("#chatRoomArea").find("." + room_id);
 		$(chatRoom).find(".chatMessageArea").append(message_div);
 		
+		// 채팅 메세지 출력창 스크롤바를 항상 맨 밑으로 유지
+		$(".chatRoom").scrollTop($(".chatMessageArea").height() - $(".chatRoom").height());
 	}
 
 	// =====================================================================================

@@ -75,10 +75,10 @@
 		text-align: right;
 		position: relative;
 	    margin: 5px;
-	    background: aliceblue;
-	    border-radius: 20px 5px 40px 30px;
-	    font-weight:bold;
-	    padding:7px;
+ 	    background: aliceblue; 
+ 	    border-radius: 20px 5px 40px 30px; 
+ 	    font-weight:bold; 
+	    padding:7px; 
 	    margin-bottom:10px;
 	}
 	
@@ -111,6 +111,12 @@
   		padding: 5px;
   		margin-bottom:10px;
 	}
+/* 	p{ */
+/* 		 background: aliceblue; */
+/* 	    border-radius: 20px 5px 40px 30px; */
+/* 	    font-weight:bold; */
+/* 	    padding:7px; */
+/* 	} */
 </style>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
