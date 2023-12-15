@@ -4,18 +4,18 @@
 <!DOCTYPE html>
 
 <script type="text/javascript">
-	function checks() {
-		let amount = $("#amount").val();
-		let result = true;			
-		if(amount < 10000){
-			$("#amount").css({'border-color':'#ff3e1d'});
-			$("#danger").css({'color':'#ff3e1d'});
-			$("#danger").text("10000원 이상부터 충전 가능");
-			result = false;
-		}
+// 	function checks() {
+// 		let amount = $("#amount").val();
+// 		let result = true;			
+// 		if(amount < 10000){
+// 			$("#amount").css({'border-color':'#ff3e1d'});
+// 			$("#danger").css({'color':'#ff3e1d'});
+// 			$("#danger").text("10000원 이상부터 충전 가능");
+// 			result = false;
+// 		}
 		
-		return result;  
-	}
+// 		return result;  
+// 	}
 </script>
 
 <div class="modal fade" id="up_pay_re" tabindex="-1" aria-hidden="true">
@@ -30,7 +30,7 @@
 					aria-label="Close"
 				></button>
 			</div>
-			<form action="UpPayRefund" method="post" onsubmit="return checks()">
+			<form action="UpPayRefund" method="post">
 				<div class="modal-body">
 					<div class="row">
 						<div class="col mb-3">

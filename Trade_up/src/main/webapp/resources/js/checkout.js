@@ -127,6 +127,44 @@ const autoHyphen = (target) => {
 	.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 }
 
+function meet_checks() {
+    // 결제방식 선택 여부 검사
+    if(!$("#acc-or").is(':checked') && !$("#payment").is(':checked') && !$("#paypal").is(':checked')) {
+		alert("결제 방식을 선택해주세요.");
+		return false;
+	};
+	
+	// 무통장입금 시 입금 계좌 선택 여부 검사
+	if($("#paypal").is(':checked')) {
+		if($("#bank option:selected").val() == "noSelect") {
+			alert("무통장 입금 시 입금 계좌를 선택해주세요.");
+			return false;
+		};
+	};
+	
+	if($('input[type="checkbox"][name="pay"]:checked').val( ) == 1){
+		$("form").attr("action", "AccPro");
+	};
+	if($('input[type="checkbox"][name="pay"]:checked').val( ) == 2){
+		$("form").attr("action", "PaymentPro");
+	};
+	if($('input[type="checkbox"][name="pay"]:checked').val( ) == 3){
+		$("form").attr("action", "PaypalPro");
+	};
+	
+	if ($('input[name=add]').is(":checked")) {
+		$('input[name=add]').val('Y');
+	} else {
+		$('input[name=add]').val('N');
+	}
+	
+	if ($('input[name=pick]').is(":checked")) {
+		$('input[name=pick]').val('Y');
+	} else {
+		$('input[name=pick]').val('N');
+	}
+}
+
 function checks() {
 	var getName= RegExp(/^[가-힣]+$/);
 //	var getMail = RegExp(/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/);

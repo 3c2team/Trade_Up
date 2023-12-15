@@ -252,7 +252,7 @@
                                 <ul class="checkout__total__all">
                                     <li>총 가격 <span>${totalShow }</span></li>
                                 </ul>
-                                <div class="checkout__input__checkbox"> <!-- 셋 중 하나만 되게 고칠 것 -->
+                                <div class="checkout__input__checkbox">
                                     <label for="acc-or">
                                         카카오 페이
                                         <input type="checkbox" id="acc-or" name="pay" value="1">

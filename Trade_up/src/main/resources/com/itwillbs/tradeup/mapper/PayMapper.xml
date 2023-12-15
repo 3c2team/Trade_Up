@@ -74,7 +74,7 @@
     		SELECT uppay_remain
     		FROM UPPAY
     		WHERE member_id = #{sId}
-    		ORDER BY uppay_date DESC
+    		ORDER BY uppay_idx DESC
 			LIMIT 1
     	</select>
     	
@@ -118,6 +118,8 @@
 			SELECT *
 			FROM UPPAY
 			WHERE member_id = #{sId}
+			ORDER BY uppay_idx DESC
+			LIMIT 1
 		</select>
 		
     	<select id="selectTokenInfo" resultType="map"> <!-- 토큰 정보 가져오기 -->
@@ -133,7 +135,7 @@
 				VALUES (
 		            #{member_id}
 		            , #{chargeMoney}
-		            , '자동 충전'
+		            , #{state}
 		            , now()
 		            , #{total}
             )
@@ -205,4 +207,17 @@
 			FROM MEMBER
 			WHERE member_id = #{sId}
 		</select>
+    	
+    	<insert id="insertrefundUppay"> <!-- 업페이 환불 -->
+			INSERT 
+    		INTO UPPAY
+    		(member_id, uppay_pay, uppay_use, uppay_date, uppay_remain)
+				VALUES (
+		            #{member_id}
+		            , #{refund_price}
+		            , '송금'
+		            , now()
+		            , #{remain_pay}
+	            )
+		</insert>
     </mapper>

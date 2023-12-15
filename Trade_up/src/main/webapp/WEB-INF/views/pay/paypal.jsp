@@ -94,41 +94,43 @@
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span>상품이 주문 완료 되었습니다. 상품 수령 후 구매확정 버튼을 눌러주세요.</h6>
                             <h6 class="checkout__title">결제 정보</h6>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>받으시는 분 : ${deliver.member_name }</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="checkout__input">
-                                    <p>주소 : (${deliver.zonecode })${deliver.member_address1 } ${deliver.member_address2 }</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>전화번호 : ${deliver.member_phone }</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>이메일 : ${deliver.member_email }</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="checkout__input">
-                                    <p>배송문구 : 
-                                    <c:choose>
-	                                    <c:when test="${empty deliver.diliver_ment }">
-	                                   		작성된 배송문구가 없습니다.
-	                                   	</c:when>
-	                                   	<c:otherwise>
-	                                   		${deliver.diliver_ment }
-	                                   	</c:otherwise>
-                                    </c:choose>
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
+                            <c:if test="${!empty deliver.member_address1 }">
+	                            <div class="col-lg-6">
+	                                <div class="checkout__input">
+	                                    <p>받으시는 분 : ${deliver.member_name }</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-12">
+	                                <div class="checkout__input">
+	                                    <p>주소 : (${deliver.zonecode })${deliver.member_address1 } ${deliver.member_address2 }</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6">
+	                                <div class="checkout__input">
+	                                    <p>전화번호 : ${deliver.member_phone }</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6">
+	                                <div class="checkout__input">
+	                                    <p>이메일 : ${deliver.member_email }</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-12">
+	                                <div class="checkout__input">
+	                                    <p>배송문구 : 
+	                                    <c:choose>
+		                                    <c:when test="${empty deliver.diliver_ment }">
+		                                   		작성된 배송문구가 없습니다.
+		                                   	</c:when>
+		                                   	<c:otherwise>
+		                                   		${deliver.diliver_ment }
+		                                   	</c:otherwise>
+	                                    </c:choose>
+	                                    </p>
+	                                </div>
+	                            </div>
+	                            <hr>
+                            </c:if>
                             <div class="col-lg-12">
                                 <div class="checkout__input">
                                 	<c:if test="${deliver.bank eq 'kakao' }">
