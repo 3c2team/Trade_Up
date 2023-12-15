@@ -274,18 +274,6 @@
 										<p class="mb-0">계정을 삭제하면 되돌릴 수 없습니다. 다시 확인해주세요.</p>
 									</div>
 								</div>
-<!-- 								<form id="formAccountDeactivation" onsubmit="return false"> -->
-								<div class="form-check mb-3">
-									<input
-									class="form-check-input"
-									type="checkbox"
-									name="accountActivation"
-									id="accountActivation"
-									/>
-									<label class="form-check-label" for="accountActivation"
-									>계정을 삭제하겠습니다.</label
-									>
-								</div>
 								<%-- 모달창 버튼 --%>
 								
 								<button type="button"

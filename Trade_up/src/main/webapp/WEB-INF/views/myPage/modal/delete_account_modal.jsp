@@ -10,7 +10,7 @@
 			
 			let selectedOptionVal = $('option:selected', this).val();
 				
-			if(selectedOptionVal == "option_last") {
+			if(selectedOptionVal == 0) {
 				$("#tip_last").css("display", "");
 				$("#other_reason").css("display", "");
 			}
@@ -31,6 +31,26 @@
 			result = false;
 		}
 		
+		$.ajax({
+			url: PasswordCheck,
+			method: 'POST',
+			data: { "password" : password },
+			success: function(data) {
+				if(data=="false"){
+					$("#password").css({'border-color':'#ff3e1d'});
+					$("#danger2").css({'color':'#ff3e1d'});
+					$("#danger2").text("잘못된 비밀번호 입니다.");
+					result = false;					
+				}
+			},
+			error: function(error) {
+				$("#password").css({'border-color':'#ff3e1d'});
+				$("#danger2").css({'color':'#ff3e1d'});
+				$("#danger2").text("문제가 발생했습니다.");
+				result = false;	
+			}
+		});
+		
 		return result;  
 	}
 </script>
@@ -49,23 +69,18 @@
 					<b>${member.member_nick_name }님이 계정을 삭제하려는 이유가 궁금해요. </b><br><br>
 					<div class="row">
 						<div class="col mb-3">
-							<select class="form-select" id="select_feedback" name="" required>
-	<%-- 							<c:forEach var="account" items="${accountList }" varStatus="status"> --%>
-	<%-- 								<option id="account_${status.count }" > --%>
-	<%-- 									${account.accout } --%>
-	<!-- 								</option> -->
-	<%-- 							</c:forEach> --%>
-								<option>선택해주세요</option>
+							<select class="form-select" id="select_feedback" name="exid_feedback" required>
+								<option disabled selected >선택해주세요</option>
 								<c:forEach var="feedback" items="${feedback }" varStatus="status">
-									<option value="${feedback.feedback_idx }" id="option_${feedback.feedback_idx }">${feedback.exid_feedback }</option>
+									<option value="${feedback.exid_feedback_idx }" id="option_${feedback.feedback_idx }">${feedback.exid_feedback }</option>
 								</c:forEach>
-								<option value="option_last">기타</option>
+								<option value="0">기타</option>
 							</select>
 							<div class="mt-3">
-								<input type="text" name="etc" id="other_reason" class="form-control mb-3" placeholder="계정을 삭제하려는 이유를 알려주세요." style="display: none;"/>
+								<input type="text" name="exid_etc_feedback" id="other_reason" class="form-control mb-3" placeholder="계정을 삭제하려는 이유를 알려주세요." style="display: none;"/>
 								<label class="form-label" id="danger1" style="display: none;"></label>
 								<c:forEach var="feedback" items="${feedback }" varStatus="status">
-									<small class="tip_class" id="tip_${feedback.feedback_idx }" style="display: none;">${feedback.exid_feedback_tip }</small>
+									<small class="tip_class" id="tip_${feedback.exid_feedback_idx }" style="display: none;">${feedback.exid_feedback_tip }</small>
 								</c:forEach>
 								<small class="tip_class" id="tip_last" style="display: none;">	
 									말씀해주신 소중한 의견을 반영하여 더 따뜻한 서비스를 만들어가도록 노력할게요.<br>	
@@ -78,7 +93,8 @@
 					<div class="row">
 						<div class="col mb-3">
 							<label for="nameSmall" class="form-label" >비밀번호를 입력해주세요.</label>
-							<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" />
+							<input type="password" id="password" name="password_check" class="form-control" placeholder="비밀번호" />
+							<input type="hidden" name="password" value="${member.member_passwd }">
 							<label class="form-label" id="danger2"></label>
 						</div>
 					</div>
@@ -94,4 +110,3 @@
 		</div>
 	</div>
 </div>
-<%-- 모달창 --%>

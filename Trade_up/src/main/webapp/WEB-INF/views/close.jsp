@@ -5,14 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
 $(function {
     opener.location.reload();
     window.close();
 });
 </script>
-
+</head>
+<body>
+	scsds
 </body>
 </html>

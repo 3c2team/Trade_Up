@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +71,7 @@ public class MyPageController {
 		System.out.println(favoriteList);
 		return "myPage/myPage_favorite";
 	}
-	
+	// 관심상품 삭제
 	@GetMapping("DeleteFavorite")
 	public String deleteFavorite(HttpSession session, Model model, @RequestParam Map<String, Object> param) {
 		String sId = (String)session.getAttribute("sId");
@@ -179,21 +180,6 @@ public class MyPageController {
 		return "myPage/myPage_info";
 	}
 	
-	// 프로필관리 - 회원 탈퇴
-	@PostMapping("DeleteMember")
-	public String deleteMember(HttpSession session, @RequestParam Map<String, Object> param, Model model) {
-		String sId = (String)session.getAttribute("sId");
-		
-		if(sId == null) {
-			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
-			model.addAttribute("targetURL", "Login");
-			return "forward";
-		}
-		
-		System.out.println("탈퇴 param: " + param);
-		
-		return "myPage/myPage_info";
-	}
 	
 	// 프로필관리 - 정보 수정 (닉네임, 전화번호, 이메일)
 	@PostMapping("MyInfoModify")
@@ -271,7 +257,34 @@ public class MyPageController {
 	    }
 		
 	}
-
+	
+	// 프로필관리 - 회원 탈퇴
+	@PostMapping("DeleteMember")
+	public String deleteMember(HttpSession session, @RequestParam Map<String, Object> param, Model model) {
+		String sId = (String)session.getAttribute("sId");
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>탈퇴 param: " + param);
+		
+		Map<String, Object> map = service.getMember(sId);
+		
+		if(sId == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("targetURL", "Login");
+			return "forward";
+		}
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		if(!passwordEncoder.matches(param.get("password_check").toString(), map.get("member_passwd").toString())) {
+			return "fail_back";
+		} 
+		
+		
+		
+		
+		return "myPage/myPage_info";
+	}
+		
 	// 계좌관리
 	@GetMapping("MyAccount")
 	public String myAccount(HttpSession session, Model model, HttpServletRequest request) {
