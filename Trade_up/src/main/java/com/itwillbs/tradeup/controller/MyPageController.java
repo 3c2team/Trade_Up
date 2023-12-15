@@ -429,7 +429,7 @@ public class MyPageController {
 		}
 		
 		param.put("sId", sId);
-		
+		System.out.println(">>>>>>>>>>>>>>>>>>>param"+param);
 		int insertCount = service.changeMainInfo(param);
 		
 		

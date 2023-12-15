@@ -121,7 +121,9 @@
 																			AND member_id = #{sId})a)
 		                        																		THEN FALSE  
 	                    			WHEN ${col} = #{value} THEN TRUE 
-	  						   END;
+	  						   END
+		   WHERE member_id = #{sId};
+  						   
     	</update>
     	
     	<delete id="deleteInfo">
@@ -172,19 +174,20 @@
     	<update id="updateAddress">
 			UPDATE MY_ADDRESS 
 			SET 
-				recipient_name = #{recipient_name}
+				  recipient_name = #{recipient_name}
 				, recipient_phone_num = #{phone_num}
 				, address1 = #{address1}
 				, address2 = #{address2}
 				, address_name = #{address_name}
-				, address_main = (SELECT * FROM (							 
+				, address_main = (SELE
+				CT * FROM (							 
 												  SELECT address_main  
 												  FROM MY_ADDRESS
 												  WHERE member_id = #{sId} AND address_idx = #{address_idx}) a)
 				, postcode = #{postcode}
 			WHERE 1=1
-						AND address_idx = #{address_idx}
-						And member_id = #{sId};    		
+			  AND address_idx = #{address_idx}
+			  AND member_id = #{sId};    		
     	</update>
     	
     </mapper>
