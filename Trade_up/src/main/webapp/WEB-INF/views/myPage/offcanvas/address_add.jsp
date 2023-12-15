@@ -45,55 +45,55 @@ function searchAddress() {
 				<div class="card-body demo-vertical-spacing demo-only-element">
 				
 					<label class="form-label" for="address_name">배송지명</label>
-					<div class="input-group">
-						<input
-							type="text"
-							id="address_name"
-							class="form-control"
-						/>
-					</div>
-					
-					<label class="form-label" for="recipient_name">받으시는 분</label>
-					<div class="input-group">
-						<input
-							type="text"
-							id="recipient_name"
-							class="form-control"
-						/>
-					</div>
-					
-					<label class="form-label" for="phone_num">전화번호</label>
-					<div class="input-group">
-						<input
-							type="tel"
-							id="phone_num"
-							class="form-control"
-							required
-						/>
-					</div>
-					
-					<label class="form-label" for="address1">주소</label>
-					<div class="input-group">
-						<input
-							type="text"
-							id="address1"
-							class="form-control"
-							readonly
-							onclick="searchAddress()"
-						/>
-					</div>
-					
-					<label class="form-label" for="address2">상세주소</label>
-					<div class="input-group">
-						<input
-							type="text"
-							id="address2"
-							class="form-control"
-						/>
-					</div>
+				<div class="input-group">
+					<input
+						type="text"
+						name="address_name"
+						class="form-control"
+					/>
 				</div>
+				
+				<label class="form-label" for="recipient_name">받으시는 분</label>
+				<div class="input-group">
+					<input
+						type="text"
+						name="recipient_name"
+						class="form-control"
+					/>
+				</div>
+				
+				<label class="form-label" for="phone_num">전화번호</label>
+				<div class="input-group">
+					<input
+						type="tel"
+						name="recipient_phone_num"
+						class="form-control"
+					/>
+				</div>
+				
+				<label class="" for="address1">주소</label>
+				<div class="">
+					<input
+						type="text"
+						id="address1"
+						name="address1"
+						class="form-control"
+						onclick="searchAddress()"
+					/>
+				</div>
+				<label class="form-label" for="address2">상세주소</label>
+				<div class="input-group">
+					<input
+						type="text"
+						id="address2"
+						name="address2"
+						class="form-control"
+					/>
+				</div>
+				<input type="hidden" id="postcode" name="postcode">
 			</div>
-			<button type="button" class="btn btn-primary mb-2 d-grid w-100">저장</button>
+			</div>
+			<button type="submit" class="btn btn-primary mb-2 d-grid w-100">저장</button>
 			<button
 				type="button"
 				class="btn btn-outline-secondary d-grid w-100"

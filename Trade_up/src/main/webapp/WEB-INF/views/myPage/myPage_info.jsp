@@ -84,15 +84,7 @@
 	    margin: auto;
   	}
   </style>
-	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("green", 2);
-		naver_id_login.setDomain("http://localhost:8081/tradeup/Login");
-		naver_id_login.setState(state);
-		naver_id_login.init_naver_id_login();
-	</script>
+
 	
 	
   <script>
@@ -175,8 +167,8 @@
 				        					</span></h5>
 											<h5>네이버 
 												<span class="text-muted fw-light">
-													<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;">
-													</div>연동하기
+													<a id="naverLogin" onclick="$('#naver_id_login').trigger('click');" >연동하기</a>
+													<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;"></div>
 												</span>
 											</h5>
 										</div>
@@ -336,5 +328,16 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript">
+	var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
+	var state = naver_id_login.getUniqState();
+	naver_id_login.setButton("green", 2);
+	naver_id_login.setDomain("http://localhost:8081/tradeup/Login");
+	naver_id_login.setState(state);
+	naver_id_login.init_naver_id_login();
+</script>
+    
 	</body>
 </html>
