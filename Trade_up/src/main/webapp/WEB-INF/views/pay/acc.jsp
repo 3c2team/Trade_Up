@@ -43,10 +43,11 @@
 	                    member_address2 : "${deliver.member_address2 }",
 	                    member_phone : "${deliver.member_phone }",
 	                    member_email : "${deliver.member_email }",
+	                    member_email : "${deliver.member_name }",
 	                    diliver_ment : "${deliver.diliver_ment }",
-	                    product_num : "${deliver.product_num }",
 	                    product_name : "${deliver.product_name }",
 	                    product_price : "${deliver.total }",
+	                    commission : "${deliver.commission }",
 						},
 					success:function(result){
 						console.log("데이터 전송 성공");

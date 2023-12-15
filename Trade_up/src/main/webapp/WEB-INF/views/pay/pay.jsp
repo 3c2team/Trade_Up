@@ -155,8 +155,10 @@
                             </div>
                             <div class="col-lg-12" id="moneyDown" style="display: none;">
                                 <div class="checkout__input">
+                                	<c:if test="${deliver.chargeMoney ge 0}">
                                     <p style="color: #5F12D3;">${deliver.chargeMoneyShow }원이 부족하므로 자동으로 ${deliver.chargeMoneyShow }원 충전 후 결제됩니다.</p>
                                     <p>연결된 계좌에 금액이 들어있는지 확인 후 결제를 진행해주시길 바랍니다.</p>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="col-lg-12" id="moneyUp" style="display: none;">

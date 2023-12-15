@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 import com.itwillbs.tradeup.vo.ResponseDepositListVO;
+import com.itwillbs.tradeup.service.MemberService;
 import com.itwillbs.tradeup.service.PayService;
 import com.itwillbs.tradeup.service.bankApiClient;
 import com.itwillbs.tradeup.vo.ResponseWithdrawVO;
@@ -28,6 +29,9 @@ public class PayController {
 	PayService service;
 	
 	@Autowired
+	MemberService memberService;
+	
+	@Autowired
 	private bankApiClient bankApiClient;
 	
 	@Value("${client_id}")
@@ -35,7 +39,26 @@ public class PayController {
 	
 	// 직거래 페이지
 	@GetMapping("CheckoutMeet")
-	public String checkoutMeet() {
+	public String checkoutMeet(HttpSession session, Model model, @RequestParam int product_num, Map<String,String> map) {
+		String sId = LoginNeed(session, model);
+		model.addAttribute("sId", sId);
+		String member_name = service.getMemberName(sId);
+		map.put("member_name", member_name);
+		
+		String product_price = service.getProductPrice(product_num);
+		String product_name = service.getProductName(product_num);
+		int commission = (int)((Integer.parseInt(product_price.replaceAll("[^0-9 ]", ""))) * 0.01);
+		DecimalFormat format = new DecimalFormat("###,###,###");
+		int total = Integer.parseInt(product_price.replaceAll("[^0-9 ]", "")) + commission;
+		model.addAttribute("product_price", product_price.replaceAll("[^0-9 ]", ""));
+		model.addAttribute("product_priceShow", product_price);
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("product_num", product_num);
+		model.addAttribute("commission", commission + "");
+		model.addAttribute("commissionShow", format.format(commission));
+		model.addAttribute("total", total);
+		model.addAttribute("totalShow", format.format(total));
+		
 		return "pay/checkout_meet";
 	}
 	
@@ -293,11 +316,13 @@ public class PayController {
 				Map<String, String> mainAccount = service.getMainAccount(sId);
 				map.put("account_num", mainAccount.get("account_num"));
 				map.put("account_bank", mainAccount.get("account_bank"));
-//				map.put("acc_num", "2023120106");
-//				map.put("acc_bank","KDB산업은행");
+				map.put("acc_num", "2023120106");
+				map.put("acc_bank","KDB산업은행");
 				map.put("member_id", sId);
 				ResponseWithdrawVO withdrawResult = bankApiClient.requestWithdraw(map);
+				System.out.println("4" + withdrawResult);
 				model.addAttribute("withdrawResult", withdrawResult);
+				map.put("state", "자동 충전");
 				service.chargeAutoUppay(map);
 			}
 			Calendar now = Calendar.getInstance();
@@ -321,7 +346,7 @@ public class PayController {
 	}
 	
 	// 구매확정
-	@PostMapping("BuyCheck") 
+	@PostMapping("BuyCheck")
 	public String buyCheck(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		System.out.println(map);
 		// Map으로 받아올 정보 - 구매자가 구매확정을 누름 판매자 정보는 상품 번호로 조인해서 들고 올 것
@@ -350,9 +375,10 @@ public class PayController {
 			return "fail_back";
 		}
 		
-		service.updateDeposit(map.get("product_num")); // withdraw 테이블에서 구매 상태 구매확정으로 바꾸기
+		service.updateDeposit(map.get("product_num")); // withdraw 테이블에서 구매 상태 구매 확정으로 바꾸기
 		String state = "거래완료";
 		service.updateSalesStatus(map.get("product_num"), state);
+		memberService.updateCommission(map.get("merchant_uid"));
 		return "myPage/myPage_purchase";
 	}
 	
@@ -360,18 +386,27 @@ public class PayController {
 	@PostMapping("UpPayCharge")
 	public String upPayCharge(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		String sId = LoginNeed(session, model);
+		System.out.println("1" + map);
 		
 		String member_name = service.getMemberName(sId);
+		System.out.println("2" + member_name);
 		map.put("member_name", member_name);
 		Map<String, String> tokenInfo = service.getTokenInfo(sId); // 토큰 정보 가져오기
 		map.put("access_token", tokenInfo.get("access_token"));
 		map.put("user_seq_no", tokenInfo.get("user_seq_no"));
 		map.put("fintech_use_num", tokenInfo.get("fintech_use_num"));
 		map.put("member_id", sId);
+		System.out.println("3" + map);
 		
-		ResponseDepositListVO depositResult = bankApiClient.requestDeposit(map);
+		ResponseWithdrawVO withdrawResult = bankApiClient.requestWithdraw(map);
+		System.out.println("4" + withdrawResult);
+		model.addAttribute("withdrawResult", withdrawResult);
 		
-		model.addAttribute("depositResult", depositResult);
+		String remainPay = service.getRemainPay(sId);
+		String total = Integer.parseInt(remainPay) + Integer.parseInt(map.get("chargeMoney")) + "";
+		map.put("total", total);
+		map.put("state", "충전");
+		service.chargeAutoUppay(map);
 		
 		return "myPage/myPage_main";
 	}
@@ -380,6 +415,12 @@ public class PayController {
 	@PostMapping("UpPayRefund")
 	public String upPayRefund(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		String sId = LoginNeed(session, model);
+		String remainPay = service.getRemainPay(sId);
+		
+		if(Integer.parseInt(remainPay) < Integer.parseInt(map.get("refund_price"))) {
+			model.addAttribute("msg", "남아있는 금액보다 더 많은 금액 작성 시 환불이 불가능합니다.");
+			return "fail_back";
+		}
 		
 		String member_name = service.getMemberName(sId);
 		map.put("member_name", member_name);
@@ -394,6 +435,9 @@ public class PayController {
 		ResponseDepositListVO depositResult = bankApiClient.requestDeposit(map);
 		
 		model.addAttribute("depositResult", depositResult);
+		String remain_pay = (Integer.parseInt(remainPay) - Integer.parseInt(map.get("refund_price"))) + "";
+		map.put("remain_pay", remain_pay);
+		service.refundUppay(map);
 		
 		return "myPage/myPage_main";
 	}

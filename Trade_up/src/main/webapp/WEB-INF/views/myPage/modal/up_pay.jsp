@@ -47,7 +47,7 @@
 					<div class="row">
 						<div class="col mb-3">
 							<label class="form-label" for="emailSmall">충전금액</label>
-							<input type="number" class="form-control" id="amount" name= "chargeMoney"/>
+							<input type="number" class="form-control" id="amount" name="chargeMoney"/>
 							<label class="form-label" id="danger" for="emailSmall"></label>
 						</div>
 					</div>

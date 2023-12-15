@@ -128,7 +128,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form method="post" onsubmit="return checks()">
+                <form method="post" onsubmit="return meet_checks()">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span>같은 상품을 2회 이상 주문 완료 후 취소하실 경우 그 상품은 구매하실 수 없으므로 신중하게 구매해 주세요.</h6>
@@ -144,13 +144,22 @@
                                 <h4 class="order__title">주문 내역</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>주문한 상품 <span>30,000</span></li>
-                                    <li>안전거래 수수료(1%) <span>300</span></li>
+                                    <li>주문한 상품 <span>${product_priceShow }</span></li>
+                                    <li>안전거래 수수료(1%) <span>${commissionShow }</span></li>
                                 </ul>
+                                <input type="hidden" name="product_price"  value="${product_price }">
+                                <input type="hidden" name="product_priceShow"  value="${product_priceShow }">
+                                <input type="hidden" name="product_num"  value="${product_num }">
+                                <input type="hidden" name="commission"  value="${commission }">
+                                <input type="hidden" name="total"  value="${total }">
+                                <input type="hidden" name="commissionShow"  value="${commissionShow }">
+                                <input type="hidden" name="totalShow"  value="${totalShow }">
+                                <input type="hidden" name="product_name" value="${product_name }">
+                                <input type="hidden" name="member_name" value="${member_name }">
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>33,300</span></li>
+                                    <li>총 가격 <span>${totalShow }</span></li>
                                 </ul>
-                                <div class="checkout__input__checkbox"> <!-- 셋 중 하나만 되게 고칠 것 -->
+                                <div class="checkout__input__checkbox">
                                     <label for="acc-or">
                                         카카오 페이
                                         <input type="checkbox" id="acc-or" name="pay" value="1">
@@ -175,11 +184,13 @@
                                 	<select name="bank" id="bank">
                                 		<option value="noSelect" disabled selected>입금 은행을 선택해주세요.</option>
                                 		<option value="kakao">카카오뱅크</option>
-                                		<option value="kb">국민은행</option>
+                                		<option value="su">산업은행</option>
                                 		<option value="sinhan">신한은행</option>
                                		</select>
 								</div>
                                 <button type="submit" class="site-btn" id="paymentCheck" style="padding: 3%; font-size: 18px;">결제하기</button>
+                                <input type="hidden" name="add" value="N">
+                                <input type="hidden" name="pick" value="N">
                             </div>
                         </div>
                     </div>

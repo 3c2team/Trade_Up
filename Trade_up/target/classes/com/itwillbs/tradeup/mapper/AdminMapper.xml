@@ -219,7 +219,7 @@
 	<select id="selectCommissionSum" resultType="map">
 		SELECT sum(commission) as chargeSum
 		FROM WITHDRAW
-		WHERE buy_check = '구매확정';
+		WHERE buy_check = '구매확정'
 	</select>
 	
 	<select id="selectFixWithdrawSearch" resultType="map">
@@ -336,5 +336,7 @@
 		FROM OFTEN_QUESTION
 		WHERE often_qna_num = #{qnaDetailNum}
 	</select>
+	
+	<!-- 업로드용 주석 -->
 	
 </mapper>

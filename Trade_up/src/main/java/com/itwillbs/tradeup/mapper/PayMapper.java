@@ -74,5 +74,7 @@ public interface PayMapper {
 	
 	// 이름 가져오기
 	String selectMemberName(String sId);
+	// 업페이 환불
+	void insertrefundUppay(Map<String, String> map);
 
 }

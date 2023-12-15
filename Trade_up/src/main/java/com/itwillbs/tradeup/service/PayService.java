@@ -122,4 +122,9 @@ public class PayService {
 	public String getMemberName(String sId) {
 		return mapper.selectMemberName(sId);
 	}
+	
+	// 업페이 환불
+	public void refundUppay(Map<String, String> map) {
+		mapper.insertrefundUppay(map);
+	}
 }
