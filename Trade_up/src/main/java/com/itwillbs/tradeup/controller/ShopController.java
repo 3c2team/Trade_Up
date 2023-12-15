@@ -71,30 +71,44 @@ public class ShopController {
 	
 	
 	@ResponseBody
+	@PostMapping("CategoryProduct")
+	public List<Map<String, Object>> categoryProduct(@RequestParam(required = false) String category_name) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.categoryProductList(category_name);
+	}
+	
+//	@ResponseBody
+//	@PostMapping("CategoryProduct")
+//	public List<Map<String, Object>> searchProduct(@RequestParam(required = false) String category_name, String search) {
+////		System.out.println("category_idx: " + category_name);
+//		return shopService.categoryProductList(category_name);
+//	}	
+	
+	@ResponseBody
 	@PostMapping("LastProduct")
-	public List<Map<String, Object>> lastProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-		return shopService.lastProductList(category_idx);
+	public List<Map<String, Object>> lastProduct(@RequestParam(required = false) String category_name) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.lastProductList(category_name);
 	}	
 	@ResponseBody
 	@PostMapping("JjimProduct")
-	public List<Map<String, Object>> jjimProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-		return shopService.jjimProductList(category_idx);
+	public List<Map<String, Object>> jjimProduct(@RequestParam(required = false) String category_name) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.jjimProductList(category_name);
 	}	
 	
 	@ResponseBody
 	@PostMapping("HighProduct")
-	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-		return shopService.highProductList(category_idx);
+	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_name) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.highProductList(category_name);
 	}	
 	
 	@ResponseBody
 	@PostMapping("LowProduct")
-	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_idx) {
-//		System.out.println("category_idx: " + category_idx);
-		return shopService.lowProductList(category_idx);
+	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_name) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.lowProductList(category_name);
 	}	
 	
 	

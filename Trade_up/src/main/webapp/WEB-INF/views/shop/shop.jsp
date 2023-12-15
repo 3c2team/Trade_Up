@@ -24,37 +24,31 @@
 </style>
 </head>
 <script type="text/javascript">
+	const searchParams = new URLSearchParams(location.search);
+	let category_name = "";
+	for (const param of searchParams) {
+	  category_name = param[1];
+	}
+	console.log(category_name);
     $(function() {
-// 		debugger;
-// 			alert("${param.category}");
-//			if(search){
 		var search = "";
 		var category = "";
 		var price = "";
-		let category_idx = 1;
-// 		$(".cusor").click(function() {
-// 	 		debugger;
-// 			category_idx = $(this).val();
-// 			alert(category_idx);
-// 		});
 
 		
-		$(".nice-scroll li").click(function() {
-// 	 		debugger;
-			category_idx = $(this).val();
-			alert(category_idx);
-			$(".nice-scroll li").css("background-color" , "white");
-			$(".nice-scroll li").css("color" , "#6c757d");
-			$(this).css("background-color" , "#5F12D3");
-			$(this).css("color" , "white");
-		});
-
+// 		let selectCategory = "";
 		$(".cusor").on("click",function(){
 			location.href="Shop?category=" + $(this).text() + search + price;
+// 			selectCategory = $(this).text() + search + price;
 		});
 		
-		if("${param.category}"){
-			category = "&category=${param.category}";
+		$(".nice-scroll li").click(function() {
+			category_idx = $(this).val();
+			$(".nice-scroll li").css("background-color" , "white");
+			$(".nice-scroll li").css("color" , "#6c757d");
+// 			$(selectCategory).css("background-color" , "#5F12D3");
+// 			$(selectCategory).css("color" , "white");
+		});
 // 			$(".nice-scroll li").each(function(){
 // // 				debugger;				
 // 				if($(this).text() == "${param.category}"){
@@ -64,13 +58,88 @@
 // 					$(this).css("color" , "white");
 // 				}
 // 			});
+		
+		if("${param.category}"){
+			category = "&category=${param.category}";
 			$("#category").attr("hidden",false);
 			$("#category").html("${param.category} <i class='bi bi-x'></i>");
+			$.ajax({
+				type: "POST",
+				url: "CategoryProduct",
+				data: {
+					category_name : category_name
+				},
+				dataType: 'json',
+				success: function(data) {
+					$(".rightList").html("");
+					data.forEach( product =>{
+						$(".rightList").append( 
+							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+							+ 	"<div class='product__item'>"
+							+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+							+ 			"<ul class='product__hover'>"
+							+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+							+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+							+ 			"</ul>"
+							+ 		"</div>"
+							+ 		"<div class='product__item__text'>"
+							+ 			"<h6>" + product.product_name + "</h6>"
+							+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+							+ 			"<p>" + product.trading_location + "</p>"
+							+ 			"<h5>" + product.product_price + "</h5>"
+							+ 		"</div>"
+							+	 "</div>"
+							+ "</div>"
+						);
+					});
+				},erorr: function() {
+					location.href="Shop";
+				}
+			
+			});
 		}
 		if("${param.search}"){
+// 			if("${param.category}"){
+// 				category_name = 
+// 			}
 			search = "&search=${param.search}";
 			$("#search").attr("hidden",false);
 			$("#search").html("${param.search} <i class='bi bi-x'></i>");
+// 			$.ajax({
+// 				type: "POST",
+// 				url: "searchProduct",
+// 				data: {
+// 					search : "${param.search}"
+// 				},
+// 				dataType: 'json',
+// 				success: function(data) {
+// 					$(".rightList").html("");
+// 					data.forEach( product =>{
+// 						$(".rightList").append( 
+// 							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+// 							+ 	"<div class='product__item'>"
+// 							+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+// 							+ 			"<ul class='product__hover'>"
+// 							+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+// 							+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+// 							+ 			"</ul>"
+// 							+ 		"</div>"
+// 							+ 		"<div class='product__item__text'>"
+// 							+ 			"<h6>" + product.product_name + "</h6>"
+// 							+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+// 							+ 			"<p>" + product.trading_location + "</p>"
+// 							+ 			"<h5>" + product.product_price + "</h5>"
+// 							+ 		"</div>"
+// 							+	 "</div>"
+// 							+ "</div>"
+// 						);
+// 					});
+// 				},erorr: function() {
+// 					alert("검색 결과가 없습니다.")
+// 					location.href="Shop";
+// 				}
+			
+			});
 		}
 		if("${param.price}"){
 			$("input[type=radio][name=radio]").each(function(){
@@ -108,13 +177,13 @@
 		$("#selectBox").change(function() {		    
 // 	 		debugger;
 			var result = $("#selectBox option:selected").val();
-			alert(category_idx);
+			alert(category_name);
 		    if (result == 'last') {
 				$.ajax({
 					type: "POST",
 					url: "LastProduct",
 					data: {
-						category_idx : category_idx
+						category_name : category_name
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -150,7 +219,7 @@
 					type: "POST",
 					url: "JjimProduct",
 					data: {
-						category_idx : category_idx
+						category_name : category_name
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -186,7 +255,7 @@
 					type: "POST",
 					url: "LowProduct",
 					data: {
-						category_idx : category_idx
+						category_name : category_name
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -222,7 +291,7 @@
 					type: "POST",
 					url: "HighProduct",
 					data: {
-						category_idx : category_idx
+						category_name : category_name
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -254,14 +323,14 @@
 			}
 		});
 		
-	    // 각 span에 적용
-// 	    $('.elapsed-time').each(function () {
-// 	        const releaseDate = $(this).text(); // span의 텍스트를 가져옵니다
-// 	        const elapsed = elapsedTime(releaseDate);
+// 	    각 span에 적용
+	    $('.elapsed-time').each(function () {
+	        const releaseDate = $(this).text(); // span의 텍스트를 가져옵니다
+	        const elapsed = elapsedTime(releaseDate);
 	
-	        // 경과 시간으로 변경된 값을 span에 다시 설정
-// 	        $(this).text(elapsed);
-// 	    });
+// 	        경과 시간으로 변경된 값을 span에 다시 설정
+	        $(this).text(elapsed);
+	    });
 	});
 	 // 시간 변환 함수
 //     function elapsedTime(date) {

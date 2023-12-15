@@ -40,24 +40,28 @@ public interface ShopMapper {
 	
 	// 판매자 상품 개수
 	int getSellerCount(int product_num);
-	
+
+	// 카테고리 순
+	List<Map<String, Object>> categoryProductList(String category_name);
+
 	// 최신 목록
-	List<Map<String, Object>> lastProductList(String category_idx);
+	List<Map<String, Object>> lastProductList(String category_name);
 	
 	// 찜 목록
-	List<Map<String, Object>> jjimProductList(String category_idx);
+	List<Map<String, Object>> jjimProductList(String category_name);
 	
 	// 낮은 가격순
-	List<Map<String, Object>> lowProductList(String category_idx);
+	List<Map<String, Object>> lowProductList(String category_name);
 	
 	// 높은 가격순
-	List<Map<String, Object>> highProductList(String category_idx);
+	List<Map<String, Object>> highProductList(String category_name);
 
 	String selectJJim(int product_num);
 
 	String selectSellCount(String member_id);
 	
 	String selectAllCount();
+
 
 }
 

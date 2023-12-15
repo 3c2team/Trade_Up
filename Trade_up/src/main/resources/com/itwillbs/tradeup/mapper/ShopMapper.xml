@@ -36,7 +36,7 @@
 	
 	<!-- 상품 상세조회 -->
 	<select id="getProduct" resultType="map">
-		SELECT *, DATE_FORMAT(product_release, '%Y-%m-%d %H:%i:%s') AS formatted_datetime
+		SELECT *
    		  FROM PRODUCT
    		 WHERE product_num = #{product_num}
 	</select>
@@ -58,7 +58,7 @@
 	
 	<!-- 판매자 상품 조회 -->
 	<select id="getSellerProduct" resultType="map">
-		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
+		SELECT *
 		  FROM PRODUCT
 		 WHERE member_id = #{member_id}
 	</select>
@@ -74,12 +74,11 @@
 	
 	<!-- 최신 상품 조회 -->
 	<select id="selectProductList" resultType="map">
-		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
+		SELECT *
 		  FROM PRODUCT
 		 WHERE sales_status = '판매중'
 	  ORDER BY product_release DESC
 	</select>
-
 	
 	<!-- 찜 갯수 -->
 	<select id="selectJJim">
@@ -97,41 +96,59 @@
 		  FROM PRODUCT
  		 WHERE (SELECT count(sales_status)
 		  		  FROM PRODUCT
-		 		 WHERE member_id = #{member_id}) = '거래완료';
+		 		 WHERE member_id = #{member_id}) = '거래완료'
 	</select>
 	
+	<!-- 카테고리별 조회 -->
+	<select id="categoryProductList">
+		SELECT *
+		  FROM PRODUCT
+		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
+															 FROM CATEGORY
+															WHERE category_name = #{category_name})
+	  ORDER BY product_release DESC
+	</select>
+
 	<!-- 최신 목록 -->
 	<select id="lastProductList">
 		SELECT *, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease
 		  FROM PRODUCT 
-		 WHERE category_idx = #{category_idx} AND sales_status = '판매중'
+		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
+															 FROM CATEGORY
+															WHERE category_name = #{category_name})
 	  ORDER BY product_release desc
 	</select>
 	
 	<!-- 찜 목록 -->
 	<select id="jjimProductList">
-		SELECT P.product_num, product_name, product_main_img, product_price, SUBSTRING_INDEX(product_release, 'T', 1) as productRelease, trading_location, sales_status, COUNT(F.favorite_idx) as C
+		SELECT P.product_num, category_idx, product_name, product_main_img, product_price, product_release, trading_location, sales_status, COALESCE(COUNT(F.favorite_idx), 0) AS C
 		  FROM PRODUCT P
-		  JOIN FAVORITE F ON P.product_num = F.product_num
-		 WHERE P.category_idx = #{category_idx} AND sales_status = '판매중'
+	 LEFT JOIN FAVORITE F ON P.product_num = F.product_num
+		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
+															 FROM CATEGORY
+															WHERE category_name = #{category_name})
 	  GROUP BY P.product_num
 	  ORDER BY C desc
 	</select>
 	
 	<!-- 높은 가격 목록 -->
 	<select id="highProductList">
-	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
+	  SELECT *, replace(replace(product_price, "원", "") , ",", "") as p
 		FROM PRODUCT
-	   WHERE category_idx = #{category_idx} AND sales_status = '판매중'
-	ORDER BY cast(p as unsigned) desc;
+	   WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
+														   FROM CATEGORY
+														  WHERE category_name = #{category_name}) 
+	ORDER BY cast(p as unsigned) desc
 	</select>
 	
 	<!-- 낮은 가격 목록 -->
 	<select id="lowProductList">
-	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
+	  SELECT *, replace(replace(product_price, "원", "") , ",", "") as p
 		FROM PRODUCT
-	   WHERE category_idx = #{category_idx} AND sales_status = '판매중'
-	ORDER BY cast(p as unsigned);
+	   WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
+														   FROM CATEGORY
+														  WHERE category_name = #{category_name}) 
+	ORDER BY cast(p as unsigned)
 	</select>
 	
 	<!-- 판매중 목록 -->
