@@ -36,11 +36,6 @@ const autoEnter = (target) => {
 
 $(function () {
 	
-	 $(".product__details__option__size label").on('click', function () {
-	        $(".product__details__option__size label").removeClass('active');
-	        $(this).addClass('active');
-	 });
-	
 	// li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
 		$(".nice-scroll li").css("background-color" , "white");
@@ -55,44 +50,29 @@ $(function () {
 	
 	$(".trading_method1").on("click",function(){
 		if($(".trading_method1").is(":checked")){
-			$('.product__details__option__delivery').append(
-	            $('<input>').prop({
-	                type: 'radio',
-	                id: 'xxlx',
-	                name: 'delivery_method',
-	                value: '배송비 별도'
-	            }),
-	            $('<label>').prop({
-	                for: 'xxlx',
-	                class: 'active'
-	            }).html('배송비 별도')
-	        ).append( 
-	            $('<br>')
-	        );
-			$('.product__details__option__delivery').append(
-	            $('<input>').prop({
-	                type: 'radio',
-	                id: 'xxlxx',
-	                name: 'delivery_method',
-	                value: '배송비 포함'
-	            }),
-	            $('<label>').prop({
-	                for: 'xxlxx'
-	            }).html('배송비 포함')
-	        ).append(
-	            $('<br>')
-	        );
+			let method1 = "<label class='delivery_method' for='xxlx'><input type='radio' id='xxlx' name='delivery_method' value='배송비 별도'>배송비 별도</label>";
+			let method2 = "<label class='delivery_method' for='xxlxx'><input type='radio' id='xxlxx' name='delivery_method' value='배송비 포함'>배송비 포함</label>"
+			$('.product__details__option__delivery').append(method1+method2);
 		} 
 		if(!$(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").empty();
 		}
 	});
 	
-	$(".product__details__option__delivery label").on("click", function () {
-		debugger;
-		$(".product__details__option__delivery label").removeClass('active');
-		$(this).addClass('active');
-	});
+// 	$(".checkout__input__checkbox").on('click', function () {
+// 		if($(".checkout__input__checkbox").is(":checked")){
+// 			debugger;
+// 			$(this).addClass('active');
+// 		} else{
+// 	        $(this).removeClass('active');
+// 		}
+//     });
+	
+// 	$(".delivery_method").on('click', function () {
+// 		debugger;
+//         $(".delivery_method").removeClass('active');
+// 		$(this).addClass('active');
+//     });
 	
 	$(".trading_method2").on("click",function(){
 // 		debugger;
@@ -110,26 +90,6 @@ $(function () {
 			$(".address").empty();
 		}
 	});
-	
-	$(".free_sharing").change(function(){
-        if($(this).is(":checked")){
-//         	debugger;
-			$("#product_price").prop("disabled", true);
-			$("#product_price").prop("placeholder", "무료나눔");
-			$(".nice-scroll li[value=1]").css("color" , "white");
-			$(".nice-scroll li[value=1]").css("background-color" , "#5F12D3");
-			$("#hidCategory").val('1');
-        } else{
-//         	debugger;
-			$("#product_price").prop("disabled", false);
-			$("#product_price").prop("placeholder", "판매가격");
-			$("#product_price").css("border-color", "grey");
-			$(".nice-scroll li[value=1]").css("color" , "#6c757d");
-			$(".nice-scroll li[value=1]").css("background-color" , "white");
-			$("#product_price").focus();
-        }
-    });
-	
 	
 	$("#fileTrigger").on("click", function() {
 		$("#file").trigger("click");
@@ -234,10 +194,10 @@ function insertCheck(){
 //         if(checkboxes[i].checked === true) return false;	
 //     }
 //     alert('검색할 파일 형태를 선택하세요.'); 
-// var result = confirm("판매등록 하시겠습니까?");
-// 	if(result){
-// 		$("form").submit();
-// 	}
+	var result = confirm("판매등록 하시겠습니까?");
+		if(result){
+			$("form").submit();
+		}
 	return false;
 }
 
@@ -259,10 +219,10 @@ function insertCheck(){
 <!-- 	                    <div class="contact__text"> -->
 <!-- 	                    </div> -->
 					<div style="display: flex; margin: 3%">
-							<button id="fileTrigger" type="button" class="site-btn" style="width: 66px;"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
-							<div id="imgArea" style="display: flex; height: 100px;">
-								<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none;"/>
-							</div>
+						<button id="fileTrigger" type="button" class="site-btn" style="width: 66px;"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
+						<div id="imgArea" style="display: flex; height: 100px;">
+							<input type="file" multiple accept=" audio/*, video/*, image/*" name="file" id="file" style="display:none;"/>
+						</div>
 					</div>
                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
 						<div class="card">
@@ -293,53 +253,42 @@ function insertCheck(){
 						<div style="display: grid;">
 						    <input type="text" name="product_name" class="input-name" placeholder="글제목">
 						</div>
-								<div style="display: grid;">
-<!--                                 <fieldset>  -->
-									<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
-									<label for="check">
-										<input type="checkbox" name="free_sharing" class="free_sharing" id="check" value="무료나눔">무료나눔
-									</label>
-<!-- 								</fieldset> -->
-<!--                                 <fieldset>  -->
-<!--                                 <input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10"> -->
-<!-- 								<input id="check" type="checkbox">  -->
-<!-- 								<label for="check">무료나눔</label> -->
-<!-- 								</fieldset> -->
-									<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false" oninput="autoEnter(this)">
-- 상품명(브랜드) >
+						<div style="display: grid;">
+							<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
+							<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false" placeholder="- 상품명(브랜드) 
 - 구매 시기
 - 사용 기간
 - 하자 여부
 * 실제 촬영한 사진과 함께 상세 정보를 입력해주세요.
 * 카카오톡 아이디 첨부 시 게시물 삭제 및 이용제재 처리될 수 있어요.
- 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 트레이드업이 함께합니다.</textarea>
-								</div>
-								<div class="product__details__option">
-									<div class="product__details__option__size">
-										 <fieldset id="product_status">
-											<span style="color: #111111; font-weight: 700;">상품상태</span>
-											<label class="active" for="중고">중고
-												<input type="radio" id="xxl" name="product_status" value="중고" checked>
-		                                    </label>
-		                                    <label for="새상품">새상품
-		                                        <input type="radio" id="xl" name="product_status" value="새상품">
-		                                    </label>
-										 </fieldset>
-                                	</div>
-	                            </div>
-								<div class="product__details__option">
-	                                <div class="product__details__option__size">
-	                                    <span style="color: #111111; font-weight: 700;">거래방법</span>
-	                                    <input type="checkbox" name="trading_method1" class="trading_method1" value="delivery">택배거래
-	                                    <input type="checkbox" name="trading_method2" class="trading_method2" value="direct" >직거래
-	                                </div>
-	                            </div>
-                                <div class="product__details__option__delivery d-flex justify-content-center"></div>
-                                <div class="address d-flex justify-content-center" style="display: contents; margin-top: 30px;"></div>
-	                            <div class="product__form__submit">
-                                    <button type="reset" class="site-btn" >리셋</button>
-                                    <button class="site-btn" onclick="insertCheck()">판매등록</button>
-	                            </div>
+ 안전하고 건전한 거래환경을 위해 과학기술정보통신부, 한국인터넷진흥원, 트레이드업이 함께합니다."></textarea>
+						</div>
+						<div class="product__details__option">
+							<div class="product__details__option__size">
+								<fieldset id="product_status">
+									<span style="color: #111111; font-weight: 700;">상품상태</span>
+									<label class="active" for="중고">중고
+										<input type="radio" id="xxl" name="product_status" value="중고" checked>
+									</label>
+									<label for="새상품">새상품
+										<input type="radio" id="xl" name="product_status" value="새상품">
+									</label>
+								</fieldset>
+                           	</div>
+                        </div>
+						<div class="product__details__option">
+							<div class="product__details__option__size">
+								<span style="color: #111111; font-weight: 700;">거래방법</span>
+								<label class="checkout__input__checkbox"><input type="checkbox" name="trading_method1" class="trading_method1" value="delivery" style="accent-color:#5F12D3;">택배거래</label>
+								<label class="checkout__input__checkbox"><input type="checkbox" name="trading_method2" class="trading_method2" value="direct" style="accent-color:#5F12D3;">직거래</label>
+							</div>
+                        </div>
+						<div class="product__details__option__delivery d-flex justify-content-center"></div>
+						<div class="address d-flex justify-content-center" style="display: contents; margin-top: 30px;"></div>
+						<div class="product__form__submit">
+							<button class="site-btn" onclick="history.back()">돌아가기</button>
+							<button class="site-btn" onclick="insertCheck()">판매등록</button>
+						</div>
 					</div>
 				</div>
 			</div>

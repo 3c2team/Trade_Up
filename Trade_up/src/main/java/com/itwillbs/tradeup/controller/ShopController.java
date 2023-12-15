@@ -141,11 +141,8 @@ public class ShopController {
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
-		String uploadDir = "/Trade_Up/product_img/"; //가상 경로
-		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_Up/", ""); //실제 경로
-//		String sId = (String)session.getAttribute("sId");
-//		String uploadDir = "/upload/"; //가상 경로
-//		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", ""); //실제 경로
+		String uploadDir = "/TradeUp_upload/product_image/";
+		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", ""); //.replace("프로젝트명"); 추가하기
 		
 		map.put("member_id", sId);
 		
@@ -223,6 +220,9 @@ public class ShopController {
 		
 		// 판매자 
 		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct((String)product.get("member_id"));
+		
+		String date = sellerProduct.get(0).get("product_release").toString();
+		System.out.println("변환하기 전!!!!! :" + date);
 
 		int sellerCount = shopService.getSellerCount(product_num);
 		

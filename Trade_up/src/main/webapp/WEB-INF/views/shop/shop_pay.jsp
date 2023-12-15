@@ -9,25 +9,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
 
-function direct(){
+function delivery(){
 	let result = confirm("채팅 후 거래하시겠습니까?");
-	if(result){
-		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	if(!result){
+		window.opener.location.href="Checkout?product_num=${product_num}";
 		self.close();
 	}
-	window.opener.location.href="CheckoutMeet?product_num=${product_num}";
+	window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	self.close();
+	
+}
+
+function direct(){
+	let result = confirm("채팅 후 거래하시겠습니까?");
+	if(!result){
+		window.opener.location.href="CheckoutMeet?product_num=${product_num}";
+		self.close();
+	}
+	window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
 	self.close();
 }
 
-function delivery(){
-	let result = confirm("채팅 후 거래하시겠습니까?");
-	if(result){
-		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
-		self.close();
-	}
-	window.opener.location.href="Checkout?product_num=${product_num}";
-	self.close();
-}
 
 </script>
 <jsp:include page="../inc/style.jsp"></jsp:include>

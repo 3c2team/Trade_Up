@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d&libraries=services"></script>
 <title>Male-Fashion | Template</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <style type="text/css">
@@ -28,6 +29,28 @@
 		padding: 1rem;
 		border-color: rgb(230 230 230);
    }
+   html body {overflow-x:hidden;}
+    /*carousel*/
+    .slidebox {overflow:hidden; width:100%; height:700px; position:relative;}
+    .slide {width: 500%; height: 100%; transition: transform .5s ease;} /*% = viewport width의 100%*/
+    .imgbox {width: 20%; float:left; height: 100%;}
+    .imgbox img {width:100%; height:100%; position: relative;object-fit: contain; padding: 3%;}
+    .prevbtn {position:absolute;top:46%;left:30px;border:0;background:rgb(80,80,80);color:white;font-weight:bold;width:50px;height:40px;opacity:0.2;}
+    .nextbtn {position:absolute;top:46%;right:30px;border:0;background:rgb(80,80,80);color:white;font-weight:bold;width:50px;height:40px;opacity:0.2;}
+    .prevbtn:hover, .nextbtn:hover {opacity:0.5;}
+
+    .btnbox {display:flex;justify-content:center;}
+    .btnbox button {margin:10px 5px;text-indent:-9999px;width:20px;height:20px;border-radius:50%;border:0;background-color:#888;}
+    .btnbox button.nowbtn {background:#444;}
+    .col-lg-12 h6{
+        color: #111111;
+    	font-size: 15px;
+    	font-weight: 600;
+    	margin-bottom: 5px;
+    	-webkit-transition: all, 0.3s;
+    	-o-transition: all, 0.3s;
+    	transition: all, 0.3s;
+    }
 
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
@@ -51,44 +74,55 @@
                <!-- 1행 -->
                 <div class="row">
                <!-- 왼쪽 -->
-                    <div class="col-lg-6 col-md-9">
+				<div class="col-lg-6 col-md-9">
                   <div class="tab-pane active" id="tabs-1" role="tabpanel">
                       <div class="product__details__pic__item">
-                         <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
-                           <div class="carousel-indicators">
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                           </div>
-                           <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                 <img class="product__details__pic__form" id="main_img" src="${pageContext.request.contextPath }${product.product_main_img}" class="d-block w-100" >
-                              </div>
-                              <c:forEach items="${productImg }" var="productImg" begin="0" varStatus="status">
-                                 <div class="carousel-item">
-                                    <img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100">
-                                 </div>
-                              </c:forEach>
-                           </div>
-                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Next</span>
-                              </button>
-                        </div>
-                      </div>
-                     <div class="product__details__mini__pic">
-						<c:forEach var="productImg" items="${productImg }">
-	                        <ul>
-								<li><a><img src="${pageContext.request.contextPath }${productImg.product_image}" id="mini_img" ></a></li>
-	                        </ul>
-						</c:forEach>
-                     </div>
-                  </div>
-                    </div>
+<!--                          <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false"> -->
+<!--                            <div class="carousel-indicators"> -->
+<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> -->
+<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> -->
+<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
+<!--                            </div> -->
+<!--                            <div class="carousel-inner"> -->
+<!--                               <div class="carousel-item active"> -->
+<%--                                  <img class="product__details__pic__form" id="main_img" src="${pageContext.request.contextPath }/resources/img/tradeup.jpg" class="d-block w-100" > --%>
+<!--                               </div> -->
+<%--                               <c:forEach items="${productImg }" var="productImg" begin="0" varStatus="status"> --%>
+<!--                                  <div class="carousel-item"> -->
+<%--                                     <img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100"> --%>
+<!--                                  </div> -->
+<%--                               </c:forEach> --%>
+<!--                            </div> -->
+<!--                               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"> -->
+<!--                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!--                                  <span class="visually-hidden">Previous</span> -->
+<!--                               </button> -->
+<!--                               <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"> -->
+<!--                                  <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!--                                  <span class="visually-hidden">Next</span> -->
+<!--                               </button> -->
+<!--                         </div> -->
+							    <div class="slidebox col-lg-12">
+							        <div class="slide">
+<%-- 										<c:forEach var="productImg" items="${productImg }" varStatus="status"> --%>
+					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
+					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
+					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
+					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
+					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
+<%-- 										</c:forEach> --%>
+							        </div>
+							        <button class="prevbtn">&lt;</button>
+							        <button class="nextbtn">&gt;</button>
+							    </div>
+						    	<div class="btnbox">
+									<c:forEach var="productImg" items="${productImg }" varStatus="status">
+								        <button type="button" class="slide" ><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" alt="v${status.count}"/>${status.count}</button>
+									</c:forEach>
+						    	</div>
+							</div>
+						</div>
+					</div>
                <!-- 오른쪽 -->
                     <div class="col-lg-6 col-md-9">
                   <div class="product__details__content" style="margin: 10%;">
@@ -101,86 +135,56 @@
                            </div>
                      <div class="container">
                         <div class="row d-flex justify-content-center">
-                           <div class="col-lg-12" style="max-width: 100%;">
-                              <div class="product__details__text">
-                                 <h3>${product.product_name }</h3>
-                                 <h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }
-                                 <img onclick="location.href='RegistQuewstion?product_num=${param.product_num}'" class="report_img" src="${pageContext.request.contextPath }/resources/img/product/report.png">
-                                 </h3>
-								<div class="dateJjim" style="display: flex; text-align: center;"></div>
-								<div class="product__details__info">
-								   <div style="border-right: 0.1em #adb5bd solid; padding-right: 20px; margin-right: 50px;">
-								      <p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
-								   </div>
-								<c:if test="${product.delivery_method eq 'total'}">
-								   <div>
-								      <p>배송비</p><br><h6>${product.delivery_method }</h6>
-								   </div>
-								</c:if>
+							<div class="col-lg-12" style="max-width: 100%;">
+								<div class="product__details__text">
+									<h3>${product.product_name }</h3>
+									<h3 style="padding-bottom: 1.25rem; border-bottom: 0.01em #adb5bd solid;">${product.product_price }
+                                 	<img onclick="location.href='RegistQuewstion?product_num=${param.product_num}'" class="report_img" src="${pageContext.request.contextPath }/resources/img/product/report.png">
+                                 	</h3>
+									<div class="dateJjim" style="display: flex; text-align: center;">
+										<c:choose>
+											<c:when test="${!empty jjim}">
+												<span> · 찜 ${jjim}</span>
+											</c:when>
+											<c:otherwise>
+												<span> · 찜 0</span>
+											</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
-								<c:if test="${product.delivery_method ne '안함' }">
+								<div class="product__details__info">
+									<div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
+										<p>제품상태</p><br><h6 id="product_status">${product.product_status }</h6>
+									</div>
+									<c:if test="${!empty product.delivery_method}">
+									   <div style="border-left: 0.1em #adb5bd solid; padding-left: 20px; margin-right: 50px;">
+									      <p>배송비</p><br><h6>${product.delivery_method }</h6>
+									   </div>
+									</c:if>
+								</div>
+								<c:if test="${!empty product.trading_location}">
 									<h6 style="text-align: left; margin-top: 30px">직거래 희망장소</h6>
 									<div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
 								</c:if>
-                                 
-                                 <script>
-                                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		                     			mapOption = {
-		                     			    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		                     			    level: 3 // 지도의 확대 레벨
-		                     			};  
-		                     	   	
-		                     	   // 지도를 생성합니다    
-		                     		var map = new kakao.maps.Map(mapContainer, mapOption); 
-		                     			
-		                     		// 주소-좌표 변환 객체를 생성합니다
-		                     		var geocoder = new kakao.maps.services.Geocoder();
-		                     			
-		                     		// 주소로 좌표를 검색합니다
-		                     		geocoder.addressSearch('${product.trading_location}', function(result, status) {
-		                     			
-		                     			// 정상적으로 검색이 완료됐으면 
-		                     			 if (status === kakao.maps.services.Status.OK) {
-		                     				
-		                     			    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		                     			
-		                     			    // 결과값으로 받은 위치를 마커로 표시합니다
-		                     			    var marker = new kakao.maps.Marker({
-		                     			        map: map,
-		                     			        position: coords
-		                     			    });
-		                     			
-		                     			    // 인포윈도우로 장소에 대한 설명을 표시합니다
-		                     			    var infowindow = new kakao.maps.InfoWindow({
-		                     			        content: '<div style="width:150px;text-align:center;padding:6px 0;">직거래 희망장소</div>'
-		                     			    });
-		                     			    infowindow.open(map, marker);
-		                     			
-		                     			    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		                     			    map.setCenter(coords);
-		                     			} 
-		                     		}); 
-                                 </script>
-                                 <div class="product__details__cart__option">
+								<div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
                                        <input type="hidden" value="${product_num}">
 									</c:forEach>
-                                       <c:choose>
-                                          <c:when test="${empty sessionScope.sId }">
+									<c:choose>
+										<c:when test="${empty sessionScope.sId }">
 											<a class="primary-btn"  style="background: gray;">채팅하기</a>                                             
-                                          </c:when>
-                                          <c:otherwise>
+										</c:when>
+										<c:otherwise>
 											<a href="#" id="btnJoin" class="primary-btn" onclick="openChat()">채팅하기</a>
-                                          </c:otherwise>
-                                       </c:choose>
+										</c:otherwise>
+									</c:choose>
 										<a href="#" class="primary-btn" onclick="payCheck()">안심거래하기</a>
 								</div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
                     </div>
                 </div>
             </div>
@@ -192,7 +196,7 @@
                      <div class="row">
                             <div class="tab-content">
                             <div class="product__content__all">
-                                <div class="tab-pane active" id="tabs-5" role="tabpanel">
+                                <div class="tab-pane active col-lg-4" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                               			<h5>상품내용</h5>
                                         <div class="product__details__notice" style="background-color: #F3EDFF;">
@@ -208,7 +212,7 @@
                                 </div>
 								
 								<!-- 판매자 시작 -->
-                                <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                <div class="tab-pane col-lg-6" id="tabs-6" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item custom_seller" onclick="location.href='UserMarket?member_id=${product.member_id}'">
 <!--                                            <a name="tabs-6"></a> -->
@@ -346,7 +350,44 @@
 
 	const elapsedTimeResult = elapsedTime(mysqlDatetimeString);
 
-	document.querySelector('.dateJjim').innerHTML = '<span>' + elapsedTimeResult + ' · 찜 ${jjim}</span>';
+	document.querySelector('.dateJjim').prepend(elapsedTimeResult+" ");
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+		    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		    level: 3 // 지도의 확대 레벨
+		};  
+	
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+		
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('${product.trading_location}', function(result, status) {
+		
+		// 정상적으로 검색이 완료됐으면 
+		 if (status === kakao.maps.services.Status.OK) {
+			
+		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		    // 결과값으로 받은 위치를 마커로 표시합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        position: coords
+		    });
+		
+		    // 인포윈도우로 장소에 대한 설명을 표시합니다
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content: '<div style="width:150px;text-align:center;padding:6px 0;font-size: 10px;">${product.trading_location}</div>'
+		    });
+		    infowindow.open(map, marker);
+		
+		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		    map.setCenter(coords);
+		} 
+	}); 
 	
 	$(function() {
 		
@@ -403,7 +444,90 @@
 			});
 		});
 	});
+	//carousel 
 
+    //slidebtn
+    var nowimg = '${product_img}'; //nowimg 변수값 지정
+
+   //next
+	$('.nextbtn').click(function(){  //next 버튼 클릭 시
+		debugger;
+		if (nowimg == 1){
+			$('.slide').css('transform','translateX(-20%)');
+			nowimg = 2;
+		} 
+		
+		else if (nowimg == 2){
+			$('.slide').css('transform','translateX(-40%)'); 
+			nowimg = 3; 
+		}
+		else if (nowimg == 3){
+			$('.slide').css('transform','translateX(-60%)'); 
+			nowimg = 4; 
+		}
+		else if (nowimg == 4){
+			$('.slide').css('transform','translateX(-80%)'); 
+			nowimg = 5; 
+		}
+		
+		else{
+			$('.slide').css('transform','translateX(0%)'); //.slide박스를 x축 기준 왼쪽으로 정렬 (첫번째 이미지가 노출)
+			nowimg = 1;
+		}
+    });
+
+   //prev
+    $('.prevbtn').click(function(){
+       if (nowimg == 1)
+       {$('.slide').css('transform','translateX(-80%)');
+       nowimg = 5;}
+
+       else if (nowimg == 5)
+       {$('.slide').css('transform','translateX(-60%)');
+       nowimg = 4;
+       }
+       
+       else if (nowimg == 4)
+       {$('.slide').css('transform','translateX(-40%)');
+       nowimg = 3;
+       }
+       
+       else if (nowimg == 3)
+       {$('.slide').css('transform','translateX(-20%)');
+       nowimg = 2;
+       }
+
+       else {$('.slide').css('transform','translateX(0%)');
+       nowimg = 1;}
+    });
+
+
+   //btnbox
+     $('.slide1').click(function(){ //하단 btnbox의 첫번째 버튼 클릭 시
+       $('.btnbox > button').removeClass('nowbtn'); // btnbox 속 모든 버튼에 붙어있는 nowbtn class 삭제
+       $('.slide').css('transform','translateX(0%)'); //.slide박스를 x축 기준 왼쪽으로 정렬 (첫번째 이미지가 노출)
+       $(this).addClass('nowbtn'); //방금 누른 버튼에 nowbtn class 추가
+    });
+    $('.slide2').click(function(){
+       $('.btnbox > button').removeClass('nowbtn');
+       $('.slide').css('transform','translateX(-20%)');
+       $(this).addClass('nowbtn');
+    });
+    $('.slide3').click(function(){
+       $('.btnbox > button').removeClass('nowbtn');
+       $('.slide').css('transform','translateX(-40%)');
+       $(this).addClass('nowbtn');
+    });
+    $('.slide4').click(function(){
+       $('.btnbox > button').removeClass('nowbtn');
+       $('.slide').css('transform','translateX(-60%)');
+       $(this).addClass('nowbtn');
+    });
+    $('.slide5').click(function(){
+       $('.btnbox > button').removeClass('nowbtn');
+       $('.slide').css('transform','translateX(-80%)');
+       $(this).addClass('nowbtn');
+    });
    
 </script>
 </html>
