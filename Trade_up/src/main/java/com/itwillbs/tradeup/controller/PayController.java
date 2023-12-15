@@ -379,7 +379,7 @@ public class PayController {
 		String state = "거래완료";
 		service.updateSalesStatus(map.get("product_num"), state);
 		memberService.updateCommission(map.get("merchant_uid"));
-		return "myPage/myPage_purchase";
+		return "redirect:/MyPurchase";
 	}
 	
 	// 업페이 충전
@@ -408,7 +408,7 @@ public class PayController {
 		map.put("state", "충전");
 		service.chargeAutoUppay(map);
 		
-		return "myPage/myPage_main";
+		return "redirect:/MyPageMain";
 	}
 	
 	// 업페이 환불
