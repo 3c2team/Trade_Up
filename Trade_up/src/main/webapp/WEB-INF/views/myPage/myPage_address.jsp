@@ -78,23 +78,16 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="container-xxl flex-grow-1 container-p-y">
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 배송지 관리
-								<!-- 
-								<button 
-									id="address_add"
-									class="btn rounded-pill btn-icon btn-outline-primary"
-									style="float: right;"
-								>
-									<span class="tf-icons bx bx-plus"></span>
-								</button>
-								 -->
-								<button 
-									id="address_add"
-									class="btn rounded-pill btn-icon btn-outline-primary"
-									data-bs-toggle="offcanvas"
-									data-bs-target="#offcanvasEnd"
-									style="float: right;">
-									<span class="tf-icons bx bx-plus"></span>
-								</button>
+								<c:if test="${not empty my_address }">
+									<button 
+										id="address_add"
+										class="btn rounded-pill btn-icon btn-outline-primary"
+										data-bs-toggle="offcanvas"
+										data-bs-target="#offcanvasEnd"
+										style="float: right;">
+										<span class="tf-icons bx bx-plus"></span>
+									</button>
+								</c:if>
 							</h4>
 							<div class="row">
 								
@@ -142,7 +135,20 @@
 									</div>
 									<!-- / Basic -->
 								</c:forEach>
-								
+								<c:if test="${empty my_address}">
+									<div class="col-12" >
+										<div class="card mb-4" id="account_security_btn" data-bs-toggle="modal"
+											href="#accountModal" style="border: 2px dashed #cbd0d5; cursor: pointer;">
+											<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+												<h5>앗!   등록한 배송지가 없어요.</h5>
+												<h6 class="mb-0"><small class="text-muted">우리 같이 배송지등록 해볼까요?</small></h6>
+												<h6 class="mb-0"><small class="text-muted">클릭 해주세요!</small></h6>
+												<br>
+												<h6 class="mb-0"><small class="text-muted">♡°⌒(⭒ᵔ દ ᵔ⭒)ノ</small></h6>
+											</div>
+										</div>
+									</div>
+								</c:if>
 							</div>
 						</div>
 					</div>

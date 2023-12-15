@@ -95,7 +95,7 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="container-xxl flex-grow-1 container-p-y">
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 계좌 관리
-								<c:if test="${not empty token }">
+								<c:if test="${not empty my_account }">
 									<button id="account_add"
 											class="btn rounded-pill btn-icon btn-outline-primary"
 											data-bs-toggle="modal"
@@ -146,6 +146,20 @@
 									</div>
 									<!-- / Basic -->
 								</c:forEach>
+								<c:if test="${empty my_account}">
+									<div class="col-12" >
+										<div class="card mb-4" id="account_security_btn" data-bs-toggle="modal"
+											href="#accountModal" style="border: 2px dashed #cbd0d5; cursor: pointer;">
+											<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
+												<h5>앗!   등록한 계좌가 없어요.</h5>
+												<h6 class="mb-0"><small class="text-muted">우리 같이 계좌등록 해볼까요?</small></h6>
+												<h6 class="mb-0"><small class="text-muted">클릭 해주세요!</small></h6>
+												<br>
+												<h6 class="mb-0"><small class="text-muted">◝(⑅•ᴗ•⑅)◜..°♡</small></h6>
+											</div>
+										</div>
+									</div>
+								</c:if>
 							</div>
 						</div>
 					</div>
