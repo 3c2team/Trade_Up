@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MyPageService;
@@ -46,12 +47,14 @@ public class MyPageController {
 	public String myPageMain(HttpSession session, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		List<Map<String, Object>> accountList = service.getMyAccount(sId);
-//		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
-//		List<Map<String, Object>> productsList = service.getMyProduct(sId);
-//		
+		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
+		List<Map<String, Object>> productsList = service.getMyPurchase(sId);
+		List<Map<String, Object>> salesList = service.getMyProduct(sId);
+		
 		model.addAttribute("accountList", accountList);
-//		model.addAttribute("favoriteList", favoriteList);
-//		model.addAttribute("productsList", productsList);
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("productsList", productsList);
+		model.addAttribute("salesList", salesList);
 		return "myPage/myPage_main";
 	}
 	
@@ -263,24 +266,13 @@ public class MyPageController {
 	public String deleteMember(HttpSession session, @RequestParam Map<String, Object> param, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>탈퇴 param: " + param);
-		
-		Map<String, Object> map = service.getMember(sId);
-		
 		if(sId == null) {
 			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
 			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
 		
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
-		if(!passwordEncoder.matches(param.get("password_check").toString(), map.get("member_passwd").toString())) {
-			return "fail_back";
-		} 
-		
-		
-		
+		System.out.println("딜리트멤");
 		
 		return "myPage/myPage_info";
 	}
@@ -442,7 +434,6 @@ public class MyPageController {
 		}
 		
 		param.put("sId", sId);
-		System.out.println(">>>>>>>>>>>>>>>>>>>param"+param);
 		int insertCount = service.changeMainInfo(param);
 		
 		
@@ -501,6 +492,24 @@ public class MyPageController {
 	public String termsAndPolicies() {
 		
 		return "myPage/myPage_favorite";
+	}
+	
+	@ResponseBody
+	@PostMapping("PasswordCheck")
+	public String passwordCheck(@RequestParam Map<String, Object> param, HttpSession session) {
+		String sId = (String)session.getAttribute("sId");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>비번 판별 param: " + param);
+		
+		Map<String, Object> map = service.getMember(sId);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if(!passwordEncoder.matches(param.get("password").toString(), map.get("member_passwd").toString())) {
+			System.out.println("비번 오류!");
+			return "false";
+		} 
+		
+		System.out.println("비번 맞음!");
+		return "true";
 	}
 	
 	public List<Map<String, Object>> retrieveDataForServletAndSession(String sId, String servlet_path, String order_by) {

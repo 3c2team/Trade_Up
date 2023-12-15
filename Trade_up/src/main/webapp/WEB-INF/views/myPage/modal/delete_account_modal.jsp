@@ -32,15 +32,16 @@
 		}
 		
 		$.ajax({
-			url: PasswordCheck,
+			url: "PasswordCheck",
 			method: 'POST',
 			data: { "password" : password },
 			success: function(data) {
+				alert(data);
 				if(data=="false"){
 					$("#password").css({'border-color':'#ff3e1d'});
 					$("#danger2").css({'color':'#ff3e1d'});
 					$("#danger2").text("잘못된 비밀번호 입니다.");
-					result = false;					
+					result = false;
 				}
 			},
 			error: function(error) {
@@ -51,7 +52,9 @@
 			}
 		});
 		
-		return result;  
+		if (result == 'false') {
+		    e.preventDefault(); // 폼 제출 방지
+		}			
 	}
 </script>
 <%-- 모달창 --%>
@@ -62,7 +65,7 @@
 				<h5 class="modal-title" id="exampleModalLabel2">회원탈퇴</h5>
 			</div>
 			
-			<form action="DeleteMember" method="post" onsubmit="return checks()">
+			<form method="post" onsubmit="return checks()">
 				<div class="modal-body">
 					<a>계정을 삭제하면 30일 후 신뢰도, 게시글, 관심, 채팅 등 모든 활동 정보가 삭제됩니다.</a><br><br>
 					
@@ -94,7 +97,6 @@
 						<div class="col mb-3">
 							<label for="nameSmall" class="form-label" >비밀번호를 입력해주세요.</label>
 							<input type="password" id="password" name="password_check" class="form-control" placeholder="비밀번호" />
-							<input type="hidden" name="password" value="${member.member_passwd }">
 							<label class="form-label" id="danger2"></label>
 						</div>
 					</div>

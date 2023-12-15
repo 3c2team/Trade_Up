@@ -144,7 +144,7 @@
 														<i class="bx bx-dots-vertical-rounded"></i>
 													</button>
 													<div class="dropdown-menu">
-														<a class="dropdown-item" href="">
+														<a class="dropdown-item" href="#">
 															<i class="bx bx-edit-alt me-1"></i>수정
 														</a>
 														<a class="dropdown-item" onclick="deleteMyProduct(${product.product_num }, '${product.sales_status}')" href="#">
