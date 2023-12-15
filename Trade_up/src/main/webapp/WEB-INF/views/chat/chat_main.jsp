@@ -60,10 +60,25 @@
 	
 	.message_align_left {
 		text-align: left;
+		position: relative;
+	    margin: 5px;
+	    background: blueviolet;
+	    border-radius: 5px 20px 30px 40px;
+	    font-weight:bold;
+	    padding: 7px;
+    	width: fit-content;
+    	margin-bottom:10px;
 	}
 	
 	.message_align_right {
 		text-align: right;
+		position: relative;
+	    margin: 5px;
+	    background: aliceblue;
+	    border-radius: 20px 5px 40px 30px;
+	    font-weight:bold;
+	    padding:7px;
+	    margin-bottom:10px;
 	}
 	
 	/* 채팅 메세지 하단 입력 영역 */
@@ -452,7 +467,7 @@
 		<input type="button" value="채팅방 나가기" id="btnQuit">
 		</div>
 		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
-		<div id="chatRoomListArea"><%-- 채팅방 목록 추가될 위치 --%></div>
+<%-- 		<div id="chatRoomListArea">채팅방 목록 추가될 위치</div> --%>
 	</article>
 	<hr>
 <!-- 	<footer> -->

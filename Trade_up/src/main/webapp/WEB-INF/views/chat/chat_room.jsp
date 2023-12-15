@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html style="background: rgba(105, 108, 255, 0.16) !important;">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,9 +11,9 @@
 <style type="text/css">
 	/* 채팅방 전체 영역 */
 	#chatRoomArea { 
-		width: 650px;
+		width: 370px;
 		height: 600px;
-		border: 1px solid black;
+/* 		border: 1px solid black; */
 		margin-top: 20px;
 		margin-bottom: 20px;
 		display: inline-block;
@@ -23,14 +23,16 @@
 	
 	/* 채팅방 목록 영역 */
 	#chatRoomListArea {
-		width: 310px;
+		width: 200px;
 		height: 600px;
-		border: 1px solid black;
+/* 		border: 1px solid black; */
 		margin-top: 20px;
 		margin-bottom: 20px;
 		display: inline-block;
 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
 		overflow-y: auto;
+		text-align: center;
+		margin-right: 15px;
 	}
 	
 	/* 채팅방 1개 */
@@ -39,16 +41,17 @@
 /* 		border: 1px solid black; */
 		display: inline-block;
 		margin-right: 10px;
-		margin-bottom: 20px;
+		margin-bottom: 30px;
 	}
 	
 	/* 채팅 메세지 표시 영역 */
 	.chatMessageArea {
-		width: 300px;
+		width: 350px;
 		height: 200px;
-		border: 1px solid blue;
+/* 		border: 1px solid blue; */
 		/* 지정한 영역 크기 컨텐츠보다 많은 양이 표시될 경우 수직 방향 스크롤바 추가 */
 		overflow-y: auto;
+		background: rgba(105, 108, 255, 0.16) !important;
 	}
 	
 	/* 채팅 메세지 정렬 */
@@ -58,16 +61,55 @@
 	
 	.message_align_left {
 		text-align: left;
+		position: relative;
+	    margin: 5px;
+	    background: blueviolet;
+	    border-radius: 5px 20px 30px 40px;
+	    font-weight:bold;
+	    padding: 7px;
+    	width: fit-content;
+    	margin-bottom:10px;
 	}
 	
 	.message_align_right {
 		text-align: right;
+		position: relative;
+	    margin: 5px;
+	    background: aliceblue;
+	    border-radius: 20px 5px 40px 30px;
+	    font-weight:bold;
+	    padding:7px;
+	    margin-bottom:10px;
 	}
+	
 	
 	/* 채팅 메세지 하단 입력 영역 */
 	.commandArea {
-		width: 300px;
+		width: 350px;
 		position: relative;
+		margin-top: 25px;
+	}
+	
+	.btnSend {
+	    background: #5F12D3;
+	    color: #ffffff;
+	    border-color: #5F12D3;
+/* 	    float: right; */
+	}
+	
+	.btnQuitRoom {
+	    background: #5F12D3;
+	    color: #ffffff;
+	    border-color: #5F12D3;
+	    float: right;
+	}
+	
+	.chatRoomTitle{
+		background-color : green;
+  		border-radius: 30px;
+  		background-color : mediumslateblue;
+  		padding: 5px;
+  		margin-bottom:10px;
 	}
 </style>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
@@ -241,13 +283,14 @@
 		let room = '<div class="chatRoom ' + room_id + '">'
 					+ '	<div class="chatMessageArea"></div>'
 					+ '	<div class="commandArea">'
-					+ '		<input type="text" class="chatMsg" onkeypress="checkEnter(this)">'
+					+ '		<input type="text" size="27" class="chatMsg" onkeypress="checkEnter(this)">'
 					+ '		<input type="hidden" class="room_id" value="' + room_id + '">'
 					+ '		<input type="hidden" class="receiver_id" value="' + receiver_id + '">'
 					+ '		<input type="button" class="btnSend" value="전송" onclick="sendMessage(this)">'
 					+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
 					+ '	</div>'
-					+ '</div>';
+					+ '</div>'
+					+ '<hr>';
 		
 		$("#chatRoomArea").append(room);
 	}
@@ -407,20 +450,21 @@
 				location.href = "MemberLoginForm";
 			</script>
 		</c:if>
-		<h1>채팅 페이지</h1>
+		<h1>채팅 리스트</h1>
 		<hr>
 <%-- 		판매자 아이디 : ${receiverId } --%>
 <%-- 		<input type="hidden" id="receiver_id" value="${receiverId }"><br> --%>
-		상대방 아이디 : <input type="text" id="receiver_id">
-		<input type="button" value="채팅 시작" id="btnJoin">
-		<input type="button" value="채팅방 나가기" id="btnQuit">
+<!-- 		상대방 아이디 : <input type="text" id="receiver_id"> -->
+		<strong>${sessionScope.sId}</strong>님 반갑습니다.
+<!-- 		<input type="button" value="채팅 시작" id="btnJoin"> -->
+<!-- 		<input type="button" value="채팅방 나가기" id="btnQuit"> -->
 		<hr>
-		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
 		<div id="chatRoomListArea"><%-- 채팅방 목록 추가될 위치 --%></div>
+		<div id="chatRoomArea"><%-- 채팅방 추가될 위치 --%></div>
 	</article>
 	<hr>
 <!-- 	<footer> -->
-<!-- 		<!-- bottom.jsp 페이지를 현재 페이지에 삽입 --> -->
+<!-- 		<!-- bottom.jsp 페이지를 현재 페이지에 삽입 -->
 <%-- 		<jsp:include page="../inc/bottom.jsp"></jsp:include> --%>
 <!-- 	</footer> -->
 </body>
