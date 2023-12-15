@@ -3,16 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
-<%--
-	전화번호 수정
-	이메일 수정
-	정규식 추가
-	계정 연동
-	회원 탈퇴
-	대표계좌. 대표주소 없을 때 아무것도 안뜸!
-	프로필 업로드 성공하고 잘 불러오는데 오류뜸 확인
---%>
-
 <html
   lang="en"
   class="light-style layout-menu-fixed"
@@ -84,32 +74,7 @@
 	    margin: auto;
   	}
   </style>
-
-	
-	
-  <script>
-    function submitForm() {
-    	var formData = $('#MyInfoModify').serialize();
-    	$.ajax({
-            type: 'POST',
-            url: 'MyInfoModify',
-            data: formData,
-            dataType: "json",
-            success: function(response) {
-            	// 판별 추가하기
-	            window.location.reload();
-            },
-            error: function() {
-                alert('서버 오류가 발생했습니다.');
-            }
-    	});
-    }
-</script>
-  
 </head>
-
-
-
 <body>
 	<%-- 탑 메뉴 --%>
 	<jsp:include page="../inc/top.jsp"></jsp:include>

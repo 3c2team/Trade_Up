@@ -22,13 +22,12 @@
 	
 	function checks() {
 		let password = $("#password").val();
-		let result = true;
+		let result = "false";
 		
 		if(password == ""){
 			$("#password").css({'border-color':'#ff3e1d'});
 			$("#danger2").css({'color':'#ff3e1d'});
 			$("#danger2").text("비밀번호를 입력해주세요.");
-			result = false;
 		}
 		
 		$.ajax({
@@ -36,25 +35,25 @@
 			method: 'POST',
 			data: { "password" : password },
 			success: function(data) {
-				alert(data);
+				console.log(data);
+				debugger;
 				if(data=="false"){
 					$("#password").css({'border-color':'#ff3e1d'});
 					$("#danger2").css({'color':'#ff3e1d'});
 					$("#danger2").text("잘못된 비밀번호 입니다.");
-					result = false;
+				} else {
+					result = "true";
+					return result;
 				}
 			},
 			error: function(error) {
 				$("#password").css({'border-color':'#ff3e1d'});
 				$("#danger2").css({'color':'#ff3e1d'});
 				$("#danger2").text("문제가 발생했습니다.");
-				result = false;	
 			}
 		});
 		
-		if (result == 'false') {
-		    e.preventDefault(); // 폼 제출 방지
-		}			
+		return result;
 	}
 </script>
 <%-- 모달창 --%>
@@ -65,7 +64,7 @@
 				<h5 class="modal-title" id="exampleModalLabel2">회원탈퇴</h5>
 			</div>
 			
-			<form method="post" onsubmit="return checks()">
+			<form action="DeleteMember"  method="post" onsubmit="return checks()">
 				<div class="modal-body">
 					<a>계정을 삭제하면 30일 후 신뢰도, 게시글, 관심, 채팅 등 모든 활동 정보가 삭제됩니다.</a><br><br>
 					

@@ -14,14 +14,20 @@
 			     , c.account_bank 
 			     , c.account_num 
 			  FROM MEMBER m
-		 LEFT JOIN MY_ADDRESS d ON m.member_id = d.member_id 
+		 LEFT JOIN MY_ADDRESS d 
+		 						ON m.member_id = d.member_id 
 	 						   AND d.address_main = TRUE
-		 LEFT JOIN MY_ACCOUNT c ON m.member_id = c.member_id
+		 LEFT JOIN MY_ACCOUNT c 
+	 							ON m.member_id = c.member_id
  						 	   AND c.account_main = TRUE
 			 WHERE 1=1 
 			   AND m.member_id = #{sId}
-			   AND (d.address_main = TRUE OR d.address_main IS NULL)
-			   AND (c.account_main = TRUE OR c.account_main IS NULL);
+			   AND (
+		   			 d.address_main = TRUE
+		   			 OR d.address_main IS NULL)
+			   AND (
+		   			 c.account_main = TRUE 
+		   			 OR c.account_main IS NULL);
 			]]>
     	</select>
     	
@@ -38,6 +44,17 @@
     		 WHERE member_id = #{sId}
    		  ORDER BY ${order_by} DESC;
     	</select>
+    	
+    	<update id="updateDeletMember">
+    		UPDATE MEMBER 
+			   SET member_state = '탈퇴' 
+				 , exid_date = now()
+				 , exid_feedback_idx = #{exid_feedback}
+			<if test="exid_etc_feedback!=null and !exid_etc_feedback.equals('')">
+				 , exid_etc_feedback = #{exid_etc_feedback}
+			</if>
+			 WHERE member_id = #{sId};
+    	</update>
     	
     	<select id="selectMyProduct" resultType="map">
     		SELECT p.product_num

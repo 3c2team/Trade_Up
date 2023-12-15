@@ -153,14 +153,6 @@ public class MyPageController {
 		return "myPage/myPage_purchase";
 	}
 	
-	// 구매내역 - 거래완료
-	@GetMapping("TransactionCompleted")
-	public String TransactionCompleted(HttpSession session, Map<String, Object> map, Model model) {
-		
-		
-		return "";
-	}
-	
 	// 프로필관리
 	@GetMapping("MyInfo")
 	public String myInfo(HttpSession session, Map<String, Object> map, Model model) {
@@ -218,8 +210,8 @@ public class MyPageController {
 		
 		param.put("sId", sId);
 		
-		String uploadDir = "resources/TradeUp_upload/user_profile_image";
-		String saveDir = session.getServletContext().getRealPath(uploadDir); //.replace("프로젝트명"); 추가하기
+		String uploadDir = "/TradeUp_upload/user_profile_image/";
+		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", ""); //.replace("프로젝트명"); 추가하기
 		String fileName = "";
 			//================= < 이미지 처리 > =================
 		try {
@@ -271,10 +263,18 @@ public class MyPageController {
 			model.addAttribute("targetURL", "Login");
 			return "forward";
 		}
+		param.put("sId", sId);
 		
-		System.out.println("딜리트멤");
+		int count = service.updateDeleteMember(param);
 		
-		return "myPage/myPage_info";
+		if(count > 0) {
+			return "redirect:/Main";
+		} else {
+			model.addAttribute("msg", "앗, 서버오류로 탈퇴 실패했어요. 다시 시도해주세요.");
+			model.addAttribute("targetURL", "DeleteMember");
+			return "forward";
+		}
+		
 	}
 		
 	// 계좌관리

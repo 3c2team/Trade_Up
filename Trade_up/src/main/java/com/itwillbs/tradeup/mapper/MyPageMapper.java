@@ -45,4 +45,6 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectFeedback();
 	// 구매내역 - 내역 조회
 	List<Map<String, Object>> selectMyPurchase(String sId);
+	// 프로필관리 - 회원 탈퇴 
+	int updateDeletMember(Map<String, Object> param);
 }

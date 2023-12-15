@@ -71,5 +71,8 @@ public class MyPageService {
 	public int deleteFavorite(Map<String, Object> param) {
 		return mapper.deleteFavorite(param);
 	}
+	public int updateDeleteMember(Map<String, Object> param) {
+		return mapper.updateDeletMember(param);
+	}
 
 }

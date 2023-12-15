@@ -95,49 +95,49 @@
 									</thead>
 									<tbody class="text-center table-border-bottom-0">
 										<c:forEach var="product" items="${productList }">
-											<tr>
-												<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
-												<td class="align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
-													<strong>${product.product_name }</strong>
-												</td>
-												<td class="align-middle">
-													${product.product_price }
-												</td>
-												<td class="align-middle">
-													<a>${product.member_id }</a>
-												</td>
-												<td class="align-middle">
-													<c:choose>
-														<c:when test="${product.sales_status eq '거래중'}">
-															<span class="badge bg-label-secondary">거래중</span>
-														</c:when>
-														<c:when test="${product.sales_status eq '거래완료' }">
-															<span class="badge bg-label-success">거래완료</span>
-														</c:when>
-														<c:otherwise>
-															<span class="badge bg-label-primary">판매중</span>
-														</c:otherwise>
-													</c:choose>
-
-												</td>
-												<td class="align-middle">
-													<c:choose>
-														<c:when test="${product.trading_method eq 'direct '}">
-															<span class="badge bg-label-warning">직거래</span>
-														</c:when>
-														<c:when test="${product.trading_method eq 'delivery'}">
-															<span class="badge bg-label-info">택배</span>
-														</c:when>
-														<c:otherwise>
-															<span class="badge bg-label-info">택배</span>
-															<span class="badge bg-label-warning">직거래</span>
-														</c:otherwise>
-													</c:choose>
-												</td>
-												<td class="align-middle">
-													<button class="btn btn-sm btn-outline-primary">거래완료</button>
-												</td>
-											</tr>
+												<tr>
+													<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
+													<td class="align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
+														<strong>${product.product_name }</strong>
+													</td>
+													<td class="align-middle">
+														${product.product_price }
+													</td>
+													<td class="align-middle">
+														<a>${product.member_id }</a>
+													</td>
+													<td class="align-middle">
+														<c:choose>
+															<c:when test="${product.sales_status eq '거래중'}">
+																<span class="badge bg-label-secondary">거래중</span>
+															</c:when>
+															<c:when test="${product.sales_status eq '거래완료' }">
+																<span class="badge bg-label-success">거래완료</span>
+															</c:when>
+															<c:otherwise>
+																<span class="badge bg-label-primary">판매중</span>
+															</c:otherwise>
+														</c:choose>
+	
+													</td>
+													<td class="align-middle">
+														<c:choose>
+															<c:when test="${product.trading_method eq 'direct '}">
+																<span class="badge bg-label-warning">직거래</span>
+															</c:when>
+															<c:when test="${product.trading_method eq 'delivery'}">
+																<span class="badge bg-label-info">택배</span>
+															</c:when>
+															<c:otherwise>
+																<span class="badge bg-label-info">택배</span>
+																<span class="badge bg-label-warning">직거래</span>
+															</c:otherwise>
+														</c:choose>
+													</td>
+													<td class="align-middle">
+														<button class="btn btn-sm btn-outline-primary" onclick="location.href='BuyCheck?product_num=${product.product_num }'">거래완료</button>
+													</td>
+												</tr>
 										</c:forEach>
 									</tbody>
 								</table>
