@@ -90,7 +90,7 @@
         		window.open("MyChat", "MyChat","top=200,left=700,width=500, height=500");
 			}
         	function chatRoom() {
-        		window.open("ChatRoom", "ChatRoom","top=200,left=700,width=635, height=430");
+        		window.open("ChatRoom", "ChatRoom","top=200,left=700,width=640, height=430");
 			}
         </script>
     </header>
