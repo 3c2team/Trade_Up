@@ -100,15 +100,15 @@
 							<img class="icon_img" style="height: 35px;" src="${pageContext.request.contextPath }/resources/img/icon/kakao_icon.jpg">
 						</c:if>
 						</h1>
-						<div style="color: rgb(156 163 175);margin-left: 20px;margin-top: 5px;">2023년12월12일</div>
+						<div style="color: rgb(156 163 175);margin-left: 20px;margin-top: 5px;">생년월일 : ${Seller.member_birth}</div>
 					</div>
 				</div>
 				<div style="width: 50%;    padding-top: 15px;">
-					<div class="user_font fs-5">신뢰지수 100
+					<div class="user_font fs-5">신뢰지수 ${sellerCount.count } 
 						<span style="float: inline-end; margin-right: 5px; color: rgb(156 163 175);">1000</span>
 					 </div>
 					<div class="user_border">
-						<div class="user_border" style="background-color: rgb(12 182 80); width: 30%; margin-left: 0px;"></div>
+						<div class="user_border" style="background-color: rgb(12 182 80); width: ${sellerCount.count }%; margin-left: 0px;"></div>
 					</div>
 				</div>
 			</div>

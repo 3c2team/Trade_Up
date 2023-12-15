@@ -61,6 +61,23 @@ public class MainController {
 		
 		return "main";
 	}
+	@GetMapping("Category")
+	public String category(HttpSession session,Model model) {
+		
+		List<Map<String, String>> category = service.selectCategory();
+		
+		model.addAttribute("category",category);
+		return "admin/category";
+	}
+	
+	@GetMapping("CategoryQna")
+	public String categoryQna(HttpSession session,Model model) {
+		
+		List<Map<String, String>> selectQnaCategory = service.selectQnaCategory();
+		selectQnaCategory.remove(1);
+		model.addAttribute("selectQnaCategory",selectQnaCategory);
+		return "admin/category_qna";
+	}
 	
 	@GetMapping("ShoppingCart")
 	public String shoppingCart() {
@@ -151,7 +168,9 @@ public class MainController {
 	public String userMarket(@RequestParam String member_id,Model model) {
 		Map<String, String> Seller = memberService.getMemberLogin(member_id);
 		List<Map<String, String>> sellerProduct = service.selectSellerProduct(member_id);
+		Map<String, String> sellerCount = service.sellerCount(member_id);
 		Seller.put("Count", ""+sellerProduct.size());
+		model.addAttribute("sellerCount", sellerCount);
 		model.addAttribute("Seller", Seller);
 		model.addAttribute("sellerProduct", sellerProduct);
 		return "user_market";
@@ -247,6 +266,41 @@ public class MainController {
 //		System.out.println(service.selectOftenQna(map));
 	return service.selectOftenQna(map);
 
+	}	
+	@ResponseBody
+	@PostMapping("DeleteQnaCategoryDetail")
+	public void deleteQnaCategoryDetail(@RequestParam(required = false)int qnaCategoryDetailNum) {
+		service.deleteQnaCategoryDetail(qnaCategoryDetailNum);
+	}	
+	@ResponseBody
+	@PostMapping("InsertQnaCategoryDetail")
+	public void insertQnaCategoryDetail(@RequestParam(required = false)Map<String, String> map) {
+		System.out.println("나와라~~~~~" + map);
+		service.insertQnaCategoryDetail(map);
+	}	
+	@ResponseBody
+	@PostMapping("DeleteProductCategory")
+	public void deleteProductCategory(@RequestParam int product_category_num) {
+		System.out.println("fdfdfdfdf : " + product_category_num);
+		service.deleteProductCategory(product_category_num);
+	}	
+	@ResponseBody
+	@PostMapping("InsertProductCategory")
+	public void insertProductCategory(@RequestParam String product_category_name) {
+		System.out.println("fdfdfdfdf : " + product_category_name);
+		service.insertProductCategory(product_category_name);
+	}	
+	@ResponseBody
+	@PostMapping("InsertQnaCategory")
+	public void insertQnaCategory(@RequestParam String qnaCategoryName) {
+		System.out.println("fdfdfdfdf : " + qnaCategoryName);
+		service.insertQnaCategory(qnaCategoryName);
+	}	
+	@ResponseBody
+	@PostMapping("DeleteQnaCategory")
+	public void deleteQnaCategory(@RequestParam String qnaCategoryNum) {
+		System.out.println("fdfdfdfdf : " + qnaCategoryNum);
+		service.deleteQnaCategory(qnaCategoryNum);
 	}	
 	
 	

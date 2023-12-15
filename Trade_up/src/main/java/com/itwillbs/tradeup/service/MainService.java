@@ -114,4 +114,39 @@ public class MainService {
 		// TODO Auto-generated method stub
 		return mapper.mainProductList(sId);
 	}
+
+	public Map<String, String> sellerCount(String member_id) {
+		// TODO Auto-generated method stub
+		return mapper.sellerCount(member_id);
+	}
+
+	public void deleteProductCategory(int product_category_num) {
+		// TODO Auto-generated method stub
+		mapper.deleteProductCategory(product_category_num);
+	}
+
+	public void insertProductCategory(String product_category_name) {
+		// TODO Auto-generated method stub
+		mapper.insertProductCategory(product_category_name);
+	}
+
+	public void deleteQnaCategoryDetail(int qnaCategoryDetailNum) {
+		// TODO Auto-generated method stub
+		mapper.deleteQnaCategoryDetail(qnaCategoryDetailNum);
+	}
+
+	public void insertQnaCategoryDetail(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		mapper.insertQnaCategoryDetail(map);
+	}
+
+	public void insertQnaCategory(String qnaCategoryName) {
+		// TODO Auto-generated method stub
+		mapper.insertQnaCategory(qnaCategoryName);
+	}
+
+	public void deleteQnaCategory(String qnaCategoryNum) {
+		// TODO Auto-generated method stub
+		mapper.deleteQnaCategory(qnaCategoryNum);
+	}
 }

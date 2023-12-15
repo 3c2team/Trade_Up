@@ -48,5 +48,19 @@ public interface MainMapper {
 
 	List<Map<String, Object>> mainProductList(String sId);
 
+	Map<String, String> sellerCount(String member_id);
+
+	void deleteProductCategory(int product_category_num);
+
+	void insertProductCategory(String product_category_name);
+
+	void deleteQnaCategoryDetail(int qnaCategoryDetailNum);
+
+	void insertQnaCategoryDetail(Map<String, String> map);
+
+	void insertQnaCategory(String qnaCategoryName);
+
+	void deleteQnaCategory(String qnaCategoryNum);
+
 
 }

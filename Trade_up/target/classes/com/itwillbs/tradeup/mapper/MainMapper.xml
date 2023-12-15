@@ -122,6 +122,7 @@
 			FROM PRODUCT 
 			WHERE product_name like '%${product_name}%' 
 			AND product_release > date_sub(now(),interval 3 month)
+			AND sales_status = '판매중'
 			LIMIT 9;
 		</select>
     	<insert id="insertReport">
@@ -205,4 +206,43 @@
 				WHERE member_id = #{sId}) f
 			ON p.product_num = f.product_num;
     	</select>
+    	<select id="sellerCount" resultType="map">
+	    	SELECT COUNT(deposit_idx) as count
+			FROM DEPOSIT
+			WHERE member_id = #{member_id}
+   		</select>
+   		<delete id="deleteProductCategory">
+   			DELETE FROM CATEGORY
+   			WHERE category_idx = #{product_category_num}
+   		</delete>
+   		<insert id="insertProductCategory">
+   			INSERT INTO CATEGORY
+   			VALUES (
+   				null
+   				,#{product_category_name}
+   			)
+   		</insert>
+   		<delete id="deleteQnaCategoryDetail">
+   			DELETE FROM QUESTION_CATEGORY_DETAIL
+   			WHERE qna_category_detail_num = #{qnaCategoryDetailNum}
+   		</delete>
+   		<insert id="insertQnaCategoryDetail">
+   			INSERT INTO QUESTION_CATEGORY_DETAIL
+   			VALUES (
+   				null
+   				,#{qnaCategoryNum}
+   				,#{qnaCategoryDetailName}
+   			)
+   		</insert>
+   		<insert id="insertQnaCategory">
+   			INSERT INTO QUESTION_CATEGORY
+   			VALUES (
+   				null
+   				,#{qnaCategoryName}
+   			)
+   		</insert>
+   		<delete id="deleteQnaCategory">
+   			DELETE FROM QUESTION_CATEGORY
+   			WHERE qna_category_num = #{qnaCategoryNum}
+   		</delete>
     </mapper>
