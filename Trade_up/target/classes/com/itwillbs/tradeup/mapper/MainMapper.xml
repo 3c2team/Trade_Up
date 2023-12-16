@@ -201,10 +201,12 @@
     	<select id="mainProductList">
 	    	SELECT *
 			FROM PRODUCT p left 
-			JOIN (select product_num,favorite_idx
-				FROM FAVORITE
-				WHERE member_id = #{sId}) f
-			ON p.product_num = f.product_num;
+			JOIN (SELECT product_num,favorite_idx
+					FROM FAVORITE
+					WHERE member_id = #{sId}) f
+			ON p.product_num = f.product_num
+			WHERE sales_status = '판매중'
+	  		ORDER BY product_release DESC
     	</select>
     	<select id="sellerCount" resultType="map">
 	    	SELECT COUNT(deposit_idx) as count
