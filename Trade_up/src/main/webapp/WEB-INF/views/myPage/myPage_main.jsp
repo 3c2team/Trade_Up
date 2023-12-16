@@ -15,8 +15,7 @@
   <meta charset="utf-8" />
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-/>
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 	<title>GARGE | MyPage</title>
 	
@@ -193,6 +192,15 @@
 										</div>
 										<div class="card-body">
 											<ul class="p-0 m-0">
+												<c:if test="${empty favoriteList }">
+													<div class="text-center" onclick="location.href='Shop'" style="cursor: pointer;">
+														<h5>앗!   관심목록에 등록한 상품이 없어요.</h5>
+														<h6 class="mb-0"><small class="text-muted">우리 같이 다른 고객님이 올려주신 상품 구경하러 가볼까요?</small></h6>
+														<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+														<br>
+														<h6 class="mb-0"><small class="text-muted"> * : ˚·✧* : ˚·✧ ヾ꒰ྀི *ˊᵕˋ ꒱ྀིﾉ ✧·˚ : *✧·˚ : *</small></h6>
+													</div>
+												</c:if>
 												<c:forEach var="favorite" items="${favoriteList }" end="7">
 													<li class="d-flex mb-4 pb-1">
 														<div class="avatar flex-shrink-0 me-3">
@@ -225,6 +233,15 @@
 									</div>
 									<div class="card-body">
 										<ul class="p-0 m-0">
+											<c:if test="${empty productsList }">
+												<div class="text-center" onclick="location.href='Shop'" style="cursor: pointer;">
+													<h5>앗!   구매하신 상품이 없어요.</h5>
+													<h6 class="mb-0"><small class="text-muted">우리 같이 다른 고객님이 올려주신 상품 구경하러 가볼까요?</small></h6>
+													<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+													<br>
+													<h6 class="mb-0"><small class="text-muted">ଘ(❁•̀ 3 •́)━☆*✲⋆✧･ﾟ: *✧･ﾟ:* *:･ﾟ✧*:･ﾟ✧</small></h6>
+												</div>
+											</c:if>
 											<c:forEach var="products" items="${productsList }" end="7">
 												<li class="d-flex mb-4 pb-1">
 													<div class="avatar flex-shrink-0 me-3">
@@ -256,6 +273,15 @@
 									</div>
 									<div class="card-body">
 										<ul class="p-0 m-0">
+											<c:if test="${empty salesList }">
+												<div class="text-center" onclick="location.href='ShopForm'" style="cursor: pointer;">
+													<h5>앗!   판매중인 상품이 없어요.</h5>
+													<h6 class="mb-0"><small class="text-muted">우리 같이 상품등록 하러 가볼까요?</small></h6>
+													<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+													<br>
+													<h6 class="mb-0"><small class="text-muted">(つ˵•́ω•́˵)つ━☆.。.:*・°☆ ｡+.｡☆ﾟ:;｡+ﾟ</small></h6>
+												</div>
+											</c:if>
 											<c:forEach var="sales" items="${salesList }" end="7">
 												<li class="d-flex mb-4 pb-1">
 													<div class="avatar flex-shrink-0 me-3">

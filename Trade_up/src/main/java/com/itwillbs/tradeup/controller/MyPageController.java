@@ -268,7 +268,7 @@ public class MyPageController {
 		int count = service.updateDeleteMember(param);
 		
 		if(count > 0) {
-			return "redirect:/Main";
+			return "myPage/delete";
 		} else {
 			model.addAttribute("msg", "앗, 서버오류로 탈퇴 실패했어요. 다시 시도해주세요.");
 			model.addAttribute("targetURL", "DeleteMember");
