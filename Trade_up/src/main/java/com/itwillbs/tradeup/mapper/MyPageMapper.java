@@ -47,4 +47,6 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectMyPurchase(String sId);
 	// 프로필관리 - 회원 탈퇴 
 	int updateDeletMember(Map<String, Object> param);
+	// 거래건수 조회
+	String selectDepositCount(String sId);
 }

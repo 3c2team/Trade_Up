@@ -138,6 +138,13 @@
 /* 	    float: right; */
 	}
 	
+	.btnSend_end {
+	    background: dimgray;
+	    color: #ffffff;
+	    border-color: black;
+/* 	    float: right; */
+	}
+	
 	#btnQuit{
 		background: #5F12D3;
 	    color: #ffffff;
@@ -317,13 +324,25 @@
 			// status 값이 존재할 경우 상대방 아이디를 status 값으로 변경 후 
 			// 채팅방 제목 뒤에 (종료) 추가
 			if(status) {
-				title = status + "님과의 채팅방(종료)";
+				title = status + "님과의 채팅방 (종료)";
+				
+				let room = '<div class="chatRoomList ' + room_id + '">'
+				+ '<div class="chatRoomTitle" ondblclick="createRoom_end(\'' + room_id + '\', \'' + receiver_id + '\')">' + title + '</div>'
+				+ '</div>';
+				
+				$("#chatRoomListArea").append(room);
 			}
 			
-			let room = '<div class="chatRoomList ' + room_id + '">'
-						+ '<div class="chatRoomTitle" ondblclick="createRoom(\'' + room_id + '\', \'' + receiver_id + '\')">' + title + '</div>'
-						+ '</div>';
-			$("#chatRoomListArea").append(room);
+			if(status == ""){
+				
+				let room = '<div class="chatRoomList ' + room_id + '">'
+				+ '<div class="chatRoomTitle" ondblclick="createRoom(\'' + room_id + '\', \'' + receiver_id + '\')">' + title + '</div>'
+				+ '</div>';
+				
+				$("#chatRoomListArea").append(room);
+				
+			}
+			
 			
 		}
 		
@@ -367,6 +386,48 @@
 								+ '</div>';
 					
 					$("#chatRoomArea").append(room);
+			
+			
+		}
+	}
+	
+	function createRoom_end(room_id, receiver_id) {
+		// AJAX 를 활용하여 room_id 에 해당하는 채팅방의 모든 채팅목록 조회 요청
+		// => 단, 해당 채팅방이 열려있지 않을 경우에만 작업 요청 및 수행
+		// 현재 화면에서 상대방과의 채팅방이 열려있지 않으면 새 채팅방 표시
+		if(!$(".chatRoom").hasClass(room_id)) {
+			$.ajax({
+				url: "requestChatList", // ChatController 에서 매핑
+				data: {room_id : room_id}, // 룸ID 전달
+				dataType: "json", // 리턴데이터타입 JSON
+				success: function(chatList) {
+// 					console.log(JSON.stringify(chatList));
+					
+					console.log("채팅방 생성!");
+					// 생성할 채팅방의 hidden 태그에 채팅방의 룸ID 값을 value 속성값으로 저장
+					// 생성할 채팅방을 묶는 div 태그(".chatRoom")에 룸ID 를 클래스로 추가
+					let room = '<div class="chatRoom ' + room_id + '">'
+								+ '	<div class="chatMessageArea"></div>'
+								+ '	<div class="commandArea">'
+								+ '		<input type="text" class="chatMsg" disabled>'
+								+ '		<input type="hidden" class="room_id" value="' + room_id + '">'
+								+ '		<input type="hidden" class="receiver_id" value="' + receiver_id + '">'
+								+ '		<input type="button" class="btnSend_end" value="전송" disabled>'
+								+ '		<input type="button" class="btnQuitRoom" value="대화종료" onclick="quitRoom(this)">'
+								+ '	</div>'
+								+ '</div>';
+					
+					$("#chatRoomArea").append(room);
+					
+					if(chatList != "") {
+						for(let chat of chatList) {
+// 							console.log(current_user_id + ", " + chat.sender_id + ", " + chat.receiver_id + ", " + chat.message + ", " + chat.type + ", " + chat.send_time);
+							appendMessageToTargetRoom(room_id, chat.sender_id, chat.receiver_id, chat.message, chat.type, chat.send_time);
+						}
+					}
+				}
+			});
+			
 			
 			
 		}

@@ -117,6 +117,12 @@
     		  FROM EXITED_FEEDBACK;
 		</select>
 		
+		<select id="selectDepositCount">
+			SELECT COUNT(deposit_idx) as count
+            FROM DEPOSIT
+            WHERE member_id = #{sId}
+		</select>
+		
     	<update id="updateMember">
     		UPDATE MEMBER
 			   SET ${modify_type} = #{modify_value}
@@ -136,7 +142,6 @@
 	                    			WHEN ${col} = #{value} THEN TRUE 
 	  						   END
 		     WHERE member_id = #{sId};
-  						   
     	</update>
     	
     	<delete id="deleteInfo">
