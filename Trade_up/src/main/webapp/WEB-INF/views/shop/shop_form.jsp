@@ -251,11 +251,11 @@ function insertCheck(){
                 <div class="col-6">
                     <div class="contact__form">
 						<div style="display: grid;">
-						    <input type="text" name="product_name" class="input-name" placeholder="글제목">
+						    <input type="text" name="product_name" class="input-name" placeholder="글제목" required>
 						</div>
 						<div style="display: grid;">
-							<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10">
-							<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false" placeholder="- 상품명(브랜드) 
+							<input type="text" name="product_price" class="input-name" id="product_price" placeholder="판매가격" min="0" oninput="autoHyphen(this)" maxlength="10" required>
+							<textarea rows="2" name="product_info" cols="50" wrap="hard" maxlength="1000" spellcheck="false" required placeholder="- 상품명(브랜드) 
 - 구매 시기
 - 사용 기간
 - 하자 여부

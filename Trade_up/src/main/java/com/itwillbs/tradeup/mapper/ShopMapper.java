@@ -42,7 +42,10 @@ public interface ShopMapper {
 	int getSellerCount(int product_num);
 
 	// 카테고리 순
-	List<Map<String, Object>> categoryProductList(String category_name);
+	List<Map<String, Object>> fillterProductList(String category_name);
+	
+	// 카테고리 순
+	List<Map<String, Object>> searchProductList(String search);
 
 	// 최신 목록
 	List<Map<String, Object>> lastProductList(String category_name);
@@ -61,6 +64,12 @@ public interface ShopMapper {
 	String selectSellCount(String member_id);
 	
 	String selectAllCount();
+
+	int selectAccount(String sId);
+
+	Map<String, Object> dateTime(int product_num);
+	
+	
 
 
 }

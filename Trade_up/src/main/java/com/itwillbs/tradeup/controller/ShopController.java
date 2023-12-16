@@ -39,9 +39,12 @@ public class ShopController {
 	
 	
 	@GetMapping("Shop")
-	public String shop(Model model,@RequestParam(required = false) Map<String,String> map) {
-
+	public String shop(Model model,@RequestParam(required = false) Map<String,String> map
+						, HttpSession session) {
+		
 		List<Map<String, String>> selectCategory = service.selectCategory();
+		
+//		Map<String, String> dateTime = shopService.dateTime(product_num);
 
 		if(map.get("price") != null) {
 			String[] price = map.get("price")
@@ -65,24 +68,23 @@ public class ShopController {
 		model.addAttribute("productList", productList);
 		model.addAttribute("selectCategory", selectCategory);
 		model.addAttribute("allCount", allCount);
+//		model.addAttribute("dateTime", dateTime);
 		
 		return "shop/shop";
 	}
 	
-	
 	@ResponseBody
-	@PostMapping("CategoryProduct")
-	public List<Map<String, Object>> categoryProduct(@RequestParam(required = false) String category_name) {
+	@PostMapping("FillterProduct")
+	public List<Map<String, Object>> fillterProduct(@RequestParam(required = false) String category_name) {
 //		System.out.println("category_idx: " + category_name);
-		return shopService.categoryProductList(category_name);
-	}
-	
-//	@ResponseBody
-//	@PostMapping("CategoryProduct")
-//	public List<Map<String, Object>> searchProduct(@RequestParam(required = false) String category_name, String search) {
-////		System.out.println("category_idx: " + category_name);
-//		return shopService.categoryProductList(category_name);
-//	}	
+		return shopService.fillterProductList(category_name);
+	}	
+	@ResponseBody
+	@PostMapping("SearchProduct")
+	public List<Map<String, Object>> searchProduct(@RequestParam(required = false)String search) {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.searchProductList(search);
+	}	
 	
 	@ResponseBody
 	@PostMapping("LastProduct")
@@ -115,12 +117,19 @@ public class ShopController {
 	@GetMapping("ShopForm")
 	public String shopForm(@RequestParam(required = false) Map<String,String> map
 							, HttpSession session, Model model) {
+		String sId = (String)session.getAttribute("sId");
 		// 로그인X 처리
 		if(session.getAttribute("sId") == null) {
 			model.addAttribute("msg", "로그인 후 이용부탁드립니다.");
 			model.addAttribute("targetURL", "redirect:/");
 			return "fail_back";
 		}
+//		int count = shopService.selectAccount(sId);
+//		if(count != 1) {
+//			model.addAttribute("msg", "대표계좌를 설정해주세요.");
+//			model.addAttribute("targetURL", "redirect:/");
+//			return "fail_back";
+//		}
 		
 		List<Map<String, String>> selectCategory = service.selectCategory();
 //		System.out.println(selectCategory);

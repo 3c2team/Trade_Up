@@ -75,54 +75,25 @@
                 <div class="row">
                <!-- 왼쪽 -->
 				<div class="col-lg-6 col-md-9">
-                  <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                      <div class="product__details__pic__item">
-<!--                          <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false"> -->
-<!--                            <div class="carousel-indicators"> -->
-<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> -->
-<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> -->
-<!--                               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
-<!--                            </div> -->
-<!--                            <div class="carousel-inner"> -->
-<!--                               <div class="carousel-item active"> -->
-<%--                                  <img class="product__details__pic__form" id="main_img" src="${pageContext.request.contextPath }/resources/img/tradeup.jpg" class="d-block w-100" > --%>
-<!--                               </div> -->
-<%--                               <c:forEach items="${productImg }" var="productImg" begin="0" varStatus="status"> --%>
-<!--                                  <div class="carousel-item"> -->
-<%--                                     <img class="product__details__pic__form" src="${pageContext.request.contextPath }${productImg.product_image}" class="d-block w-100"> --%>
-<!--                                  </div> -->
-<%--                               </c:forEach> --%>
-<!--                            </div> -->
-<!--                               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"> -->
-<!--                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-<!--                                  <span class="visually-hidden">Previous</span> -->
-<!--                               </button> -->
-<!--                               <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"> -->
-<!--                                  <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-<!--                                  <span class="visually-hidden">Next</span> -->
-<!--                               </button> -->
-<!--                         </div> -->
-							    <div class="slidebox col-lg-12">
-							        <div class="slide">
-<%-- 										<c:forEach var="productImg" items="${productImg }" varStatus="status"> --%>
-					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
-					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
-					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
-					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
-					                        <div class="imgbox"><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" /></div>
-<%-- 										</c:forEach> --%>
-							        </div>
-							        <button class="prevbtn">&lt;</button>
-							        <button class="nextbtn">&gt;</button>
-							    </div>
-						    	<div class="btnbox">
+					<div class="tab-pane active" id="tabs-1" role="tabpanel">
+						<div class="product__details__pic__item">
+							<div class="slidebox col-lg-12">
+								<div class="slide">
 									<c:forEach var="productImg" items="${productImg }" varStatus="status">
-								        <button type="button" class="slide" ><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" alt="v${status.count}"/>${status.count}</button>
+			                        	<div class="imgbox"><img src="${pageContext.request.contextPath }${product.product_main_img}"/></div>
 									</c:forEach>
-						    	</div>
-							</div>
+						        </div>
+						        <button class="prevbtn">&lt;</button>
+						        <button class="nextbtn">&gt;</button>
+						    </div>
+						    	<div class="btnbox">
+								<c:forEach var="productImg" items="${productImg }" varStatus="status">
+							        <button type="button" class="slide" ><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" alt="v${status.count}"/>${status.count}</button>
+								</c:forEach>
+					    	</div>
 						</div>
 					</div>
+				</div>
                <!-- 오른쪽 -->
                     <div class="col-lg-6 col-md-9">
                   <div class="product__details__content" style="margin: 10%;">
@@ -246,7 +217,8 @@
 						                                <div class="product__item__text">
 						                                    <h6>${sellerProduct.product_name}</h6>
 						                                    <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
-															<p>${sellerProduct.trading_location} <span class="product-release">${sellerProduct.product_release}</span></p>
+															<p>${sellerProduct.trading_location} </p>
+<%-- 															<span class="product-release">${sellerProduct.product_release}</span> --%>
 						                                    <h5>${sellerProduct.product_price }</h5>
 						                                </div>
 						                            </div>
@@ -286,7 +258,8 @@
 							<div class="product__item__text">
 								<h6>${productList.product_name}</h6>
 								<a href="ShopDetail?product_num=${productList.product_num}" class="add-cart">상세보기</a>
-								<p>${productList.trading_location } <span> /${productList.product_release}</span></p>
+								<p>${productList.trading_location } </p>
+<%-- 								<span> /${productList.product_release}</span> --%>
 								<h5>${productList.product_price}</h5>
 							</div>
 						</div>
@@ -451,7 +424,6 @@
 
    //next
 	$('.nextbtn').click(function(){  //next 버튼 클릭 시
-		debugger;
 		if (nowimg == 1){
 			$('.slide').css('transform','translateX(-20%)');
 			nowimg = 2;

@@ -68,8 +68,11 @@ public class ShopService {
 		return mapper.getSellerCount(product_num);
 	}
 
-	public List<Map<String, Object>> categoryProductList(String category_name) {
-		return mapper.categoryProductList(category_name);
+	public List<Map<String, Object>> fillterProductList(String category_name) {
+		return mapper.fillterProductList(category_name);
+	}
+	public List<Map<String, Object>> searchProductList(String search) {
+		return mapper.searchProductList(search);
 	}
 
 	public List<Map<String, Object>> lastProductList(String category_name) {
@@ -98,6 +101,14 @@ public class ShopService {
 	
 	public String selectAllCount() {
 		return mapper.selectAllCount();
+	}
+	
+	public Map<String, Object> dateTime(int product_num) {
+		return mapper.dateTime(product_num);
+	}
+
+	public int selectAccount(String sId) {
+		return mapper.selectAccount(sId);
 	}
 
 

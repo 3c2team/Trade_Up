@@ -13,6 +13,10 @@
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <style type="text/css">
+.select{
+	background-color: #5F12D3;
+	color: white;
+}
 .btn{
 	 background-color:#e0e0e0;
 	 margin: 5px;
@@ -24,12 +28,12 @@
 </style>
 </head>
 <script type="text/javascript">
-	const searchParams = new URLSearchParams(location.search);
-	let category_name = "";
-	for (const param of searchParams) {
-	  category_name = param[1];
-	}
-	console.log(category_name);
+// 	const searchParams = new URLSearchParams(location.search);
+// 	let category_name = "";
+// 	for (const param of searchParams) {
+// 	  category_name = param[1];
+// 	}
+// 	console.log(category_name);
     $(function() {
 		var search = "";
 		var category = "";
@@ -38,19 +42,19 @@
 		
 // 		let selectCategory = "";
 		$(".cusor").on("click",function(){
-			location.href="Shop?category=" + $(this).text() + search + price;
-// 			selectCategory = $(this).text() + search + price;
+			category_name = $(this).text();
+			$(this).addClass("select");
+			location.href="Shop?category=" + $(this).text() + search;
 		});
 		
-		$(".nice-scroll li").click(function() {
-			category_idx = $(this).val();
-			$(".nice-scroll li").css("background-color" , "white");
-			$(".nice-scroll li").css("color" , "#6c757d");
-// 			$(selectCategory).css("background-color" , "#5F12D3");
-// 			$(selectCategory).css("color" , "white");
-		});
+// 		$(".nice-scroll li").click(function() {
+// 			$(".nice-scroll li").css("background-color" , "white");
+// 			$(".nice-scroll li").css("color" , "#6c757d");
+// 			$(this).css("background-color" , "#5F12D3");
+// 			$(this).css("color" , "white");
+// 		});
 // 			$(".nice-scroll li").each(function(){
-// // 				debugger;				
+// // // 				debugger;				
 // 				if($(this).text() == "${param.category}"){
 // 					$(".nice-scroll li").css("background-color" , "white");
 // 					$(".nice-scroll li").css("color" , "#6c757d");
@@ -63,11 +67,58 @@
 			category = "&category=${param.category}";
 			$("#category").attr("hidden",false);
 			$("#category").html("${param.category} <i class='bi bi-x'></i>");
+// 			alert("${param.category}");
+// 			alert("${param.search}");
 			$.ajax({
 				type: "POST",
-				url: "CategoryProduct",
+				url: "FillterProduct",
 				data: {
-					category_name : category_name
+					category_name : "${param.category}"
+				},
+				dataType: 'json',
+				success: function(data) {
+					$(".rightList").html("");
+					data.forEach( product =>{
+						$(".rightList").append( 
+							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
+							+ 	"<div class='product__item'>"
+							+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+							+ 			"<ul class='product__hover'>"
+							+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+							+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+							+ 			"</ul>"
+							+ 		"</div>"
+							+ 		"<div class='product__item__text'>"
+							+ 			"<h6>" + product.product_name + "</h6>"
+							+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+							+ 			"<p>" + product.trading_location + "</p>"
+							+ 			"<h5>" + product.product_price + "</h5>"
+							+ 		"</div>"
+							+	 "</div>"
+							+ "</div>"
+							
+						);
+// 						data.css("background-color" , "#5F12D3");
+// 						data.css("color" , "white");
+// 						$(".nice-scroll li").css("background-color" , "white");
+// 						$(".nice-scroll li").css("color" , "#6c757d");
+					});
+				},erorr: function() {
+					location.href="Shop";
+				}
+			
+			});
+		}
+		if("${param.search}"){
+			search = "&search=${param.search}";
+			$("#search").attr("hidden",false);
+			$("#search").html("${param.search} <i class='bi bi-x'></i>");
+// 			alert("${param.search}");
+			$.ajax({
+				type: "POST",
+				url: "SearchProduct",
+				data: {
+					search : "${param.search}"
 				},
 				dataType: 'json',
 				success: function(data) {
@@ -93,23 +144,29 @@
 						);
 					});
 				},erorr: function() {
+					alert("검색 결과가 없습니다.")
 					location.href="Shop";
 				}
 			
 			});
 		}
-		if("${param.search}"){
-// 			if("${param.category}"){
-// 				category_name = 
-// 			}
-			search = "&search=${param.search}";
-			$("#search").attr("hidden",false);
-			$("#search").html("${param.search} <i class='bi bi-x'></i>");
+// 		if("${param.price}"){
+// 			$("input[type=radio][name=radio]").each(function(){
+// 				if($(this).val() == "${param.price}"){
+// 					$(this).prop("checked",true);
+// 				}
+// 			});
+// 			price = "&price=${param.price}";
+// 			$("#price").attr("hidden",false);
+// 			$("#price").html("${param.price} <i class='bi bi-x'></i>");
+// 			alert("${param.price}");
 // 			$.ajax({
 // 				type: "POST",
-// 				url: "searchProduct",
+// 				url: "FillterProduct",
 // 				data: {
-// 					search : "${param.search}"
+					
+// 					search : "${param.search}",
+// 					price : "${param.price}"
 // 				},
 // 				dataType: 'json',
 // 				success: function(data) {
@@ -139,18 +196,8 @@
 // 					location.href="Shop";
 // 				}
 			
-			});
-		}
-		if("${param.price}"){
-			$("input[type=radio][name=radio]").each(function(){
-				if($(this).val() == "${param.price}"){
-					$(this).prop("checked",true);
-				}
-			});
-			price = "&price=${param.price}";
-			$("#price").attr("hidden",false);
-			$("#price").html("${param.price} <i class='bi bi-x'></i>");
-		}
+// 			});
+// 		}
 		
 		
 		$(".delete").on("click",function(){
@@ -177,7 +224,7 @@
 		$("#selectBox").change(function() {		    
 // 	 		debugger;
 			var result = $("#selectBox option:selected").val();
-			alert(category_name);
+// 			alert(category_name);
 		    if (result == 'last') {
 				$.ajax({
 					type: "POST",
@@ -323,35 +370,7 @@
 			}
 		});
 		
-// 	    각 span에 적용
-	    $('.elapsed-time').each(function () {
-	        const releaseDate = $(this).text(); // span의 텍스트를 가져옵니다
-	        const elapsed = elapsedTime(releaseDate);
-	
-// 	        경과 시간으로 변경된 값을 span에 다시 설정
-	        $(this).text(elapsed);
-	    });
 	});
-	 // 시간 변환 함수
-//     function elapsedTime(date) {
-//         const start = new Date(date);
-//         const end = new Date();
-
-//         const seconds = Math.floor((end.getTime() - start.getTime()) / 1000);
-//         if (seconds < 60) return '방금 전';
-
-//         const minutes = seconds / 60;
-//         if (minutes < 60) return `${Math.floor(minutes)}분 전`;
-
-//         const hours = minutes / 60;
-//         if (hours < 24) return `${Math.floor(hours)}시간 전`;
-
-//         const days = hours / 24;
-//         if (days < 7) return `${Math.floor(days)}일 전`;
-
-//         return `${start.toLocaleDateString()}`;
-//     }
-//     document.getElementById("elapsedTime").innerText = "${elapsedTimeString}";
     </script>
 <body>
 	<jsp:include page="../inc/top.jsp"></jsp:include>
@@ -403,11 +422,9 @@
                                         <div class="card-body">
                                             <div class="card-main">
                                                 <ul class="nice-scroll">
-                                                	<c:forEach var="selectCategory" items="${selectCategory }" varStatus="status">
-														<li class="cusor" value="${status.count }">
-<!-- 														<div class="cusor"> -->
+                                                	<c:forEach var="selectCategory" items="${selectCategory }">
+														<li class="cusor" value="${selectCategory.category_name }">
 														${selectCategory.category_name }
-<!-- 														</div> -->
 														</li>
                                                     </c:forEach>
                                                 </ul>
@@ -415,7 +432,6 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                 <input type="hidden" name="category_idx" id="category_idx"> -->
                                 <!-- 가격 -->
                                 <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
@@ -450,7 +466,6 @@
                                 <div class="shop__product__option__left">
                                     <p>총 ${allCount }개의 상품</p>
                                 </div>
-                                
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
@@ -473,16 +488,15 @@
 		                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
 		                                    <ul class="product__hover">
 		                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
-	<%-- 	                                        <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li> --%>
 		                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
 		                                    </ul>
 		                                </div>
 		                                <div class="product__item__text">
 		                                    <h6>${product.product_name}</h6>
 		                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
-											<p>${product.trading_location } / <span id="">${product.product_release}</span></p>
+											<p>${product.trading_location } </p>
+<%-- 											/ <span>${product.product_release}</span> --%>
 		                                    <h5>${product.product_price}</h5>
-<%-- 		                                    <fmt:formatDate value="${product.product_release }" pattern="yy-MM-dd HH:mm"/> --%>
 		                                </div>
 		                            </div>
 		                        </div>
