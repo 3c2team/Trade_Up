@@ -74,5 +74,8 @@ public class MyPageService {
 	public int updateDeleteMember(Map<String, Object> param) {
 		return mapper.updateDeletMember(param);
 	}
+	public String getDepositCount(String sId) {
+		return mapper.selectDepositCount(sId);
+	}
 
 }
