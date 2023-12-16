@@ -74,9 +74,9 @@
 									<div class="d-flex align-items-end row">
 										<div class="col-sm-7">
 											<div class="card-body">
-												<h5 class="card-title text-primary">신혜리님 안녕하세요!</h5>
+												<h5 class="card-title text-primary">${sessionScope.sName }님 안녕하세요!</h5>
 												<p class="mb-4">
-													신혜리님의 신뢰도 <span class="fw-bold">30%</span> 입니다.
+													${sessionScope.sName }님의 신뢰도 <span class="fw-bold">30%</span> 입니다.
 												</p> 
 												<div class="progress" style="height: 6px">
 													<div
@@ -125,7 +125,7 @@
 													</div>
 												</div>
 												<span class="fw-semibold d-block mb-1">Pay</span>
-												<h3 class="card-title mb-2">50,000원</h3>
+												<h3 class="card-title mb-2">${RemainPay }<c:if test="${empty RemainPay }">0</c:if>원</h3>
 												<small
 													class="text-success fw-semibold"
 													data-bs-toggle="modal"

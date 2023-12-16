@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MyPageService;
+import com.itwillbs.tradeup.service.PayService;
 import com.itwillbs.tradeup.service.bankApiClient;
 import com.itwillbs.tradeup.service.bankApiService;
 import com.itwillbs.tradeup.vo.BankAccountVO;
@@ -35,6 +36,9 @@ import com.itwillbs.tradeup.vo.ResponseUserInfoVO;
 public class MyPageController {
 	@Autowired
 	MyPageService service;
+	
+	@Autowired
+	PayService payService;
 	
 	@Autowired
 	private bankApiClient bankApiClient;
@@ -50,11 +54,18 @@ public class MyPageController {
 		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
 		List<Map<String, Object>> productsList = service.getMyPurchase(sId);
 		List<Map<String, Object>> salesList = service.getMyProduct(sId);
+		String depositCount = service.getDepositCount(sId);
+		String RemainPay = payService.getRemainPay(sId);
+		
+		System.out.println("페이 잔액: " + RemainPay);
 		
 		model.addAttribute("accountList", accountList);
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("productsList", productsList);
 		model.addAttribute("salesList", salesList);
+		model.addAttribute("depositCount", depositCount);
+		model.addAttribute("RemainPay", RemainPay);
+		
 		return "myPage/myPage_main";
 	}
 	
@@ -504,11 +515,9 @@ public class MyPageController {
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		if(!passwordEncoder.matches(param.get("password").toString(), map.get("member_passwd").toString())) {
-			System.out.println("비번 오류!");
 			return "false";
 		} 
 		
-		System.out.println("비번 맞음!");
 		return "true";
 	}
 	
