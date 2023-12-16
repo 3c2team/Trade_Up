@@ -1,6 +1,9 @@
 package com.itwillbs.tradeup.chat;
 
+
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,13 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 		System.out.println("웹소켓 연결됨(afterConnectionEstablished) - " + session.getId());
 	}
 
+	private String getNowToLocalDate() {
+		// LocalDateTime 클래스 활용하여 시스템의 현재 날짜 및 시각 정보 생성
+		LocalDateTime dateTime = LocalDateTime.now();
+		// DateTimeFormatter 클래스를 활용하여 LocalDateTime 의 포맷 지정
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return dateTime.format(dtf);
+	}
 	
 	// 웹소켓 객체를 통해 메세지 전송 시 자동으로 호출되는 메서드
 	@Override
@@ -58,13 +68,14 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 		// ------------------------------------------------------------------
 		// [ JSON 형식 문자열 파싱 - ChatMessage2 클래스 활용 ]
 		ChatMessage2 chatMessage = gson.fromJson(message.getPayload(), ChatMessage2.class);
-		System.out.println("들어온 전체 메세지 ==> ChatMessage : " + chatMessage);
+		System.out.println("ChatMessage : " + chatMessage);
+//		System.out.println("현재 시각 : " + getNowToLocalDate());
+		chatMessage.setSend_time(getNowToLocalDate());
 		// ------------------------------------------------------------------
 		// [ 채팅 페이지 진입 처리 또는 새 채팅창 추가 작업 처리 ]
 		// 사용자 아이디와 상대방 아이디를 변수에 저장
 		String sender_id = chatMessage.getSender_id();
 		String receiver_id = chatMessage.getReceiver_id();
-		System.out.println("처음 웹서버로  들어온 메세지 sender_id ==> " + sender_id + ", receiver_id ==>" + receiver_id);
 		
 		// 메세지 타입 판별
 		if(chatMessage.getType().equals(ChatMessage2.TYPE_INIT)) { 
@@ -91,7 +102,7 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 			// => 파라미터 : 자신의 아이디(sender_id)   
 			// => 리턴타입 : List<ChatRoomListVO>(chatRoomList)
 			List<Map<String, String>> chatRoomList = chatService.getChatRoomList(sender_id);
-			System.out.println("chatRoomList 확인 : " + chatRoomList);	
+//			System.out.println(chatRoomList);
 			// 조회 결과를 JSON 형식으로 변환하여 메세지로 설정
 			chatMessage.setMessage(gson.toJson(chatRoomList));
 			// 메세지 타입을 전체 목록 표시를 위한 LIST 로 설정
@@ -197,20 +208,21 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 					}
 					
 					// 메세지 전송
-					sendMessage(userSession.getSession(), chatMessage);
+//					sendMessage(userSession.getSession(), chatMessage);
 				} else if(chatMessage.getType().equals(ChatMessage.TYPE_LEAVE)) {
-					// 현재 채팅방의 정보를 활용하여 rooms 객체에서 채팅방 제거
-					rooms.remove(chatMessage.getRoom_id());
-					
 					// ChatService - removeChatRoomUser() 메서드 호출하여 채팅방 정보 제거
 					// => 파라미터 : ChatMessage2 객체   리턴타입 : int
 					int roomUserCnt = chatService.removeChatRoomUser(chatMessage); 
 					
-					// 자신의 세션에도 메세지 전송(자신의 브라우저 화면에서 방 제거 위해)
-					// => 단, 자신의 세션에 있는 채팅창만 제거하기 위해 타입을 REMOVE 로 변경 후 전송
-					chatMessage.setType(ChatMessage2.TYPE_REMOVE);
-					sendMessage(userSession.getSession(), chatMessage);
+					// 현재 채팅방의 정보를 활용하여 rooms 객체에서 채팅방 제거
+					// => 단, 해당 방의 참여자가 0 일 경우에만 제거
+					if(roomUserCnt == 0) {
+						rooms.remove(chatMessage.getRoom_id());
+					}
+					
 				}
+				
+				sendMessage(userSession.getSession(), chatMessage);
 				
 			}
 			
@@ -222,7 +234,7 @@ public class MyWebSocketHandler2 extends TextWebSocketHandler {
 			
 		} else { // 상대방이 채팅방을 삭제한 후 자신의 나가기를 눌렀을 때 아무 객체도 없을 경우
 			// 자신의 채팅방 삭제에 필요한 메세지 전송
-			chatMessage.setType(ChatMessage2.TYPE_REMOVE);
+			chatMessage.setType(ChatMessage2.TYPE_LEAVE);
 			sendMessage(session, chatMessage); // 현재 웹소켓 세션 객체 활용
 		}
 		

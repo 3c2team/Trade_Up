@@ -21,4 +21,7 @@ public interface ChatMapper {
 
 	int deleteChatRoomUser(ChatMessage2 chatMessage);
 
+	int selectCurrentChatRoomUserCountFromRoomId(ChatMessage2 chatMessage);
+
+	void updateChatRoomUser(ChatMessage2 chatMessage);
 }

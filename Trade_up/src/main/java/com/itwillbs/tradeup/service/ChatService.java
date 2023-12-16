@@ -20,8 +20,8 @@ public class ChatService {
 	public void addChatRoom(ChatMessage2 chatMessage) {
 		// 1개 방 정보(룸아이디, 사용자아이디)를 갖는 ChatRoomListVO 객체 생성하여 List 에 추가
 		List<ChatRoomListVO> chatRoomList = new ArrayList<ChatRoomListVO>();
-		chatRoomList.add(new ChatRoomListVO(chatMessage.getRoom_id(), chatMessage.getSender_id()));
-		chatRoomList.add(new ChatRoomListVO(chatMessage.getRoom_id(), chatMessage.getReceiver_id()));
+		chatRoomList.add(new ChatRoomListVO(chatMessage.getRoom_id(), chatMessage.getSender_id(), ""));
+		chatRoomList.add(new ChatRoomListVO(chatMessage.getRoom_id(), chatMessage.getReceiver_id(), ""));
 		mapper.insertChatRoom(chatRoomList);
 	}
 
@@ -42,7 +42,9 @@ public class ChatService {
 
 	// 채팅방 사용자 삭제 요청
 	public int removeChatRoomUser(ChatMessage2 chatMessage) {
-		return mapper.deleteChatRoomUser(chatMessage);
+		mapper.deleteChatRoomUser(chatMessage); // 사용자 삭제
+		mapper.updateChatRoomUser(chatMessage); // 채팅방 사용자 정보 수정
+		return mapper.selectCurrentChatRoomUserCountFromRoomId(chatMessage); // 남은 사용자 조회
 	}
 }
 

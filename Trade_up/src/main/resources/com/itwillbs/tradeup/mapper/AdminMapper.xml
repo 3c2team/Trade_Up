@@ -84,7 +84,8 @@
 		    D.product_price
 		    , D.deposit_bank
 		    , D.deposit_acc
-		    , D.sell_check
+            , D.merchant_uid
+            , D.deposit_date
 			, M.member_name
 		FROM DEPOSIT D JOIN MEMBER M
 		ON D.member_id = M.member_id
@@ -157,7 +158,7 @@
  	<select id="selectWithdrawCharge" resultType="com.itwillbs.tradeup.vo.WithdrawVO">
  		SELECT *
  		FROM WITHDRAW
- 		WHERE buy_check = '구매확정'
+ 		WHERE buy_check = '구매 확정'
  	</select>
  	
  	<!-- 공지사항 등록 -->
@@ -219,7 +220,7 @@
 	<select id="selectCommissionSum" resultType="map">
 		SELECT sum(commission) as chargeSum
 		FROM WITHDRAW
-		WHERE buy_check = '구매확정'
+		WHERE buy_check = '구매 확정'
 	</select>
 	
 	<select id="selectFixWithdrawSearch" resultType="map">

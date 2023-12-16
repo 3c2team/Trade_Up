@@ -12,10 +12,11 @@ public class DepositVO {
 	private String owner_bank;
 	private String owner_acc;
 	private String product_price; 
+	private String merchant_uid;
 	private String member_id; 
 	private String method;
 	private String sell_check; 
-	private Timestamp deposit_date;
+	private String deposit_date;
 	private String member_name;
 	
 }

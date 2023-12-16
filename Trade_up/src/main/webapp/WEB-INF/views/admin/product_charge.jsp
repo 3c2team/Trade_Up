@@ -137,7 +137,7 @@
 															<c:when test="${CommissionList.buy_check eq '확정대기'}">
 																<span class="badge bg-label-hold me-1" style="font-size:small;">${CommissionList.buy_check}</span>
 															</c:when>
-															<c:when test="${CommissionList.buy_check eq '구매확정'}">
+															<c:when test="${CommissionList.buy_check eq '구매 확정'}">
 																<span class="badge bg-label-approval me-1" style="font-size:small;">${CommissionList.buy_check}</span>
 															</c:when>
 														</c:choose>

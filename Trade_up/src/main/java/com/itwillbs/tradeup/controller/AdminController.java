@@ -80,11 +80,14 @@ public class AdminController {
 			model.addAttribute("CommissionList",WithdrawCharge);
 			
 			// 금일 수수료 금액, 금일 거래량
-//			map = adminService.selectCommissionSum();
-//			if(map.get("chargeSum") == null) {
-//				model.addAttribute("commission",0);
-//			}
-//			model.addAttribute("commission",map.get("chargeSum"));
+			map = adminService.selectCommissionSum();
+			System.out.println("금일 수수료 금액, 금일 거래량 : " + map);
+			
+			if(map.get("chargeSum") == null) {
+				model.addAttribute("commission",0);
+			}
+			
+			model.addAttribute("commission",map.get("chargeSum"));
 			return "admin/product_charge";
 		
 	}
@@ -123,6 +126,10 @@ public class AdminController {
 		
 		// 입금한 내역 조회
 		List<DepositVO> depositList = adminService.selectDepositList();
+		
+		System.out.println("depositList ==> " + depositList);
+		
+		
 		model.addAttribute("depositList",depositList);
 		
 		return "admin/deposit";

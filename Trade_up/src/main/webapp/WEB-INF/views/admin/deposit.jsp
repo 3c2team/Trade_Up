@@ -95,23 +95,21 @@
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>상품정보</th>
 													<th>판매자</th>
 													<th>신뢰지수</th>
 													<th>입금액</th>
-													<th>입금 상태</th>
+													<th>상품번호</th>
 													<th>입금계좌</th>
+													<th>입금날짜</th>
 												</tr>
 											</thead>
 											<tbody>
 											<c:forEach var="depositList" items="${depositList }">
 												<tr>
 													<td><input type="checkbox" name="checkbox" ></td>
-													<td>
-														<div class="">
-															<div class=""><strong>****상품명****</strong></div>
-														</div>
-													</td>
+<!-- 													<td> -->
+<%-- 														${depositList.merchant_uid} --%>
+<!-- 													</td> -->
 													<td>${depositList.member_name }</td>
 													<td>
 														<span class="badge bg-label-state" style="font-size:small;">88%</span>
@@ -120,10 +118,13 @@
 								                        <span class="badge bg-label-prohibition" style="font-size:small;">${depositList.product_price }</span>	
 													</td>
 													<td>
-								                        <span>${depositList.sell_check}</span>	
+								                        <span>${depositList.merchant_uid}</span>	
 													</td>
 													<td>
 								                        <span>${depositList.deposit_bank} (${depositList.deposit_acc})</span>	
+													</td>
+													<td>
+								                        <span>${depositList.deposit_date}</span>	
 													</td>
 												</tr>
 											</c:forEach>

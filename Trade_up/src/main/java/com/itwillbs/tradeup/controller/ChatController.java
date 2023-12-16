@@ -32,9 +32,6 @@ public class ChatController {
 			
 			model.addAttribute("receiverId", memberId);
 			
-//			return "myChat";
-//			return "chat/shopDetail_Main2";
-//			return "chat/chat_main";
 			return "chat/chat_main";
 		}
 		

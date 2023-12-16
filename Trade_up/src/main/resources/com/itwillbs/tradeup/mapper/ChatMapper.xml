@@ -3,14 +3,14 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itwillbs.tradeup.mapper.ChatMapper">
-		<!-- 채팅방 추가 -->
+	<!-- 채팅방 추가 -->
 	<insert id="insertChatRoom">
 		INSERT 
 		INTO CHAT_ROOM_LIST 
 		VALUES
 		<!-- 복수개의 항목을 한꺼번에 INSERT 할 경우 반복문 형식의 <foreach> 태그 활용 -->
 		<foreach item="chatRoom" collection="list" separator=",">
-			(#{chatRoom.room_id}, #{chatRoom.user_id})
+			(#{chatRoom.room_id}, #{chatRoom.user_id}, "")
 		</foreach>
 	</insert>
 	
@@ -30,6 +30,7 @@
 					room_id = c.room_id
 					AND user_id != c.user_id
 			) AS receiver_id
+			, c.status
 		FROM CHAT_ROOM_LIST AS c 
 		WHERE c.user_id = #{sender_id};
 	</select>
@@ -66,7 +67,7 @@
 					, 'N' -- 아무에게도 출력하지 않음
 				</otherwise>
 			</choose>
-			, now()
+			, #{send_time} -- 외부에서 설정한 날짜 및 시각 그대로 저장
 		)
 	</insert>
 	
@@ -78,6 +79,23 @@
 			room_id = #{room_id}
 			AND user_id = #{sender_id}
 	</delete>
+	
+	<!-- 룸ID 에 해당하는 채팅방 유져 정보 삭제 후 -->
+	<!-- 남은 유져의 채팅방 정보에 채팅방 상태 변경(퇴장한 상대방 아이디 기록) -->
+	<update id="updateChatRoomUser">
+		UPDATE CHAT_ROOM_LIST
+		SET status = #{sender_id}
+		WHERE
+			room_id = #{room_id}
+	</update>
+	
+	<!-- 현재 채팅방의 남은 유져 조회 -->
+	<select id="selectCurrentChatRoomUserCountFromRoomId" resultType="int">
+		SELECT COUNT(*)
+		FROM CHAT_ROOM_LIST
+		WHERE
+			room_id = #{room_id}
+	</select>
 </mapper>
 
 
