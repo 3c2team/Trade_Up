@@ -144,7 +144,7 @@
 										<span style="font-size:14px; color: #9e9e9e;">현재 페이지에서는 상품 카테고리를 삭제하거나 등록을 할 수 있습니다.<br></span>
 										<span style="font-size:14px;color: red;">*카테고리를 삭제할 시 그에 관한 상품도 같이 삭제되니 삭제할때는 주의하시길 바랍니다.*</span>
 									</div>
-								<div class="custom_div_box3" style="float: inline-end;">
+								<div id="load_div"class="custom_div_box3" style="float: inline-end;">
 									<c:forEach var="category" items="${category }">
 										<div style="display: flex;align-items: baseline;">
 											<input type="text" readonly class="form-text form-control" style="width: 80%;" value="${category.category_name }">
@@ -208,6 +208,8 @@
 						},
 						success: function(data) {
 							alert("등록 되었습니다.");
+							debugger;
+							location.reload();
 						},erorr: function() {
 							alert("등록에 실패했습니다.");
 						}
@@ -224,10 +226,12 @@
 					},
 					success: function(data) {
 						alert("삭제 되었습니다.");
+						location.reload();
 					},erorr: function() {
 						alert("삭제에 실패했습니다.");
 					}
 				});
+				
 			}
 		});
 	</script>

@@ -84,6 +84,11 @@ public class MainController {
 		
 		return "shopping_cart";
 	}
+	@GetMapping("Result")
+	public String Result() {
+		
+		return "result";
+	}
 	//사기조회 페이지 이동
 	@GetMapping("FraudInquiry")
 	public String fraudInquiry() {

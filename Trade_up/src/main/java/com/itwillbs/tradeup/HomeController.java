@@ -39,7 +39,6 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		List<Map<String, Object>> productList = null;
 		String sId = (String)session.getAttribute("sId");
-		System.out.println("세션이없을땐 어케 찍히나? " + sId);
 		if(session.getAttribute("sId") != null) {
 			productList = mainService.mainProductList(sId);
 		}else {

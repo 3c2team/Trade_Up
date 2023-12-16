@@ -109,7 +109,6 @@
                 </c:forEach>
             </div>
         </div>
-       
     </section>
     <!-- Product Section End -->
 

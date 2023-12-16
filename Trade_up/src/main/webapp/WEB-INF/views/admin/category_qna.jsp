@@ -226,6 +226,8 @@
 	<script src="${pageContext.request.contextPath }/resources/js/admin_calender.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_search_list.js"></script>
 	<script type="text/javascript">
+		$(function() {
+		})
 		$(".custom_div_box4").on("click",function(){
 // 			debugger;
 			if($(".add_category").is(':visible')==true){
@@ -275,19 +277,17 @@
 										dataType: 'json',
 										success: function(data) {
 											alert("삭제에 성공했습니다.");
-											
+											location.reload();
 										},erorr: function() {
 											alert("삭제에 실패했습니다.");
 										}
 									});
+									
 								}
 								return;
 							}
 							if(confirm("등록하시겠습니까?")){
-								alert($("#insert_detail").val());
-								alert($(".on2")[0].id);
-								
-								debugger;
+										
 								$.ajax({
 									type: "POST",
 									url: "InsertQnaCategoryDetail",
@@ -298,11 +298,12 @@
 									dataType: 'json',
 									success: function(data) {
 										alert("등록에 완료했습니다.");
-										
+										location.reload();
 									},erorr: function() {
 										alert("등록에 실패했습니다.");
 									}
 								});
+								
 							}
 							
 						});
@@ -323,7 +324,7 @@
 					},
 					success: function(data) {
 						alert("삭제에 완료했습니다.");
-						
+						location.reload();
 					},erorr: function() {
 						alert("삭제에 실패했습니다.");
 					}
@@ -343,6 +344,7 @@
 			);
 			$("#next").on("click",function(){
 				if(confirm("등록하시겠습니까?")){
+// 					debugger;
 					$.ajax({
 						type: "POST",
 						url: "InsertQnaCategory",
@@ -351,7 +353,7 @@
 						},
 						success: function(data) {
 							alert("등록에 완료했습니다.");
-							
+							location.reload();
 						},erorr: function() {
 							alert("등록에 실패했습니다.");
 						}
