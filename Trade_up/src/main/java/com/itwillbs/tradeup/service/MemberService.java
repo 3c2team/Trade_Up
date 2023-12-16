@@ -83,7 +83,7 @@ public class MemberService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=1582f2676c7805fc4f4fc798652b9f28");
-            sb.append("&redirect_uri=http://localhost:8081/tradeup/kakao");
+            sb.append("&redirect_uri=http://c3d2306t2.itwillbs.com/Trade_up/kakao");
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();

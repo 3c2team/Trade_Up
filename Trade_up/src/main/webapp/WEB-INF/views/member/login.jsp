@@ -56,7 +56,7 @@
 						<div class="kakaoLogin">
 							<a href="https://kauth.kakao.com/oauth/authorize?
 										client_id=1582f2676c7805fc4f4fc798652b9f28
-										&redirect_uri=http://localhost:8081/tradeup/kakao
+										&redirect_uri=http://c3d2306t2.itwillbs.com/Trade_up/kakao
 										&response_type=code" id="kakaoLogin">
 					            		Kakao 로그인
 					        </a>
