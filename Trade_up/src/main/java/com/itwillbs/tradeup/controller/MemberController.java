@@ -350,6 +350,11 @@ public class MemberController {
 //            return "admin/admin_login";
 //         }
 		
+		if(dbMember.get("member_state").equals("탈퇴")) {
+			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
+			return "fail_back";
+		}
+		
 		if(dbMember == null || !passwordEncoder.matches(member_passwd, dbMember.get("member_passwd"))) {
 			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
 			return "fail_back";
