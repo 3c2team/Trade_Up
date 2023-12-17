@@ -308,16 +308,17 @@ public class PayController {
 				return "forward";
 			}
 			
+			Map<String, String> mainAccount = service.getMainAccount(sId);
+			map.put("account_num", mainAccount.get("account_num"));
+			map.put("account_bank", mainAccount.get("account_bank"));
+			map.put("acc_num", "2023120106");
+			map.put("acc_bank","KDB산업은행");
+			
 			if(Integer.parseInt(map.get("chargeMoney")) > 0) { // 충전해야할 금액이 있는 경우
 				Map<String, String> tokenInfo = service.getTokenInfo(sId); // 토큰 정보 가져오기
 				map.put("access_token", tokenInfo.get("access_token"));
 				map.put("user_seq_no", tokenInfo.get("user_seq_no"));
 				map.put("fintech_use_num", tokenInfo.get("fintech_use_num"));
-				Map<String, String> mainAccount = service.getMainAccount(sId);
-				map.put("account_num", mainAccount.get("account_num"));
-				map.put("account_bank", mainAccount.get("account_bank"));
-				map.put("acc_num", "2023120106");
-				map.put("acc_bank","KDB산업은행");
 				map.put("member_id", sId);
 				ResponseWithdrawVO withdrawResult = bankApiClient.requestWithdraw(map);
 				System.out.println("4" + withdrawResult);
@@ -346,7 +347,7 @@ public class PayController {
 	}
 	
 	// 구매확정
-	@PostMapping("BuyCheck")
+	@GetMapping("BuyCheck")
 	public String buyCheck(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 		System.out.println(map);
 		// Map으로 받아올 정보 - 구매자가 구매확정을 누름 판매자 정보는 상품 번호로 조인해서 들고 올 것

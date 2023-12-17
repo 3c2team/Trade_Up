@@ -135,7 +135,7 @@
 														</c:choose>
 													</td>
 													<td class="align-middle">
-														<button class="btn btn-sm btn-outline-primary" onclick="location.href='BuyCheck?product_num=${product.product_num }'">거래완료</button>
+														<button class="btn btn-sm btn-outline-primary" onclick="buyCheck(${product.product_num })">거래완료</button>
 													</td>
 												</tr>
 										</c:forEach>
@@ -185,5 +185,14 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script type="text/javascript">
+    function buyCheck(productNum) {
+    	if (!confirm("해당 상품을 구매확정 처리 하시겠습니까? (구매 확정 처리 이후 환불은 어렵습니다.)")) {
+            return;
+        }
+		alert("구매확정 처리 되었습니다.")
+		location.href='BuyCheck?product_num=productNum';
+	}
+    </script>
 	</body>
 </html>

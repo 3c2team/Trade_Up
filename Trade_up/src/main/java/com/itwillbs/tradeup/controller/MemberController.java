@@ -225,6 +225,11 @@ public class MemberController {
 			return "fail_back";
 		}
 		
+		if(member.get("member_state").equals("탈퇴")) {
+			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
+			return "fail_back";
+		}
+		
 		session.setAttribute("sName", member_name);
 		session.setAttribute("sPhone", member_phone_num);
 		session.setAttribute("sId", member.get("member_id"));
@@ -243,6 +248,11 @@ public class MemberController {
 		Map<String, String> member = service.getMemberToPhone(member_phone_num);
 		if (member == null || !member_id.equals(member.get("member_id"))) {
 			model.addAttribute("msg", "정보에 해당하는 회원이 없습니다.");
+			return "fail_back";
+		}
+		
+		if(member.get("member_state").equals("탈퇴")) {
+			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
 			return "fail_back";
 		}
 		
@@ -283,6 +293,12 @@ public class MemberController {
         Map<String, String> dbMember = service.getMemberKakaoLogin(kakao_id);
     	
     	if(dbMember != null) { // 연동 이력이 있는 경우
+    		
+    		if(dbMember.get("member_state").equals("탈퇴")) {
+    			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
+    			return "fail_back";
+    		}
+    		
     		session.setAttribute("kakao_id", kakao_id);
             session.setAttribute("access_Token", access_Token);
             session.setAttribute("sId", dbMember.get("member_id"));
@@ -291,7 +307,7 @@ public class MemberController {
             session.setAttribute("sEmail", dbMember.get("member_e_mail"));
             session.setAttribute("loginUser", dbMember);
             model.addAttribute("msg", "로그인에 성공했습니다. 메인페이지로 이동합니다."); // 출력할 메세지
-			model.addAttribute("targetURL", "/"); // 이동시킬 페이지
+			model.addAttribute("targetURL", "redirect:/"); // 이동시킬 페이지
 			return "forward";
     	}
     	
@@ -318,6 +334,12 @@ public class MemberController {
 			model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
 			return "fail_back";
 		}
+		
+		if(dbMember.get("member_state").equals("탈퇴")) {
+			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
+			return "fail_back";
+		}
+		
 		session.setAttribute("sId", map.get("member_id"));
 		session.setAttribute("sName", dbMember.get("member_name"));
         session.setAttribute("sPhone", dbMember.get("member_phone_num"));

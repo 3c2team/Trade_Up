@@ -26,7 +26,7 @@
 			<input class="phone" name="member_phone_num" id="member_phone_num" type="text" placeholder="전화번호">
 			<input type="submit" class="submit" id="btn_submit" style="margin-left: 31%" value="비밀번호 찾기">
 <!-- 			<p class="submit" align="center">전화번호 인증</p> -->
-			<a href="JoinAgree" class="join" style="margin-left:20%">회원가입</a>
+			<a href="Join" class="join" style="margin-left:20%">회원가입</a>
 			<a href="IdForgot" class="idForgot" style="margin-left: 30%">아이디찾기</a>
 		</form>
     </div>
