@@ -33,7 +33,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo" id="easterEgg" onclick="easterEgg()">
 <!--                     <div class="header__logo" id="easterEgg" > -->
-                        <a href="./"><img src="${pageContext.request.contextPath }/resources/img/logo.png" style="width: 70%" alt=""></a>
+                        <a href="./"><img src="${pageContext.request.contextPath }/resources/img/logo.png" style="width: 50%; margin-left: 175px;" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">

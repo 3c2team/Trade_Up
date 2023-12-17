@@ -480,7 +480,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rightList" style="display: flex;">
+                    <div class="rightList" >
 	                    <div class="row">
 	                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
 		                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
