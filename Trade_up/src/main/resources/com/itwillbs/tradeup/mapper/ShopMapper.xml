@@ -9,8 +9,7 @@
 	<select id="selectAccount" resultType="int"> 
 		SELECT COUNT(*)
 		  FROM MY_ACCOUNT
-		WHERE member_id = #{sId}
-		  AND account_main = true
+		 WHERE member_id = #{sId} AND account_main = true
    	</select>
 	
 	<!-- 상품 등록 -->
@@ -26,7 +25,16 @@
 				,#{file_name}
 				,#{trading_method}
 				,#{product_status}
+				<if test="trading_location == null">
+<!-- 				<if test="!map.containsKey('trading_location')"> -->
+				,(SELECT address1
+			        FROM MY_ADDRESS
+			       WHERE member_id = #{member_id})
+				</if>
+				<if test="trading_location != null">
+<!-- 				</if> -->
 		 		,#{trading_location}
+				</if>
 				,'판매중'
 				,#{delivery_method}
 			   )
@@ -68,7 +76,7 @@
 	<select id="getSellerProduct" resultType="map">
 		SELECT *
 		  FROM PRODUCT
-		 WHERE member_id = #{member_id}
+		 WHERE member_id = #{member_id} AND sales_status = '판매중'
 	</select>
 	
 	<!-- 판매자 상품 개수 -->

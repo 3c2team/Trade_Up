@@ -109,9 +109,9 @@
         $(".product__color__select label, .shop__sidebar__size label").removeClass('active');
         $(this).addClass('active');
     });
-    $(".product__details__option__delivery label").on("click", function () {
-		$(".product__details__option__delivery label").removeClass('active1');
-		$(this).addClass('active1');
+    $(".product__details__option__size label").on("click", function () {
+		$(".product__details__option__size label").removeClass('active');
+		$(this).addClass('active');
 	});
 
     /*-------------------

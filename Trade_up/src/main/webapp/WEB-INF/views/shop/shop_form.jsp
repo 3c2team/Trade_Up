@@ -8,7 +8,7 @@
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Male-Fashion | Template</title>
+<title>Trade up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -23,6 +23,7 @@
 
 
 const dataTransfer = new DataTransfer();
+let fileCheck = "";
 	
 const autoHyphen = (target) => {
 	target.value = target.value
@@ -30,12 +31,11 @@ const autoHyphen = (target) => {
 	.replace(/\B(?=(\d{3})+(?!\d))/g,",");
 }
 
-const autoEnter = (target) => {
-	target.value = target.value.replace(/\r\n|\n/ , "<br>");
-}
+// const autoEnter = (target) => {
+// 	target.value = target.value.replace(/\r\n|\n/ , "<br>");
+// }
 
 $(function () {
-	
 	// li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
 		$(".nice-scroll li").css("background-color" , "white");
@@ -45,18 +45,21 @@ $(function () {
 		$(this).css("color" , "white");
 // 		alert($("#hidCategory").val());
 // 		debugger;
+		
+
 	});
 	
 	
 	$(".trading_method1").on("click",function(){
 		if($(".trading_method1").is(":checked")){
-			let method1 = "<label class='delivery_method' for='xxlx'><input type='radio' id='xxlx' name='delivery_method' value='배송비 별도'>배송비 별도</label>";
-			let method2 = "<label class='delivery_method' for='xxlxx'><input type='radio' id='xxlxx' name='delivery_method' value='배송비 포함'>배송비 포함</label>"
-			$('.product__details__option__delivery').append(method1+method2);
+			let method1 = "<label class='delivery_method' for='xxlx'><input type='radio' id='xxlx' name='delivery_method' value='배송비 별도' checked style='accent-color:#5F12D3;'>배송비 별도</label>";
+			let method2 = "<label class='delivery_method' for='xxlxx'><input type='radio' id='xxlxx' name='delivery_method' value='배송비 포함' style='accent-color:#5F12D3;'>배송비 포함</label>"
+			$('.product__details__option__delivery').append(method1 + method2);
 		} 
 		if(!$(".trading_method1").is(":checked")){
 			$(".product__details__option__delivery").empty();
 		}
+		
 	});
 	
 // 	$(".checkout__input__checkbox").on('click', function () {
@@ -139,11 +142,7 @@ function uploadImageHandler(e) {
 	});
 	e.target.files = dataTransfer.files;
 	$("#count").text($("#file")[0].files.length);
-	if(insertCheck()){
-		if(e.target.files == "" || e.target.files == "undefined" || e.target.files == null){
-			return false;
-		}
-	}
+	
 }
 
 function tradingLocation(){
@@ -160,45 +159,35 @@ function tradingLocation(){
 
 function insertCheck(){
 	
-	if ($(".category_idx").val() == "") {
+    if( $("#file").val() == ''){
+		alert("첨부파일 1개 이상 첨부해주세요.");
+		return false;
+	}
+    if( $("#hidCategory").val() == ''){
 		alert("카테고리를 선택해주세요.");
 		return false;
 	}
-	if ($("input[name:product_name]").val() == "") {
-		alert("상품 이름을 입력해주세요.");
-		return false;
-	}
-	if ($("input[name:product_price]").val() == "") {
-		alert("판매가격을 입력해주세요.");
-		return false;
-	}
-	if ($("input[name:product_status]").val() == "") {
-		alert("판매정보를 입력해주세요.");
-		return false;
-	}
-	if ($(".category_idx").val() == "") {
-		alert("카테고리를 선택해주세요.");
-		return false;
-	}
-	if($('input[name=product_info]').val() == "undefined" || $('input[name=product_info]').val() == "" || $('input[name=product_info]').val() == null){
-		alert("판매할 상품정보를 입력해주세요.");
-		return false;
-	}
-	if($('input[name=trading_method1]:checked').val() == "undefined" || $('input[name=trading_method1]:checked').val() == "" || $('input[name=trading_method1]:checked').val() == null){
-		alert("거래 방법을 선택해주세요.");
-		return false;
-	}
-// 	const checkboxes = document.querySelectorAll('input');
-
-//     for( let i = 0; i < checkboxes.length; i ++){
-//         if(checkboxes[i].checked === true) return false;	
-//     }
-//     alert('검색할 파일 형태를 선택하세요.'); 
+    if (!$(".trading_method1").is(':checked')) {
+    	if(!$(".trading_method2").is(':checked')){
+			$("#check").css("color", "red");
+			$('#check').append("<span style='color: red;'>을 선택해주세요.</span>");
+			return false;
+    	}
+    }
+    if ($(".trading_method2").is(":checked")) {
+    	if($("#trading_location").val() == ""){
+		      alert("직거래 희망 장소를 입력해주세요.");
+		      return false;
+    	}
+    }
+	
 	var result = confirm("판매등록 하시겠습니까?");
-		if(result){
-			$("form").submit();
-		}
-	return false;
+	
+	if(!result){
+		return false;
+	}
+// 		$("form").submit();
+	
 }
 
 </script>
@@ -209,7 +198,7 @@ function insertCheck(){
 	</header>
 
     <!-- 본문 시작 -->
-    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" >
+    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return insertCheck()">
     	<section class="contact shop_spad">
 			<div class="section-title">
 			    <h2>판매하기</h2>
@@ -267,18 +256,18 @@ function insertCheck(){
 							<div class="product__details__option__size">
 								<fieldset id="product_status">
 									<span style="color: #111111; font-weight: 700;">상품상태</span>
-									<label class="active" for="중고">중고
-										<input type="radio" id="xxl" name="product_status" value="중고" checked>
+									<label class="active" for="xxl">
+										<input type="radio" id="xxl" name="product_status" value="중고" checked style="accent-color:#5F12D3;">중고
 									</label>
-									<label for="새상품">새상품
-										<input type="radio" id="xl" name="product_status" value="새상품">
+									<label for="xl">
+										<input type="radio" id="xl" name="product_status" value="새상품" style="accent-color:#5F12D3;">새상품
 									</label>
 								</fieldset>
                            	</div>
                         </div>
 						<div class="product__details__option">
-							<div class="product__details__option__size">
-								<span style="color: #111111; font-weight: 700;">거래방법</span>
+							<div class="product__details__option">
+								<span style="color: #111111; font-weight: 700;" id="check">거래방법</span>
 								<label class="checkout__input__checkbox"><input type="checkbox" name="trading_method1" class="trading_method1" value="delivery" style="accent-color:#5F12D3;">택배거래</label>
 								<label class="checkout__input__checkbox"><input type="checkbox" name="trading_method2" class="trading_method2" value="direct" style="accent-color:#5F12D3;">직거래</label>
 							</div>
@@ -287,7 +276,7 @@ function insertCheck(){
 						<div class="address d-flex justify-content-center" style="display: contents; margin-top: 30px;"></div>
 						<div class="product__form__submit">
 							<button class="site-btn" onclick="history.back()">돌아가기</button>
-							<button class="site-btn" onclick="insertCheck()">판매등록</button>
+							<button type="submit" class="site-btn" >판매등록</button>
 						</div>
 					</div>
 				</div>

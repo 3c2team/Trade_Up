@@ -9,7 +9,7 @@
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Male-Fashion | Template</title>
+<title>Trade up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <style type="text/css">
@@ -383,7 +383,7 @@
                     <div class="breadcrumb__text">
                         <h4>거래하기</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">홈</a>
+                            <a href="./">홈</a>
                             <span>거래하기</span>
                         </div>
                     </div>
@@ -480,7 +480,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rightList">
+                    <div class="rightList" style="display: flex;">
 	                    <div class="row">
 	                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
 		                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
