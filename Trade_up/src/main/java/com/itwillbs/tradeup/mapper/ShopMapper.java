@@ -55,6 +55,18 @@ public interface ShopMapper {
 	
 	// 높은 가격순
 	List<Map<String, Object>> highProductList(String category_name);
+	
+	// 최신 목록
+	List<Map<String, Object>> relastProductList();
+	
+	// 찜 목록
+	List<Map<String, Object>> rejjimProductList();
+	
+	// 낮은 가격순
+	List<Map<String, Object>> relowProductList();
+	
+	// 높은 가격순
+	List<Map<String, Object>> rehighProductList();
 
 	String selectJJim(int product_num);
 
