@@ -186,6 +186,42 @@
 		 WHERE sales_status = '판매중' AND product_name LIKE('%${search}%') 
 	  ORDER BY product_release DESC
 	</select>
+	<!-- 카테고리별 조회 -->
+	<select id="fillterProductList">
+		SELECT 
+			CASE
+			    WHEN TIMESTAMPDIFF(SECOND, product_release, NOW()) &lt; 60 THEN '방금 전'
+			    WHEN TIMESTAMPDIFF(MINUTE, product_release, NOW()) &lt; 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, product_release, NOW()), '분 전')
+			    WHEN TIMESTAMPDIFF(HOUR, product_release, NOW()) &lt; 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, product_release, NOW()), '시간 전')
+			    WHEN TIMESTAMPDIFF(DAY, product_release, NOW()) = 1 THEN '어제'
+			    WHEN TIMESTAMPDIFF(DAY, product_release, NOW()) &lt; 7 THEN CONCAT(TIMESTAMPDIFF(DAY, product_release, NOW()), '일 전')
+			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) = 1 THEN '한 달 전'
+			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
+			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
+			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  FROM PRODUCT
+		 WHERE sales_status = '판매중'
+	  ORDER BY product_release DESC
+	</select>
+	
+	<select id="searchProductList">
+		SELECT 
+			CASE
+			    WHEN TIMESTAMPDIFF(SECOND, product_release, NOW()) &lt; 60 THEN '방금 전'
+			    WHEN TIMESTAMPDIFF(MINUTE, product_release, NOW()) &lt; 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, product_release, NOW()), '분 전')
+			    WHEN TIMESTAMPDIFF(HOUR, product_release, NOW()) &lt; 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, product_release, NOW()), '시간 전')
+			    WHEN TIMESTAMPDIFF(DAY, product_release, NOW()) = 1 THEN '어제'
+			    WHEN TIMESTAMPDIFF(DAY, product_release, NOW()) &lt; 7 THEN CONCAT(TIMESTAMPDIFF(DAY, product_release, NOW()), '일 전')
+			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) = 1 THEN '한 달 전'
+			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
+			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
+			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  FROM PRODUCT
+		 WHERE sales_status = '판매중' AND product_name LIKE('%${search}%') 
+	  ORDER BY product_release DESC
+	</select>
 
 	<!-- 최신 목록 -->
 	<select id="lastProductList">
@@ -286,7 +322,7 @@
 		   SET product_name = #{product_name}
 			   , product_price = #{product_price}
 			   , product_info = #{product_info}
-			   , product_release = #{product_release}
+			   , product_release = now()
 			   , product_main_img = #{file_name}
 			   , trading_method = #{trading_method}
 			   , product_status = #{product_status}

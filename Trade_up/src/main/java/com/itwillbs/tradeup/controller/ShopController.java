@@ -113,7 +113,6 @@ public class ShopController {
 		return shopService.lowProductList(category_name.trim());
 	}	
 	
-	
 	@GetMapping("ShopForm")
 	public String shopForm(@RequestParam(required = false) Map<String,String> map
 							, HttpSession session, Model model) {
@@ -341,8 +340,8 @@ public class ShopController {
 		//-------------------- < 이미지명 처리 : 3자리 랜덤 > --------------------
 		String uuid = UUID.randomUUID().toString();
 		System.out.println("s234123515163456 : " + file);
-		int insertImgCount = 0;
-		int insertCount = 0;
+		int updateImgCount = 0;
+		int updateCount = 0;
 		int index = 0;
 		try {
 			for(MultipartFile file2 : file) {
@@ -360,17 +359,17 @@ public class ShopController {
 				//System.out.println("프로덕트에 넣을 수 있어? : "+map.get("file_name"));
 				
 				if(index < 1) {
-					insertCount = shopService.registProduct(map);
+					updateCount = shopService.updateProduct(map);
 				}
 				
-				insertImgCount = shopService.registProductImg(map);
+				updateImgCount = shopService.registProductImg(map);
 				//System.out.println(" 이미지 몇개씩 들어있어? :"+map.get("product_image"));
 				
 				index++;
 			}
-				if(insertCount > 0 && insertImgCount > 0) { //성공
-					model.addAttribute("msg", "판매할 상품을 등록했습니다.");
-					model.addAttribute("targetURL", "Shop");
+				if(updateCount > 0 && updateImgCount > 0) { //성공
+					model.addAttribute("msg", "판매할 상품을 수정했습니다.");
+					model.addAttribute("targetURL", "MySales");
 					return "forward";
 				}
 		//------------------ < 게시물 등록 처리 > -------------------

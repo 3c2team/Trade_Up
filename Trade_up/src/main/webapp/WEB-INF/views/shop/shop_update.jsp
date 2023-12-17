@@ -152,10 +152,10 @@ function insertCheck(){
 		alert("첨부파일 1개 이상 첨부해주세요.");
 		return false;
 	}
-    if( $("#hidCategory").val() == ''){
-		alert("카테고리를 선택해주세요.");
-		return false;
-	}
+//     if( $("#hidCategory").val() == ''){
+// 		alert("카테고리를 선택해주세요.");
+// 		return false;
+// 	}
     if (!$(".trading_method1").is(':checked')) {
     	if(!$(".trading_method2").is(':checked')){
 			$("#check").css("color", "red");

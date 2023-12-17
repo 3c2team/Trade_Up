@@ -326,7 +326,7 @@
 			alert("로그인 후 이용바랍니다.");
 			return;
 		}
-		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=500, height=430");
+		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=300, height=300");
       
 	}
 	
