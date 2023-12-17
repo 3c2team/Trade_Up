@@ -7,6 +7,7 @@ $(function(){
 	$("#revoke").on("click",function(){
 		if($("input[name=checkbox]:checked").each(function(){
 			member_id.push($(this).val());
+//			alert(member_id);
 			location.href="MemberRevoke?member_id="+member_id;
 		})){
 		}else{

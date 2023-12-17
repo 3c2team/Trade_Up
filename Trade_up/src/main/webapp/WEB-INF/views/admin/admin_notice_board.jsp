@@ -115,7 +115,7 @@
 											</c:forEach>
 											</tbody>
 										</table>	
-									<input type="submit" id="delete_btn" class="btn btn-primary" value="삭제">	
+									<input type="button" id="delete_btn" class="btn btn-primary" value="삭제">	
 									<input type="button" class="btn default"  id="open_notice_insert" style="border-radius: 3px; margin-bottom: 3px; font-size: small; color: #fff; background: darkgreen; float:right;" value="공지사항 등록">
 <!-- 								</form> -->
 
@@ -160,6 +160,7 @@
 	<script src="${pageContext.request.contextPath }/resources/js/admin_datatable.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_calender.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/admin_search_list.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/admin_authorization.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/admin_notice_delete.js"></script>
+	
 	</body>
 </html>
