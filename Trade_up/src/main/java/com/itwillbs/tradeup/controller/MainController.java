@@ -178,6 +178,7 @@ public class MainController {
 		model.addAttribute("sellerCount", sellerCount);
 		model.addAttribute("Seller", Seller);
 		model.addAttribute("sellerProduct", sellerProduct);
+		model.addAttribute("member_id",member_id);
 		return "user_market";
 	}
 	@PostMapping("QuestionRegistPro")

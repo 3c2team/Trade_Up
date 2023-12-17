@@ -93,6 +93,7 @@
 					<img class="user_profile" alt="" src="https://img2.joongna.com/common/Profile/Default/profile_m.png">
 					<div>
 						<h1 class="user_name">${Seller.member_nick_name}
+						<input type="hidden" id="sellMember" value="${member_id}">
 						<c:if test="${!empty Seller.naver_id}">
 							<img class="icon_img" style="margin-left: 7px;" src="${pageContext.request.contextPath }/resources/img/icon/naver_icon.png">
 						</c:if>
@@ -112,7 +113,7 @@
 					</div>
 				</div>
 			</div>
-			<input type="button" class="custom_chat_btn" value="채팅하기">
+			<input type="button" class="custom_chat_btn" value="채팅하기" onclick="openChat()">
 			<div class="custom_font">${Seller.Count }개의 상품</div>
 			<div style="display: flex;">
 				<c:forEach var="sellerProduct" items="${sellerProduct }">
@@ -137,4 +138,14 @@
 		</div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+	//채팅 연결
+	function openChat() {
+	   let memberId = $("#sellMember").val();
+// 	   alert(memberId);
+	//      alert(memberId);
+	//    window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
+		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=400, height=530");
+}
+</script>
 </html>
