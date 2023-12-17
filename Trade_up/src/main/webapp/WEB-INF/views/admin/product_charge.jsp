@@ -114,7 +114,7 @@
 											<thead>
 												<tr>
 <!-- 													<th>#</th> -->
-													<th>상품정보</th>
+													<th>상품번호</th>
 													<th>구매자</th>
 													<th>구매완료 여부</th>
 													<th>출금액</th>
@@ -127,9 +127,7 @@
 												<tr>
 <!-- 													<td><input type="checkbox" name="checkbox" value=""></td> -->
 													<td>
-<!-- 														<div class=""> -->
-															<div class=""><strong>****상품명****</strong></div>
-<!-- 														</div> -->
+														${CommissionList.merchant_uid}
 													</td>
 													<td>${CommissionList.member_name}</td>
 													<td>

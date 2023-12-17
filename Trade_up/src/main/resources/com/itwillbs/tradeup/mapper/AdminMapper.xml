@@ -72,6 +72,7 @@
 		    , W.withdraw_acc
 		    , W.commission
 		    , W.buy_check
+		    , W.merchant_uid
 			, M.member_name
 		FROM WITHDRAW W JOIN MEMBER M
 		ON W.member_id = M.member_id

@@ -18,4 +18,5 @@ public class WithdrawVO {
 	private String buy_check;
 	private Timestamp withdraw_date;
 	private String member_name;
+	private String merchant_uid;
 }
