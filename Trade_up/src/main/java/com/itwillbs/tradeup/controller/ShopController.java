@@ -77,7 +77,7 @@ public class ShopController {
 	@PostMapping("FillterProduct")
 	public List<Map<String, Object>> fillterProduct(@RequestParam(required = false) String category_name) {
 //		System.out.println("category_idx: " + category_name);
-		return shopService.fillterProductList(category_name);
+		return shopService.fillterProductList(category_name.trim());
 	}	
 	@ResponseBody
 	@PostMapping("SearchProduct")
@@ -90,27 +90,27 @@ public class ShopController {
 	@PostMapping("LastProduct")
 	public List<Map<String, Object>> lastProduct(@RequestParam(required = false) String category_name) {
 //		System.out.println("category_idx: " + category_name);
-		return shopService.lastProductList(category_name);
+		return shopService.lastProductList(category_name.trim());
 	}	
 	@ResponseBody
 	@PostMapping("JjimProduct")
 	public List<Map<String, Object>> jjimProduct(@RequestParam(required = false) String category_name) {
-//		System.out.println("category_idx: " + category_name);
-		return shopService.jjimProductList(category_name);
+		System.out.println("category_idx: " + category_name);
+		return shopService.jjimProductList(category_name.trim());
 	}	
 	
 	@ResponseBody
 	@PostMapping("HighProduct")
 	public List<Map<String, Object>> highProduct(@RequestParam(required = false) String category_name) {
 //		System.out.println("category_idx: " + category_name);
-		return shopService.highProductList(category_name);
+		return shopService.highProductList(category_name.trim());
 	}	
 	
 	@ResponseBody
 	@PostMapping("LowProduct")
 	public List<Map<String, Object>> lowProduct(@RequestParam(required = false) String category_name) {
 //		System.out.println("category_idx: " + category_name);
-		return shopService.lowProductList(category_name);
+		return shopService.lowProductList(category_name.trim());
 	}	
 	
 	

@@ -254,8 +254,8 @@
 	
 	<!-- 낮은 가격 목록 -->
 	<select id="lowProductList">
-	  SELECT replace(replace(product_price, "원", "") , ",", "") as p
-		CASE
+	   SELECT replace(replace(product_price, "원", "") , ",", "") as p,
+		  CASE
 		    WHEN TIMESTAMPDIFF(SECOND, product_release, NOW()) &lt; 60 THEN '방금 전'
 		    WHEN TIMESTAMPDIFF(MINUTE, product_release, NOW()) &lt; 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, product_release, NOW()), '분 전')
 		    WHEN TIMESTAMPDIFF(HOUR, product_release, NOW()) &lt; 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, product_release, NOW()), '시간 전')
@@ -265,12 +265,12 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-	  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
 		FROM PRODUCT
 	   WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
 														   FROM CATEGORY
 														  WHERE category_name = #{category_name}) 
-	ORDER BY cast(p as unsigned)
+	ORDER BY cast(p as unsigned) asc
 	</select>
 	
 	<!-- 판매중 목록 -->

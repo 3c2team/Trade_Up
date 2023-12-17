@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d&libraries=services"></script>
-<title>Trade up</title>
+<title>Trade Up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <style type="text/css">
    .report_img{
@@ -248,9 +248,8 @@
 											<c:forEach items="${sellerProduct}" var="sellerProduct" end="2">
 											    <div class="col">
 								                    <div class="product__item sale">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px; overflow: hidden;" data-setbg="${product.product_main_img}">
+						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px; overflow: hidden;" data-setbg="${sellerProduct.product_main_img}">
 						                                    <ul class="product__hover">
-						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
 						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
 						                                    </ul>
 						                                </div>
@@ -290,7 +289,6 @@
 						<div class="product__item">
 							<div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
 								<ul class="product__hover">
-									<li><a href="ShopDetail?product_num=${productList.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
 									<li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
 								</ul>
 							</div>

@@ -2901,7 +2901,7 @@ s
 
 .checkout__input__checkbox label input {
 	position: absolute;
-/* 	visibility: hidden; */
+	visibility: hidden;
 }
 
 .checkout__input__checkbox label input:checked~.checkmark {

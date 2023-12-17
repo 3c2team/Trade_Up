@@ -9,7 +9,7 @@
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Trade up</title>
+<title>Trade Up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <style type="text/css">
@@ -28,12 +28,12 @@
 </style>
 </head>
 <script type="text/javascript">
-// 	const searchParams = new URLSearchParams(location.search);
-// 	let category_name = "";
-// 	for (const param of searchParams) {
-// 	  category_name = param[1];
-// 	}
-// 	console.log(category_name);
+	const searchParams = new URLSearchParams(location.search);
+	let category_name = "";
+	for (const param of searchParams) {
+	  category_name = param[1];
+	}
+	console.log(category_name);
     $(function() {
 		var search = "";
 		var category = "";
@@ -73,7 +73,7 @@
 				type: "POST",
 				url: "FillterProduct",
 				data: {
-					category_name : "${param.category}"
+					category_name : category_name
 				},
 				dataType: 'json',
 				success: function(data) {
@@ -81,21 +81,21 @@
 					data.forEach( product =>{
 						$(".rightList").append( 
 							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-							+ 	"<div class='product__item'>"
-							+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-							+ 			"<ul class='product__hover'>"
-							+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-							+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-							+ 			"</ul>"
-							+ 		"</div>"
-							+ 		"<div class='product__item__text'>"
-							+ 			"<h6>" + product.product_name + "</h6>"
-							+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-							+ 			"<p>" + product.trading_location + "</p>"
-							+ 			"<h5>" + product.product_price + "</h5>"
-							+ 		"</div>"
-							+	 "</div>"
-							+ "</div>"
+		                     +    "<div class='product__item'>"
+		                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+		                     +          "<ul class='product__hover'>"
+		                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+		                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+		                     +          "</ul>"
+		                     +       "</div>"
+		                     +       "<div class='product__item__text'>"
+		                     +          "<h6>" + product.product_name + "</h6>"
+		                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+		                     +          "<p>" + product.trading_location + "</p>"
+		                     +          "<h5>" + product.product_price + "</h5>"
+		                     +       "</div>"
+		                     +    "</div>"
+		                     + "</div>"
 							
 						);
 // 						data.css("background-color" , "#5F12D3");
@@ -126,21 +126,21 @@
 					data.forEach( product =>{
 						$(".rightList").append( 
 							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-							+ 	"<div class='product__item'>"
-							+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-							+ 			"<ul class='product__hover'>"
-							+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-							+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-							+ 			"</ul>"
-							+ 		"</div>"
-							+ 		"<div class='product__item__text'>"
-							+ 			"<h6>" + product.product_name + "</h6>"
-							+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-							+ 			"<p>" + product.trading_location + "</p>"
-							+ 			"<h5>" + product.product_price + "</h5>"
-							+ 		"</div>"
-							+	 "</div>"
-							+ "</div>"
+		                     +    "<div class='product__item'>"
+		                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+		                     +          "<ul class='product__hover'>"
+		                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+		                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+		                     +          "</ul>"
+		                     +       "</div>"
+		                     +       "<div class='product__item__text'>"
+		                     +          "<h6>" + product.product_name + "</h6>"
+		                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+		                     +          "<p>" + product.trading_location + "</p>"
+		                     +          "<h5>" + product.product_price + "</h5>"
+		                     +       "</div>"
+		                     +    "</div>"
+		                     + "</div>"
 						);
 					});
 				},erorr: function() {
@@ -238,21 +238,21 @@
 						data.forEach( product =>{
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
+			                     +    "<div class='product__item'>"
+			                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+			                     +          "<ul class='product__hover'>"
+			                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+			                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+			                     +          "</ul>"
+			                     +       "</div>"
+			                     +       "<div class='product__item__text'>"
+			                     +          "<h6>" + product.product_name + "</h6>"
+			                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+			                     +          "<p>" + product.trading_location + "</p>"
+			                     +          "<h5>" + product.product_price + "</h5>"
+			                     +       "</div>"
+			                     +    "</div>"
+			                     + "</div>"
 							);
 						});
 					},erorr: function() {
@@ -274,21 +274,21 @@
 						data.forEach( product =>{
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
+			                     +    "<div class='product__item'>"
+			                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+			                     +          "<ul class='product__hover'>"
+			                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+			                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+			                     +          "</ul>"
+			                     +       "</div>"
+			                     +       "<div class='product__item__text'>"
+			                     +          "<h6>" + product.product_name + "</h6>"
+			                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+			                     +          "<p>" + product.trading_location + "</p>"
+			                     +          "<h5>" + product.product_price + "</h5>"
+			                     +       "</div>"
+			                     +    "</div>"
+			                     + "</div>"
 							);
 						});
 					},erorr: function() {
@@ -310,21 +310,21 @@
 						data.forEach( product =>{
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
+			                     +    "<div class='product__item'>"
+			                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+			                     +          "<ul class='product__hover'>"
+			                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+			                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+			                     +          "</ul>"
+			                     +       "</div>"
+			                     +       "<div class='product__item__text'>"
+			                     +          "<h6>" + product.product_name + "</h6>"
+			                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+			                     +          "<p>" + product.trading_location + "</p>"
+			                     +          "<h5>" + product.product_price + "</h5>"
+			                     +       "</div>"
+			                     +    "</div>"
+			                     + "</div>"
 							);
 						});
 					},erorr: function() {
@@ -346,21 +346,21 @@
 						data.forEach( product =>{
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
-								+ 	"<div class='product__item'>"
-								+ 		"<div class='product__item__pic set-bg' data-setbg='${pageContext.request.contextPath}"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
-								+ 			"<ul class='product__hover'>"
-								+ 				"<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
-								+ 				"<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
-								+ 			"</ul>"
-								+ 		"</div>"
-								+ 		"<div class='product__item__text'>"
-								+ 			"<h6>" + product.product_name + "</h6>"
-								+ 			"<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
-								+ 			"<p>" + product.trading_location + "</p>"
-								+ 			"<h5>" + product.product_price + "</h5>"
-								+ 		"</div>"
-								+	 "</div>"
-								+ "</div>"
+			                     +    "<div class='product__item'>"
+			                     +       "<div class='product__item__pic set-bg' data-setbg='"+ product.product_main_img +"' onclick='location.href=ShopDetail?product_num="+ product.product_num+"'>"
+			                     +          "<ul class='product__hover'>"
+			                     +             "<li><a href='ShopDetail?product_num=" + product.product_num + "'><img src='${pageContext.request.contextPath}/resources/img/icon/heart.png' alt='찜'></a></li>"
+			                     +             "<li><img src='${pageContext.request.contextPath}/resources/img/icon/search.png' alt='자세히보기'></li>"
+			                     +          "</ul>"
+			                     +       "</div>"
+			                     +       "<div class='product__item__text'>"
+			                     +          "<h6>" + product.product_name + "</h6>"
+			                     +          "<a href='ShopDetail?product_num=" + product.product_num + "' class='add-cart'>상세보기</a>"
+			                     +          "<p>" + product.trading_location + "</p>"
+			                     +          "<h5>" + product.product_price + "</h5>"
+			                     +       "</div>"
+			                     +    "</div>"
+			                     + "</div>"
 							);
 						});
 					},erorr: function() {
@@ -433,26 +433,26 @@
                                     </div>
                                 </div>
                                 <!-- 가격 -->
-                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__price">
-                                            <ul>
-                                                <li class="custom_li">
-                                                	<label><input type="radio" class="radio form-check-input"name="radio" value="10만원 이하">10만원 이하</label>
-                                                </li>
-                                                <li class="custom_li">
-                                                	<label><input type="radio" class="radio form-check-input" name="radio" value="10만원 - 30만원 이하">10만원 - 30만원 이하</label>
-                                                </li>
-                                                <li class="custom_li">
-                                                	<label><input type="radio" class="radio form-check-input" name="radio" value="30만원 - 50만원 이하">30만원 - 50만원 이하</label>
-                                                </li>
-                                                <li class="custom_li">
-                                                	<label><input type="radio" class="radio form-check-input" name="radio" value="50만원 이상">50만원 이상</label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                 <div id="collapseThree" class="collapse show" data-parent="#accordionExample"> -->
+<!--                                     <div class="card-body"> -->
+<!--                                         <div class="shop__sidebar__price"> -->
+<!--                                             <ul> -->
+<!--                                                 <li class="custom_li"> -->
+<!--                                                 	<label><input type="radio" class="radio form-check-input"name="radio" value="10만원 이하">10만원 이하</label> -->
+<!--                                                 </li> -->
+<!--                                                 <li class="custom_li"> -->
+<!--                                                 	<label><input type="radio" class="radio form-check-input" name="radio" value="10만원 - 30만원 이하">10만원 - 30만원 이하</label> -->
+<!--                                                 </li> -->
+<!--                                                 <li class="custom_li"> -->
+<!--                                                 	<label><input type="radio" class="radio form-check-input" name="radio" value="30만원 - 50만원 이하">30만원 - 50만원 이하</label> -->
+<!--                                                 </li> -->
+<!--                                                 <li class="custom_li"> -->
+<!--                                                 	<label><input type="radio" class="radio form-check-input" name="radio" value="50만원 이상">50만원 이상</label> -->
+<!--                                                 </li> -->
+<!--                                             </ul> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
                             </div>
                         </div>
                     </div>
@@ -480,15 +480,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rightList" >
+                    <div class="rightList" style="display: flex; flex-wrap: wrap;">
 	                    <div class="row">
 	                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
 		                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
 		                            <div class="product__item">
 		                                <div class="product__item__pic set-bg" data-setbg="${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
 		                                    <ul class="product__hover">
-		                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
-		                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
+		                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
 		                                    </ul>
 		                                </div>
 		                                <div class="product__item__text">
