@@ -64,10 +64,11 @@
 				 , p.product_price 
 			 	 , p.sales_status 
 				 , p.trading_method 
+				 , p.product_release
 			  FROM PRODUCT p
 			  JOIN CATEGORY c 
 			    ON p.category_idx = c.category_idx
-			 WHERE p.member_id = #{sId};
+			 WHERE p.member_id = #{sId}
 		  ORDER BY product_release DESC;
     	</select>
     	
