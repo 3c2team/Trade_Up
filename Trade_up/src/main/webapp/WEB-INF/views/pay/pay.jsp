@@ -94,6 +94,7 @@
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span>같은 상품을 2회 이상 주문 완료 후 취소하실 경우 그 상품은 구매하실 수 없으므로 신중하게 구매해 주세요.</h6>
                             <h6 class="checkout__title">결제 정보</h6>
+                            <c:if test="${!empty deliver.member_address1 }">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>받으시는 분 : ${deliver.member_name }</p>
@@ -135,6 +136,7 @@
                                     </p>
                                 </div>
                             </div>
+                            </c:if>
                             <hr>
                             <div class="col-lg-12">
                                 <div class="checkout__input">

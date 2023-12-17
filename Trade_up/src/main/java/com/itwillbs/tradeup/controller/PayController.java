@@ -176,7 +176,6 @@ public class PayController {
 	// 업페이
 	@PostMapping("PaymentPro")
 	public String paymentPro(@RequestParam Map<String, String> map, Model model, HttpSession session) {
-		System.out.println(map);
 		String sId = LoginNeed(session, model);
 		
 		if(map.get("pick").equals("Y")) {

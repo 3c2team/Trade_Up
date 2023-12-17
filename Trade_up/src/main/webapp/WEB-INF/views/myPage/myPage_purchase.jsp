@@ -191,7 +191,7 @@
             return;
         }
 		alert("구매확정 처리 되었습니다.")
-		location.href='BuyCheck?product_num=productNum';
+		location.href='BuyCheck?product_num=' + productNum;
 	}
     </script>
 	</body>
