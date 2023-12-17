@@ -185,7 +185,7 @@
 												</div>
 											</c:if>
 											<c:forEach var="favorite" items="${favoriteList }" end="7">
-												<li class="d-flex mb-4 pb-1">
+												<li class="d-flex mb-4 pb-1" onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
 													<div class="avatar flex-shrink-0 me-3">
 														<img src="${favorite.product_main_img }"  class="rounded" />
 													</div>
@@ -226,7 +226,7 @@
 												</div>
 											</c:if>
 											<c:forEach var="products" items="${productsList }" end="7">
-												<li class="d-flex mb-4 pb-1">
+												<li class="d-flex mb-4 pb-1"  onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
 													<div class="avatar flex-shrink-0 me-3">
 														<img src="${products.product_main_img }" class="rounded" />
 													</div>
@@ -266,7 +266,7 @@
 												</div>
 											</c:if>
 											<c:forEach var="sales" items="${salesList }" end="7">
-												<li class="d-flex mb-4 pb-1">
+												<li class="d-flex mb-4 pb-1"onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
 													<div class="avatar flex-shrink-0 me-3">
 														<img src="${sales.product_main_img }" class="rounded" />
 													</div>
