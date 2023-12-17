@@ -77,5 +77,8 @@ public class MyPageService {
 	public String getDepositCount(String sId) {
 		return mapper.selectDepositCount(sId);
 	}
+	public String getTotalWithdraw(String sId) {
+		return mapper.selectTotalWithdraw(sId);
+	}
 
 }

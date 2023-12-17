@@ -56,6 +56,8 @@ public class MyPageController {
 		List<Map<String, Object>> salesList = service.getMyProduct(sId);
 		String depositCount = service.getDepositCount(sId);
 		String RemainPay = payService.getRemainPay(sId);
+		String totalWithdraw = service.getTotalWithdraw(sId);
+		
 		
 		System.out.println("페이 잔액: " + RemainPay);
 		
@@ -65,6 +67,7 @@ public class MyPageController {
 		model.addAttribute("salesList", salesList);
 		model.addAttribute("depositCount", depositCount);
 		model.addAttribute("RemainPay", RemainPay);
+		model.addAttribute("totalWithdraw", totalWithdraw);
 		
 		return "myPage/myPage_main";
 	}

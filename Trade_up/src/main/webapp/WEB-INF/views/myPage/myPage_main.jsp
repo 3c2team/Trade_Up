@@ -153,26 +153,9 @@
 														class="rounded"
 														/>
 													</div>
-													<div class="dropdown">
-														<button
-														class="btn p-0"
-														type="button"
-														id="cardOpt6"
-														data-bs-toggle="dropdown"
-														aria-haspopup="true"
-														aria-expanded="false"
-														>
-															<i class="bx bx-dots-vertical-rounded"></i>
-														</button>
-														<div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-															<a class="dropdown-item" href="javascript:void(0);">View More</a>
-															<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-														</div>
-													</div>
 												</div>
-												<span>Sales</span>
-												<h3 class="card-title text-nowrap mb-1">$4,679</h3>
-												<small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+												<span>이번달 지출금액</span>
+												<h3 class="card-title text-nowrap mb-1"><c:if test="${empty totalWithdraw }">0</c:if>${totalWithdraw } 원</h3>
 											</div>
 										</div>
 									</div>
@@ -204,7 +187,7 @@
 												<c:forEach var="favorite" items="${favoriteList }" end="7">
 													<li class="d-flex mb-4 pb-1">
 														<div class="avatar flex-shrink-0 me-3">
-															<img src="${pageContext.request.contextPath }/resources/myPage/assets/img/icons/unicons/wallet.png" class="rounded" />
+															<img src="${favorite.product_main_img }v" class="rounded" />
 														</div>
 														<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 															<div class="me-2">
@@ -245,7 +228,7 @@
 											<c:forEach var="products" items="${productsList }" end="7">
 												<li class="d-flex mb-4 pb-1">
 													<div class="avatar flex-shrink-0 me-3">
-														<img src="${pageContext.request.contextPath }/resources/myPage/assets/img/icons/unicons/wallet.png" class="rounded" />
+														<img src="${products.product_main_img }" class="rounded" />
 													</div>
 													<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 														<div class="me-2">
@@ -285,7 +268,7 @@
 											<c:forEach var="sales" items="${salesList }" end="7">
 												<li class="d-flex mb-4 pb-1">
 													<div class="avatar flex-shrink-0 me-3">
-														<img src="${pageContext.request.contextPath }/resources/myPage/assets/img/icons/unicons/wallet.png" class="rounded" />
+														<img src="${sales.product_main_img }" class="rounded" />
 													</div>
 													<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 														<div class="me-2">

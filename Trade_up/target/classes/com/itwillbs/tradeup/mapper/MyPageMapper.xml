@@ -72,6 +72,15 @@
 		  ORDER BY product_release DESC;
     	</select>
     	
+    	<select id="selectTotalWithdraw">
+    		SELECT SUM(product_price) AS total_product_price
+			  FROM WITHDRAW
+		     WHERE 1=1
+			   AND member_id = #{sId}
+			   AND MONTH(withdraw_date) = MONTH(CURRENT_DATE())
+			   AND YEAR(withdraw_date) = YEAR(CURRENT_DATE());
+    	</select>
+    	
     	<select id="selectMyPurchase" resultType="map">
     		SELECT p.product_num 
 				 , p.product_main_img 

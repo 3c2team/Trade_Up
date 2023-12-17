@@ -49,4 +49,6 @@ public interface MyPageMapper {
 	int updateDeletMember(Map<String, Object> param);
 	// 거래건수 조회
 	String selectDepositCount(String sId);
+	// 한달 사용금액 
+	String selectTotalWithdraw(String sId);
 }
