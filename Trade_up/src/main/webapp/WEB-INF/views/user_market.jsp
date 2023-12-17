@@ -115,25 +115,24 @@
 			</div>
 			<input type="button" class="custom_chat_btn" value="채팅하기" onclick="openChat()">
 			<div class="custom_font">${Seller.Count }개의 상품</div>
-			<div style="display: flex;">
-				<c:forEach var="sellerProduct" items="${sellerProduct }">
-					<div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
-						<div class="product__item">
-							<div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${sellerProduct.product_num}'">
-								<ul class="product__hover">
-									<li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
-									<li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
-								</ul>
-							</div>
-							<div class="product__item__text">
-								<h6>${sellerProduct.product_name}</h6>
-								<a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
-								<p>${sellerProduct.trading_location }<span> / ${sellerProduct.product_release }</span></p>
-								<h5>${sellerProduct.product_price}원</h5>
-		        			</div>
-		    			</div>
-					</div>
-				</c:forEach>
+			<div style="display: flex;flex-wrap: wrap;">
+			<c:forEach items="${sellerProduct }" var="product" begin="0" varStatus="status">
+			<div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
+				<div class="product__item">
+				    <div class="product__item__pic set-bg" data-setbg="${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
+						<ul class="product__hover">
+						    <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
+						    </ul>
+						</div>
+						<div class="product__item__text">
+						    <h6>${product.product_name}</h6>
+						<a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
+						<p>${product.trading_location } <span> / ${product.productRelease}</span></p>
+						<h5>${product.product_price}</h5>
+			        </div>
+			    </div>
+			</div>
+			</c:forEach>
 			</div>
 		</div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>

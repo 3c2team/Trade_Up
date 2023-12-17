@@ -88,7 +88,7 @@ debugger;
 						$("#registrationProduct").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6'>"
 							+"<div class='product__item'>"
-							+"		<div class='product__item__pic set-bg' data-setbg='productList.product_main_img' onclick="+goProductDetail+">"
+							+"		<div class='product__item__pic set-bg' "+style+"data-setbg='productList.product_main_img' onclick="+goProductDetail+">"
 							+"			<ul class='product__hover'>"
 							+"				<li><img src='${pageContext.request.contextPath }/resources/img/icon/search.png' alt='자세히보기'></li>"
 							+"			</ul>"

@@ -188,7 +188,7 @@ public class MainController {
 			if(sId == null || sId.equals("")) return "not_login";
 			
 			String uploadDir = "/qna_img/";//가상 업로드 경로
-			String saveDir = session.getServletContext().getRealPath(uploadDir).replace("tradeup","");//실제 업로드 경로
+			String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/","");//실제 업로드 경로
 			// 맵에 이름과 경로 전달
 			//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
 			System.out.println("머가 넘어올까 ? " + map);
@@ -218,7 +218,7 @@ public class MainController {
 		if(sId == null || sId.equals("")) return "not_login";
 		
 		String uploadDir = "/report_img/";//가상 업로드 경로
-		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("tradeup/", "");//실제 업로드 경로
+		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", "");//실제 업로드 경로
 		// 맵에 이름과 경로 전달
 		//실제 파일 이름과 uuid랜덤합쳐서 겹치는걸 방지
 		System.out.println(map);
@@ -251,6 +251,8 @@ public class MainController {
 	@ResponseBody
 	@PostMapping("SelectProduct")
 	public List<Map<String, String>> selectProduct(@RequestParam(required = false) String product_name) {
+		System.out.println("product_name:" + product_name);
+		
 		return service.selectProduct(product_name);
 //		return null;
 	}	
