@@ -138,6 +138,12 @@ a.bg-primary:hover, a.bg-primary:focus {
   background-color: lightsteelblue !important;
   color: darkblue !important;
 }
+
+.bg-label-hold-1 {
+  background-color: brown !important;
+  color: aliceblue !important;
+}
+
 .bg-label-approval {
   background-color: forestgreen !important;
   color: antiquewhite !important;

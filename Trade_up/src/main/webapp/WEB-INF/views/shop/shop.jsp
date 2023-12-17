@@ -9,7 +9,7 @@
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Male-Fashion | Template</title>
+<title>Trade up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <style type="text/css">
@@ -383,7 +383,7 @@
                     <div class="breadcrumb__text">
                         <h4>거래하기</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">홈</a>
+                            <a href="./">홈</a>
                             <span>거래하기</span>
                         </div>
                     </div>
@@ -480,12 +480,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rightList">
+                    <div class="rightList" style="display: flex;">
 	                    <div class="row">
 	                        <c:forEach items="${productList }" var="product" begin="0" varStatus="status">
 		                        <div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
 		                            <div class="product__item">
-		                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
+		                                <div class="product__item__pic set-bg" data-setbg="${product.product_main_img}" onclick="location.href='ShopDetail?product_num=${product.product_num}'">
 		                                    <ul class="product__hover">
 		                                        <li><a href="ShopDetail?product_num=${product.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
 		                                        <li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
@@ -494,8 +494,7 @@
 		                                <div class="product__item__text">
 		                                    <h6>${product.product_name}</h6>
 		                                    <a href="ShopDetail?product_num=${product.product_num}" class="add-cart">상세보기</a>
-											<p>${product.trading_location } </p>
-<%-- 											/ <span>${product.product_release}</span> --%>
+											<p>${product.trading_location } <span> / ${product.productRelease}</span></p>
 		                                    <h5>${product.product_price}</h5>
 		                                </div>
 		                            </div>

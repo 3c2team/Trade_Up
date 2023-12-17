@@ -144,9 +144,11 @@
 														<i class="bx bx-dots-vertical-rounded"></i>
 													</button>
 													<div class="dropdown-menu">
-														<a class="dropdown-item" href="#">
-															<i class="bx bx-edit-alt me-1"></i>수정
-														</a>
+														<c:if test="${product.sales_status eq '판매중'}">
+															<a class="dropdown-item" href="ShopUpdatePro?product_num=${product.product_num }">
+																<i class="bx bx-edit-alt me-1"></i>수정
+															</a>
+														</c:if>
 														<a class="dropdown-item" onclick="deleteMyProduct(${product.product_num }, '${product.sales_status}')" href="#">
 															<i class="bx bx-trash me-1"></i>삭제
 														</a>

@@ -76,19 +76,19 @@
 											<div class="card-body">
 												<h5 class="card-title text-primary">${sessionScope.sName }님 안녕하세요!</h5>
 												<p class="mb-4">
-													${sessionScope.sName }님의 신뢰도 <span class="fw-bold">30%</span> 입니다.
+													${sessionScope.sName }님은 지금까지 총 <span class="fw-bold">${depositCount }</span>번의 거래를 하셨어요!
 												</p> 
-												<div class="progress" style="height: 6px">
-													<div
-													class="progress-bar"
-													role="progressbar"
-													style="width: 30%"
-													aria-valuenow="25"
-													aria-valuemin="0"
-													aria-valuemax="100"
-													></div>
-												</div>
-												<a>거래를 통해 신뢰도를 올릴 수 있어요!</a>
+<!-- 												<div class="progress" style="height: 6px"> -->
+<!-- 													<div -->
+<!-- 													class="progress-bar" -->
+<!-- 													role="progressbar" -->
+<!-- 													style="width: 100%" -->
+<!-- 													aria-valuenow="25" -->
+<!-- 													aria-valuemin="0" -->
+<!-- 													aria-valuemax="100" -->
+<!-- 													></div> -->
+<!-- 												</div> -->
+<!-- 												<a></a> -->
 											</div>
 										</div>
 										<div class="col-sm-5 text-center text-sm-left">

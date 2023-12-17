@@ -199,10 +199,12 @@ public class AdminService {
 		return adminMapper.selectQnaDetail(qnaDetailNum);
 	}
 
+	// 공지사항 삭제
+	public int deleteNotice(String qnaDetailNum) {
+		// TODO Auto-generated method stub
+		return adminMapper.deleteNotice(qnaDetailNum);
+	}
 
-
-
-	
 	
 	
 }

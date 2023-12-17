@@ -101,8 +101,8 @@
 										<table id="datatablesSimple">
 											<thead>
 												<tr>
-													<th>#</th>
-													<th>상품정보</th>
+<!-- 													<th>#</th> -->
+													<th>상품번호</th>
 													<th>구매자</th>
 													<th>구매완료 여부</th>
 													<th>출금액</th>
@@ -113,11 +113,9 @@
 											<tbody>
 											<c:forEach var="withdrawList" items="${withdrawList }">
 												<tr>
-													<td><input type="checkbox" name="checkbox" value=""></td>
+<!-- 													<td><input type="checkbox" name="checkbox" value=""></td> -->
 													<td>
-<!-- 														<div class=""> -->
-															<div class=""><strong>****상품명****</strong></div>
-<!-- 														</div> -->
+														${withdrawList.merchant_uid }
 													</td>
 													<td>${withdrawList.member_name }</td>
 													<td>
@@ -125,7 +123,7 @@
 															<c:when test="${withdrawList.buy_check eq '확정대기'}">
 																<span class="badge bg-label-hold me-1" style="font-size:small;">${withdrawList.buy_check }</span>
 															</c:when>
-															<c:when test="${withdrawList.buy_check eq '구매확정'}">
+															<c:when test="${withdrawList.buy_check eq '구매 확정'}">
 																<span class="badge bg-label-approval me-1" style="font-size:small;">${withdrawList.buy_check }</span>
 															</c:when>
 														</c:choose>
@@ -145,7 +143,7 @@
 											</tbody>
 										</table>
 										
-										<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	
+<!-- 										<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	 -->
 								</form>
 							</div>
 						</div>

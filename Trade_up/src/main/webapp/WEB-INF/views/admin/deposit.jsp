@@ -94,11 +94,11 @@
 										<table id="datatablesSimple">
 											<thead>
 												<tr>
-													<th>#</th>
-													<th>판매자</th>
-													<th>신뢰지수</th>
-													<th>입금액</th>
+<!-- 													<th>#</th> -->
 													<th>상품번호</th>
+													<th>판매자</th>
+<!-- 													<th>신뢰지수</th> -->
+													<th>입금액</th>
 													<th>입금계좌</th>
 													<th>입금날짜</th>
 												</tr>
@@ -106,19 +106,19 @@
 											<tbody>
 											<c:forEach var="depositList" items="${depositList }">
 												<tr>
-													<td><input type="checkbox" name="checkbox" ></td>
+<!-- 													<td><input type="checkbox" name="checkbox" ></td> -->
 <!-- 													<td> -->
 <%-- 														${depositList.merchant_uid} --%>
 <!-- 													</td> -->
-													<td>${depositList.member_name }</td>
-													<td>
-														<span class="badge bg-label-state" style="font-size:small;">88%</span>
-													</td>
-													<td>
-								                        <span class="badge bg-label-prohibition" style="font-size:small;">${depositList.product_price }</span>	
-													</td>
 													<td>
 								                        <span>${depositList.merchant_uid}</span>	
+													</td>
+													<td>${depositList.member_name }</td>
+<!-- 													<td> -->
+<!-- 														<span class="badge bg-label-state" style="font-size:small;">88%</span> -->
+<!-- 													</td> -->
+													<td>
+								                        <span class="badge bg-label-prohibition" style="font-size:small;">${depositList.product_price }</span>	
 													</td>
 													<td>
 								                        <span>${depositList.deposit_bank} (${depositList.deposit_acc})</span>	

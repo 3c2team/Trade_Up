@@ -123,17 +123,35 @@
 										</div>
 										<div class="card-header d-flex align-items-center justify-content-center" style="flex-direction: column;">
 											<h5>카카오 <span class="text-muted fw-light">
-												<a href="https://kauth.kakao.com/oauth/authorize?
-													client_id=1582f2676c7805fc4f4fc798652b9f28
-													&redirect_uri=http://localhost:8081/tradeup/kakao
-													&response_type=code" id="kakaoLogin">
-								            		연동하기
-					        					</a>
+												<c:if test="${empty member.kakao_id }">
+													<a href="https://kauth.kakao.com/oauth/authorize?
+														client_id=1582f2676c7805fc4f4fc798652b9f28
+														&redirect_uri=http://localhost:8081/tradeup/kakao
+														&response_type=code" id="kakaoLogin">
+									            		연동하기
+						        					</a>
+												</c:if>
+												<c:if test="${not empty member.kakao_id }">
+													<a>연동중</a>
+												</c:if>
 				        					</span></h5>
 											<h5>네이버 
 												<span class="text-muted fw-light">
-													<a id="naverLogin" onclick="$('#naver_id_login').trigger('click');" >연동하기</a>
-													<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;"></div>
+													<c:if test="${empty member.naver_id }">
+														<div class="naverLogin" id="naver_id_login" style="border-radius: 20px; overflow: hidden;"></div>
+														<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+														<script type="text/javascript">
+															var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
+															var state = naver_id_login.getUniqState();
+															naver_id_login.setButton("green", 2);
+															naver_id_login.setDomain("http://localhost:8081/tradeup/Login");
+															naver_id_login.setState(state);
+															naver_id_login.init_naver_id_login();
+														</script>
+													</c:if>
+													<c:if test="${not empty member.naver_id }">
+														<a>연동중</a>
+													</c:if>
 												</span>
 											</h5>
 										</div>
@@ -282,15 +300,7 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript">
-	var naver_id_login = new naver_id_login("4ti9U3l3MXudKm9oCFhb", "http://localhost:8081/tradeup/NaverLoginCallBack");
-	var state = naver_id_login.getUniqState();
-	naver_id_login.setButton("green", 2);
-	naver_id_login.setDomain("http://localhost:8081/tradeup/Login");
-	naver_id_login.setState(state);
-	naver_id_login.init_naver_id_login();
-</script>
+
     
 	</body>
 </html>

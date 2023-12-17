@@ -100,7 +100,7 @@ public class MyPageController {
 		int deleteCount = service.deleteFavorite(param);
 		
 		if(deleteCount > 0) {
-			return "redirect:/DeleteFavorite";
+			return "redirect:/MyFavorite";
 		}
 		
 		model.addAttribute("msg", "서버 오류로 관심상품 해제에 실패했습니다. 다시 시도해주세요.");

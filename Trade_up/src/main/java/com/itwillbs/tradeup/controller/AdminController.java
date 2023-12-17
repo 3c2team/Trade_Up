@@ -289,6 +289,8 @@ public class AdminController {
 			, Model model
 			) {
 		
+//		System.out.println("member_id : " + member_id);
+		
 		// 관리자 권한 회수
 		if(member_id[0] != "") {
 			for(String member : member_id) {
@@ -602,6 +604,31 @@ public class AdminController {
 	    	return "success_close";
 		}
 		
+		// 공지사항 삭제
+		@GetMapping("/NoticeDelete")
+		public String noticeDelete(
+				@RequestParam(value="qnaNum", defaultValue = "", required = false) String[] qnaNum
+				, Model model
+				) {
+			
+//			System.out.println("qnaNum : " + qnaNum);
+			
+			if(qnaNum[0] != "") {
+				for(String qnaDetailNum : qnaNum) {
+					
+					int deleteNotice = adminService.deleteNotice(qnaDetailNum);
+					if(deleteNotice > 0) {
+						System.out.println(qnaDetailNum + " : 공지사항 삭제");
+					}
+				}
+			}
+			
+			// 공지사항 조회
+			List<Map<String, String>> noticeList = adminService.selectNoticeList();
+			model.addAttribute("NoticeList", noticeList);
+			
+			return "admin/admin_notice_board";
+		}
 	
 	
 	

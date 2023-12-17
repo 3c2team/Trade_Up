@@ -113,8 +113,8 @@
 										<table id="datatablesSimple">
 											<thead>
 												<tr>
-													<th>#</th>
-													<th>상품정보</th>
+<!-- 													<th>#</th> -->
+													<th>상품번호</th>
 													<th>구매자</th>
 													<th>구매완료 여부</th>
 													<th>출금액</th>
@@ -125,11 +125,9 @@
 											<tbody>
 											<c:forEach var="CommissionList" items="${CommissionList}">
 												<tr>
-													<td><input type="checkbox" name="checkbox" value=""></td>
+<!-- 													<td><input type="checkbox" name="checkbox" value=""></td> -->
 													<td>
-<!-- 														<div class=""> -->
-															<div class=""><strong>****상품명****</strong></div>
-<!-- 														</div> -->
+														${CommissionList.merchant_uid}
 													</td>
 													<td>${CommissionList.member_name}</td>
 													<td>
@@ -157,7 +155,7 @@
 											</tbody>
 										</table>
 										
-										<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	
+<!-- 										<input type="submit" id="delete_btn"class="btn btn-primary" value="삭제">	 -->
 								</form>
 							</div>
 						</div>

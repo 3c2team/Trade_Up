@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d&libraries=services"></script>
-<title>Male-Fashion | Template</title>
+<title>Trade up</title>
 <jsp:include page="../inc/style.jsp"></jsp:include>
 <style type="text/css">
    .report_img{
@@ -55,7 +55,7 @@
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <!-- 쌤꺼 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script>
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d"></script> -->
 <!-- 내꺼 -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=047e14e9ac251be40261bd5614958317&libraries=services"></script> -->
 
@@ -63,12 +63,12 @@
 
 </head>
 <body>
-   <header>
-      <jsp:include page="../inc/top.jsp"></jsp:include>
-   </header>
+	<header>
+		<jsp:include page="../inc/top.jsp"></jsp:include>
+	</header>
    
     <!-- 본문 시작 -->
-    <section class="shop-details">
+	<section class="shop-details">
         <div class="product__details__pic">
             <div class="container">
                <!-- 1행 -->
@@ -80,7 +80,7 @@
 							<div class="slidebox col-lg-12">
 								<div class="slide">
 									<c:forEach var="productImg" items="${productImg }" varStatus="status">
-			                        	<div class="imgbox"><img src="${pageContext.request.contextPath }${product.product_main_img}"/></div>
+			                        	<div class="imgbox"><img src="${productImg.product_image}"/></div>
 									</c:forEach>
 						        </div>
 						        <button class="prevbtn">&lt;</button>
@@ -88,7 +88,7 @@
 						    </div>
 						    	<div class="btnbox">
 								<c:forEach var="productImg" items="${productImg }" varStatus="status">
-							        <button type="button" class="slide" ><img src="${pageContext.request.contextPath }/resources/img/KakaoTalk_20231215_174341784_02.jpg" alt="v${status.count}"/>${status.count}</button>
+							        <button type="button" class="slide" >${status.count}</button>
 								</c:forEach>
 					    	</div>
 						</div>
@@ -101,7 +101,6 @@
                                <a href="Main">홈</a>
                                <a href="Shop?category=${category.category_name }">${category.category_name }</a>
                                <span>${product.product_num }</span>
-                               
                                <div id="favorite_btn"class="favorite_off" style="cursor:pointer; width: 50px;float: inline-end;"></div>
                            </div>
                      <div class="container">
@@ -115,10 +114,10 @@
 									<div class="dateJjim" style="display: flex; text-align: center;">
 										<c:choose>
 											<c:when test="${!empty jjim}">
-												<span> · 찜 ${jjim}</span>
+												<span>${product.productRelease } · 찜 ${jjim}</span>
 											</c:when>
 											<c:otherwise>
-												<span> · 찜 0</span>
+												<span>${product.productRelease } · 찜 0</span>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -133,10 +132,51 @@
 									   </div>
 									</c:if>
 								</div>
-								<c:if test="${!empty product.trading_location}">
+								<c:if test="${product.trading_method ne 'delivery'}">
 									<h6 style="text-align: left; margin-top: 30px">직거래 희망장소</h6>
 									<div id="map" style="margin-bottom:1em; width:400px; height:190px;"></div>
 								</c:if>
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d79e4be802855b8c8c9dc38e9b02f6d&libraries=services"></script>
+								<script type="text/javascript">
+									window.onload = function(){
+										var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+											mapOption = {
+											    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+											    level: 3 // 지도의 확대 레벨
+											};  
+										
+										// 지도를 생성합니다    
+										var map = new kakao.maps.Map(mapContainer, mapOption); 
+											
+										// 주소-좌표 변환 객체를 생성합니다
+										var geocoder = new kakao.maps.services.Geocoder();
+											
+										// 주소로 좌표를 검색합니다
+										geocoder.addressSearch('${product.trading_location}', function(result, status) {
+											
+											// 정상적으로 검색이 완료됐으면 
+											 if (status === kakao.maps.services.Status.OK) {
+												
+											    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+											
+											    // 결과값으로 받은 위치를 마커로 표시합니다
+											    var marker = new kakao.maps.Marker({
+											        map: map,
+											        position: coords
+											    });
+											
+											    // 인포윈도우로 장소에 대한 설명을 표시합니다
+											    var infowindow = new kakao.maps.InfoWindow({
+											        content: '<div style="width:150px;text-align:center;padding:6px 0;font-size: 10px;">${product.trading_location}</div>'
+											    });
+											    infowindow.open(map, marker);
+											
+											    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+											    map.setCenter(coords);
+											} 
+										}); 
+									}
+								</script>
 								<div class="product__details__cart__option">
                                     <c:forEach var="sellerProduct" items="${sellerProduct }">
                                        <input type="hidden" id="sellMember" value="${sellerProduct.member_id}">
@@ -208,7 +248,7 @@
 											<c:forEach items="${sellerProduct}" var="sellerProduct" end="2">
 											    <div class="col">
 								                    <div class="product__item sale">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px;" data-setbg="${pageContext.request.contextPath }${product.product_main_img}">
+						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px; overflow: hidden;" data-setbg="${product.product_main_img}">
 						                                    <ul class="product__hover">
 						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
 						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
@@ -217,8 +257,7 @@
 						                                <div class="product__item__text">
 						                                    <h6>${sellerProduct.product_name}</h6>
 						                                    <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
-															<p>${sellerProduct.trading_location} </p>
-<%-- 															<span class="product-release">${sellerProduct.product_release}</span> --%>
+															<p>${sellerProduct.trading_location}<span> / ${sellerProduct.productRelease}</span> </p>
 						                                    <h5>${sellerProduct.product_price }</h5>
 						                                </div>
 						                            </div>
@@ -249,7 +288,7 @@
             	<c:forEach items="${productList }" var="productList" end="2" varStatus="status">
 					<div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
 						<div class="product__item">
-							<div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
+							<div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
 								<ul class="product__hover">
 									<li><a href="ShopDetail?product_num=${productList.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
 									<li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
@@ -258,8 +297,7 @@
 							<div class="product__item__text">
 								<h6>${productList.product_name}</h6>
 								<a href="ShopDetail?product_num=${productList.product_num}" class="add-cart">상세보기</a>
-								<p>${productList.trading_location } </p>
-<%-- 								<span> /${productList.product_release}</span> --%>
+								<p>${productList.trading_location }<span> / ${productList.productRelease}</span> </p>
 								<h5>${productList.product_price}</h5>
 							</div>
 						</div>
@@ -293,74 +331,6 @@
 		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=500, height=430");
       
 	}
-	
-	function elapsedTime(dateString) {
-	    const mysqlDatetime = new Date(dateString + 'Z'); // 'Z'는 UTC 타임존을 의미
-	    const now = new Date();
-	    const diffInSeconds = Math.floor((now - mysqlDatetime) / 1000);
-
-	    if (diffInSeconds < 60) {
-	        return '방금 전';
-	    } else if (diffInSeconds < 3600) {
-	        const minutes = Math.floor(diffInSeconds / 60);
-	        return minutes + '분 전';
-	    } else if (diffInSeconds < 86400) {
-	        const hours = Math.floor(diffInSeconds / 3600);
-	        return hours + '시간 전';
-	    } else if (diffInSeconds < 2592000) {
-	        const days = Math.floor(diffInSeconds / 86400);
-	        return days + '일 전';
-	    } else if (diffInSeconds < 31536000) {
-	        const months = Math.floor(diffInSeconds / 2592000);
-	        return months + '개월 전';
-	    } else {
-	        const years = Math.floor(diffInSeconds / 31536000);
-	        return years + '년 전';
-	    }
-	}
-
-	const mysqlDatetimeString = '${product.product_release}';
-
-	const elapsedTimeResult = elapsedTime(mysqlDatetimeString);
-
-	document.querySelector('.dateJjim').prepend(elapsedTimeResult+" ");
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-		    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		    level: 3 // 지도의 확대 레벨
-		};  
-	
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-		
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-		
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('${product.trading_location}', function(result, status) {
-		
-		// 정상적으로 검색이 완료됐으면 
-		 if (status === kakao.maps.services.Status.OK) {
-			
-		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		
-		    // 결과값으로 받은 위치를 마커로 표시합니다
-		    var marker = new kakao.maps.Marker({
-		        map: map,
-		        position: coords
-		    });
-		
-		    // 인포윈도우로 장소에 대한 설명을 표시합니다
-		    var infowindow = new kakao.maps.InfoWindow({
-		        content: '<div style="width:150px;text-align:center;padding:6px 0;font-size: 10px;">${product.trading_location}</div>'
-		    });
-		    infowindow.open(map, marker);
-		
-		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		    map.setCenter(coords);
-		} 
-	}); 
 	
 	$(function() {
 		
@@ -420,15 +390,15 @@
 	//carousel 
 
     //slidebtn
-    var nowimg = '${product_img}'; //nowimg 변수값 지정
+    var nowimg = '${product_image}'; //nowimg 변수값 지정
 
    //next
 	$('.nextbtn').click(function(){  //next 버튼 클릭 시
+		
 		if (nowimg == 1){
 			$('.slide').css('transform','translateX(-20%)');
 			nowimg = 2;
 		} 
-		
 		else if (nowimg == 2){
 			$('.slide').css('transform','translateX(-40%)'); 
 			nowimg = 3; 

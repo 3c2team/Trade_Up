@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Trade up</title>
 </head>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
@@ -15,7 +16,7 @@ function delivery(){
 		window.opener.location.href="Checkout?product_num=${product_num}";
 		self.close();
 	}
-	window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
 	self.close();
 	
 }
@@ -26,7 +27,7 @@ function direct(){
 		window.opener.location.href="CheckoutMeet?product_num=${product_num}";
 		self.close();
 	}
-	window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=520, height=395");
+	window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
 	self.close();
 }
 
@@ -38,12 +39,16 @@ function direct(){
 	<div class="product__details__option">
 		<div class="product__details__option__size">
 			<span>거래방법 선택</span>
-			<label for="xxl">택배거래
-				<input type="radio" id="xxl" onclick="delivery()">
-	        </label>
-			<label class="active" for="xl">직거래
-	            <input type="radio" id="xl" onclick="direct()">
-	        </label>
+			<c:if test="${product.trading_method ne 'direct'}">
+				<label for="xxl">택배거래
+					<input type="radio" id="xxl" onclick="delivery()">
+		        </label>
+			</c:if>
+			<c:if test="${product.trading_method ne 'delivery'}">
+				<label class="active" for="xl">직거래
+		            <input type="radio" id="xl" onclick="direct()">
+		        </label>
+			</c:if>
 		</div>
 	</div>
 </body>

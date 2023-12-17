@@ -100,6 +100,10 @@ public interface AdminMapper {
 	// 공지사항 상세내용
 	Map<String, String> selectQnaDetail(int qnaDetailNum);
 
+	// 공지사항 삭제
+	int deleteNotice(String qnaDetailNum);
+
+
 
 	
 	

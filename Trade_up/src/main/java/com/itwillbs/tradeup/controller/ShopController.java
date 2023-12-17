@@ -119,7 +119,7 @@ public class ShopController {
 							, HttpSession session, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		// 로그인X 처리
-		if(session.getAttribute("sId") == null) {
+		if(sId == null) {
 			model.addAttribute("msg", "로그인 후 이용부탁드립니다.");
 			model.addAttribute("targetURL", "redirect:/");
 			return "fail_back";
@@ -145,22 +145,21 @@ public class ShopController {
 		System.out.println("오긴옴?" + map);
 		
 //		거래 방식 지정
-		if(map.get("trading_method1") != null && map.get("trading_method2") != null) {
+		if(map.containsKey("trading_method1") && map.containsKey("trading_method2")) {
 			map.put("trading_method", "total");
 		}
-		if (map.get("trading_method1") != null) {
-			map.put("trading_method", map.get("trading_method1"));
-		}
-		if (map.get("trading_method2") != null) {
+		if (!map.containsKey("trading_method1")) {
 			map.put("trading_method", map.get("trading_method2"));
+		}
+		if (!map.containsKey("trading_method2")) {
+			map.put("trading_method", map.get("trading_method1"));
 		} 
 		
-		if (map.get("product_price") == null) {
-			map.put("product_price", map.get("free_sharing"));
-		} else {
-			map.put("product_price", map.get("product_price")+"원");
-		}
+		map.put("product_price", map.get("product_price")+"원");
 		
+//		if(!map.containsKey("trading_location")) {
+//			map.put("trading_location", "");
+//		}
 		
 		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
 		String sId = (String)session.getAttribute("sId");
@@ -243,9 +242,6 @@ public class ShopController {
 		
 		// 판매자 
 		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct((String)product.get("member_id"));
-		
-		String date = sellerProduct.get(0).get("product_release").toString();
-		System.out.println("변환하기 전!!!!! :" + date);
 
 		int sellerCount = shopService.getSellerCount(product_num);
 		
@@ -273,6 +269,9 @@ public class ShopController {
 	// 상품 상세 페이지에서 결제 페이지 이동
 	@GetMapping("ShopPay")
 	public String shopPay(@RequestParam int product_num, Model model) {
+		Map<String, Object> product = shopService.getProduct(product_num);
+		
+		model.addAttribute("product", product);
 		model.addAttribute("product_num", product_num);
 		return "shop/shop_pay";
 	}
@@ -283,99 +282,106 @@ public class ShopController {
 		List<Map<String, String>> selectCategory = service.selectCategory();
 
 		Map<String, Object> product = shopService.getProduct(product_num);
+		product.put("product_price", product.get("product_price").toString().replace("원", ""));
 		
+		List<Map<String, Object>> productImg = shopService.getProductImg(product_num);
+
 		model.addAttribute("selectCategory", selectCategory);
 		model.addAttribute("product", product);
+		model.addAttribute("productImg", productImg);
 		
 		return "shop/shop_update";
 	}
 	
 	// 상품 수정
-//	@PostMapping("ShopUpdate")
-//	public String shopUpdate(@RequestParam Map<String, Object> map
-//			  				,@RequestParam(value = "file", required=false) MultipartFile[] file
-//			  				, int product_num
-//			  				, HttpSession session, Model model) {
-//		
-//		int delectProductImg = shopService.delectProductImg(product_num);
-//		if(delectProductImg < 0) {
-//			//////////////////////////////////////////////// 삭제가 안된다면? 판별
-//		}
-//		
-//		if(map.get("trading_method1") != null && map.get("trading_method2") != null) {
-//			map.put("trading_method", "total");
-//		}
-//		if (map.get("trading_method1") != null) {
-//			map.put("trading_method", map.get("trading_method1"));
-//		}
-//		if (map.get("trading_method2") != null) {
-//			map.put("trading_method", map.get("trading_method2"));
-//		}
-//		
-//		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
-//		String sId = (String)session.getAttribute("sId");
-//		String uploadDir = "/resources/upload/"; //가상 경로
-//		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Project_garge/resources/upload/", ""); //실제 경로
-//		
-//		map.put("member_id", sId);
-//		
-//		//===================== < 이미지 처리 : yyyy/MM/dd 형식 > ===================== 
-//		String subDir = "";
-//		try {
-//			LocalDate now = LocalDate.now();
-//			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//			subDir = now.format(dtf);
-//			saveDir += subDir;
-//			
-//			Path path = Paths.get(saveDir);
-//			Files.createDirectories(path);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		//-------------------- < 이미지명 처리 : 3자리 랜덤 > --------------------
-//		String uuid = UUID.randomUUID().toString();
-//		System.out.println("s234123515163456 : " + file);
-//		int updateProductImgCount = 0;
-//		int updateProduct = 0;
-//		int index = 0;
-//		try {
-//			for(MultipartFile file2 : file) {
-////				System.out.println("여기 안와? : " + file2.getOriginalFilename());
-//					
-//				String fileName =  uuid.substring(0, 3) + "_" + file2.getOriginalFilename();
-//				
-//				if(file == null || fileName.equals("")) {
-//					map.put("file_name", "");
-//				} 
-//				map.put("file_name", uploadDir + subDir + "/" + fileName);
-//				
-//				file2.transferTo(new File(saveDir, fileName));
-////				System.out.println("프로덕트에 넣을 수 있어? : "+map.get("file_name"));
-//				
-//				map.put("product_image", fileName);
-//				if(index < 1) {
-//					updateProduct = shopService.updateProduct(map);
-//				}
-//				updateProductImgCount = shopService.updateProductImg(map);
-////				System.out.println(" 이미지 몇개씩 들어있어? :"+map.get("product_image"));
-//				
-//				index++;
-//			}
-//			if(updateProduct > 0 && updateProductImgCount > 0) { //성공
-//				model.addAttribute("msg", "판매상품 수정을 성공했습니다.");
-//				model.addAttribute("targetURL", "redirect:/MySales");
-//				return "forward";
-//			}
-//			//------------------ < 게시물 등록 처리 > -------------------
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} 
-//		
-//		model.addAttribute("msg", "판매상품 수정을 실패했습니다.");
-//		model.addAttribute("targetURL", "redirect:/ShopUpdatePro");
-//		return "fail_back";
-//	}
+	@PostMapping("ShopUpdate")
+	public String shopUpdate(@RequestParam Map<String, Object> map
+							  ,@RequestParam(value = "file", required=false) MultipartFile[] file
+							  , HttpSession session, Model model) {
+		System.out.println("오긴옴?" + map);
+		
+		//거래 방식 지정
+		if(map.containsKey("trading_method1") && map.containsKey("trading_method2")) {
+			map.put("trading_method", "total");
+		}
+		if (!map.containsKey("trading_method1")) {
+			map.put("trading_method", map.get("trading_method2"));
+		}
+		if (!map.containsKey("trading_method2")) {
+			map.put("trading_method", map.get("trading_method1"));
+		} 
+		
+		map.put("product_price", map.get("product_price")+"원");
+		
+		//if(!map.containsKey("trading_location")) {
+		//map.put("trading_location", "");
+		//}
+		
+		//--------------------- < 이미지 경로 : 가상, 실제 경로> ---------------------
+		String sId = (String)session.getAttribute("sId");
+		String uploadDir = "/TradeUp_upload/product_image/";
+		String saveDir = session.getServletContext().getRealPath(uploadDir).replace("Trade_up/", ""); //.replace("프로젝트명"); 추가하기
+		
+		map.put("member_id", sId);
+		
+		//===================== < 이미지 처리 : yyyy/MM/dd 형식 > ===================== 
+		String subDir = "";
+		try {
+			LocalDate now = LocalDate.now();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			subDir = now.format(dtf);
+			saveDir += subDir;
+			
+			Path path = Paths.get(saveDir);
+			Files.createDirectories(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//-------------------- < 이미지명 처리 : 3자리 랜덤 > --------------------
+		String uuid = UUID.randomUUID().toString();
+		System.out.println("s234123515163456 : " + file);
+		int insertImgCount = 0;
+		int insertCount = 0;
+		int index = 0;
+		try {
+			for(MultipartFile file2 : file) {
+			//System.out.println("여기 안와? : " + file2.getOriginalFilename());
+			
+				String fileName =  uuid.substring(0, 3) + "_" + file2.getOriginalFilename();
+				
+				if(file == null || fileName.equals("")) {
+					map.put("file_name", "");
+				} 
+				map.put("file_name", uploadDir + subDir + "/" + fileName);
+				
+				map.put("product_image", uploadDir + subDir + "/" + fileName);
+				file2.transferTo(new File(saveDir, fileName));
+				//System.out.println("프로덕트에 넣을 수 있어? : "+map.get("file_name"));
+				
+				if(index < 1) {
+					insertCount = shopService.registProduct(map);
+				}
+				
+				insertImgCount = shopService.registProductImg(map);
+				//System.out.println(" 이미지 몇개씩 들어있어? :"+map.get("product_image"));
+				
+				index++;
+			}
+				if(insertCount > 0 && insertImgCount > 0) { //성공
+					model.addAttribute("msg", "판매할 상품을 등록했습니다.");
+					model.addAttribute("targetURL", "Shop");
+					return "forward";
+				}
+		//------------------ < 게시물 등록 처리 > -------------------
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+			model.addAttribute("msg", "상품등록을 실패했습니다.");
+			model.addAttribute("targetURL", "redirect:/ShopForm");
+			return "fail_back";
+		}
 	
 	
 }
