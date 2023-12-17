@@ -132,9 +132,9 @@
 		</select>
 		
 		<select id="selectDepositCount">
-			SELECT COUNT(deposit_idx) as count
-            FROM DEPOSIT
-            WHERE member_id = #{sId}
+			SELECT COUNT(withdraw_idx) as count
+            FROM WITHDRAW
+            WHERE member_id = #{sId};
 		</select>
 		
     	<update id="updateMember">

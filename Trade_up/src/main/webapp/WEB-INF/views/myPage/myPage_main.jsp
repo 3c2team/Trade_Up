@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 <html
@@ -125,7 +126,7 @@
 													</div>
 												</div>
 												<span class="fw-semibold d-block mb-1">Pay</span>
-												<h3 class="card-title mb-2">${RemainPay }<c:if test="${empty RemainPay }">0</c:if>원</h3>
+												<h3 class="card-title mb-2"><fmt:formatNumber value="${RemainPay }" /><c:if test="${empty RemainPay }">0</c:if>원</h3>
 												<small
 													class="text-success fw-semibold"
 													data-bs-toggle="modal"
@@ -155,7 +156,13 @@
 													</div>
 												</div>
 												<span>이번달 지출금액</span>
-												<h3 class="card-title text-nowrap mb-1"><c:if test="${empty totalWithdraw }">0</c:if>${totalWithdraw } 원</h3>
+												<h3 class="card-title text-nowrap mb-1"><fmt:formatNumber value="${totalWithdraw }" /><c:if test="${empty totalWithdraw }">0</c:if>원</h3>
+												<small
+													class="text-success fw-semibold"
+													data-bs-toggle="modal"
+													data-bs-target="#up_pay"
+													style="cursor:pointer; visibility: hidden;"
+												>내역보기</small>
 											</div>
 										</div>
 									</div>
@@ -226,7 +233,7 @@
 												</div>
 											</c:if>
 											<c:forEach var="products" items="${productsList }" end="7">
-												<li class="d-flex mb-4 pb-1"  onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
+												<li class="d-flex mb-4 pb-1"  onclick="location.href='ShopDetail?product_num=${products.product_num }'" style="cursor:pointer">
 													<div class="avatar flex-shrink-0 me-3">
 														<img src="${products.product_main_img }" class="rounded" />
 													</div>
@@ -266,7 +273,7 @@
 												</div>
 											</c:if>
 											<c:forEach var="sales" items="${salesList }" end="7">
-												<li class="d-flex mb-4 pb-1"onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
+												<li class="d-flex mb-4 pb-1"onclick="location.href='ShopDetail?product_num=${sales.product_num }'" style="cursor:pointer">
 													<div class="avatar flex-shrink-0 me-3">
 														<img src="${sales.product_main_img }" class="rounded" />
 													</div>
