@@ -210,8 +210,7 @@
 				, address1 = #{address1}
 				, address2 = #{address2}
 				, address_name = #{address_name}
-				, address_main = (SELE
-				CT * FROM (							 
+				, address_main = (SELECT * FROM (							 
 												  SELECT address_main  
 												  FROM MY_ADDRESS
 												  WHERE member_id = #{sId} AND address_idx = #{address_idx}) a)

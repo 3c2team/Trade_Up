@@ -21,7 +21,7 @@ public class OauthController {
 	@Autowired
 	private bankApiService bankApiService;
 	
-	@GetMapping("/callback")
+	@GetMapping("callback")
 	public String responseAuthCode(@RequestParam Map<String, String> authResponse, HttpSession session, Model model) {
 		String sId = (String)session.getAttribute("sId");
 		
