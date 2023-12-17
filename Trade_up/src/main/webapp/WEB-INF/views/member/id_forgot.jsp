@@ -35,7 +35,7 @@ const autoHyphen = (target) => {
 				<input class="user" name="member_name" id="member_name" type="text" style="align-content: center" placeholder="이름">
 				<input class="phone" name="member_phone_num" id="member_phone_num" type="text" style="align-content: center" placeholder="전화번호"  oninput="autoHyphen(this)" maxlength="13">
 				<input type="submit" class="submit" id="btn_submit" style="margin-left: 38%; margin-top: 5%" value="확인">
-				<a href="JoinAgree" class="join" style="align-content: center; margin:15%">회원가입</a>
+				<a href="Join" class="join" style="align-content: center; margin:15%">회원가입</a>
 				<a href="PassForgot" class="passForgot" style="margin-left: 15%">비밀번호찾기</a>
 			</form>
 	    </div>

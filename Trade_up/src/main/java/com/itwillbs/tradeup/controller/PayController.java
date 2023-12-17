@@ -404,6 +404,10 @@ public class PayController {
 		model.addAttribute("withdrawResult", withdrawResult);
 		
 		String remainPay = service.getRemainPay(sId);
+		if(remainPay == null) {
+			remainPay = "0";
+		}
+			
 		String total = Integer.parseInt(remainPay) + Integer.parseInt(map.get("chargeMoney")) + "";
 		map.put("total", total);
 		map.put("state", "충전");
