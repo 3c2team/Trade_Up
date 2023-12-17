@@ -10,7 +10,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>Trade Up</title>
 <style type="text/css">
     .main_heart{
 	    background-size: contain;
@@ -80,7 +80,7 @@
             <c:forEach items="${productList }" var="productList">
 	                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
 	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${productList.product_main_img}">
+	                        <div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}">
 	                            <span class="label">New</span>
 	                            <ul class="product__hover">
 	                            	<c:if test="${empty productList.favorite_idx}">
@@ -89,7 +89,6 @@
 	                            	<c:if test="${!empty productList.favorite_idx}">
 	                                	<li style="margin-left:10px; background-size: contain; width: 30px; height: 30px;"class="main_heart favorite_on"></li>
 	                                </c:if>
-	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
 	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
 	                            </ul>
 	                        </div>
@@ -102,7 +101,8 @@
 	                                <i class="fa fa-star-o"></i>
 	                                <i class="fa fa-star-o"></i>
 	                            </div>
-	                            <h5>${productList.product_price} 원</h5>
+	                            <p>${productList.trading_location } <span> / ${productList.productRelease}</span></p>
+	                            <h5>${productList.product_price}</h5>
 	                        </div>
 	                    </div>
 	                </div>
