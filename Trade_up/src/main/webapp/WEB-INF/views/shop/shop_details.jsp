@@ -88,7 +88,7 @@
 						    </div>
 						    	<div class="btnbox">
 								<c:forEach var="productImg" items="${productImg }" varStatus="status">
-							        <button type="button" class="slide" >${status.count}</button>
+							        <button type="button" class="slide${status.count}" >${status.count}</button>
 								</c:forEach>
 					    	</div>
 						</div>
