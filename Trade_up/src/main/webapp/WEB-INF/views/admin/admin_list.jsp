@@ -133,7 +133,7 @@
 																<span class="badge bg-label-prohibition" style="font-size:small;" id="checkedResult">${memberList.member_state}</span>
 															</c:when>
 															<c:when test="${memberList.member_state eq '탈퇴'}">
-																<span class="badge bg-label-prohibition-1"  style="font-size:small;" id="checkedResult">${memberList.member_state}</span>
+																<span style="color: deeppink; font-size:small; font-weight:bold" id="checkedResult">${memberList.member_state}</span>
 															</c:when>
 														</c:choose>
 													</td>
