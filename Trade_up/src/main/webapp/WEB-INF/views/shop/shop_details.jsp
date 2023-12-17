@@ -88,7 +88,7 @@
 						    </div>
 						    	<div class="btnbox">
 								<c:forEach var="productImg" items="${productImg }" varStatus="status">
-							        <button type="button" class="slide" >${status.count}</button>
+							        <button type="button" class="slide${status.count}" >${status.count}</button>
 								</c:forEach>
 					    	</div>
 						</div>
@@ -317,7 +317,7 @@
 	   let memberId = $("#sellMember").val();
 	//      alert(memberId);
 	//    window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=500, height=430");
-		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=400, height=530");
+		window.open("MyChat?memberId=" + memberId, "MyChat","top=200,left=700,width=430, height=530");
 	}
    
 	function payCheck(){
@@ -326,7 +326,7 @@
 			alert("로그인 후 이용바랍니다.");
 			return;
 		}
-		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=300, height=300");
+		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=465, height=300");
       
 	}
 	
