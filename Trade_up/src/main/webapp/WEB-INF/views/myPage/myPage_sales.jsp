@@ -103,7 +103,7 @@
 										
 											<tr>
 												<td class="align-middle">${product.category_name }</td>
-												<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+												<td class="align-middle" width="120px"><img height="70px" src="${product.product_main_img }"></td>
 												<td class="text-left align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
 													${product.product_name }
 												</td>

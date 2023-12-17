@@ -96,7 +96,7 @@
 									<tbody class="text-center table-border-bottom-0">
 										<c:forEach var="product" items="${productList }">
 												<tr>
-													<td class="align-middle"><img height="80px" src="${pageContext.request.contextPath }/resources/img/shopping-cart/cart-1.jpg"></td>
+													<td class="align-middle"><img height="80px" src="${product.product_main_img }"></td>
 													<td class="align-middle" onclick="location.href='ShopDetail?product_num=${product.product_num }'" style="cursor:pointer">
 														<strong>${product.product_name }</strong>
 													</td>

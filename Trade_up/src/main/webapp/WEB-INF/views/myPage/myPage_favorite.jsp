@@ -126,7 +126,7 @@
 									<tbody class="table-border-bottom-0 text-center">
 										<c:forEach var="favorite" items="${favoriteList }">
 											<tr>
-												<td class="align-middle" width="120px"><img height="70px" src="${pageContext.request.contextPath }/resources/img/shop-details/product-big-3.png"></td>
+												<td class="align-middle" width="120px"><img height="70px" src="${favorite.product_main_img }"></td>
 												<td class="text-left align-middle" onclick="location.href='ShopDetail?product_num=${favorite.product_num }'" style="cursor:pointer">
 													${favorite.product_name }
 												</td>

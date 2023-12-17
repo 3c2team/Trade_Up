@@ -68,6 +68,7 @@
 			  JOIN CATEGORY c 
 			    ON p.category_idx = c.category_idx
 			 WHERE p.member_id = #{sId};
+		  ORDER BY product_release DESC;
     	</select>
     	
     	<select id="selectMyPurchase" resultType="map">
@@ -81,7 +82,8 @@
 				 , w.*
 			  FROM WITHDRAW w
 			  JOIN PRODUCT p ON w.product_num = p.product_num 
-			 WHERE w.member_id = #{sId};
+			 WHERE w.member_id = #{sId}
+		  ORDER BY withdraw_date DESC;
     	</select>
     	
     	<select id="selectMyFavorite">
@@ -95,7 +97,8 @@
 				 , f.favorite_idx 
 			  FROM FAVORITE f 
 			  JOIN PRODUCT p ON f.product_num = p.product_num 
-			 WHERE f.member_id = #{sId};
+			 WHERE f.member_id = #{sId}
+		  ORDER BY favorite_idx DESC;
     	</select>
     	
     	<delete id="deleteFavorite">
