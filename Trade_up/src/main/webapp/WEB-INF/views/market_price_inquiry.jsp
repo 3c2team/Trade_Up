@@ -84,6 +84,7 @@ debugger;
 				success: function(data) {
 					$("#registrationProduct").html("");
 					data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 						$("#registrationProduct").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6'>"
