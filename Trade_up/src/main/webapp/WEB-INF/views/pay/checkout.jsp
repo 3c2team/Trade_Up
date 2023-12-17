@@ -238,8 +238,8 @@
                                 <h4 class="order__title">주문 내역</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>주문한 상품 <span>${product_priceShow }</span></li>
-                                    <li>안전거래 수수료(1%) <span>${commissionShow }</span></li>
+                                    <li>주문한 상품 <span>${product_priceShow }원</span></li>
+                                    <li>안전거래 수수료(1%) <span>${commissionShow }원</span></li>
                                 </ul>
                                 <input type="hidden" name="product_price"  value="${product_price }">
                                 <input type="hidden" name="product_priceShow"  value="${product_priceShow }">
@@ -250,7 +250,7 @@
                                 <input type="hidden" name="totalShow"  value="${totalShow }">
                                 <input type="hidden" name="product_name" value="${product_name }">
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>${totalShow }</span></li>
+                                    <li>총 가격 <span>${totalShow }원</span></li>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="acc-or">
