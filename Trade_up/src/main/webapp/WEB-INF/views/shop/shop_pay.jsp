@@ -15,10 +15,10 @@ function delivery(){
 	if(!result){
 		window.opener.location.href="Checkout?product_num=${product_num}";
 		self.close();
+	} else{
+		window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
+		self.close();
 	}
-	window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
-	self.close();
-	
 }
 
 function direct(){
@@ -26,9 +26,10 @@ function direct(){
 	if(!result){
 		window.opener.location.href="CheckoutMeet?product_num=${product_num}";
 		self.close();
+	} else{
+		window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
+		self.close();
 	}
-	window.open("MyChat?memberId=" + "${product.member_id}", "MyChat","top=200, left=700, width=300, height=300");
-	self.close();
 }
 
 

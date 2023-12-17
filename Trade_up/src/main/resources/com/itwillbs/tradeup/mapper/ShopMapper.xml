@@ -96,7 +96,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location 
+		  	 END AS productRelease, product_num, member_id, product_name, product_price, product_info, product_release, category_idx, product_main_img, trading_method, product_status, trading_location, sales_status, delivery_method
 		  FROM PRODUCT
 		 WHERE member_id = #{member_id} AND sales_status = '판매중'
 	</select>
