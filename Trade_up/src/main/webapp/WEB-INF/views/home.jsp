@@ -76,13 +76,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="row product__filter" style="overflow:auto; flex-wrap: nowrap;">
-            <c:forEach items="${productList }" var="productList">
-	                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
-	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}">
-	                            <span class="label">New</span>
-	                            <ul class="product__hover">
+            <div class="row product__filter" style="overflow:auto;">
+           <c:forEach items="${productList }" var="productList"  varStatus="status">
+					<div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
+						<div class="product__item">
+							<div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
+								  <ul class="product__hover">
 	                            	<c:if test="${empty productList.favorite_idx}">
 	                                	<li style="margin-left:10px;background-size: contain; width: 30px; height: 30px;" class="favorite_off"></li>
 	                                </c:if>
@@ -91,22 +90,16 @@
 	                                </c:if>
 	                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
 	                            </ul>
-	                        </div>
-	                        <div class="product__item__text">
-	                            <h6>${productList.product_name}</h6>
-	                            <div class="rating">
-	                                <i class="fa fa-star-o"></i>
-	                                <i class="fa fa-star-o"></i>
-	                                <i class="fa fa-star-o"></i>
-	                                <i class="fa fa-star-o"></i>
-	                                <i class="fa fa-star-o"></i>
-	                            </div>
-	                            <p>${productList.trading_location } <span> / ${productList.productRelease}</span></p>
-	                            <h5>${productList.product_price}</h5>
-	                        </div>
-	                    </div>
-	                </div>
-                </c:forEach>
+							</div>
+							<div class="product__item__text">
+								<h6>${productList.product_name}</h6>
+								<a href="ShopDetail?product_num=${productList.product_num}" class="add-cart">상세보기</a>
+								<p>${productList.trading_location }<span> / ${productList.productRelease}</span> </p>
+								<h5>${productList.product_price}</h5>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
             </div>
         </div>
     </section>

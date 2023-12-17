@@ -52,7 +52,7 @@ public class HomeController {
 //		System.out.println(productList);
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("productList", productList );
-		
+		System.out.println("fdfdfdfd" + productList);
 		return "home";
 	}
 	

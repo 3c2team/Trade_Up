@@ -119,7 +119,7 @@
 											<c:forEach var="selectReport" items="${selectReport }">
 												<tr>
 													<td><input type="checkbox" name="checkbox" value="${selectReport.report_idx }"></td>
-													<td><img  src="${pageContext.request.contextPath }${selectReport.report_image_real_file }"></td>
+													<td><img  src="${selectReport.report_image_real_file }"></td>
 													<td><button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #7173db;" onclick="location.href='ShopDetail?product_num=${selectReport.report_product_num }'">자세히보기</button></td>
 													<td>${selectReport.qna_category_detail_name } : ${selectReport.report_content }
 													</td>
