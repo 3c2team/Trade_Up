@@ -518,6 +518,7 @@ public class MyPageController {
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		if(!passwordEncoder.matches(param.get("password").toString(), map.get("member_passwd").toString())) {
+			System.out.println("비번틀림");
 			return "false";
 		} 
 		
