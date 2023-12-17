@@ -80,7 +80,7 @@
 							<div class="slidebox col-lg-12">
 								<div class="slide">
 									<c:forEach var="productImg" items="${productImg }" varStatus="status">
-			                        	<div class="imgbox"><img src="${pageContext.request.contextPath }${productImg.product_image}"/></div>
+			                        	<div class="imgbox"><img src="${productImg.product_image}"/></div>
 									</c:forEach>
 						        </div>
 						        <button class="prevbtn">&lt;</button>
@@ -114,10 +114,10 @@
 									<div class="dateJjim" style="display: flex; text-align: center;">
 										<c:choose>
 											<c:when test="${!empty jjim}">
-												<span> · 찜 ${jjim}</span>
+												<span>${product.productRelease } · 찜 ${jjim}</span>
 											</c:when>
 											<c:otherwise>
-												<span> · 찜 0</span>
+												<span>${product.productRelease } · 찜 0</span>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -248,7 +248,7 @@
 											<c:forEach items="${sellerProduct}" var="sellerProduct" end="2">
 											    <div class="col">
 								                    <div class="product__item sale">
-						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px; overflow: hidden;" data-setbg="${pageContext.request.contextPath }${product.product_main_img}">
+						                                <div class="product__item__pic set-bg" style="width: 170px; height: 170px; overflow: hidden;" data-setbg="${product.product_main_img}">
 						                                    <ul class="product__hover">
 						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a></li>
 						                                        <li><a href="ShopDetail?product_num=${sellerProduct.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a></li>
@@ -257,8 +257,7 @@
 						                                <div class="product__item__text">
 						                                    <h6>${sellerProduct.product_name}</h6>
 						                                    <a href="ShopDetail?product_num=${sellerProduct.product_num}" class="add-cart">상세보기</a>
-															<p>${sellerProduct.trading_location} </p>
-<%-- 															<span class="product-release">${sellerProduct.product_release}</span> --%>
+															<p>${sellerProduct.trading_location}<span> / ${sellerProduct.productRelease}</span> </p>
 						                                    <h5>${sellerProduct.product_price }</h5>
 						                                </div>
 						                            </div>
@@ -289,7 +288,7 @@
             	<c:forEach items="${productList }" var="productList" end="2" varStatus="status">
 					<div class="col-lg-4 col-md-6 col-sm-6 product${status.count} productList" >
 						<div class="product__item">
-							<div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath }${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
+							<div class="product__item__pic set-bg" data-setbg="${productList.product_main_img}" onclick="location.href='ShopDetail?product_num=${productList.product_num}'">
 								<ul class="product__hover">
 									<li><a href="ShopDetail?product_num=${productList.product_num}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt="찜"></a></li>
 									<li><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt="자세히보기"></li>
@@ -298,8 +297,7 @@
 							<div class="product__item__text">
 								<h6>${productList.product_name}</h6>
 								<a href="ShopDetail?product_num=${productList.product_num}" class="add-cart">상세보기</a>
-								<p>${productList.trading_location } </p>
-<%-- 								<span> /${productList.product_release}</span> --%>
+								<p>${productList.trading_location }<span> / ${productList.productRelease}</span> </p>
 								<h5>${productList.product_price}</h5>
 							</div>
 						</div>
@@ -333,39 +331,6 @@
 		window.open("ShopPay?product_num=" + ${product.product_num}, "ShopPay","top=200,left=700,width=500, height=430");
       
 	}
-	
-	function elapsedTime(dateString) {
-	    const mysqlDatetime = new Date(dateString + 'Z'); // 'Z'는 UTC 타임존을 의미
-	    const now = new Date();
-	    const diffInSeconds = Math.floor((now - mysqlDatetime) / 1000);
-
-	    if (diffInSeconds < 60) {
-	        return '방금 전';
-	    } else if (diffInSeconds < 3600) {
-	        const minutes = Math.floor(diffInSeconds / 60);
-	        return minutes + '분 전';
-	    } else if (diffInSeconds < 86400) {
-	        const hours = Math.floor(diffInSeconds / 3600);
-	        return hours + '시간 전';
-	    } else if (diffInSeconds < 2592000) {
-	        const days = Math.floor(diffInSeconds / 86400);
-	        return days + '일 전';
-	    } else if (diffInSeconds < 31536000) {
-	        const months = Math.floor(diffInSeconds / 2592000);
-	        return months + '개월 전';
-	    } else {
-	        const years = Math.floor(diffInSeconds / 31536000);
-	        return years + '년 전';
-	    }
-	}
-
-	const mysqlDatetimeString = '${product.product_release}';
-
-	const elapsedTimeResult = elapsedTime(mysqlDatetimeString);
-
-	document.querySelector('.dateJjim').prepend(elapsedTimeResult+" ");
-	
-	
 	
 	$(function() {
 		

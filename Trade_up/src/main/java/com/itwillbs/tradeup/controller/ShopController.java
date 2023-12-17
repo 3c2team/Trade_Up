@@ -242,9 +242,6 @@ public class ShopController {
 		
 		// 판매자 
 		List<Map<String, Object>> sellerProduct = shopService.getSellerProduct((String)product.get("member_id"));
-		
-		String date = sellerProduct.get(0).get("product_release").toString();
-		System.out.println("변환하기 전!!!!! :" + date);
 
 		int sellerCount = shopService.getSellerCount(product_num);
 		
