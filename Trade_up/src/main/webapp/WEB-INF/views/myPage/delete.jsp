@@ -67,7 +67,7 @@
 						<small class="text-muted">
 							고객님의 소중한 의견을 반영하여 더 따뜻한 Trade Up이 되도록 노력할게요.<br>
 							언제나 이 자리에서 기다리고 있을게요. 언제든지 돌아와주세요.<br>
-							지금까지 함께여서 진심으로 행복했어요.
+							지금까지 함께여서 진심으로 행복했어요.<br>
 						</small> 
 						<a href="./" class="btn btn-primary mt-3">홈페이지로 가기</a>
 					</div>
