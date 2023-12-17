@@ -135,6 +135,9 @@
 															<c:when test="${memberList.member_state eq '탈퇴'}">
 																<span style="color: deeppink; font-size:small; font-weight:bold" id="checkedResult">${memberList.member_state}</span>
 															</c:when>
+															<c:when test="${memberList.member_state eq '정지'}">
+																<span style="color: deeppink; font-size:small; font-weight:bold" id="checkedResult">${memberList.member_state}</span>
+															</c:when>
 														</c:choose>
 													</td>
 														
