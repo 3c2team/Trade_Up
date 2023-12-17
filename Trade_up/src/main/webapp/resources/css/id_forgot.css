@@ -95,12 +95,16 @@ form.form1 {
 	font-size: 15px;
 }
 
-.passForgot {
+.passForgot .idForgot {
 	text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
 	color: rgb(108, 108, 108);
 	padding-top: 15px;
 	font-family: 'Noto Serif KR', sans-serif;
 	font-size: 15px;
+}
+
+a:hover, a:focus {
+	color: black;
 }
 
 p {

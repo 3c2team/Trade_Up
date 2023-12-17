@@ -158,7 +158,6 @@ public class bankApiClient {
 		jo.put("cntr_account_type", "N"); // 약정 계좌/계정 구분("N" : 계좌, "C" 계정 => N 고정)
 		jo.put("cntr_account_num", "2023032400"); // 약정 계좌/계정 번호(핀테크 서비스 기관 계좌)
 		jo.put("dps_print_content", map.get("member_id") + "_충전"); // 입금계좌인자내역
-		System.out.println("22" + jo);
 		// ----- 고객 -------
 		jo.put("fintech_use_num", map.get("fintech_use_num")); // 출금계좌 핀테크이용번호
 		jo.put("wd_print_content", "업페이_충전"); // 출금계좌인자내역
@@ -168,7 +167,7 @@ public class bankApiClient {
 		jo.put("req_client_fintech_use_num", map.get("fintech_use_num")); // 요청고객핀테크이용번호(출금계좌)
 		jo.put("req_client_num", map.get("member_id").toUpperCase()); // 요청고객회원번호(아이디처럼 사용) => 단, 영문자는 모두 대문자
 		jo.put("transfer_purpose", "TR"); // 이체용도(송금(TR), 결제(ST))
-		System.out.println("33" + jo);
+		
 		jo.put("recv_client_name", "트업_업페이"); // 최종수취고객성명
 		jo.put("recv_client_bank_code", "002"); // 최종수취고객계좌 개설기관.표준코드
 		jo.put("recv_client_account_num", "2023032400"); // 최종수취고객계좌번호
