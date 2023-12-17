@@ -307,7 +307,7 @@ public class MemberController {
             session.setAttribute("sEmail", dbMember.get("member_e_mail"));
             session.setAttribute("loginUser", dbMember);
             model.addAttribute("msg", "로그인에 성공했습니다. 메인페이지로 이동합니다."); // 출력할 메세지
-			model.addAttribute("targetURL", "redirect:/"); // 이동시킬 페이지
+			model.addAttribute("targetURL", "Shop"); // 이동시킬 페이지
 			return "forward";
     	}
     	
