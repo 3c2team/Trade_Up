@@ -368,9 +368,12 @@ public class ShopController {
 				index++;
 			}
 				if(updateCount > 0 && updateImgCount > 0) { //성공
-					model.addAttribute("msg", "판매할 상품을 수정했습니다.");
-					model.addAttribute("targetURL", "MySales");
-					return "forward";
+					int deleteImg = shopService.delectProductImg((String)map.get("product_num"));
+					if(deleteImg > 0) {
+						model.addAttribute("msg", "판매할 상품을 수정했습니다.");
+						model.addAttribute("targetURL", "MySales");
+						return "forward";
+					}
 				}
 		//------------------ < 게시물 등록 처리 > -------------------
 		} catch (Exception e) {

@@ -35,9 +35,6 @@ public interface ShopMapper {
 	// 상품 이미지 수정
 	int updateProductImg(Map<String, Object> map);
 	
-	// 상품 이미지 삭제
-	int delectProductImg(int product_num);
-	
 	// 판매자 상품 개수
 	int getSellerCount(int product_num);
 
@@ -69,8 +66,10 @@ public interface ShopMapper {
 
 	Map<String, Object> dateTime(int product_num);
 	
+	// 상품 이미지 삭제
+	int delectProductImg(String product_num);
 	
-
+	
 
 }
 

@@ -60,10 +60,6 @@ public class ShopService {
 		return mapper.getSellerProduct(member_id);
 	}
 
-	public int delectProductImg(int product_num) {
-		return mapper.delectProductImg(product_num);
-	}
-
 	public int getSellerCount(int product_num) {
 		return mapper.getSellerCount(product_num);
 	}
@@ -109,6 +105,10 @@ public class ShopService {
 
 	public int selectAccount(String sId) {
 		return mapper.selectAccount(sId);
+	}
+
+	public int delectProductImg(String product_num) {
+		return mapper.delectProductImg(product_num);
 	}
 
 
