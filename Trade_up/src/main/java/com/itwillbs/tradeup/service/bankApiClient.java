@@ -61,7 +61,7 @@ public class bankApiClient {
 		requestToken.setCode(authResponse.get("code"));
 		requestToken.setClient_id(client_id);
 		requestToken.setClient_secret(client_secret);
-		requestToken.setRedirect_uri("http://localhost:8081/tradeup/callback");
+		requestToken.setRedirect_uri("http://c3d2306t2.itwillbs.com/Trade_up/callback");
 		requestToken.setGrant_type("authorization_code");
 		
 		URI uri = UriComponentsBuilder
@@ -75,7 +75,7 @@ public class bankApiClient {
 		parameters.add("code", authResponse.get("code"));
 		parameters.add("client_id", client_id);
 		parameters.add("client_secret", client_secret);
-		parameters.add("redirect_uri", "http://localhost:8081/tradeup/callback");
+		parameters.add("redirect_uri", "http://c3d2306t2.itwillbs.com/Trade_up/callback");
 		parameters.add("grant_type", "authorization_code");
 		
 		HttpEntity<LinkedMultiValueMap<String, String>> httpEntity = 

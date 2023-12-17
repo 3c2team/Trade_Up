@@ -168,41 +168,41 @@
 							<!-- 거래내역 -->
 							<div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
 								<div class="card h-100">
-										<div class="card-header d-flex align-items-center justify-content-between">
-											<h5 class="card-title m-0 me-2">관심목록</h5>
-											<div class="dropdown">
-											</div>
-										</div>
-										<div class="card-body">
-											<ul class="p-0 m-0">
-												<c:if test="${empty favoriteList }">
-													<div class="text-center" onclick="location.href='Shop'" style="cursor: pointer;">
-														<h5>앗!   관심목록에 등록한 상품이 없어요.</h5>
-														<h6 class="mb-0"><small class="text-muted">우리 같이 다른 고객님이 올려주신 상품 구경하러 가볼까요?</small></h6>
-														<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
-														<br>
-														<h6 class="mb-0"><small class="text-muted"> * : ˚·✧* : ˚·✧ ヾ꒰ྀི *ˊᵕˋ ꒱ྀིﾉ ✧·˚ : *✧·˚ : *</small></h6>
-													</div>
-												</c:if>
-												<c:forEach var="favorite" items="${favoriteList }" end="7">
-													<li class="d-flex mb-4 pb-1">
-														<div class="avatar flex-shrink-0 me-3">
-															<img src="${favorite.product_main_img }v" class="rounded" />
-														</div>
-														<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-															<div class="me-2">
-																<h6 class="mb-0">${favorite.product_name }</h6>
-																<small class="text-muted d-block mb-1">${favorite.member_id }</small>
-															</div>
-															<div class="user-progress d-flex align-items-center gap-1">
-																<h6 class="mb-0">${favorite.product_price }</h6>
-															</div>
-														</div>
-													</li>
-												</c:forEach>
-											</ul>
+									<div class="card-header d-flex align-items-center justify-content-between">
+										<h5 class="card-title m-0 me-2">관심목록</h5>
+										<div class="dropdown">
 										</div>
 									</div>
+									<div class="card-body">
+										<ul class="p-0 m-0">
+											<c:if test="${empty favoriteList }">
+												<div class="text-center" onclick="location.href='Shop'" style="cursor: pointer;">
+													<h5>앗!   관심목록에 등록한 상품이 없어요.</h5>
+													<h6 class="mb-0"><small class="text-muted">우리 같이 다른 고객님이 올려주신 상품 구경하러 가볼까요?</small></h6>
+													<h6 class="mb-0"><small class="text-muted">클릭 해주시면 저희가 이동시켜드릴게요!</small></h6>
+													<br>
+													<h6 class="mb-0"><small class="text-muted"> * : ˚·✧* : ˚·✧ ヾ꒰ྀི *ˊᵕˋ ꒱ྀིﾉ ✧·˚ : *✧·˚ : *</small></h6>
+												</div>
+											</c:if>
+											<c:forEach var="favorite" items="${favoriteList }" end="7">
+												<li class="d-flex mb-4 pb-1">
+													<div class="avatar flex-shrink-0 me-3">
+														<img src="${favorite.product_main_img }v" class="rounded" />
+													</div>
+													<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+														<div class="me-2">
+															<h6 class="mb-0">${favorite.product_name }</h6>
+															<small class="text-muted d-block mb-1">${favorite.member_id }</small>
+														</div>
+														<div class="user-progress d-flex align-items-center gap-1">
+															<h6 class="mb-0">${favorite.product_price }</h6>
+														</div>
+													</div>
+												</li>
+											</c:forEach>
+										</ul>
+									</div>
+								</div>
 							</div>
 							<!--/ 거래내역 -->
 				
