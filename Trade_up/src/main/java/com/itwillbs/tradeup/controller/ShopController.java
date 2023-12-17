@@ -269,6 +269,9 @@ public class ShopController {
 	// 상품 상세 페이지에서 결제 페이지 이동
 	@GetMapping("ShopPay")
 	public String shopPay(@RequestParam int product_num, Model model) {
+		Map<String, Object> product = shopService.getProduct(product_num);
+		
+		model.addAttribute("product", product);
 		model.addAttribute("product_num", product_num);
 		return "shop/shop_pay";
 	}
