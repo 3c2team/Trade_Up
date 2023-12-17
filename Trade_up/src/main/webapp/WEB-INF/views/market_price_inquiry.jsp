@@ -131,9 +131,9 @@
 					}
 					let sum = 0;
 					data.forEach(e => {
-					    sum+=Number(e.product_price.replace(',','').replace('원','').trim());
+					    sum+=Number(e.product_price.replaceAll(',','').replace('원','').trim());
+					debugger;
 					});
-// 					debugger;
 					max = data.reduce((max, curr) => max < curr ? curr : max );
 					min = data.reduce((min, curr) => min < curr ? min : curr );
 					avg = sum/data.length;
