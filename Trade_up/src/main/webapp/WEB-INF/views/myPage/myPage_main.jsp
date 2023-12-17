@@ -187,7 +187,7 @@
 											<c:forEach var="favorite" items="${favoriteList }" end="7">
 												<li class="d-flex mb-4 pb-1">
 													<div class="avatar flex-shrink-0 me-3">
-														<img src="${favorite.product_main_img }" class="rounded" />
+														<img src="${favorite.product_main_img }"  class="rounded" />
 													</div>
 													<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 														<div class="me-2">

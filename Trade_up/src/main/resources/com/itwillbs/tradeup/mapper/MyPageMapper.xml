@@ -60,7 +60,8 @@
     		SELECT p.product_num
 				 , c.category_name
 				 , p.product_main_img 
-				 , p.product_name 
+				 , p.product_name
+				 , p.member_id 
 				 , p.product_price 
 			 	 , p.sales_status 
 				 , p.trading_method 
