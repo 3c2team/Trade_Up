@@ -70,7 +70,7 @@
 							</c:otherwise>
 						</c:choose>
 				</div>
-				<button class="custom_btn"type="button">확인</button>
+				<button class="custom_btn"type="button" onclick="location.href='UserCustomer'">확인</button>
 			</div>
 		</div>
 	<jsp:include page="inc/bottom.jsp"></jsp:include>
