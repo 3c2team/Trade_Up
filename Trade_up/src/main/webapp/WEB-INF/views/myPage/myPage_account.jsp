@@ -146,7 +146,7 @@
 									</div>
 									<!-- / Basic -->
 								</c:forEach>
-								<c:if test="${empty my_account}">
+								<c:if test="${empty my_account and not empty token}">
 									<div class="col-12" >
 										<div class="card mb-4" id="account_security_btn" data-bs-toggle="modal"
 											href="#accountModal" style="border: 2px dashed #cbd0d5; cursor: pointer;">

@@ -122,7 +122,7 @@
 													</td>
 													<td class="align-middle">
 														<c:choose>
-															<c:when test="${product.trading_method eq 'direct '}">
+															<c:when test="${product.trading_method eq 'direct'}">
 																<span class="badge bg-label-warning">직거래</span>
 															</c:when>
 															<c:when test="${product.trading_method eq 'delivery'}">
@@ -135,7 +135,9 @@
 														</c:choose>
 													</td>
 													<td class="align-middle">
-														<button class="btn btn-sm btn-outline-primary" onclick="buyCheck(${product.product_num })">거래완료</button>
+														<c:if test="${product.sales_status eq '거래중' }">
+															<button class="btn btn-sm btn-outline-primary" onclick="buyCheck(${product.product_num })">거래완료</button>
+														</c:if>
 													</td>
 												</tr>
 										</c:forEach>
