@@ -78,8 +78,8 @@
 				dataType: 'json',
 				success: function(data) {
 					$(".rightList").html("");
-					let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 					data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						$(".rightList").append( 
 							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 		                     +    "<div class='product__item'>"
@@ -123,8 +123,8 @@
 				dataType: 'json',
 				success: function(data) {
 					$(".rightList").html("");
-					let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 					data.forEach( product =>{
+					let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						$(".rightList").append( 
 							"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 		                     +    "<div class='product__item'>"
@@ -236,8 +236,8 @@
 					dataType: 'json',
 					success: function(data) {
 						$(".rightList").html("");
-						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 			                     +    "<div class='product__item'>"
@@ -272,8 +272,8 @@
 					dataType: 'json',
 					success: function(data) {
 						$(".rightList").html("");
-						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 			                     +    "<div class='product__item'>"
@@ -308,8 +308,8 @@
 					dataType: 'json',
 					success: function(data) {
 						$(".rightList").html("");
-						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 			                     +    "<div class='product__item'>"
@@ -344,8 +344,8 @@
 					dataType: 'json',
 					success: function(data) {
 						$(".rightList").html("");
-						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						data.forEach( product =>{
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6 productList'>"
 			                     +    "<div class='product__item'>"
