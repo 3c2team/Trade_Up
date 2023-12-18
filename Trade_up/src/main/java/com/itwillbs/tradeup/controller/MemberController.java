@@ -192,7 +192,7 @@ public class MemberController {
 		Map<String, String> address = new HashMap<String, String>();
 		address.put("member_id", (String)map.get("member_id"));
 		address.put("member_name", (String)map.get("member_name"));
-		address.put("member_phone", (String)map.get("member_phone"));
+		address.put("member_phone", (String)map.get("member_phone_num"));
 		address.put("member_address1", (String)map.get("member_address1"));
 		address.put("member_address2", (String)map.get("member_address2"));
 		address.put("zonecode", (String)map.get("zonecode"));
