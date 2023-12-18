@@ -105,7 +105,7 @@
 												<tr>
 													
 													<td><input type="checkbox" id="checkbox" name="checkbox" value="${questoinList.qna_num}"></td>
-													<td><img  src="${pageContext.request.contextPath }${questoinList.qna_image_real_file}"></td>
+													<td><img style="height: 40px;" src="${questoinList.qna_image_real_file}"></td>
 													<td>${questoinList.qna_category_detail_name}</td>
 													<td>${questoinList.qna_content}</td>
 													<td>${questoinList.qna_date}</td>

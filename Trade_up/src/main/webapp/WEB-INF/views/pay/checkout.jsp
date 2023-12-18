@@ -205,7 +205,7 @@
                                 	주소<span>*</span>
                                 	<button type="button" style="cursor: pointer; margin-left:1%; color:white; background-color: #cb99c5; border: none; font-size: 0.8em" id="btnSearchAddress">주소 검색</button>
                                 </p>
-                                <input type="text" id="member_address1" name="member_address1" value="${addressMain.address1 }" class="checkout__input__add" style="color: black;">
+                                <input type="text" id="member_address1" name="member_address1" value="${addressMain.address1 }" class="checkout__input__add" style="color: black;" readonly>
                                 <input type="text" id="member_address2" name="member_address2" value="${addressMain.address2 }" style="color: black;">
                             </div>
                             <div class="checkout__input">

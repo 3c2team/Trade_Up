@@ -402,7 +402,7 @@ public class MyPageController {
 		int insertCount = service.registMyAddress(param);
 		
 		if(insertCount > 0) {
-			return "redirect:/MyAddress";
+			return "close";
 		} else {
 			model.addAttribute("msg", "오류남");
 			model.addAttribute("isClose", "true");

@@ -132,7 +132,6 @@ debugger;
 					let sum = 0;
 					data.forEach(e => {
 					    sum+=Number(e.product_price.replaceAll(',','').replace('원','').trim());
-					debugger;
 					});
 					max = data.reduce((max, curr) => max < curr ? curr : max );
 					min = data.reduce((min, curr) => min < curr ? min : curr );
@@ -174,10 +173,9 @@ debugger;
 						+			"</div>"
 // 						+		"</div>"
 					);
-					debugger;
 					$("#success_box").html(
 							"<div style='margin-bottom: 3%;' class='fs-5 fw-semibold text-secondary'>최근 등록 상품 가격을 비교해봤어요!</div>"
-							+"		<div style='margin-bottom: 0%;height: 8rem;' class='custom_box2 border border-success'>"
+							+"		<div style='height: 8rem;' class='custom_box2 border border-success'>"
 							+"			<div class='custom_price'>"
 							+"				<div class='fs-5 fw-semibold text-secondary custom_font'>평균 가격이에요</div>"
 							+"				<div style='margin-top: 10%;'>"
