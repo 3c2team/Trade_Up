@@ -61,12 +61,11 @@
 				<div class="custom_qna_answer" style="margin-top: 0.5rem; font-size: 0.8rem;">
 						<div class="fw-bold "style="margin-bottom: 0.5rem;">트레이드업 고객센터 :</div>
 						<c:choose> 
-							<c:when test="${empty QnaDetail.qna_anwer}">
+							<c:when test="${empty QnaDetail.qna_answer}">
 								<div class="fw-bold "style="text-align: center; margin-bottom: 0.5rem;">답변 대기중입니다.</div>
 							</c:when>
 							<c:otherwise>
-								${QnaDetail.qna_anwer}
-								<div class="custom_date">${QnaDetail.qna_date}</div>
+							<div class="fw-bold "style="text-align: center; margin-bottom: 0.5rem;">${QnaDetail.qna_answer}</div>
 							</c:otherwise>
 						</c:choose>
 				</div>
