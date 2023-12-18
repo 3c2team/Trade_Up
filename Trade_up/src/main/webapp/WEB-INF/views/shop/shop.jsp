@@ -78,7 +78,7 @@
 					$(".rightList").html("");
 // 					parent.removeChild(dom);
 					data.forEach( product =>{
-						let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 							$(".rightList").append( 
 								"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -122,7 +122,7 @@
 				success: function(data) {
 					$(".rightList").html("");
 					data.forEach( product =>{
-					let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+					let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 					let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 					let h6 = "<h6>" + product.product_name + "</h6>";
 						$(".rightList").append( 
@@ -237,7 +237,7 @@
 					success: function(data) {
 						$(".rightList").html("");
 						data.forEach( product =>{
-						let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 							$(".rightList").append( 
 									"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -270,7 +270,7 @@
 						success: function(data) {
 							$(".rightList").html("");
 							data.forEach( product =>{
-							let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+							let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 								$(".rightList").append( 
 										"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -308,7 +308,7 @@
 					success: function(data) {
 						$(".rightList").html("");
 						data.forEach( product =>{
-						let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 							$(".rightList").append( 
 									"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -341,7 +341,7 @@
 						success: function(data) {
 							$(".rightList").html("");
 							data.forEach( product =>{
-							let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+							let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 								$(".rightList").append( 
 										"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -379,7 +379,7 @@
 					success: function(data) {
 						$(".rightList").html("");
 						data.forEach( product =>{
-						let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+						let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 							$(".rightList").append( 
 									"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -412,7 +412,7 @@
 						success: function(data) {
 							$(".rightList").html("");
 							data.forEach( product =>{
-							let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+							let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 								$(".rightList").append( 
 										"<div class='col-lg-4 col-md-6 col-sm-6'>"
@@ -450,8 +450,8 @@
 					success: function(data) {
 						$(".rightList").html("");
 						data.forEach( product =>{
-						let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
-						let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
+							let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+							let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 							$(".rightList").append( 
 									"<div class='col-lg-4 col-md-6 col-sm-6'>"
 			                        +"<div class='product__item'>"
@@ -482,7 +482,7 @@
 						success: function(data) {
 							$(".rightList").html("");
 							data.forEach( product =>{
-							let style = "style= cursor: pointer;'background-image: url(&quot;" + product.product_main_img+"&quot;);'";
+							let style = "style='background-image: url(&quot;" + product.product_main_img+"&quot;);'";
 							let goProductDetail = "location.href='ShopDetail?product_num="+ product.product_num + '\'';
 								$(".rightList").append( 
 										"<div class='col-lg-4 col-md-6 col-sm-6'>"
