@@ -443,7 +443,7 @@ public class PayController {
 		map.put("remain_pay", remain_pay);
 		service.refundUppay(map);
 		
-		return "myPage/myPage_main";
+		return "redirect:/MyPageMain";
 	}
 	
 	public String LoginNeed(HttpSession session, Model model) {
