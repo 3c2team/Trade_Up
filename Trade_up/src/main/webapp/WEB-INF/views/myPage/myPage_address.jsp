@@ -98,8 +98,7 @@
 									id="address_add"
 									class="btn rounded-pill btn-icon btn-outline-primary"
 									style="float: right;"
-									onclick="window.open('AddAddressFrom'
-							 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no')"
+									
 								>
 									<span class="tf-icons bx bx-plus"></span>
 								</button>
@@ -153,8 +152,8 @@
 								</c:forEach>
 								<c:if test="${empty my_address}">
 									<div class="col-12" >
-										<div class="card mb-4" id="account_security_btn" data-bs-toggle="offcanvas"
-											href="#offcanvasEnd" style="border: 2px dashed #cbd0d5; cursor: pointer;">
+										<div class="card mb-4" id="account_security_btn" onclick="window.open('AddAddressFrom'
+							 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no')" style="border: 2px dashed #cbd0d5; cursor: pointer;">
 											<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
 												<h5>앗!   등록한 배송지가 없어요.</h5>
 												<h6 class="mb-0"><small class="text-muted">우리 같이 배송지등록 해볼까요?</small></h6>
