@@ -149,7 +149,7 @@ public class MemberController {
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phone_num); // 받는 사람
-		params.put("from", "0109249369"); // 보내는 사람(나) - 일부러 오류나게 해놓음
+		params.put("from", "01092493697"); // 보내는 사람(나)
 		params.put("type", "SMS");
 		params.put("text", "[Trade UP] 본인 확인 인증번호[" + authCode + "]를 화면에 입력해주세요");
 		params.put("app_version", "test app 1.2");
@@ -306,7 +306,7 @@ public class MemberController {
             session.setAttribute("sPhone", dbMember.get("member_phone_num"));
             session.setAttribute("sEmail", dbMember.get("member_e_mail"));
             session.setAttribute("loginUser", dbMember);
-            model.addAttribute("msg", "로그인에 성공했습니다. 메인페이지로 이동합니다."); // 출력할 메세지
+            model.addAttribute("msg", "로그인에 성공했습니다. 상품페이지로 이동합니다."); // 출력할 메세지
 			model.addAttribute("targetURL", "Shop"); // 이동시킬 페이지
 			return "forward";
     	}

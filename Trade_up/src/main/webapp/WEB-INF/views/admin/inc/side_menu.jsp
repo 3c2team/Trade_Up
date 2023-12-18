@@ -120,7 +120,21 @@
 		</li>
 		
 	  <!-- Cards -->
-	  <li class="menu-item">
+	
+		<li class="menu-item">
+			<a href="MemberList" class="menu-link">
+				<i class="menu-icon tf-icons bx bx-collection"></i>
+				<div data-i18n="Basic">회원 조회</div>
+			</a>
+		</li>
+				<li class="menu-item">
+			<a href="Declaration" class="menu-link">
+<!-- 				<i class="menu-icon tf-icons bx bx-dock-top"></i> -->
+				<i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+				<div data-i18n="">사기신고 조회</div>
+			</a>
+		</li>
+		 <li class="menu-item">
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-cube-alt"></i>
 				<div data-i18n="Misc">지원관리</div>
@@ -138,19 +152,6 @@
 				</li>
 				
 			</ul>
-		</li>
-		<li class="menu-item">
-			<a href="MemberList" class="menu-link">
-				<i class="menu-icon tf-icons bx bx-collection"></i>
-				<div data-i18n="Basic">회원 조회</div>
-			</a>
-		</li>
-				<li class="menu-item">
-			<a href="Declaration" class="menu-link">
-<!-- 				<i class="menu-icon tf-icons bx bx-dock-top"></i> -->
-				<i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-				<div data-i18n="">사기신고 조회</div>
-			</a>
 		</li>
 	  <!-- User interface -->
 <!-- 		<li class="menu-item"> -->

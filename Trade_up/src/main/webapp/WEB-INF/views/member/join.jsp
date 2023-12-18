@@ -106,7 +106,7 @@ input[type="text"] {
 				<tr>
 					<th>주소<span style="color: red; margin-left: 6%;">*</span></th>
 					<td>
-						<input type="text" name="member_address1" id="member_address1" placeholder="기본주소" size="25">
+						<input type="text" name="member_address1" id="member_address1" placeholder="기본주소" size="25" readonly>
 						<input type="hidden" name="zonecode" id="zonecode" value="">
 						<input type="button" id="btnSearchAddress" value="주소검색" onclick="daumPostcode()"><br>
 						<input type="text" name="member_address2" id="member_address2" placeholder="상세주소" size="25">
