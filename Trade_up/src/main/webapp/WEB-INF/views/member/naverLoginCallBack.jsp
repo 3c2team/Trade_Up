@@ -15,7 +15,6 @@
   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
   function naverSignInCallback() {
     let id = naver_id_login.getProfileData('id');
-    alert(id);
 //     debugger;
     location.href="NaverLogin?id=" + id;
   }
