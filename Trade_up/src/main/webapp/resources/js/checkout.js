@@ -83,6 +83,20 @@ $(function() {
 	    }).open();
 	});
 	
+	$("#member_address1").click(function() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            let address = data.address; // 기본 주소 저장
+	            if(data.buildingName != '') { // 건물명이 있을 경우
+	            	address += " (" + data.buildingName + ")";
+	            }
+	            $("#zonecode").val(data.zonecode);
+	            $("#member_address1").val(address);
+	            $("#member_address2").focus();
+	        }
+	    }).open();
+	});
+	
 	// 기존 배송지와 새로운 배송지 구분 짓기
 	$('input[type="radio"][name="diliver"]').change(function(){
 		if($('input[type="radio"][name="diliver"]:checked').val() == 1){

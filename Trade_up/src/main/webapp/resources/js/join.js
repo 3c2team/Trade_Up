@@ -192,6 +192,20 @@ $(function() {
 	        }
 	    }).open();
 	});
+	$("#member_address1").click(function() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            let address = data.address; // 기본 주소 저장
+	            let zonecode = data.zonecode;
+	            if(data.buildingName != '') { // 건물명이 있을 경우
+	            	address += " (" + data.buildingName + ")";
+	            }
+	            $("#member_address1").val(address);
+	            $("#zonecode").val(zonecode);
+	            $("#member_address2").focus();
+	        }
+	    }).open();
+	});
 });
 
 function mail() {
