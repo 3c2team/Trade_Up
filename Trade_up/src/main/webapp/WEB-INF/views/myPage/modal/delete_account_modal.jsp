@@ -20,41 +20,83 @@
 		});
 	});
 	
-	function checks() {
-		let password = $("#password").val();
-		let result = "false";
+	$(document).ready(function () {
+	    // 폼 제출 이벤트에 대한 핸들러 등록
+	    $("#delete_account_modal form").submit(function (event) {
+	        event.preventDefault(); // 이벤트 기본 동작 막기
+	
+	        let password = $("#password").val();
+	
+	        if (password === "") {
+	            $("#password").css({ 'border-color': '#ff3e1d' });
+	            $("#danger2").css({ 'color': '#ff3e1d' });
+	            $("#danger2").text("비밀번호를 입력해주세요.");
+	            return false;
+	        }
+	
+	        $.ajax({
+	            url: "PasswordCheck",
+	            method: 'POST',
+	            data: { "password": password },
+	            success: function (data) {
+	                if (data === "false") {
+	                    $("#password").css({ 'border-color': '#ff3e1d' });
+	                    $("#danger2").css({ 'color': '#ff3e1d' });
+	                    $("#danger2").text("잘못된 비밀번호입니다.");
+	                } else if (data === "true") {
+	                    // 비밀번호가 맞는 경우 폼을 직접 제출
+	                    $("#delete_account_modal form").off('submit').submit();
+	                }
+	            },
+	            error: function (error) {
+	                $("#password").css({ 'border-color': '#ff3e1d' });
+	                $("#danger2").css({ 'color': '#ff3e1d' });
+	                $("#danger2").text("문제가 발생했습니다.");
+	            }
+	        });
+	
+	        return false;
+	    });
+	});
+
+
+	
+// 	function checks() {
+// 		let password = $("#password").val();
+// // 		let result = false;
 		
-		if(password == ""){
-			$("#password").css({'border-color':'#ff3e1d'});
-			$("#danger2").css({'color':'#ff3e1d'});
-			$("#danger2").text("비밀번호를 입력해주세요.");
-		}
-		
-		$.ajax({
-			url: "PasswordCheck",
-			method: 'POST',
-			data: { "password" : password },
-			success: function(data) {
-				console.log(data);
-				debugger;
-				if(data=="false"){
-					$("#password").css({'border-color':'#ff3e1d'});
-					$("#danger2").css({'color':'#ff3e1d'});
-					$("#danger2").text("잘못된 비밀번호 입니다.");
-				} else {
-					result = "true";
-					return result;
-				}
-			},
-			error: function(error) {
-				$("#password").css({'border-color':'#ff3e1d'});
-				$("#danger2").css({'color':'#ff3e1d'});
-				$("#danger2").text("문제가 발생했습니다.");
-			}
-		});
-		
-		return result;
-	}
+// 		if(password == ""){
+// 			$("#password").css({'border-color':'#ff3e1d'});
+// 			$("#danger2").css({'color':'#ff3e1d'});
+// 			$("#danger2").text("비밀번호를 입력해주세요.");
+// 			return false;
+// 		}
+		 
+// 		$.ajax({
+// 			url: "PasswordCheck",
+// 			method: 'POST',
+// 			data: { "password" : password },
+// 			success: function(data) {
+// 				if(data === "false"){
+// 					$("#password").css({'border-color':'#ff3e1d'});
+// 					$("#danger2").css({'color':'#ff3e1d'});
+// 					$("#danger2").text("잘못된 비밀번호 입니다.");
+// 				} else if(data === "true"){
+// 					result = true;
+// 				}
+// 			},
+// 			error: function(error) {
+// 				$("#password").css({'border-color':'#ff3e1d'});
+// 				$("#danger2").css({'color':'#ff3e1d'});
+// 				$("#danger2").text("문제가 발생했습니다.");
+// 			}
+// 		});
+// 		return false;
+// 	}
+	
+// 	$(document).ready(function () {
+// 	    $("#DeleteMemberForm").submit(checks);
+// 	});
 </script>
 <%-- 모달창 --%>
 <div class="modal fade" id="delete_account_modal" tabindex="-1" aria-hidden="true">
@@ -64,7 +106,7 @@
 				<h5 class="modal-title" id="exampleModalLabel2">회원탈퇴</h5>
 			</div>
 			
-			<form action="DeleteMember"  method="post" onsubmit="return checks()">
+			<form action="DeleteMember" id="DeleteMemberForm" method="post" onsubmit="return checks()">
 				<div class="modal-body">
 					<a>계정을 삭제하면 30일 후 신뢰도, 게시글, 관심, 채팅 등 모든 활동 정보가 삭제됩니다.</a><br><br>
 					

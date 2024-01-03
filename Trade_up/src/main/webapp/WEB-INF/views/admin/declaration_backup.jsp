@@ -16,7 +16,7 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>GARGE | 신고회원</title>
+  <title>TRADE-UP | 신고회원</title>
 
   <meta name="description" content="" />
 

@@ -58,9 +58,6 @@ public class MyPageController {
 		String RemainPay = payService.getRemainPay(sId);
 		String totalWithdraw = service.getTotalWithdraw(sId);
 		
-		
-		System.out.println("페이 잔액: " + RemainPay);
-		
 		model.addAttribute("accountList", accountList);
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("productsList", productsList);
@@ -85,7 +82,6 @@ public class MyPageController {
 		
 		List<Map<String, Object>> favoriteList = service.getMyfavorite(sId);
 		model.addAttribute("favoriteList", favoriteList);
-		System.out.println(favoriteList);
 		return "myPage/myPage_favorite";
 	}
 	// 관심상품 삭제
@@ -161,8 +157,6 @@ public class MyPageController {
 		
 		List<Map<String, Object>> productList = service.getMyPurchase(sId);
 		
-		System.out.println(productList);
-		
 		model.addAttribute("productList", productList);
 		return "myPage/myPage_purchase";
 	}
@@ -180,9 +174,6 @@ public class MyPageController {
 		
 		map = service.getMember(sId);
 		List<Map<String, Object>> feedback = service.getFeedback();
-		
-		
-		System.out.println(feedback);
 		
 		model.addAttribute("member", map);
 		model.addAttribute("feedback", feedback);
@@ -327,8 +318,6 @@ public class MyPageController {
 		map = service.getFintechInfo(sId);
 		
 		ResponseUserInfoVO userInfo = bankApiClient.requestUserInfo(map);
-		System.out.println("param - " + param);			//  account_num=23062003007           account_bank=KDB산업은행, 
-		System.out.println("API UserInfo - " + userInfo);	//  account_num_masked=23062003***    bank_name=KDB산업은행
 		
 		String user_acc = (String)param.get("account_num");
 		String user_acc_masked = user_acc.substring(0, user_acc.length() - 3) + "***";
@@ -402,7 +391,7 @@ public class MyPageController {
 		int insertCount = service.registMyAddress(param);
 		
 		if(insertCount > 0) {
-			return "redirect:/MyAddress";
+			return "close";
 		} else {
 			model.addAttribute("msg", "오류남");
 			model.addAttribute("isClose", "true");
@@ -518,6 +507,7 @@ public class MyPageController {
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		if(!passwordEncoder.matches(param.get("password").toString(), map.get("member_passwd").toString())) {
+			System.out.println("비번틀림");
 			return "false";
 		} 
 		

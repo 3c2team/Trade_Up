@@ -112,6 +112,32 @@ public class ShopController {
 //		System.out.println("category_idx: " + category_name);
 		return shopService.lowProductList(category_name.trim());
 	}	
+	@ResponseBody
+	@PostMapping("ReLastProduct")
+	public List<Map<String, Object>> relastProduct() {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.relastProductList();
+	}	
+	@ResponseBody
+	@PostMapping("ReJjimProduct")
+	public List<Map<String, Object>> rejjimProduct() {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.rejjimProductList();
+	}	
+	
+	@ResponseBody
+	@PostMapping("ReHighProduct")
+	public List<Map<String, Object>> rehighProduct() {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.rehighProductList();
+	}	
+	
+	@ResponseBody
+	@PostMapping("ReLowProduct")
+	public List<Map<String, Object>> relowProduct() {
+//		System.out.println("category_idx: " + category_name);
+		return shopService.relowProductList();
+	}	
 	
 	@GetMapping("ShopForm")
 	public String shopForm(@RequestParam(required = false) Map<String,String> map

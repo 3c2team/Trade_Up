@@ -63,6 +63,21 @@
     <script src="${pageContext.request.contextPath }/resources/myPage/assets/js/config.js"></script>
 	
 	<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			let listSize = ${fn:length(my_address)};
+			console.log(listSize);
+			$("#address_add").on("click", function() {
+				if(listSize < 10) {
+					window.open('AddAddressFrom'
+ 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no');
+				} else {
+					alert("배송지는 10개까지만 입력가능합니다.");
+					return false;
+				}
+			})
+		});	
+	</script>
 </head>
 
 <body>
@@ -80,13 +95,13 @@
 							<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">내 정보 /</span> 배송지 관리
 								<c:if test="${not empty my_address }">
 									<button 
-										id="address_add"
-										class="btn rounded-pill btn-icon btn-outline-primary"
-										data-bs-toggle="offcanvas"
-										data-bs-target="#offcanvasEnd"
-										style="float: right;">
-										<span class="tf-icons bx bx-plus"></span>
-									</button>
+									id="address_add"
+									class="btn rounded-pill btn-icon btn-outline-primary"
+									style="float: right;"
+									
+								>
+									<span class="tf-icons bx bx-plus"></span>
+								</button>
 								</c:if>
 							</h4>
 							<div class="row">
@@ -137,8 +152,8 @@
 								</c:forEach>
 								<c:if test="${empty my_address}">
 									<div class="col-12" >
-										<div class="card mb-4" id="account_security_btn" data-bs-toggle="offcanvas"
-											href="#offcanvasEnd" style="border: 2px dashed #cbd0d5; cursor: pointer;">
+										<div class="card mb-4" id="account_security_btn" onclick="window.open('AddAddressFrom'
+							 							, 'question_from', 'width=600, height=800, location=no, status=no, scrollbars=no')" style="border: 2px dashed #cbd0d5; cursor: pointer;">
 											<div class="card-body text-center" style="padding: 4.5rem 1.5rem;">
 												<h5>앗!   등록한 배송지가 없어요.</h5>
 												<h6 class="mb-0"><small class="text-muted">우리 같이 배송지등록 해볼까요?</small></h6>
@@ -160,7 +175,7 @@
 	<%-- 수정 모달 --%>
 	<jsp:include page="modal/address_modal.jsp"></jsp:include>
 	<%-- 추가 캔버스 --%>
-	<%@ include file="offcanvas/address_add.jsp"%>
+<%-- 	<%@ include file="offcanvas/address_add.jsp"%> --%>
 	<%-- 바텀 메뉴 --%>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	

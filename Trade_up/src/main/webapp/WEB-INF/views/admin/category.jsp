@@ -17,7 +17,7 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>GARGE | 사기신고 조회</title>
+  <title>TRADE-UP | 사기신고 조회</title>
 
   <meta name="description" content="" />
 

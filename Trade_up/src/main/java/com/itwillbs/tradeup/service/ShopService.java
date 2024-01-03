@@ -86,6 +86,22 @@ public class ShopService {
 	public List<Map<String, Object>> lowProductList(String category_name) {
 		return mapper.lowProductList(category_name);
 	}
+	
+	public List<Map<String, Object>> relastProductList() {
+		return mapper.relastProductList();
+	}
+	
+	public List<Map<String, Object>> rejjimProductList() {
+		return mapper.rejjimProductList();
+	}
+	
+	public List<Map<String, Object>> rehighProductList() {
+		return mapper.rehighProductList();
+	}
+	
+	public List<Map<String, Object>> relowProductList() {
+		return mapper.relowProductList();
+	}
 
 	public String selectJJim(int product_num) {
 		return mapper.selectJJim(product_num);

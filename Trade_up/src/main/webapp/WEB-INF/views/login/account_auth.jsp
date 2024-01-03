@@ -159,7 +159,7 @@
     <div id="loginBox">
     
     <div id="inputBox">
-      	<div id="loginBoxTitle">GARGE의 회원이 되신걸 축하드립니다.</div>
+      	<div id="loginBoxTitle">TRADE-UP의 회원이 되신걸 축하드립니다.</div>
 	      	<p style="margin-top: 20px; font-size: 18px; color: #000000; font-weight: 500; line-height: 1.6;">
 			  안전한 중고거래를 위해 <strong style="color: #5F12D3;">계좌 인증</strong>이 필요합니다. <br>
 			  인증 절차를 완료하시면 모든 서비스를 자유롭게 이용하실 수 있습니다.

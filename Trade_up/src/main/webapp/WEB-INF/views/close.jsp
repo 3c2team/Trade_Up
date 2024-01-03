@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
-$(function {
     opener.location.reload();
     window.close();
-});
 </script>
 </head>
 <body>

@@ -17,7 +17,7 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>GARGE | 사기신고 조회</title>
+  <title>TRADE-UP | 사기신고 조회</title>
 
   <meta name="description" content="" />
 
@@ -119,7 +119,7 @@
 											<c:forEach var="selectReport" items="${selectReport }">
 												<tr>
 													<td><input type="checkbox" name="checkbox" value="${selectReport.report_idx }"></td>
-													<td><img  src="${selectReport.report_image_real_file }"></td>
+													<td><img style="height: 40px;" src="${selectReport.report_image_real_file }"></td>
 													<td><button class="btn default" style="border-radius: 3px; margin-bottom: 3px; font-size: 11px; color: #fff; background: #7173db;" onclick="location.href='ShopDetail?product_num=${selectReport.report_product_num }'">자세히보기</button></td>
 													<td>${selectReport.qna_category_detail_name } : ${selectReport.report_content }
 													</td>
