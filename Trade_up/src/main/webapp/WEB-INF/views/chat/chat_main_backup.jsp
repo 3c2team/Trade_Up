@@ -40,6 +40,7 @@
 		display: inline-block;
 		margin-right: 10px;
 		margin-bottom: 20px;
+		float:none;SS
 	}
 	
 	/* 채팅 메세지 표시 영역 */
