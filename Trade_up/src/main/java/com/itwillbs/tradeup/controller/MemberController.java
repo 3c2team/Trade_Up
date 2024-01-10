@@ -372,11 +372,11 @@ public class MemberController {
 //            return "admin/admin_login";
 //         }
 		
-		if(dbMember.get("member_state").equals("탈퇴")) {
+		if(dbMember != null && dbMember.get("member_state").equals("탈퇴")) {
 			model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
 			return "fail_back";
 		}
-		if(dbMember.get("member_state").equals("정지")) {
+		if(dbMember != null && dbMember.get("member_state").equals("정지")) {
 			model.addAttribute("msg", "회원님은 정지된 회원입니다.");
 			return "fail_back";
 		}
