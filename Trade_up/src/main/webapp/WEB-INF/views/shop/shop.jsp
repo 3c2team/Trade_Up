@@ -95,7 +95,7 @@
 		                        +"         <h5>"+product.product_price+"</h5> "
 		                        +"      </div>"
 		                        +"   </div>"   
-		                        +"   </div>"   
+		                        +"</div>"   
 							);
 // 							$(".product__item__text h6").remove();
 // 							$(".product__item__text h6").append(product.product_name);
@@ -140,7 +140,7 @@
 		                        +"         <h5>"+product.product_price+"</h5> "
 		                        +"      </div>"
 		                        +"   </div>"   
-		                        +"   </div>"
+		                        +"</div>"
 						);
 					});
 				},erorr: function() {
@@ -220,12 +220,15 @@
 		$(".radio").on("click",function(){
 			location.href="Shop?price=" + $(this).val() + search + category;
 		});
-
+		
+		// 조건별 검색
 		$("#selectBox").change(function() {		    
 // 	 		debugger;
 			var result = $("#selectBox option:selected").val();
 // 			alert(category_name);
 			console.log(category_name);
+			
+			// 최신순
 		    if (result == 'last') {
 				$.ajax({
 					type: "POST",
@@ -254,7 +257,7 @@
 			                        +"         <h5>"+product.product_price+"</h5> "
 			                        +"      </div>"
 			                        +"   </div>"   
-			                        +"   </div>"
+			                        +"</div>"
 							);
 						});
 					},erorr: function() {
@@ -262,6 +265,8 @@
 					}
 				
 				});
+				
+				// 카테고리 선택 없을 시 모든 상품 최신순 검색
 			    if (category_name == null || category_name == "" || category_name == "undefined") {
 					$.ajax({
 						type: "POST",
@@ -287,7 +292,7 @@
 				                        +"         <h5>"+product.product_price+"</h5> "
 				                        +"      </div>"
 				                        +"   </div>"   
-				                        +"   </div>"
+				                        +"</div>"
 								);
 							});
 						},erorr: function() {
@@ -297,6 +302,8 @@
 					});
 				}
 			}
+			
+			// 찜 많은 순
 		    if (result == 'jjim') {
 				$.ajax({
 					type: "POST",
@@ -325,7 +332,7 @@
 			                        +"         <h5>"+product.product_price+"</h5> "
 			                        +"      </div>"
 			                        +"   </div>"   
-			                        +"   </div>"
+			                        +"</div>"
 							);
 						});
 					},erorr: function() {
@@ -333,6 +340,8 @@
 					}
 				
 				});
+				
+				// 카테고리 선택 없을 시 모든 상품 찜 많은 순 검색
 				if (category_name == null || category_name == "" || category_name == "undefined") {
 					$.ajax({
 						type: "POST",
@@ -358,7 +367,7 @@
 				                        +"         <h5>"+product.product_price+"</h5> "
 				                        +"      </div>"
 				                        +"   </div>"   
-				                        +"   </div>"
+				                        +"</div>"
 								);
 							});
 						},erorr: function() {
@@ -368,6 +377,8 @@
 					});
 				}
 			}
+			
+			// 낮은 가격 순
 		    if (result == 'low') {
 				$.ajax({
 					type: "POST",
@@ -396,7 +407,7 @@
 			                        +"         <h5>"+product.product_price+"</h5> "
 			                        +"      </div>"
 			                        +"   </div>"   
-			                        +"   </div>"
+			                        +"</div>"
 							);
 						});
 					},erorr: function() {
@@ -404,6 +415,7 @@
 					}
 				
 				});
+				// 카테고리 선택 없을 시 모든 상품 낮은 가격 순 검색
 				if (category_name == null || category_name == "" || category_name == "undefined") {
 					$.ajax({
 						type: "POST",
@@ -429,7 +441,7 @@
 				                        +"         <h5>"+product.product_price+"</h5> "
 				                        +"      </div>"
 				                        +"   </div>"   
-				                        +"   </div>"
+				                        +"</div>"
 								);
 							});
 						},erorr: function() {
@@ -439,6 +451,8 @@
 					});
 				}
 			}
+			
+			// 높은 가격 순
 		    if (result == 'high') {
 				$.ajax({
 					type: "POST",
@@ -467,13 +481,15 @@
 			                        +"         <h5>"+product.product_price+"</h5> "
 			                        +"      </div>"
 			                        +"   </div>"   
-			                        +"   </div>"
+			                        +"</div>"
 							);
 						});
 					},erorr: function() {
 						location.href="Shop";
 					}
 				});
+				
+				// 카테고리 선택 없을 시 모든 상품 높은 가격 순 검색
 				if (category_name == null || category_name == "" || category_name == "undefined") {
 					$.ajax({
 						type: "POST",
@@ -499,7 +515,7 @@
 				                        +"         <h5>"+product.product_price+"</h5> "
 				                        +"      </div>"
 				                        +"   </div>"   
-				                        +"   </div>"
+				                        +"</div>"
 								);
 							});
 						},erorr: function() {

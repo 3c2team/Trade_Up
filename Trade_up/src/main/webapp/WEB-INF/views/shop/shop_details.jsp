@@ -98,7 +98,7 @@
                     <div class="col-lg-6 col-md-9">
                   <div class="product__details__content" style="margin: 10%;">
                            <div class="product__details__breadcrumb">
-                               <a href="Main">홈</a>
+                               <a href="./">홈</a>
                                <a href="Shop?category=${category.category_name }">${category.category_name }</a>
                                <span>${product.product_num }</span>
                                <div id="favorite_btn"class="favorite_off" style="cursor:pointer; width: 50px;float: inline-end;"></div>
@@ -209,7 +209,7 @@
                             <div class="product__content__all">
                                 <div class="tab-pane active col-lg-4" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
-                              			<h5>상품내용</h5>
+                              			<h5>상품정보</h5>
                                         <div class="product__details__notice" style="background-color: #F3EDFF;">
 	                                        <p class="note">거래 전 주의사항 안내<br>
 	                                          판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>

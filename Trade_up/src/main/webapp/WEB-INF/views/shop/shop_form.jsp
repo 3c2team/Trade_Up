@@ -24,7 +24,8 @@
 
 const dataTransfer = new DataTransfer();
 let fileCheck = "";
-	
+
+// 판매가격 유효성
 const autoHyphen = (target) => {
 	target.value = target.value
 	.replace(/[^0-9]/g, '')
@@ -36,7 +37,7 @@ const autoHyphen = (target) => {
 // }
 
 $(function () {
-	// li 선택값 넘기기, css
+	// 카테고리 li 선택값 넘기기, css
 	$(".nice-scroll li").click(function() {
 		$(".nice-scroll li").css("background-color" , "white");
 		$(".nice-scroll li").css("color" , "#6c757d");
@@ -49,7 +50,7 @@ $(function () {
 
 	});
 	
-	
+	// 택배거래
 	$(".trading_method1").on("click",function(){
 		if($(".trading_method1").is(":checked")){
 			let method1 = "<label class='delivery_method' for='xxlx'><input type='radio' id='xxlx' name='delivery_method' value='배송비 별도' checked style='accent-color:#5F12D3;'>배송비 별도</label>";
@@ -62,6 +63,7 @@ $(function () {
 		
 	});
 	
+	// 택배거래 버튼 css
 // 	$(".checkout__input__checkbox").on('click', function () {
 // 		if($(".checkout__input__checkbox").is(":checked")){
 // 			debugger;
@@ -71,12 +73,14 @@ $(function () {
 // 		}
 //     });
 	
+	// 배송방법 css
 // 	$(".delivery_method").on('click', function () {
 // 		debugger;
 //         $(".delivery_method").removeClass('active');
 // 		$(this).addClass('active');
 //     });
 	
+	// 직거래 주소
 	$(".trading_method2").on("click",function(){
 // 		debugger;
 		let mapView = '<input type="text" name="trading_location" class="input-name" id="trading_location" value="${trading_location }" placeholder="직거래 희망장소" style="margin-right: 10px;">'
@@ -94,6 +98,7 @@ $(function () {
 		}
 	});
 	
+	// 첨부파일
 	$("#fileTrigger").on("click", function() {
 		$("#file").trigger("click");
 	});
@@ -102,18 +107,31 @@ $(function () {
 	
 });
 
-let idx = 0;
-function uploadImageHandler(e) {	
+
+// 첨부파일 함수
+function uploadImageHandler(e) {
+	let idx = 0;
+	let maxLength = 5;
+	if (this.files.length > maxLength) {
+		alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
+		return;
+		const transfer = new DataTransfer();
+	    Array.from(this.files) //새로 배열 만들 그릇
+	    	.slice(0, maxLength) //첫번째 인덱스부터 최대개수까지 자르기
+	        .forEach(file => {
+	        	transfer.items.add(file) //여기서 file 반복 돌려서 추가
+// 				console.log(this.files);
+	        })
+	    this.files = transfer.files; //this.files 안에 다시 넣어주기
+// 		console.log(this.files);
+// 		return;	
+	}
 	let files = e.target.files;
 	console.log(files);
 	let filesArr = Array.prototype.slice.call(files);
 	console.log(filesArr);
-
+	
 	filesArr.forEach(function(file) {
-		if(dataTransfer.files.length > 4) {
-			alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
-			return;	
-		}
 		
 		let reader = new FileReader();
 		
@@ -145,6 +163,7 @@ function uploadImageHandler(e) {
 	
 }
 
+// 직거래 주소
 function tradingLocation(){
     new daum.Postcode({
         oncomplete: function(data) {
@@ -157,6 +176,7 @@ function tradingLocation(){
     }).open();
 }
 
+// submit 함수
 function insertCheck(){
 	
     if( $("#file").val() == ''){
@@ -169,8 +189,7 @@ function insertCheck(){
 	}
     if (!$(".trading_method1").is(':checked')) {
     	if(!$(".trading_method2").is(':checked')){
-			$("#check").css("color", "red");
-			$('#check').append("<span style='color: red;'>을 선택해주세요.</span>");
+			alert("거래방법을 선택해주세요.");
 			return false;
     	}
     }
@@ -193,20 +212,19 @@ function insertCheck(){
 </script>
 </head>
 <body>
+    <!-- 상단 시작 -->
 	<header>
 		<jsp:include page="../inc/top.jsp"></jsp:include>
 	</header>
 
     <!-- 본문 시작 -->
-    <form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return insertCheck()">
-    	<section class="contact shop_spad">
+	<form action="ShopSuccess" method="POST" enctype="multipart/form-data" name="insertForm" onsubmit="return insertCheck()">
+		<section class="contact shop_spad">
 			<div class="section-title">
-			    <h2>판매하기</h2>
+				<h2>판매하기</h2>
 			</div>
 	        <div class="container d-flex justify-content-end" >
                 <div class="col-6" style="min-width:35%; margin-bottom: 30px">
-<!-- 	                    <div class="contact__text"> -->
-<!-- 	                    </div> -->
 					<div style="display: flex; margin: 3%">
 						<button id="fileTrigger" type="button" class="site-btn" style="width: 66px;"><i class="bi bi-camera"><br>(<span id="count">0</span>/5)</i></button>		
 						<div id="imgArea" style="display: flex; height: 100px;">
@@ -216,7 +234,6 @@ function insertCheck(){
                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
 						<div class="card">
 							<div class="card-heading">
-<!-- 								    <a data-toggle="collapse" data-target="#collapseOne">카테고리</a> -->
 							    <h3 style="margin: 5%">카테고리</h3>
 							</div>
 							<div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
@@ -237,7 +254,7 @@ function insertCheck(){
 						</div>
 					</div>
             	</div>
-                <div class="col-6">
+                <div class="col-6" style="margin: 3%">
                     <div class="contact__form">
 						<div style="display: grid;">
 						    <input type="text" name="product_name" class="input-name" spellcheck="false" placeholder="글제목" required>
