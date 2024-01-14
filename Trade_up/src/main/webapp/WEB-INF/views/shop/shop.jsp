@@ -97,11 +97,11 @@
 		                        +"   </div>"   
 		                        +"</div>"   
 							);
-// 							$(".product__item__text h6").remove();
-// 							$(".product__item__text h6").append(product.product_name);
-// 						alert(product.product_name);
+							$(".shop__product__option__left").html(
+								"<p>"+ product.count +"개의 상품</p>"
+							);
 					});
-				},erorr: function() {
+				},error: function() {
 					location.href="Shop";
 				}
 			
@@ -142,8 +142,11 @@
 		                        +"   </div>"   
 		                        +"</div>"
 						);
+						$(".shop__product__option__left").html(
+							"<p>"+ product.count +"개의 상품</p>"
+						);
 					});
-				},erorr: function() {
+				},error: function() {
 					alert("검색 결과가 없습니다.")
 					location.href="Shop";
 				}
@@ -191,7 +194,7 @@
 // 							+ "</div>"
 // 						);
 // 					});
-// 				},erorr: function() {
+// 				},error: function() {
 // 					alert("검색 결과가 없습니다.")
 // 					location.href="Shop";
 // 				}
@@ -259,8 +262,11 @@
 			                        +"   </div>"   
 			                        +"</div>"
 							);
+							$(".shop__product__option__left").html(
+								"<p>"+ product.count +"개의 상품</p>"
+							);
 						});
-					},erorr: function() {
+					},error: function() {
 						location.href="Shop";
 					}
 				
@@ -294,8 +300,11 @@
 				                        +"   </div>"   
 				                        +"</div>"
 								);
+								$(".shop__product__option__left").html(
+									"<p>"+ product.count +"개의 상품</p>"
+								);
 							});
-						},erorr: function() {
+						},error: function() {
 							location.href="Shop";
 						}
 					
@@ -334,8 +343,11 @@
 			                        +"   </div>"   
 			                        +"</div>"
 							);
+							$(".shop__product__option__left").html(
+								"<p>"+ product.count +"개의 상품</p>"
+							);
 						});
-					},erorr: function() {
+					},error: function() {
 						location.href="Shop";
 					}
 				
@@ -369,8 +381,11 @@
 				                        +"   </div>"   
 				                        +"</div>"
 								);
+								$(".shop__product__option__left").html(
+									"<p>"+ product.count +"개의 상품</p>"
+								);
 							});
-						},erorr: function() {
+						},error: function() {
 							location.href="Shop";
 						}
 					
@@ -409,8 +424,11 @@
 			                        +"   </div>"   
 			                        +"</div>"
 							);
+							$(".shop__product__option__left").html(
+								"<p>"+ product.count +"개의 상품</p>"
+							);
 						});
-					},erorr: function() {
+					},error: function() {
 						location.href="Shop";
 					}
 				
@@ -443,8 +461,11 @@
 				                        +"   </div>"   
 				                        +"</div>"
 								);
+								$(".shop__product__option__left").html(
+									"<p>"+ product.count +"개의 상품</p>"
+								);
 							});
-						},erorr: function() {
+						},error: function() {
 							location.href="Shop";
 						}
 					
@@ -483,8 +504,11 @@
 			                        +"   </div>"   
 			                        +"</div>"
 							);
+							$(".shop__product__option__left").html(
+								"<p>"+ product.count +"개의 상품</p>"
+							);
 						});
-					},erorr: function() {
+					},error: function() {
 						location.href="Shop";
 					}
 				});
@@ -517,8 +541,11 @@
 				                        +"   </div>"   
 				                        +"</div>"
 								);
+								$(".shop__product__option__left").html(
+									"<p>"+ product.count +"개의 상품</p>"
+								);
 							});
-						},erorr: function() {
+						},error: function() {
 							location.href="Shop";
 						}
 					
@@ -621,7 +648,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>총 ${allCount }개의 상품</p>
+                                    <p>${allCount }개의 상품</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">

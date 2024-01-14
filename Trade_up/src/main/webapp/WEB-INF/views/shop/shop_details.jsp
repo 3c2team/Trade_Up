@@ -389,28 +389,24 @@
 
     //slidebtn
     var nowimg = '${product_image}'; //nowimg 변수값 지정
+    console.log(nowimg);
+    
 
    //next
 	$('.nextbtn').click(function(){  //next 버튼 클릭 시
-		
 		if (nowimg == 1){
 			$('.slide').css('transform','translateX(-20%)');
 			nowimg = 2;
-		} 
-		else if (nowimg == 2){
+		} else if (nowimg == 2){
 			$('.slide').css('transform','translateX(-40%)'); 
 			nowimg = 3; 
-		}
-		else if (nowimg == 3){
+		} else if (nowimg == 3){
 			$('.slide').css('transform','translateX(-60%)'); 
 			nowimg = 4; 
-		}
-		else if (nowimg == 4){
+		} else if (nowimg == 4){
 			$('.slide').css('transform','translateX(-80%)'); 
 			nowimg = 5; 
-		}
-		
-		else{
+		} else{
 			$('.slide').css('transform','translateX(0%)'); //.slide박스를 x축 기준 왼쪽으로 정렬 (첫번째 이미지가 노출)
 			nowimg = 1;
 		}
@@ -418,56 +414,59 @@
 
    //prev
     $('.prevbtn').click(function(){
-       if (nowimg == 1)
-       {$('.slide').css('transform','translateX(-80%)');
-       nowimg = 5;}
+		if (nowimg == 1){
+			$('.slide').css('transform','translateX(-80%)');
+			nowimg = 5;
+		} else if (nowimg == 5){
+			$('.slide').css('transform','translateX(-60%)');
+			nowimg = 4;
+		} else if (nowimg == 4){
+			$('.slide').css('transform','translateX(-40%)');
+			nowimg = 3;
+		} else if (nowimg == 3){
+			$('.slide').css('transform','translateX(-20%)');
+			nowimg = 2;
+		} else {
+			$('.slide').css('transform','translateX(0%)');
+			nowimg = 1;
+		}
+	});
 
-       else if (nowimg == 5)
-       {$('.slide').css('transform','translateX(-60%)');
-       nowimg = 4;
-       }
-       
-       else if (nowimg == 4)
-       {$('.slide').css('transform','translateX(-40%)');
-       nowimg = 3;
-       }
-       
-       else if (nowimg == 3)
-       {$('.slide').css('transform','translateX(-20%)');
-       nowimg = 2;
-       }
+	//btnbox
+	$('.slide1').click(function(){ //하단 btnbox의 첫번째 버튼 클릭 시
+		$('.btnbox > button').removeClass('nowbtn'); // btnbox 속 모든 버튼에 붙어있는 nowbtn class 삭제
+		$('.slide').css('transform','translateX(0%)'); //.slide박스를 x축 기준 왼쪽으로 정렬 (첫번째 이미지가 노출)
+		$(this).addClass('nowbtn'); //방금 누른 버튼에 nowbtn class 추가
+	});
+	
+	$('.slide2').click(function(){
+		$('.btnbox > button').removeClass('nowbtn');
+		$('.slide').css('transform','translateX(-20%)');
+		$(this).addClass('nowbtn');
+	});
+	
+	$('.slide3').click(function(){
+		$('.btnbox > button').removeClass('nowbtn');
+		$('.slide').css('transform','translateX(-40%)');
+		$(this).addClass('nowbtn');
+	});
+	
+	$('.slide4').click(function(){
+		$('.btnbox > button').removeClass('nowbtn');
+		$('.slide').css('transform','translateX(-60%)');
+		$(this).addClass('nowbtn');
+	});
+	
+	$('.slide5').click(function(){
+		$('.btnbox > button').removeClass('nowbtn');
+		$('.slide').css('transform','translateX(-80%)');
+		$(this).addClass('nowbtn');
+	});
+// 	const array = ['1번', '2번', '3번'];
 
-       else {$('.slide').css('transform','translateX(0%)');
-       nowimg = 1;}
-    });
-
-
-   //btnbox
-     $('.slide1').click(function(){ //하단 btnbox의 첫번째 버튼 클릭 시
-       $('.btnbox > button').removeClass('nowbtn'); // btnbox 속 모든 버튼에 붙어있는 nowbtn class 삭제
-       $('.slide').css('transform','translateX(0%)'); //.slide박스를 x축 기준 왼쪽으로 정렬 (첫번째 이미지가 노출)
-       $(this).addClass('nowbtn'); //방금 누른 버튼에 nowbtn class 추가
-    });
-    $('.slide2').click(function(){
-       $('.btnbox > button').removeClass('nowbtn');
-       $('.slide').css('transform','translateX(-20%)');
-       $(this).addClass('nowbtn');
-    });
-    $('.slide3').click(function(){
-       $('.btnbox > button').removeClass('nowbtn');
-       $('.slide').css('transform','translateX(-40%)');
-       $(this).addClass('nowbtn');
-    });
-    $('.slide4').click(function(){
-       $('.btnbox > button').removeClass('nowbtn');
-       $('.slide').css('transform','translateX(-60%)');
-       $(this).addClass('nowbtn');
-    });
-    $('.slide5').click(function(){
-       $('.btnbox > button').removeClass('nowbtn');
-       $('.slide').css('transform','translateX(-80%)');
-       $(this).addClass('nowbtn');
-    });
+// 	array.forEach((element)=>{
+// 	  console.log(element);
+// 	})
    
 </script>
 </html>

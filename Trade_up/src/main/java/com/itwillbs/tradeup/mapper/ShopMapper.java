@@ -74,9 +74,7 @@ public interface ShopMapper {
 	
 	String selectAllCount();
 
-	int selectAccount(String sId);
-
-	Map<String, Object> dateTime(int product_num);
+//	int selectAccount(String sId);
 	
 	// 상품 이미지 삭제
 	int delectProductImg(String product_num);

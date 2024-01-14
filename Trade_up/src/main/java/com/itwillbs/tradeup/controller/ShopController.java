@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.tradeup.service.MainService;
 import com.itwillbs.tradeup.service.ShopService;
-
-import retrofit2.http.GET;
 
 @Controller
 public class ShopController {

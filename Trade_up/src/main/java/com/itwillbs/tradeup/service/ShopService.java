@@ -11,59 +11,62 @@ import com.itwillbs.tradeup.mapper.ShopMapper;
 
 @Service
 public class ShopService {
-	// ShopMapper 객체 자동 주입
 	@Autowired
 	private ShopMapper mapper;
 
-	// 글쓰기 작업 요청
+	// 상품 등록
 	public int registProduct(Map<String, Object> map) {
 		return mapper.registProduct(map);
 	}
 	
-	// 글쓰기 사진 등록
+	// 상품 사진 등록
 	public int registProductImg(Map<String, Object> map) {
 		return mapper.registProductImg(map);
 	}
 	
-	// 글 상세정보 조회 요청(조회 성공 시 조회수 증가)
+	// 상품 상세정보 조회
 	public Map<String, Object> getProduct(int product_num) {
-		// 1. Mapper - selectBoard() 메서드 호출하여 상세정보 조회 요청 후 결과를 List<Map<String, Object>> 객체에 저장
 		Map<String, Object> productDetail = mapper.getProduct(product_num);
 		
 		return productDetail; 
 	}
 
-	// 글목록 조회 요청
+	// 상품 이미지 조회 
 	public List<Map<String, Object>> getProductImg(int product_num) {
 		return mapper.getProductImg(product_num);
 	}
 	
-	// 상품 수정 요청
+	// 상품 수정 
 	public int updateProduct(Map<String, Object> map) {
 		return mapper.updateProduct(map);
 	}
 	
-	// 상품이미지 수정 요청
+	// 상품 이미지 수정 요청
 	public int updateProductImg(Map<String, Object> map) {
 		return mapper.updateProductImg(map);
 	}
-
+	
+	// 상품 리스트 조회
 	public List<Map<String, Object>> selectProductList() {
 		return mapper.selectProductList();
 	}
-
+	
+	// 상품별 카테고리 조회
 	public Map<String, Object> getCategory(int product_num) {
 		return mapper.getCategory(product_num);
 	}
-
+	
+	// 판매자 상품 조회
 	public List<Map<String, Object>> getSellerProduct(String member_id) {
 		return mapper.getSellerProduct(member_id);
 	}
-
+	
+	// 판매자 상품 갯수 조회
 	public int getSellerCount(int product_num) {
 		return mapper.getSellerCount(product_num);
 	}
-
+	
+	// 카테고리 별 상품 조회
 	public List<Map<String, Object>> fillterProductList(String category_name) {
 		return mapper.fillterProductList(category_name);
 	}
@@ -115,14 +118,12 @@ public class ShopService {
 		return mapper.selectAllCount();
 	}
 	
-	public Map<String, Object> dateTime(int product_num) {
-		return mapper.dateTime(product_num);
-	}
-
-	public int selectAccount(String sId) {
-		return mapper.selectAccount(sId);
-	}
-
+	// 대표계좌 여부
+//	public int selectAccount(String sId) {
+//		return mapper.selectAccount(sId);
+//	}
+	
+	// 상품 이미지 삭제
 	public int delectProductImg(String product_num) {
 		return mapper.delectProductImg(product_num);
 	}

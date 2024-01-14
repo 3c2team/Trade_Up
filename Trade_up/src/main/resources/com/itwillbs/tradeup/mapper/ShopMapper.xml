@@ -6,11 +6,11 @@
 <mapper namespace="com.itwillbs.tradeup.mapper.ShopMapper">
 	
 	<!-- 대표계좌여부 -->
-	<select id="selectAccount" resultType="int"> 
-		SELECT COUNT(*)
-		  FROM MY_ACCOUNT
-		 WHERE member_id = #{sId} AND account_main = true
-   	</select>
+<!-- 	<select id="selectAccount" resultType="int">  -->
+<!-- 		SELECT COUNT(*) -->
+<!-- 		  FROM MY_ACCOUNT -->
+<!-- 		 WHERE member_id = #{sId} AND account_main = true -->
+<!--    	</select> -->
 	
 	<!-- 상품 등록 -->
    	<insert id="registProduct">
@@ -123,7 +123,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT
 		 WHERE sales_status = '판매중'
 	  ORDER BY product_release DESC
@@ -161,7 +161,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT
 		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
 															 FROM CATEGORY
@@ -181,7 +181,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT
 		 WHERE sales_status = '판매중' AND product_name LIKE('%${search}%') 
 	  ORDER BY product_release DESC
@@ -200,7 +200,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT 
 		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
 															 FROM CATEGORY
@@ -221,7 +221,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, P.product_num, category_idx, product_name, product_main_img, product_price, trading_location, COALESCE(COUNT(F.favorite_idx), 0) AS C
+		  END AS productRelease, P.product_num, category_idx, product_name, product_main_img, product_price, trading_location, COALESCE(COUNT(F.favorite_idx), 0) AS C, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT P
 	 LEFT JOIN FAVORITE F ON P.product_num = F.product_num
 		 WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
@@ -244,7 +244,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		FROM PRODUCT
 	   WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
 														   FROM CATEGORY
@@ -265,7 +265,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		FROM PRODUCT
 	   WHERE sales_status = '판매중' AND category_idx = (SELECT category_idx
 														   FROM CATEGORY
@@ -285,7 +285,7 @@
 			    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 			    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 			    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  	 END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT 
 		 WHERE sales_status = '판매중'
 	  ORDER BY product_release desc
@@ -304,7 +304,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, P.product_num, category_idx, product_name, product_main_img, product_price, trading_location, COALESCE(COUNT(F.favorite_idx), 0) AS C
+		  END AS productRelease, P.product_num, category_idx, product_name, product_main_img, product_price, trading_location, COALESCE(COUNT(F.favorite_idx), 0) AS C, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		  FROM PRODUCT P
 	 LEFT JOIN FAVORITE F ON P.product_num = F.product_num
 		 WHERE sales_status = '판매중'
@@ -325,7 +325,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		FROM PRODUCT
 	   WHERE sales_status = '판매중'
 	ORDER BY cast(p as unsigned) desc
@@ -344,7 +344,7 @@
 		    WHEN TIMESTAMPDIFF(MONTH, product_release, NOW()) &lt; 12 THEN CONCAT(TIMESTAMPDIFF(MONTH, product_release, NOW()), '달 전')
 		    WHEN TIMESTAMPDIFF(YEAR, product_release, NOW()) = 1 THEN '1년 전'
 		    ELSE CONCAT(TIMESTAMPDIFF(YEAR, product_release, NOW()), '년 전')
-		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location
+		  END AS productRelease, product_num, category_idx, product_name, product_main_img, product_price, trading_location, COUNT(*) OVER(PARTITION BY product_main_img like '%TradeUp_%') AS count
 		FROM PRODUCT
 	   WHERE sales_status = '판매중'
 	ORDER BY cast(p as unsigned) asc
